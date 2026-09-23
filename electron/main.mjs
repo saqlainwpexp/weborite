@@ -21,17 +21,24 @@ const DATA = DEV ? join(ROOT, "data") : join(app.getPath("userData"), "data");
 const ICON = join(ROOT, "build", "icon.png");
 const CHROME_UA = `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${process.versions.chrome.split(".")[0]}.0.0.0 Safari/537.36`;
 
-app.setAppUserModelId("com.weborite.studio");
+// Running from the project folder uses its own profile, so it never collides with the installed app.
+if (DEV) app.setPath("userData", join(app.getPath("appData"), "Weborite Studio (dev)"));
+// Only one copy per profile: a second launch just brings the running one to the front.
+if (!app.requestSingleInstanceLock()) {
+  app.exit(0);
+  process.exit(0);
+}
+app.setAppUserModelId(DEV ? "com.weborite.studio.dev" : "com.weborite.studio");
 // Only for automated checks from the project folder: `STUDIO_DEBUG_PORT=9333 npm run desktop`.
 if (DEV && process.env.STUDIO_DEBUG_PORT) app.commandLine.appendSwitch("remote-debugging-port", process.env.STUDIO_DEBUG_PORT);
 app.userAgentFallback = CHROME_UA;
-if (!app.requestSingleInstanceLock()) app.quit();
 
 let win = null;
 let tray = null;
 let server = null;
 let base = "";
 let quitting = false;
+let restarts = [];
 
 /* ---------- data: first run of the installed app imports the project's data ---------- */
 
@@ -69,10 +76,15 @@ async function startServer() {
   server.stderr?.on("data", (d) => log.write(d));
   server.on("exit", (code) => {
     log.write(`--- exited ${code}\n`);
-    if (!quitting) {
-      dialog.showErrorBox("Weborite Studio", `The background server stopped (code ${code}). Details are in ${join(DATA, "logs", "server.log")}. The app will restart it.`);
-      void startServer().then(() => win?.loadURL(base));
+    if (quitting) return;
+    restarts = restarts.filter((t) => Date.now() - t < 5 * 60000);
+    restarts.push(Date.now());
+    if (restarts.length > 3) {
+      dialog.showErrorBox("Weborite Studio", `The background server keeps stopping (code ${code}). Details are in ${join(DATA, "logs", "server.log")}. Quit and reopen the app.`);
+      return;
     }
+    log.write("--- restarting\n");
+    void startServer().then(() => win?.loadURL(base)).catch((e) => dialog.showErrorBox("Weborite Studio", e.message));
   });
   base = `http://127.0.0.1:${port}`;
   for (let i = 0; i < 120; i++) {
