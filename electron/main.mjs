@@ -8,7 +8,7 @@
  *    nothing is framed: each is a top-level page.
  */
 import { app, BrowserWindow, Menu, Notification, Tray, WebContentsView, dialog, ipcMain, nativeImage, session, shell, utilityProcess } from "electron";
-import { cpSync, createWriteStream, existsSync, mkdirSync, readFileSync } from "node:fs";
+import { cpSync, createWriteStream, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { createServer } from "node:net";
 import { join } from "node:path";
 import { PNG } from "pngjs";
@@ -19,8 +19,12 @@ const DEV = !app.isPackaged;
 // From the project folder the desktop app shares ./data with `npm run dev`; installed, it keeps its own.
 const DATA = DEV ? join(ROOT, "data") : join(app.getPath("userData"), "data");
 const ICON = join(ROOT, "build", "icon.png");
-// The whole app opens at 90% so it fits smaller screens.
+// The whole app opens at 90% so it fits smaller screens; the floating control changes it and it's remembered.
 const ZOOM = 0.9;
+// Resolved when used: a copy run from the project folder switches to its own profile further down.
+const prefsFile = () => join(app.getPath("userData"), "prefs.json");
+const readPrefs = () => { try { return JSON.parse(readFileSync(prefsFile(), "utf8")); } catch { return {}; } };
+let zoom = ZOOM;
 const CHROME_UA = `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${process.versions.chrome.split(".")[0]}.0.0.0 Safari/537.36`;
 
 // Running from the project folder uses its own profile, so it never collides with the installed app.
@@ -31,6 +35,7 @@ if (!app.requestSingleInstanceLock()) {
   process.exit(0);
 }
 app.setAppUserModelId(DEV ? "com.weborite.studio.dev" : "com.weborite.studio");
+zoom = Math.min(1.5, Math.max(0.5, Number(readPrefs().zoom) || ZOOM));
 // Only for automated checks from the project folder: `STUDIO_DEBUG_PORT=9333 npm run desktop`.
 if (DEV && process.env.STUDIO_DEBUG_PORT) app.commandLine.appendSwitch("remote-debugging-port", process.env.STUDIO_DEBUG_PORT);
 app.userAgentFallback = CHROME_UA;
@@ -115,9 +120,19 @@ function createWindow() {
     icon: ICON,
     backgroundColor: "#e6e5e5",
     autoHideMenuBar: true,
-    webPreferences: { preload: join(HERE, "preload.cjs"), contextIsolation: true, nodeIntegration: false, sandbox: true, spellcheck: true, zoomFactor: ZOOM },
+    webPreferences: { preload: join(HERE, "preload.cjs"), contextIsolation: true, nodeIntegration: false, sandbox: true, spellcheck: true, zoomFactor: zoom },
   });
   win.once("ready-to-show", () => win.show());
+  // Ctrl + / Ctrl - / Ctrl 0, like a browser.
+  win.webContents.on("before-input-event", (e, input) => {
+    if (!input.control || input.type !== "keyDown") return;
+    if (input.key === "=" || input.key === "+") setZoom(zoom + 0.1);
+    else if (input.key === "-") setZoom(zoom - 0.1);
+    else if (input.key === "0") setZoom(ZOOM);
+    else return;
+    e.preventDefault();
+  });
+  win.webContents.on("did-finish-load", () => win.webContents.setZoomFactor(zoom));
   void win.loadURL(LOADING);
 
   // Links to other sites open in the normal browser; the dashboard never navigates away from itself.
@@ -244,7 +259,7 @@ function createChannel(svc) {
   ses.setPermissionCheckHandler((_wc, perm) => allowed(perm));
 
   const view = new WebContentsView({
-    webPreferences: { session: ses, preload: join(HERE, "preload-channel.cjs"), contextIsolation: true, sandbox: true, spellcheck: true, zoomFactor: ZOOM },
+    webPreferences: { session: ses, preload: join(HERE, "preload-channel.cjs"), contextIsolation: true, sandbox: true, spellcheck: true, zoomFactor: zoom },
   });
   view.setBackgroundColor("#ffffff");
   entry.view = view;
@@ -346,7 +361,7 @@ ipcMain.handle("comms:action", async (_e, { id, action }) => {
   else if (action === "devtools") wc.openDevTools({ mode: "detach" });
   else if (action === "zoom-in") wc.setZoomLevel(wc.getZoomLevel() + 0.5);
   else if (action === "zoom-out") wc.setZoomLevel(wc.getZoomLevel() - 0.5);
-  else if (action === "zoom-reset") wc.setZoomFactor(ZOOM);
+  else if (action === "zoom-reset") wc.setZoomFactor(zoom);
   else if (action === "signout") {
     await wc.session.clearStorageData();
     await wc.session.clearCache();
@@ -355,6 +370,17 @@ ipcMain.handle("comms:action", async (_e, { id, action }) => {
   broadcast();
   return true;
 });
+function setZoom(z) {
+  zoom = Math.round(Math.min(1.5, Math.max(0.5, z)) * 100) / 100;
+  win?.webContents.setZoomFactor(zoom);
+  for (const c of channels.values()) c.view.webContents.setZoomFactor(zoom);
+  try { writeFileSync(prefsFile(), JSON.stringify({ ...readPrefs(), zoom })); } catch { /* not saved */ }
+  win?.webContents.send("zoom:changed", zoom);
+  return zoom;
+}
+ipcMain.handle("zoom:get", () => zoom);
+ipcMain.handle("zoom:set", (_e, z) => setZoom(Number(z) || ZOOM));
+
 ipcMain.on("open-external", (_e, url) => {
   if (/^https?:/i.test(String(url))) void shell.openExternal(url);
 });

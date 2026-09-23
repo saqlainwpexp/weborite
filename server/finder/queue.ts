@@ -1,6 +1,7 @@
 import { addEvent } from "../db.ts";
 import { searchMaps } from "./maps.ts";
 import { checkWhatsappBusiness, scanWebsite, whatsappStatus } from "./enrich.ts";
+import { queueQualify } from "./qualify.ts";
 import {
   computeTags, findByPlace, getProspect, getSearch, insertProspect, listProspects, listSearches, refreshSearchCounts, saveProspect, saveSearch,
 } from "./store.ts";
@@ -96,6 +97,14 @@ async function runSearch(id: string) {
       refreshSearchCounts(id);
     }
 
+    // Score every business: website audit + design review.
+    if (!cancelled.has(id)) {
+      const sc = getSearch(id)!;
+      sc.status = "scoring";
+      saveSearch(sc);
+      await queueQualify(listProspects({ searchId: id }).filter((p) => p.fit?.status !== "done").map((p) => p.id));
+    }
+
     const done = refreshSearchCounts(id)!;
     done.status = cancelled.has(id) ? "failed" : "done";
     if (cancelled.has(id)) done.error = "Stopped";
@@ -120,5 +129,5 @@ async function runSearch(id: string) {
 
 /** After a restart, finish anything that was interrupted. */
 export function resumeSearches() {
-  for (const s of listSearches().reverse()) if (s.status === "queued" || s.status === "searching" || s.status === "enriching") enqueueSearch(s.id);
+  for (const s of listSearches().reverse()) if (s.status === "queued" || s.status === "searching" || s.status === "enriching" || s.status === "scoring") enqueueSearch(s.id);
 }

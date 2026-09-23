@@ -19,5 +19,10 @@ contextBridge.exposeInMainWorld("studioDesktop", {
     onState: listen("comms:state"),
     onOpen: listen("comms:open"),
   },
+  zoom: {
+    get: () => ipcRenderer.invoke("zoom:get"),
+    set: (z) => ipcRenderer.invoke("zoom:set", z),
+    onChange: listen("zoom:changed"),
+  },
   openExternal: (url) => ipcRenderer.send("open-external", url),
 });

@@ -1,5 +1,5 @@
 import { useNavigate, useOutletContext } from "react-router-dom";
-import { ArrowRight, ArrowUpRight, Globe, Mail, MessageCircle, Users } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Flame, Mail, MessageCircle, Users } from "lucide-react";
 import type { LayoutCtx } from "../../layout/Layout";
 import { ProspectsTable, SearchRow } from "../../components/finder";
 
@@ -12,7 +12,7 @@ export default function FinderDashboard() {
     { label: "Leads found", value: st?.total, sub: `${st?.searches ?? 0} searches`, icon: <Users /> },
     { label: "With email", value: st?.withEmail, sub: pct(st?.withEmail ?? 0), icon: <Mail /> },
     { label: "On WhatsApp", value: st?.withWhatsapp, sub: pct(st?.withWhatsapp ?? 0), icon: <MessageCircle /> },
-    { label: "Have a website", value: st?.withWebsite, sub: pct(st?.withWebsite ?? 0), icon: <Globe /> },
+    { label: "Hot leads", value: (prospects ?? []).filter((p) => p.fit?.status === "done" && p.fit.grade === "hot").length, sub: `${(prospects ?? []).filter((p) => !p.website).length} with no website`, icon: <Flame /> },
   ];
 
   return (

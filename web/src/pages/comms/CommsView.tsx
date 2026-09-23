@@ -25,7 +25,8 @@ export default function CommsView() {
     if (!desktop || !el || !svc) return;
     const measure = () => {
       const top = el.getBoundingClientRect().top;
-      el.style.height = `${Math.max(320, window.innerHeight - top - 16)}px`;
+      // Leave the bottom strip free for the floating zoom control (channels are drawn above the page).
+      el.style.height = `${Math.max(320, window.innerHeight - top - 64)}px`;
       const r = el.getBoundingClientRect();
       return { x: r.left, y: r.top, width: r.width, height: r.height };
     };

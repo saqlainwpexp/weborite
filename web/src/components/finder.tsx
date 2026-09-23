@@ -89,6 +89,7 @@ const SEARCH_LABEL: Record<SearchStatus, string> = {
   queued: "Queued",
   searching: "Searching Maps",
   enriching: "Scanning websites",
+  scoring: "Scoring leads",
   done: "Done",
   failed: "Stopped",
 };
@@ -109,6 +110,18 @@ export function Rating({ rating, reviews }: { rating: number | null; reviews: nu
   );
 }
 
+/** Fit score pill: higher = better prospect. Grade in words, never colour alone. */
+export function FitPill({ p }: { p: Prospect }) {
+  const f = p.fit;
+  if (!f) return <span className="muted">—</span>;
+  if (f.status !== "done") return <span className="muted fit-wait">{f.status === "failed" ? "Couldn't score" : "Scoring…"}</span>;
+  return (
+    <span className={`fit ${f.grade}`} title={f.summary}>
+      <b>{f.score}</b>{f.grade === "hot" ? "Hot" : f.grade === "warm" ? "Warm" : "Cold"}
+    </span>
+  );
+}
+
 export function ProspectsTable({ prospects, searches, compact = false }: { prospects: Prospect[]; searches: FinderSearch[]; compact?: boolean }) {
   const nav = useNavigate();
   if (!prospects.length) {
@@ -125,6 +138,7 @@ export function ProspectsTable({ prospects, searches, compact = false }: { prosp
         <thead>
           <tr>
             <th>Business</th>
+            <th>Fit</th>
             <th className="hide-sm">Phone</th>
             <th>Reviews</th>
             {!compact && <th className="hide-sm">Website</th>}
@@ -143,10 +157,11 @@ export function ProspectsTable({ prospects, searches, compact = false }: { prosp
                     <span className="biz-mark" aria-hidden="true">{p.name.replace(/[^A-Za-z0-9]/g, "").slice(0, 1).toUpperCase() || "•"}</span>
                     <div style={{ minWidth: 0 }}>
                       <b>{p.name}</b>
-                      <span>{p.category || "Business"}{p.enrichStatus === "running" || p.enrichStatus === "pending" ? " · scanning…" : ""}</span>
+                      <span>{p.fit?.status === "done" && p.fit.grade !== "cold" && p.fit.reasons[0]?.points !== undefined ? p.fit.reasons[0].text.split(":")[0] : p.category || "Business"}{p.enrichStatus === "running" || p.enrichStatus === "pending" ? " · scanning…" : ""}</span>
                     </div>
                   </div>
                 </td>
+                <td className="nowrap"><FitPill p={p} /></td>
                 <td className="hide-sm nowrap">{p.phone || <span className="muted">—</span>}</td>
                 <td className="nowrap"><Rating rating={p.rating} reviews={p.reviews} /></td>
                 {!compact && (

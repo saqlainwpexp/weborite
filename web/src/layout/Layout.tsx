@@ -10,6 +10,7 @@ import { AddLeadModal, EventIcon, Logo, StatusPill } from "../components/ui";
 import { NewSearchModal } from "../components/finder";
 import { Calendar, dayKey, parseDayKey } from "../components/Calendar";
 import { applyBrand } from "../lib/brand";
+import { ZoomControl } from "../components/ZoomControl";
 import { careState, type CareView } from "../pages/care/CareList";
 import { desktop, type ChannelState } from "../lib/desktop";
 import { ChannelTile, UnreadBadge } from "../pages/comms/CommsHome";
@@ -528,6 +529,7 @@ export default function Layout() {
         </main>
       </div>
 
+      <ZoomControl />
       {adding && !isFinder && (
         <AddLeadModal
           onClose={() => setAdding(false)}

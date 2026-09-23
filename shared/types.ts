@@ -169,7 +169,7 @@ export interface Usage {
 /* ---------- Lead Finder workspace ---------- */
 
 export type SearchSource = "google_maps";
-export type SearchStatus = "queued" | "searching" | "enriching" | "done" | "failed";
+export type SearchStatus = "queued" | "searching" | "enriching" | "scoring" | "done" | "failed";
 
 export interface FinderSearch {
   id: string;
@@ -211,7 +211,48 @@ export interface Prospect {
   enrichStatus: "pending" | "running" | "done" | "failed";
   enrichNote?: string;
   mockupLeadId?: string;
+  fit?: ProspectFit;
   createdAt: string;
+}
+
+/** What a quick visit to the business's website found. */
+export interface ProspectAudit {
+  url: string;
+  finalUrl: string;
+  reachable: boolean;
+  status: number;
+  error: string;
+  placeholder: string; // parked / coming soon / suspended text, when found
+  blocked: boolean; // a bot check / firewall stopped the visit, so the site couldn't be judged
+  https: boolean;
+  sslError: boolean;
+  socialOnly: string; // "Facebook page", "free Wix site"… when the "website" isn't a real site
+  builder: string; // Wix, Squarespace, WordPress…
+  loadMs: number | null;
+  bytes: number | null;
+  requests: number | null;
+  mobile: { viewport: boolean; overflow: boolean; smallText: number };
+  seo: { title: string; description: string; h1: number; images: number; missingAlt: number; og: boolean; schema: string[]; lang: boolean };
+  contact: { tel: boolean; form: boolean; whatsapp: boolean; email: boolean };
+  copyrightYear: number | null;
+  oldTech: string[];
+  words: number;
+  shot: boolean; // desktop screenshot saved
+}
+
+export type FitGrade = "hot" | "warm" | "cold";
+
+/** How good a prospect this business is for a new website: higher = better fit. */
+export interface ProspectFit {
+  status: "pending" | "running" | "done" | "failed";
+  score: number;
+  grade: FitGrade;
+  summary: string;
+  reasons: { text: string; points: number }[];
+  design: { score: number; note: string } | null;
+  audit: ProspectAudit | null;
+  at: string;
+  note?: string;
 }
 
 export interface FinderStats {

@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Link, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import {
-  ArrowRight, ArrowUpRight, CheckCircle2, Copy, ExternalLink, Globe, Mail, MapPin, MessageCircle, Phone, RefreshCw, Sparkles, Trash2, XCircle,
+  ArrowRight, ArrowUpRight, CheckCircle2, Copy, ExternalLink, Gauge, Globe, Mail, MapPin, MessageCircle, Minus, Phone, Plus, RefreshCw, Sparkles, Trash2, XCircle,
 } from "lucide-react";
 import type { FinderSearch, Lead, Prospect } from "../../../../shared/types";
 import type { LayoutCtx } from "../../layout/Layout";
 import { api, host, timeAgo, usePoll } from "../../lib/api";
-import { Rating, Tags } from "../../components/finder";
+import { FitPill, Rating, Tags } from "../../components/finder";
 import { StatusPill } from "../../components/ui";
 
 type Detail = Prospect & { search: FinderSearch | null; mockup: Lead | null };
@@ -41,6 +41,14 @@ export default function FinderLeadDetail() {
 
   const waDigits = p.phone.replace(/[^\d]/g, "");
   const scanning = p.enrichStatus === "pending" || p.enrichStatus === "running";
+
+  const fit = p.fit;
+  const a = fit?.audit;
+  const secs = (ms: number | null) => (ms == null ? "–" : `${(ms / 1000).toFixed(1)}s`);
+  const rescore = async () => {
+    await api(`/api/finder/prospects/${p.id}/qualify`, { method: "POST" });
+    void reload();
+  };
 
   async function act(kind: "mockup" | "enrich" | "delete") {
     setBusy(kind);
@@ -97,6 +105,40 @@ export default function FinderLeadDetail() {
 
       <div className="grid-main">
         <div className="stack">
+          <div className="card card-lg">
+            <div className="card-head">
+              <div><h3 className="card-title">Is this a good prospect?</h3><p className="card-sub">{fit?.status === "done" ? fit.summary : fit?.status === "failed" ? `Couldn't score: ${fit.note ?? ""}` : fit ? "Auditing their website and reviewing the design…" : "Not scored yet"}</p></div>
+              <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                <FitPill p={p} />
+                <button className="btn btn-chip btn-sm" onClick={() => void rescore()} disabled={fit?.status === "running" || fit?.status === "pending"}><Gauge />{fit ? "Re-score" : "Score"}</button>
+              </div>
+            </div>
+            {fit?.status === "done" && (
+              <div className="fit-grid">
+                <ul className="fit-reasons">
+                  {fit.reasons.map((r, i) => (
+                    <li key={i} className={r.points > 0 ? "plus" : r.points < 0 ? "minus" : ""}>
+                      <span className="fit-pts">{r.points > 0 ? <><Plus size={12} />{r.points}</> : r.points < 0 ? <><Minus size={12} />{-r.points}</> : "•"}</span>
+                      <span>{r.text}</span>
+                    </li>
+                  ))}
+                </ul>
+                {a?.shot && <a href={`/api/finder/prospects/${p.id}/shot`} target="_blank" rel="noreferrer" className="fit-shot"><img src={`/api/finder/prospects/${p.id}/shot?t=${encodeURIComponent(fit.at)}`} alt={`${p.name} homepage`} /></a>}
+              </div>
+            )}
+            {fit?.status === "done" && a && a.reachable && !a.socialOnly && (
+              <dl className="fields">
+                <div className="field"><dt>Security</dt><dd>{a.sslError ? <span className="bad">Certificate error</span> : a.https ? "HTTPS" : <span className="bad">No HTTPS</span>}</dd></div>
+                <div className="field"><dt>Mobile</dt><dd>{!a.mobile.viewport ? <span className="bad">No mobile layout</span> : a.mobile.overflow ? <span className="warn">Scrolls sideways</span> : "Mobile-friendly"}</dd></div>
+                <div className="field"><dt>Load time (mobile)</dt><dd>{secs(a.loadMs)}{a.bytes ? ` · ${(a.bytes / 1048576).toFixed(1)} MB · ${a.requests} requests` : ""}</dd></div>
+                <div className="field"><dt>SEO basics</dt><dd>{[a.seo.title ? "title" : "no title", a.seo.description ? "description" : "no description", `${a.seo.h1} H1`, a.seo.schema.length ? `schema: ${a.seo.schema.slice(0, 2).join(", ")}` : "no schema"].join(" · ")}</dd></div>
+                <div className="field"><dt>Contact on site</dt><dd>{[a.contact.tel && "click-to-call", a.contact.form && "form", a.contact.whatsapp && "WhatsApp", a.contact.email && "email link"].filter(Boolean).join(", ") || <span className="bad">None found</span>}</dd></div>
+                <div className="field"><dt>Built with</dt><dd>{a.builder || "Unknown"}{a.copyrightYear ? ` · © ${a.copyrightYear}` : ""}</dd></div>
+              </dl>
+            )}
+            {fit?.status === "done" && <p className="muted" style={{ fontSize: 12.5, marginTop: 12 }}>Google ranking isn't checked (Google blocks automated searches); the site's technical and design quality stand in for it.{fit.note ? ` ${fit.note}.` : ""}</p>}
+          </div>
+
           <div className="two">
             <div className="card task-card">
               <div className="chips"><Tags tags={p.tags} /></div>

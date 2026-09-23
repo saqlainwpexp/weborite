@@ -6,6 +6,8 @@ import {
   createSearch, deleteProspect, deleteSearch, finderStats, getProspect, getSearch, listProspects, listSearches, refreshSearchCounts, saveProspect,
 } from "./store.ts";
 import type { Prospect } from "../../shared/types.ts";
+import { existsSync } from "node:fs";
+import { queueQualify, shotPath } from "./qualify.ts";
 
 export const finder = Router();
 
@@ -65,6 +67,30 @@ finder.post("/prospects/:id/enrich", async (req, res) => {
   res.json(getProspect(p.id));
 });
 
+/** Re-score one business (audit its website again). */
+finder.post("/prospects/:id/qualify", (req, res) => {
+  const p = getProspect(req.params.id);
+  if (!p) return res.sendStatus(404);
+  void queueQualify([p.id]);
+  res.json({ ok: true });
+});
+
+/** Score every business that hasn't been scored yet (or all, with ?all=1). */
+finder.post("/qualify", (req, res) => {
+  const all = req.query.all === "1";
+  const only: string[] | null = Array.isArray(req.body?.ids) ? req.body.ids.map(String) : null;
+  const ids = listProspects().filter((p) => (only ? only.includes(p.id) : all || !p.fit || p.fit.status === "failed")).map((p) => p.id);
+  void queueQualify(ids);
+  res.json({ queued: ids.length });
+});
+
+finder.get("/prospects/:id/shot", (req, res) => {
+  if (!/^[\w-]+$/.test(req.params.id)) return res.sendStatus(400);
+  const f = shotPath(req.params.id);
+  if (!existsSync(f)) return res.sendStatus(404);
+  res.sendFile(f);
+});
+
 finder.delete("/prospects/:id", (req, res) => {
   const p = getProspect(req.params.id);
   if (!p) return res.sendStatus(404);
@@ -101,10 +127,10 @@ finder.get("/export.csv", (req, res) => {
   const searchId = typeof req.query.search === "string" ? req.query.search : undefined;
   const tag = typeof req.query.tag === "string" ? req.query.tag : "";
   const rows = listProspects({ searchId }).filter((p: Prospect) => !tag || p.tags.includes(tag));
-  const head = ["Business", "Category", "Phone", "WhatsApp", "Emails", "Website", "Rating", "Reviews", "Address", "Google Maps", "Search"];
+  const head = ["Business", "Fit score", "Fit", "Why", "Category", "Phone", "WhatsApp", "Emails", "Website", "Rating", "Reviews", "Address", "Google Maps", "Search"];
   const searches = new Map(listSearches().map((s) => [s.id, s.query]));
   const lines = rows.map((p) =>
-    [p.name, p.category, p.phone, p.tags.includes("whatsapp") ? "yes" : "", p.emails.join(" "), p.website, p.rating, p.reviews, p.address, p.mapsUrl, searches.get(p.searchId)]
+    [p.name, p.fit?.status === "done" ? p.fit.score : "", p.fit?.status === "done" ? p.fit.grade : "", p.fit?.status === "done" ? p.fit.reasons.filter((r) => r.points >= 0).slice(0, 3).map((r) => r.text).join("; ") : "", p.category, p.phone, p.tags.includes("whatsapp") ? "yes" : "", p.emails.join(" "), p.website, p.rating, p.reviews, p.address, p.mapsUrl, searches.get(p.searchId)]
       .map(csvCell).join(","),
   );
   res.attachment(`leads-${new Date().toISOString().slice(0, 10)}.csv`);

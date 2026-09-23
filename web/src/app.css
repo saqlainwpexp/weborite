@@ -871,6 +871,31 @@ small.warn, span.warn, .warn { color: var(--amber); }
 .retainer-row .input { height: 36px; }
 @media (max-width: 900px) { .four.three { grid-template-columns: 1fr; } .funnel li { grid-template-columns: 96px minmax(0, 1fr) 36px 34px; } }
 
+/* ---------- Lead qualification ---------- */
+.fit { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px 0 4px; border-radius: 9px; font-size: 13px; font-weight: 500; white-space: nowrap; }
+.fit b { display: inline-grid; place-items: center; min-width: 26px; height: 22px; padding: 0 5px; border-radius: 6px; font-size: 12.5px; background: rgba(255,255,255,.7); }
+.fit.hot { background: #e5f4ea; color: #25683f; }
+.fit.warm { background: #f8efe0; color: #86591a; }
+.fit.cold { background: var(--inset); color: var(--text-2); }
+.fit-wait { font-size: 13px; }
+.fit-grid { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 20px; margin-top: 16px; align-items: start; }
+.fit-reasons { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.fit-reasons li { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 10px; align-items: start; font-size: 14px; line-height: 1.45; }
+.fit-pts { display: inline-flex; align-items: center; justify-content: center; gap: 1px; height: 22px; border-radius: 6px; font-size: 12px; font-weight: 500; background: var(--inset); color: var(--text-2); }
+.fit-reasons li.plus .fit-pts { background: #e5f4ea; color: #25683f; }
+.fit-reasons li.minus .fit-pts { background: #f7e6e6; color: #9b3434; }
+.fit-shot img { width: 100%; border-radius: 12px; border: 1px solid var(--hairline); display: block; }
+@media (max-width: 1100px) { .fit-grid { grid-template-columns: 1fr; } }
+
+/* ---------- Floating zoom control ---------- */
+.zoom-ctl { position: fixed; right: 18px; bottom: 14px; z-index: 60; display: inline-flex; align-items: center; gap: 2px; padding: 3px; border-radius: 12px; background: var(--card); box-shadow: 0 4px 18px rgba(0,0,0,.12); opacity: .82; transition: opacity .15s; }
+.zoom-ctl:hover, .zoom-ctl:focus-within { opacity: 1; }
+.zoom-ctl button { border: 0; background: none; height: 28px; min-width: 28px; border-radius: 8px; display: grid; place-items: center; cursor: pointer; color: var(--text); font: inherit; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.zoom-ctl button:hover:not(:disabled) { background: var(--inset); }
+.zoom-ctl button:disabled { opacity: .35; cursor: default; }
+.zoom-ctl button svg { width: 15px; height: 15px; }
+.zoom-ctl .zoom-val { min-width: 44px; }
+
 /* ---------- Brand chrome: top bar + sidebar in the brand colour ---------- */
 .topbar {
   background: var(--brand); border-radius: 20px; padding: 10px 12px; color: var(--on-brand);

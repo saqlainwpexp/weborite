@@ -25,6 +25,7 @@ interface DesktopApi {
     onState: (cb: (s: Record<string, ChannelState>) => void) => () => void;
     onOpen: (cb: (id: string) => void) => () => void;
   };
+  zoom: { get: () => Promise<number>; set: (z: number) => Promise<number>; onChange: (cb: (z: number) => void) => () => void };
   openExternal: (url: string) => void;
 }
 
