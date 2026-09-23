@@ -1,0 +1,10 @@
+node_modules
+dist
+.env
+*.log
+
+# Local data: the database holds API keys and WordPress Application Passwords,
+# the rest is client screenshots, generated plugins and caches. Never commit it.
+data/*
+# The benchmark library is reusable research, safe to keep.
+!data/benchmarks/

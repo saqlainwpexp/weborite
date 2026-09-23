@@ -1,0 +1,39 @@
+{
+  "vertical": "iconic-local-eatery",
+  "label": "Local Eatery",
+  "register": "The buyer is evaluating whether this feels like a beloved, authentic neighborhood institution worth traveling for, judged against other legendary local food spots rather than generic restaurant chains.",
+  "color": "#886fe2",
+  "sites": [
+    {
+      "name": "Franklin Barbecue",
+      "url": "https://franklinbbq.com/",
+      "why": "Leads with a third-party editorial quote (Texas Monthly) instead of self-praise, instantly signaling 'worth the line' credibility."
+    },
+    {
+      "name": "Pat's King of Steaks",
+      "url": "https://www.patskingofsteaks.com/",
+      "why": "Hero anchors on a giant 'SINCE 1930' heritage stamp plus pop-culture press logos (Food Network, Rocky), turning nostalgia into trust signals above the fold."
+    },
+    {
+      "name": "Pike Place Chowder",
+      "url": "https://www.pikeplacechowder.com/",
+      "why": "Stacks concrete, numbered proof ('17 First-Place awards,' James Beard, MSC certification) right under the hero claim instead of vague superlatives."
+    },
+    {
+      "name": "Russ & Daughters",
+      "url": "https://www.russanddaughters.com/",
+      "why": "A single 'since 1914' line does the trust-building work, paired with a minimal, generously-spaced layout that reads as heirloom rather than corporate."
+    },
+    {
+      "name": "Voodoo Doughnut",
+      "url": "https://voodoodoughnut.com/",
+      "why": "Seasonal hero imagery refreshed with limited-time products keeps the homepage feeling alive and worth revisiting, not a static brochure page."
+    },
+    {
+      "name": "Katz's Delicatessen",
+      "url": "https://katzsdelicatessen.com/",
+      "why": "Site name itself ('NYC's oldest deli') functions as a persistent trust badge baked into the browser tab and header, reinforcing institution status site-wide."
+    }
+  ],
+  "createdAt": "2026-09-22T20:31:21.315Z"
+}

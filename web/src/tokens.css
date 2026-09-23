@@ -1,0 +1,53 @@
+/* Design tokens sampled from the reference dashboard screenshot. */
+:root {
+  --font: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --canvas: #dadada;       /* page behind the app frame */
+  --frame: #f7f5f6;        /* outer app frame + top bar */
+  --shell: #f0eeef;        /* main content shell */
+  --card: #ffffff;
+  --inset: #efefef;        /* nested panels inside cards */
+  --chip: #e9e7e8;         /* top bar pills, secondary buttons */
+  --chip-hover: #e1dfe0;
+  --hairline: #ececec;
+
+  --text: #0e0c0d;
+  --text-2: #3d3b3c;
+  /* Reference uses #b1afb0 for meta text; darkened just enough to pass WCAG AA on white. */
+  --muted: #767475;
+  --faint: #b1afb0;        /* decorative only (separators, placeholders) */
+
+  --accent: #a36566;       /* dusty rose: active nav, primary CTA */
+  --accent-hover: #93585a;
+  --accent-soft: #f4eaea;
+  --ink: #000000;          /* black CTA buttons */
+
+  /* Brand chrome (top bar + sidebar). White on #a36566 = 4.56:1. */
+  --brand: #a36566;
+  --brand-ink: #7a4546;    /* brand text on white: 6.9:1 */
+  --on-brand: #ffffff;
+  --on-brand-muted: rgba(255, 255, 255, .86);
+  --brand-overlay: rgba(255, 255, 255, .14);
+  --brand-overlay-strong: rgba(255, 255, 255, .24);
+  --brand-line: rgba(255, 255, 255, .24);
+  --accent-softer: #faf5f5;
+  --ink-hover: #262425;
+
+  --purple: #886fe2;
+  --orange: #e47053;
+  --green: #4f9a6e;
+  --amber: #c98a2b;
+  --red: #c24b4b;
+
+  --r-frame: 28px;
+  --r-shell: 24px;
+  --r-card: 20px;
+  --r-inner: 14px;
+  --r-btn: 10px;
+  --r-pill: 999px;
+
+  --shadow-card: 0 1px 2px rgba(14, 12, 13, 0.03);
+  --shadow-pop: 0 12px 32px rgba(14, 12, 13, 0.10);
+
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 20px; --s6: 24px; --s7: 32px; --s8: 40px; --s9: 56px;
+}

@@ -1,0 +1,39 @@
+{
+  "vertical": "freelance-technical-service-provider",
+  "label": "WordPress Developer",
+  "register": "The buyer is a small trades business owner evaluating whether this solo developer looks credible and trustworthy enough to hand over their website and lead-generation, judged against other freelance web developers and small agencies rather than large enterprise dev shops.",
+  "color": "#e47053",
+  "sites": [
+    {
+      "name": "Brittany Chiang",
+      "url": "https://brittanychiang.com/",
+      "why": "Fixed-sidebar hero with a single strong intro line and one clear CTA (email) shows confident, minimal typographic hierarchy that reads as instantly credible."
+    },
+    {
+      "name": "Jack Jeznach",
+      "url": "https://jacekjeznach.com/",
+      "why": "Oversized hero statement plus a one-line value prop and subtle scroll animation proves a solo freelancer's homepage can look agency-polished without heavy production."
+    },
+    {
+      "name": "Adham Dannaway",
+      "url": "https://www.adhamdannaway.com/",
+      "why": "Leads the hero with outcome-focused case studies and recognizable client logos instead of a headshot, building trust for a one-person operation fast."
+    },
+    {
+      "name": "Codeable",
+      "url": "https://www.codeable.io/",
+      "why": "Hero built entirely around vetting/trust language, ratings, and client logos — the exact pattern needed to reassure a skeptical small-business buyer about handing over their site."
+    },
+    {
+      "name": "TMN Creative",
+      "url": "https://tmncreative.com/small-business",
+      "why": "Speaks directly to 'owner-operators' with flat pricing and turnaround time stated above the fold, matching the small-trades-buyer register almost exactly."
+    },
+    {
+      "name": "Oak Harbor Web Designs",
+      "url": "https://oakharborwebdesigns.com/",
+      "why": "Plain-English $0-down / $175-a-month pricing and a hand-coded-by-a-real-person promise in the hero is a direct comparable for a solo dev selling to local small-business owners."
+    }
+  ],
+  "createdAt": "2026-09-22T20:39:20.811Z"
+}
