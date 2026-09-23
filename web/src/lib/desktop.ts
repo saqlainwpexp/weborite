@@ -27,6 +27,7 @@ interface DesktopApi {
   };
   zoom: { get: () => Promise<number>; set: (z: number) => Promise<number>; onChange: (cb: (z: number) => void) => () => void };
   openExternal: (url: string) => void;
+  cacheBrand?: (b: { studioName?: string; brandColor?: string }) => void;
 }
 
 export const desktop = (window as unknown as { studioDesktop?: DesktopApi }).studioDesktop;

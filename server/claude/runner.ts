@@ -4,7 +4,7 @@ import { runApi } from "./apiRunner.ts";
 
 export interface RunRequest {
   leadId: string;
-  task: "diagnose" | "vertical" | "benchmarks" | "generate" | "build" | "seo" | "qualify";
+  task: "diagnose" | "vertical" | "benchmarks" | "generate" | "build" | "seo" | "qualify" | "agent";
   system: string;
   prompt: string;
   /** Absolute paths to PNG/JPEG files Claude should look at. */

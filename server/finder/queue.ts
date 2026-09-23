@@ -86,7 +86,8 @@ async function runSearch(id: string) {
       },
     });
 
-    const cur = getSearch(id)!;
+    const cur = getSearch(id);
+    if (!cur) return; // deleted mid-run
     cur.status = "enriching";
     saveSearch(cur);
 
@@ -99,13 +100,15 @@ async function runSearch(id: string) {
 
     // Score every business: website audit + design review.
     if (!cancelled.has(id)) {
-      const sc = getSearch(id)!;
+      const sc = getSearch(id);
+      if (!sc) return; // deleted mid-run
       sc.status = "scoring";
       saveSearch(sc);
       await queueQualify(listProspects({ searchId: id }).filter((p) => p.fit?.status !== "done").map((p) => p.id));
     }
 
-    const done = refreshSearchCounts(id)!;
+    const done = refreshSearchCounts(id);
+    if (!done) return; // deleted mid-run
     done.status = cancelled.has(id) ? "failed" : "done";
     if (cancelled.has(id)) done.error = "Stopped";
     done.finishedAt = new Date().toISOString();
@@ -117,7 +120,8 @@ async function runSearch(id: string) {
       detail: `${done.query}: ${done.found} leads, ${done.withEmail} with email, ${done.withWhatsapp} on WhatsApp${skipped ? ` (${skipped} already found earlier)` : ""}`,
     });
   } catch (e) {
-    const f = getSearch(id)!;
+    const f = getSearch(id);
+    if (!f) return; // deleted mid-run: nothing to mark
     f.status = "failed";
     f.error = (e as Error).message.slice(0, 300);
     f.finishedAt = new Date().toISOString();

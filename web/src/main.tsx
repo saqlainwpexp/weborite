@@ -40,6 +40,16 @@ import { applyStoredBrand } from "./lib/brand";
 
 applyStoredBrand();
 
+// Fade out the startup splash once the app has painted its first frame.
+function dismissSplash() {
+  const el = document.getElementById("splash");
+  if (!el) return;
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    el.classList.add("hide");
+    setTimeout(() => el.remove(), 400);
+  }));
+}
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
@@ -85,3 +95,5 @@ createRoot(document.getElementById("root")!).render(
     </BrowserRouter>
   </StrictMode>,
 );
+
+dismissSplash();

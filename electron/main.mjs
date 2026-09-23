@@ -8,7 +8,7 @@
  *    nothing is framed: each is a top-level page.
  */
 import { app, BrowserWindow, Menu, Notification, Tray, WebContentsView, dialog, ipcMain, nativeImage, session, shell, utilityProcess } from "electron";
-import { cpSync, createWriteStream, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { cpSync, createWriteStream, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { createServer } from "node:net";
 import { join } from "node:path";
 import { PNG } from "pngjs";
@@ -107,7 +107,67 @@ async function startServer() {
 
 /* ---------- main window ---------- */
 
-const LOADING = `data:text/html;charset=utf-8,${encodeURIComponent(`<html><body style="margin:0;height:100vh;display:grid;place-items:center;background:#e6e5e5;font:15px Inter,Segoe UI,sans-serif;color:#555">Starting Weborite Studio…</body></html>`)}`;
+/* ---------- animated startup splash (logo zoom + brand-colour fill) ---------- */
+
+// Darken a #rrggbb colour toward black by `amount` (0–1), for the fill gradient.
+function darken(hex, amount) {
+  const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || ""));
+  if (!m) return "#7a4f50";
+  const n = parseInt(m[1], 16);
+  const ch = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => Math.round(v * (1 - amount)));
+  return "#" + ch.map((v) => v.toString(16).padStart(2, "0")).join("");
+}
+
+// The white-label logo the user uploaded (newest logo-* in the brand folder), else the app icon.
+function logoDataUrl() {
+  try {
+    const brandDir = join(DATA, "brand");
+    const file = existsSync(brandDir)
+      ? readdirSync(brandDir).filter((f) => /^logo-/.test(f)).sort().pop()
+      : null;
+    if (file) {
+      const ext = file.split(".").pop().toLowerCase();
+      const mime = ext === "png" ? "image/png" : ext === "webp" ? "image/webp" : ext === "svg" ? "image/svg+xml" : "image/jpeg";
+      return `data:${mime};base64,${readFileSync(join(brandDir, file)).toString("base64")}`;
+    }
+  } catch {
+    /* fall back to the app icon */
+  }
+  return `data:image/png;base64,${readFileSync(ICON).toString("base64")}`;
+}
+
+// Name and colour aren't known before the server is up, so the dashboard caches them (brand:cache)
+// for the next launch. First ever launch uses these defaults.
+function splashUrlFor() {
+  const p = readPrefs();
+  const name = String(p.studioName || "Weborite Studio").slice(0, 40);
+  const color = /^#[0-9a-f]{6}$/i.test(String(p.brandColor)) ? p.brandColor : "#a36566";
+  const html = `<!doctype html><html><head><meta charset="utf-8"><style>
+    *{margin:0;box-sizing:border-box}html,body{height:100%}
+    body{height:100vh;display:grid;place-items:center;background:#e6e5e5;
+      font-family:Inter,'Segoe UI',system-ui,sans-serif;color:#6b6b6b;-webkit-user-select:none;overflow:hidden}
+    .wrap{display:grid;justify-items:center;gap:20px}
+    .tile{position:relative;width:104px;height:104px;border-radius:26px;overflow:hidden;background:#fff;
+      box-shadow:0 12px 34px rgba(0,0,0,.14),0 3px 8px rgba(0,0,0,.08);display:grid;place-items:center;
+      animation:pulse 2.4s ease-in-out infinite}
+    .fill{position:absolute;inset:0;background:linear-gradient(0deg,${color} 0%,${color} 34%,transparent 62%);
+      background-size:100% 220%;opacity:.17;animation:rise 2.6s linear infinite}
+    .tile img{width:62%;height:62%;object-fit:contain;position:relative;-webkit-user-drag:none}
+    .label{font-size:14px;letter-spacing:.2px}.label b{color:#3a3a3a;font-weight:600}
+    .bar{width:132px;height:3px;border-radius:3px;background:rgba(0,0,0,.09);overflow:hidden}
+    .bar i{display:block;height:100%;width:38%;border-radius:3px;background:${color};animation:slide 1.5s ease-in-out infinite}
+    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.075)}}
+    @keyframes rise{0%{background-position:0 100%}100%{background-position:0 -120%}}
+    @keyframes slide{0%{transform:translateX(-135%)}100%{transform:translateX(360%)}}
+    @media (prefers-reduced-motion:reduce){.tile,.fill,.bar i{animation:none}.fill{background-position:0 40%}}
+  </style></head><body><div class="wrap">
+    <div class="tile"><span class="fill"></span><img src="${logoDataUrl()}" alt=""></div>
+    <div class="label">Loading <b>${name.replace(/[<>&]/g, "")}</b>…</div>
+    <div class="bar"><i></i></div>
+  </div></body></html>`;
+  return `data:text/html;charset=utf-8,${encodeURIComponent(html)}`;
+}
+let splashUrl = "";
 
 function createWindow() {
   win = new BrowserWindow({
@@ -133,7 +193,8 @@ function createWindow() {
     e.preventDefault();
   });
   win.webContents.on("did-finish-load", () => win.webContents.setZoomFactor(zoom));
-  void win.loadURL(LOADING);
+  splashUrl = splashUrlFor();
+  void win.loadURL(splashUrl);
 
   // Links to other sites open in the normal browser; the dashboard never navigates away from itself.
   win.webContents.setWindowOpenHandler(({ url }) => {
@@ -142,7 +203,7 @@ function createWindow() {
     return { action: "deny" };
   });
   win.webContents.on("will-navigate", (e, url) => {
-    if (base && !url.startsWith(base) && url !== LOADING) {
+    if (base && !url.startsWith(base) && url !== splashUrl) {
       e.preventDefault();
       if (/^https?:/i.test(url)) void shell.openExternal(url);
     }
@@ -386,6 +447,19 @@ function setZoom(z) {
 }
 ipcMain.handle("zoom:get", () => zoom);
 ipcMain.handle("zoom:set", (_e, z) => setZoom(Number(z) || ZOOM));
+
+// The dashboard reports its name and brand colour so the next launch's splash matches.
+ipcMain.on("brand:cache", (_e, b) => {
+  try {
+    const name = String(b?.studioName ?? "").slice(0, 40);
+    const color = /^#[0-9a-f]{6}$/i.test(String(b?.brandColor)) ? b.brandColor : undefined;
+    const prev = readPrefs();
+    if (name === (prev.studioName ?? "") && color === prev.brandColor) return;
+    writeFileSync(prefsFile(), JSON.stringify({ ...prev, ...(name && { studioName: name }), ...(color && { brandColor: color }) }));
+  } catch {
+    /* next launch just uses the previous splash */
+  }
+});
 
 ipcMain.on("open-external", (_e, url) => {
   if (/^https?:/i.test(String(url))) void shell.openExternal(url);

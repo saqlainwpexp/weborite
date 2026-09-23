@@ -11,6 +11,7 @@ import { NewSearchModal } from "../components/finder";
 import { Calendar, dayKey, parseDayKey } from "../components/Calendar";
 import { applyBrand } from "../lib/brand";
 import { ZoomControl } from "../components/ZoomControl";
+import { AgentDock } from "../components/Agent";
 import { careState, type CareView } from "../pages/care/CareList";
 import { desktop, type ChannelState } from "../lib/desktop";
 import { ChannelTile, UnreadBadge } from "../pages/comms/CommsHome";
@@ -145,6 +146,7 @@ export default function Layout() {
   const buildStats = usePoll<BuildStats>(isBuilds ? "/api/builds/stats" : null, 4000);
 
   const [adding, setAdding] = useState(false);
+  const [agentOpen, setAgentOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(() => readLocal("studio.sidebar", "open") === "collapsed");
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
@@ -179,7 +181,7 @@ export default function Layout() {
     careSites: careSites.data,
     commsServices: commsServices.data,
     commsState,
-    overlay: popover !== null || adding,
+    overlay: popover !== null || adding || agentOpen,
     workspace,
     reloadAll,
     openAdd: () => (isAdmin ? nav("/admin/revenue?new=1") : isComms ? nav("/comms/new") : isCare ? nav("/care/new") : isSeo ? nav("/seo/new") : isWp ? nav("/wp/new") : isBuilds ? nav("/builds/new") : setAdding(true)),
@@ -215,7 +217,9 @@ export default function Layout() {
   const brandColor = settings.data?.brandColor;
   useEffect(() => {
     if (brandColor) applyBrand(brandColor);
-  }, [brandColor]);
+    // Remember name + colour so the desktop startup splash matches on the next launch.
+    if (settings.data) desktop?.cacheBrand?.({ studioName: settings.data.studioName, brandColor });
+  }, [brandColor, settings.data?.studioName]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     document.title = settings.data ? `${studio} · ${WORKSPACES.find((w) => w.key === workspace)!.label}` : "Mockup Studio";
   }, [studio, settings.data, workspace]);
@@ -530,6 +534,7 @@ export default function Layout() {
       </div>
 
       <ZoomControl />
+      <AgentDock onOverlay={setAgentOpen} />
       {adding && !isFinder && (
         <AddLeadModal
           onClose={() => setAdding(false)}

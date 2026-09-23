@@ -22,6 +22,7 @@ import { SEO_DIR } from "./seo/store.ts";
 import { care, startCareTimers } from "./care/routes.ts";
 import { comms } from "./comms.ts";
 import { admin } from "./admin.ts";
+import { agent } from "./agent/routes.ts";
 import { assertPublicUrl, localOnly, sandboxFiles } from "./security.ts";
 import { STEPS, type BenchmarkSet, type Capture, type Diagnosis, type GateResult, type LeadDetail, type StepKey, type Usage } from "../shared/types.ts";
 
@@ -119,6 +120,7 @@ app.use("/api/seo", seo);
 app.use("/api/care", care);
 app.use("/api/comms", comms);
 app.use("/api/admin", admin);
+app.use("/api/agent", agent);
 
 app.get("/api/events", (_req, res) => res.json(listEvents(40)));
 

@@ -74,15 +74,19 @@ async function pump() {
     saveSite(s);
   };
   try {
-    const s = getSite(job.siteId)!;
+    const s = getSite(job.siteId);
+    if (!s) return; // deleted before it ran
     progress("Starting…");
     if (!s.pages.length && job.kind !== "fixes") {
       progress("Discovering pages…");
       s.pages = await discoverPages(s.siteUrl);
       saveSite(s);
     }
-    const note = await job.run(getSite(job.siteId)!, progress);
-    const done = getSite(job.siteId)!;
+    const running = getSite(job.siteId);
+    if (!running) return; // deleted mid-run
+    const note = await job.run(running, progress);
+    const done = getSite(job.siteId);
+    if (!done) return; // deleted mid-run
     done.runs[job.kind] = { status: "done", startedAt: done.runs[job.kind]!.startedAt, finishedAt: new Date().toISOString(), note };
     done.error = undefined;
     saveSite(done);

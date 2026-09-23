@@ -4,8 +4,39 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mockup Studio</title>
+    <style>
+      /* Startup splash: shown from first paint until React mounts, so there's no white flash. */
+      #splash {
+        position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center;
+        background: #e6e5e5; transition: opacity .32s ease; opacity: 1;
+      }
+      #splash.hide { opacity: 0; pointer-events: none; }
+      #splash .mark {
+        width: 84px; height: 84px; border-radius: 22px; background: #fff;
+        box-shadow: 0 12px 34px rgba(0, 0, 0, .14), 0 3px 8px rgba(0, 0, 0, .08);
+        display: grid; place-items: center; animation: splashPulse 2.2s ease-in-out infinite;
+      }
+      #splash svg { width: 46px; height: 46px; color: var(--splash-brand, #a36566); }
+      @keyframes splashPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+      @media (prefers-reduced-motion: reduce) { #splash .mark { animation: none; } }
+    </style>
+    <script>
+      // Match the saved brand colour before first paint (same key as lib/brand.ts).
+      try {
+        var b = localStorage.getItem("studio.brand");
+        if (b && /^#[0-9a-f]{6}$/i.test(b)) document.documentElement.style.setProperty("--splash-brand", b);
+      } catch (e) {}
+    </script>
   </head>
   <body>
+    <div id="splash">
+      <div class="mark">
+        <svg viewBox="0 0 26 26" fill="none" aria-hidden="true">
+          <path d="M13 2.5 20.4 5.6 23.5 13 20.4 20.4 13 23.5 5.6 20.4 2.5 13 5.6 5.6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+          <path d="M13 2.5V9M13 17v6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

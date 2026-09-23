@@ -28,4 +28,5 @@ contextBridge.exposeInMainWorld("studioDesktop", {
     onChange: listen("zoom:changed"),
   },
   openExternal: (url) => ipcRenderer.send("open-external", url),
+  cacheBrand: (b) => ipcRenderer.send("brand:cache", b),
 });
