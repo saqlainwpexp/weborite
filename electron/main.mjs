@@ -19,6 +19,8 @@ const DEV = !app.isPackaged;
 // From the project folder the desktop app shares ./data with `npm run dev`; installed, it keeps its own.
 const DATA = DEV ? join(ROOT, "data") : join(app.getPath("userData"), "data");
 const ICON = join(ROOT, "build", "icon.png");
+// The whole app opens at 90% so it fits smaller screens.
+const ZOOM = 0.9;
 const CHROME_UA = `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${process.versions.chrome.split(".")[0]}.0.0.0 Safari/537.36`;
 
 // Running from the project folder uses its own profile, so it never collides with the installed app.
@@ -113,7 +115,7 @@ function createWindow() {
     icon: ICON,
     backgroundColor: "#e6e5e5",
     autoHideMenuBar: true,
-    webPreferences: { preload: join(HERE, "preload.cjs"), contextIsolation: true, nodeIntegration: false, sandbox: true, spellcheck: true },
+    webPreferences: { preload: join(HERE, "preload.cjs"), contextIsolation: true, nodeIntegration: false, sandbox: true, spellcheck: true, zoomFactor: ZOOM },
   });
   win.once("ready-to-show", () => win.show());
   void win.loadURL(LOADING);
@@ -242,7 +244,7 @@ function createChannel(svc) {
   ses.setPermissionCheckHandler((_wc, perm) => allowed(perm));
 
   const view = new WebContentsView({
-    webPreferences: { session: ses, preload: join(HERE, "preload-channel.cjs"), contextIsolation: true, sandbox: true, spellcheck: true },
+    webPreferences: { session: ses, preload: join(HERE, "preload-channel.cjs"), contextIsolation: true, sandbox: true, spellcheck: true, zoomFactor: ZOOM },
   });
   view.setBackgroundColor("#ffffff");
   entry.view = view;
@@ -311,7 +313,11 @@ function place() {
   }
 }
 
-const clampBounds = (b) => ({ x: Math.round(b.x), y: Math.round(b.y), width: Math.max(0, Math.round(b.width)), height: Math.max(0, Math.round(b.height)) });
+// The page measures in CSS pixels; at 90% zoom those are smaller than window pixels.
+const clampBounds = (b) => {
+  const z = win?.webContents.getZoomFactor() ?? 1;
+  return { x: Math.round(b.x * z), y: Math.round(b.y * z), width: Math.max(0, Math.round(b.width * z)), height: Math.max(0, Math.round(b.height * z)) };
+};
 
 ipcMain.handle("comms:sync", () => syncChannels().then(channelState));
 ipcMain.handle("comms:state", () => channelState());
@@ -340,7 +346,7 @@ ipcMain.handle("comms:action", async (_e, { id, action }) => {
   else if (action === "devtools") wc.openDevTools({ mode: "detach" });
   else if (action === "zoom-in") wc.setZoomLevel(wc.getZoomLevel() + 0.5);
   else if (action === "zoom-out") wc.setZoomLevel(wc.getZoomLevel() - 0.5);
-  else if (action === "zoom-reset") wc.setZoomLevel(0);
+  else if (action === "zoom-reset") wc.setZoomFactor(ZOOM);
   else if (action === "signout") {
     await wc.session.clearStorageData();
     await wc.session.clearCache();

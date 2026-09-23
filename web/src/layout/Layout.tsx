@@ -154,7 +154,6 @@ export default function Layout() {
   const close = () => setPopover(null);
   const searchRef = useClickAway(() => popover === "search" && close());
   const notifRef = useClickAway(() => popover === "notif" && close());
-  const moreRef = useClickAway(() => popover === "more" && close());
   const modeRef = useClickAway(() => popover === "mode" && close());
   const dateRef = useClickAway(() => popover === "date" && close());
   const wsRef = useClickAway(() => popover === "workspace" && close());
@@ -241,13 +240,13 @@ export default function Layout() {
             <CurrentIcon /><span className="label-sm-hide">{current.label}</span>{!isComms && commsActivity && <span className="unread dot" aria-label="Unread messages" />}<ChevronDown className="dd-chevron" />
           </button>
           {popover === "workspace" && (
-            <div className="popover menu" style={{ width: 300 }} role="menu" aria-label="Switch workspace">
+            <div className="popover menu" style={{ width: 230 }} role="menu" aria-label="Switch workspace">
               {WORKSPACES.map((w) => {
                 const Icon = w.icon;
                 return (
                   <button key={w.key} type="button" role="menuitemradio" aria-checked={w.key === workspace} className={`menu-item${w.key === workspace ? " on" : ""}`} onClick={() => { close(); nav(w.home); }}>
                     <span className="ws-icon"><Icon /></span>
-                    <span className="menu-text"><b>{w.label}</b><small>{w.hint}</small></span>
+                    <span className="menu-text"><b>{w.label}</b></span>
                     {w.key === "comms" && w.key !== workspace && commsActivity ? <span className="unread">{commsUnread || ""}</span> : w.key === workspace && <Check className="menu-check" />}
                   </button>
                 );
@@ -315,7 +314,7 @@ export default function Layout() {
         <span className="top-divider hide-sm" />
 
         <div className="pop-anchor" ref={notifRef}>
-          <button className="btn btn-white" onClick={() => setPopover(popover === "notif" ? null : "notif")}><Bell /><span className="label-sm-hide">Notifications</span></button>
+          <button className="btn btn-white btn-icon" aria-label="Notifications" title="Notifications" onClick={() => setPopover(popover === "notif" ? null : "notif")}><Bell /></button>
           {popover === "notif" && (
             <div className="popover">
               <div className="notif-list search-results">
@@ -328,28 +327,6 @@ export default function Layout() {
                 ))}
                 {!events.data?.length && <p className="side-empty" style={{ padding: 12 }}>Nothing yet</p>}
               </div>
-            </div>
-          )}
-        </div>
-
-        <div className="pop-anchor hide-sm" ref={moreRef}>
-          <button className="btn btn-chip btn-icon" aria-label="More" onClick={() => setPopover(popover === "more" ? null : "more")}><MoreHorizontal /></button>
-          {popover === "more" && (
-            <div className="popover" style={{ width: 240 }}>
-              {isCare ? (
-                <button className="nav-item" style={{ border: 0, background: "none", width: "100%" }} onClick={() => { close(); nav("/settings/maintenance"); }}><Wrench />Maintenance schedule</button>
-              ) : isSeo ? (
-                <button className="nav-item" style={{ border: 0, background: "none", width: "100%" }} onClick={() => { close(); nav("/seo/checklist"); }}><ListChecks />Checklist template</button>
-              ) : isWp ? (
-                <button className="nav-item" style={{ border: 0, background: "none", width: "100%" }} onClick={() => { close(); nav("/wp/all"); }}><PanelsTopLeft />All conversions</button>
-              ) : isBuilds ? (
-                <button className="nav-item" style={{ border: 0, background: "none", width: "100%" }} onClick={() => { close(); nav("/builds/all"); }}><Blocks />All builds</button>
-              ) : isFinder ? (
-                <button className="nav-item" style={{ border: 0, background: "none", width: "100%" }} onClick={() => { close(); nav("/finder/searches"); }}><Radar />Searches</button>
-              ) : (
-                <button className="nav-item" style={{ border: 0, background: "none", width: "100%" }} onClick={() => { close(); nav("/benchmarks"); }}><Layers />Benchmarks</button>
-              )}
-              <button className="nav-item" style={{ border: 0, background: "none", width: "100%" }} onClick={() => { close(); nav("/settings/profile"); }}><SettingsIcon />Profile & settings</button>
             </div>
           )}
         </div>
