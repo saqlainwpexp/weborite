@@ -5,7 +5,7 @@ import { exec } from "node:child_process";
 // @ts-expect-error archiver v8 ships without type declarations
 import { ZipArchive } from "archiver";
 import {
-  API_PORT, BRAND_DIR, BUILDS_DIR, LEADS_DIR, ROOT, deleteLeadRow, getLead, getSettings, leadDir, listEvents, listLeads,
+  API_PORT, BRAND_DIR, BUILDS_DIR, LEADS_DIR, ROOT, deleteLeadRow, encryptStoredSecrets, getLead, getSettings, leadDir, listEvents, listLeads,
   normalizeUrl, publicSettings, readJson, saveLead, setSettings, usageToday,
 } from "./db.ts";
 import { enqueue, queueState, resumeInterrupted } from "./queue.ts";
@@ -24,6 +24,9 @@ import { comms } from "./comms.ts";
 import { admin } from "./admin.ts";
 import { assertPublicUrl, localOnly, sandboxFiles } from "./security.ts";
 import { STEPS, type BenchmarkSet, type Capture, type Diagnosis, type GateResult, type LeadDetail, type StepKey, type Usage } from "../shared/types.ts";
+
+// Every store has created its tables by now: encrypt anything saved before encryption existed.
+encryptStoredSecrets();
 
 const PORT = API_PORT;
 const HOOK_PORT = Number(process.env.HOOK_PORT ?? 4001);

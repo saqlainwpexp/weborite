@@ -3,6 +3,7 @@ import { mkdirSync, existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { randomUUID } from "node:crypto";
 import { STEPS, type EventItem, type Lead, type Settings } from "../shared/types.ts";
+import { initVault, isSealed, open, seal } from "./vault.ts";
 
 // The desktop app passes its own folders; from the project folder these default to ./ and ./data.
 export const ROOT = process.env.STUDIO_ROOT ?? resolve(import.meta.dirname, "..");
@@ -13,10 +14,12 @@ export const BRAND_DIR = join(DATA, "brand");
 export const BUILDS_DIR = join(DATA, "builds");
 export const API_PORT = Number(process.env.API_PORT ?? 4000);
 for (const d of [DATA, LEADS_DIR, BENCH_DIR, BRAND_DIR, BUILDS_DIR]) mkdirSync(d, { recursive: true });
+initVault(DATA);
 
 const db = new DatabaseSync(join(DATA, "studio.db"));
 db.exec(`
   PRAGMA journal_mode = WAL;
+  PRAGMA secure_delete = ON;
   CREATE TABLE IF NOT EXISTS leads (id TEXT PRIMARY KEY, created_at TEXT NOT NULL, url_key TEXT, email TEXT, data TEXT NOT NULL);
   CREATE TABLE IF NOT EXISTS events (id INTEGER PRIMARY KEY AUTOINCREMENT, at TEXT NOT NULL, lead_id TEXT, kind TEXT, title TEXT, detail TEXT);
   CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT NOT NULL);
@@ -127,6 +130,9 @@ export function usageToday() {
 // ---- settings ----
 type StoredSettings = Settings & { apiKey: string; metaPageToken: string; metaAppSecret: string; psiKey: string; gtmetrixKey: string };
 
+/** Settings that are stored encrypted (see vault.ts). */
+const SECRET_KEYS = new Set(["apiKey", "metaPageToken", "metaAppSecret", "psiKey", "gtmetrixKey"]);
+
 const DEFAULTS: StoredSettings = {
   mode: "session",
   apiKeySet: false,
@@ -165,7 +171,7 @@ const DEFAULTS: StoredSettings = {
 export function getSettings(): StoredSettings {
   const rows = db.prepare("SELECT key, value FROM settings").all() as { key: string; value: string }[];
   const s: Record<string, unknown> = { ...DEFAULTS };
-  for (const r of rows) s[r.key] = JSON.parse(r.value);
+  for (const r of rows) s[r.key] = SECRET_KEYS.has(r.key) ? open(JSON.parse(r.value)) : JSON.parse(r.value);
   if (process.env.ANTHROPIC_API_KEY && !s.apiKey) s.apiKey = process.env.ANTHROPIC_API_KEY;
   s.apiKeySet = Boolean(s.apiKey);
   s.metaPageTokenSet = Boolean(s.metaPageToken);
@@ -189,6 +195,34 @@ export function setSettings(patch: Partial<StoredSettings>) {
   const stmt = db.prepare("INSERT INTO settings (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value");
   for (const [k, v] of Object.entries(patch)) {
     if (k.endsWith("Set") || k === "userName" || v === undefined) continue;
-    stmt.run(k, JSON.stringify(v));
+    stmt.run(k, JSON.stringify(SECRET_KEYS.has(k) && typeof v === "string" ? seal(v) : v));
   }
+}
+
+
+/**
+ * One-time upgrade: encrypt secrets saved before encryption existed. Runs at startup once every
+ * module has created its tables; already encrypted values are left alone, so it's safe to repeat.
+ */
+export function encryptStoredSecrets() {
+  let n = 0;
+  for (const r of db.prepare("SELECT key, value FROM settings").all() as { key: string; value: string }[]) {
+    const v = JSON.parse(r.value);
+    if (SECRET_KEYS.has(r.key) && typeof v === "string" && v && !isSealed(v)) {
+      db.prepare("UPDATE settings SET value = ? WHERE key = ?").run(JSON.stringify(seal(v)), r.key);
+      n++;
+    }
+  }
+  for (const table of ["wp_conversions", "seo_sites", "care_sites"]) {
+    if (!db.prepare("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = ?").get(table)) continue;
+    for (const r of db.prepare(`SELECT id, secret FROM ${table} WHERE secret != ''`).all() as { id: string; secret: string }[]) {
+      if (isSealed(r.secret)) continue;
+      db.prepare(`UPDATE ${table} SET secret = ? WHERE id = ?`).run(seal(r.secret), r.id);
+      n++;
+    }
+  }
+  if (!n) return;
+  // Rewrite the file so no copy of the old plaintext survives in free pages or the write-ahead log.
+  db.exec("PRAGMA wal_checkpoint(TRUNCATE); VACUUM; PRAGMA wal_checkpoint(TRUNCATE);");
+  console.log(`Encrypted ${n} saved password${n === 1 ? "" : "s"}, keys and tokens with Windows encryption`);
 }

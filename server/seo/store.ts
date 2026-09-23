@@ -2,6 +2,7 @@ import { randomBytes, randomUUID } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { DATA, sqlite as db } from "../db.ts";
+import { open, seal } from "../vault.ts";
 import type { SeoSite } from "../../shared/types.ts";
 
 db.exec(`CREATE TABLE IF NOT EXISTS seo_sites (id TEXT PRIMARY KEY, created_at TEXT NOT NULL, secret TEXT NOT NULL DEFAULT '', preview_token TEXT NOT NULL, data TEXT NOT NULL);`);
@@ -24,7 +25,7 @@ export function createSite(input: { name: string; siteUrl: string; conversionId:
     createdAt: new Date().toISOString(),
   };
   db.prepare("INSERT INTO seo_sites (id, created_at, secret, preview_token, data) VALUES (?, ?, ?, ?, ?)").run(
-    s.id, s.createdAt, input.appPassword, randomBytes(16).toString("hex"), JSON.stringify(s),
+    s.id, s.createdAt, seal(input.appPassword), randomBytes(16).toString("hex"), JSON.stringify(s),
   );
   mkdirSync(siteDataDir(s.id), { recursive: true });
   return s;
@@ -44,11 +45,12 @@ export function listSites(): SeoSite[] {
 }
 
 export function siteSecrets(id: string) {
-  return db.prepare("SELECT secret, preview_token as previewToken FROM seo_sites WHERE id = ?").get(id) as { secret: string; previewToken: string };
+  const r = db.prepare("SELECT secret, preview_token as previewToken FROM seo_sites WHERE id = ?").get(id) as { secret: string; previewToken: string };
+  return r && { ...r, secret: open(r.secret) };
 }
 
 export function setSiteSecret(id: string, secret: string) {
-  db.prepare("UPDATE seo_sites SET secret = ? WHERE id = ?").run(secret, id);
+  db.prepare("UPDATE seo_sites SET secret = ? WHERE id = ?").run(seal(secret), id);
 }
 
 export function deleteSiteRow(id: string) {

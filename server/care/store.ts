@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { DATA, sqlite as db } from "../db.ts";
+import { open, seal } from "../vault.ts";
 import type { CareSite } from "../../shared/types.ts";
 
 db.exec(`CREATE TABLE IF NOT EXISTS care_sites (id TEXT PRIMARY KEY, created_at TEXT NOT NULL, secret TEXT NOT NULL DEFAULT '', data TEXT NOT NULL);`);
@@ -26,7 +27,7 @@ export function createCareSite(input: { name: string; siteUrl: string; wpUser: s
     lastScan: null,
     createdAt: new Date().toISOString(),
   };
-  db.prepare("INSERT INTO care_sites (id, created_at, secret, data) VALUES (?, ?, ?, ?)").run(s.id, s.createdAt, input.appPassword, JSON.stringify(s));
+  db.prepare("INSERT INTO care_sites (id, created_at, secret, data) VALUES (?, ?, ?, ?)").run(s.id, s.createdAt, seal(input.appPassword), JSON.stringify(s));
   mkdirSync(careDir(s.id), { recursive: true });
   return s;
 }
@@ -53,8 +54,8 @@ export function updateCareSite(id: string, fn: (s: CareSite) => void) {
   return s;
 }
 
-export const careSecret = (id: string) => (db.prepare("SELECT secret FROM care_sites WHERE id = ?").get(id) as { secret: string } | undefined)?.secret ?? "";
-export const setCareSecret = (id: string, secret: string) => db.prepare("UPDATE care_sites SET secret = ? WHERE id = ?").run(secret, id);
+export const careSecret = (id: string) => open((db.prepare("SELECT secret FROM care_sites WHERE id = ?").get(id) as { secret: string } | undefined)?.secret ?? "");
+export const setCareSecret = (id: string, secret: string) => db.prepare("UPDATE care_sites SET secret = ? WHERE id = ?").run(seal(secret), id);
 export const deleteCareRow = (id: string) => db.prepare("DELETE FROM care_sites WHERE id = ?").run(id);
 
 export function readCare<T>(id: string, name: string): T | null {

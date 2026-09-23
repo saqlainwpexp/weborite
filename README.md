@@ -114,3 +114,4 @@ Converts a finished build into Elementor pages on the client's WordPress site, o
 - The brand palette is derived deterministically from the live page, never by Claude. In the dashboard, the lead page shows it as **Locked brand**.
 - Old sites often block iframes. The left pane therefore defaults to the screenshot, and the ↻ button tries the live page.
 - Benchmark sets can be edited on the **Benchmarks** page.
+- API keys, tokens and WordPress Application Passwords are stored encrypted. The key is in `data/secret.key`, protected by Windows for your Windows account. Back it up together with `studio.db`. On another PC or Windows account the saved passwords show as not set, and you enter them again.
