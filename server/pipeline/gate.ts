@@ -1,8 +1,9 @@
 import { join, basename } from "node:path";
 import { pathToFileURL } from "node:url";
-import { leadDir, writeJson } from "../db.ts";
-import type { Capture, Diagnosis, Fact, GateCheck, GateResult } from "../../shared/types.ts";
+import { leadDir, listLeads, readJson, writeJson } from "../db.ts";
+import type { Capture, Diagnosis, Fact, GateCheck, GateResult, Lead } from "../../shared/types.ts";
 import { DESKTOP, MOBILE, newContext } from "./browser.ts";
+import { dhash, similarity } from "./signature.ts";
 import { mobileChecks, navToggleCheck, runAxeContrast } from "./capture.ts";
 import { googleFonts, isGoogleFamily, primaryFamily } from "../fonts.ts";
 
@@ -56,7 +57,7 @@ export interface InspectOptions {
 }
 
 /** Deterministic quality checks on one rendered page (file:// or http:// URL). */
-export async function inspectPage(url: string, input: InspectOptions): Promise<GateCheck[]> {
+export async function inspectPage(url: string, input: InspectOptions): Promise<{ checks: GateCheck[]; signature: string }> {
   const checks: GateCheck[] = [];
 
   // ---- desktop render ----
@@ -64,6 +65,14 @@ export async function inspectPage(url: string, input: InspectOptions): Promise<G
   const page = await ctx.newPage();
   await page.goto(url, { waitUntil: "load", timeout: 30000 });
   await page.waitForTimeout(800);
+
+  // Top-fold fingerprint for the sameness check (see signature.ts).
+  let signature = "";
+  try {
+    signature = dhash(await page.screenshot({ type: "png" }));
+  } catch {
+    /* if the shot fails, sameness is simply skipped */
+  }
 
   const dom = await page.evaluate(() => {
     const used = new Set<string>();
@@ -252,18 +261,51 @@ export async function inspectPage(url: string, input: InspectOptions): Promise<G
     detail: [...mobileFails.map((m) => m.detail), ...structure].join("; ") || "No sideways scroll, nav opens, semantic landmarks present",
   });
 
-  return checks;
+  return { checks, signature };
+}
+
+// A near-identical layout to an existing mockup blocks the gate (forces a more distinct retry).
+// dHash ≥ this means only a few of 64 bits differ — genuinely the same template, not just same sector.
+const SAMENESS_BLOCK = 0.9375;
+
+/** The mockup most visually similar to this one, across every other lead that has been gated. */
+function closestMockup(leadId: string, signature: string): { label: string; sim: number } | null {
+  let best: { label: string; sim: number } | null = null;
+  for (const l of listLeads()) {
+    if (l.id === leadId) continue;
+    const g = readJson<GateResult>(l.id, "gate.json");
+    if (!g?.signature) continue;
+    const sim = similarity(signature, g.signature);
+    if (!best || sim > best.sim) best = { label: (l as Lead).business || new URL((l as Lead).url).hostname.replace(/^www\./, ""), sim };
+  }
+  return best;
 }
 
 export async function runGate(leadId: string, input: { capture: Capture; diagnosis: Diagnosis; facts: Fact[] }, attempt: number): Promise<GateResult> {
   const url = pathToFileURL(join(leadDir(leadId), "mockup", "index.html")).href;
-  const checks = await inspectPage(url, {
+  const { checks, signature } = await inspectPage(url, {
     facts: input.facts.map((f) => f.text),
     strongestAsset: input.diagnosis.strongestAsset,
     logo: input.capture.logo,
     brand: input.diagnosis.brand,
   });
-  const result: GateResult = { pass: checks.every((c) => c.pass), attempt, checks };
+
+  // Sameness: don't ship a near-clone of another lead's mockup.
+  if (signature) {
+    const closest = signature ? closestMockup(leadId, signature) : null;
+    const pct = closest ? Math.round(closest.sim * 100) : 0;
+    checks.push({
+      name: "Distinct from other mockups",
+      pass: !closest || closest.sim < SAMENESS_BLOCK,
+      detail: !closest
+        ? "No other mockups to compare against yet"
+        : closest.sim >= SAMENESS_BLOCK
+          ? `Near-identical layout to ${closest.label} (${pct}% similar) — change the structure, don't reuse the template`
+          : `Most distinct so far; closest is ${closest.label} at ${pct}%`,
+    });
+  }
+
+  const result: GateResult = { pass: checks.every((c) => c.pass), attempt, checks, signature };
   writeJson(leadId, "gate.json", result);
   return result;
 }

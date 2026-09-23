@@ -313,7 +313,7 @@ Reply in exactly this format and nothing else:
 
 async function checkPage(ctx: Ctx, page: BuildPage) {
   const url = `http://127.0.0.1:${API_PORT}/files/builds/${ctx.build.id}/site/${fileFor(page.slug)}?t=${Date.now()}`;
-  const checks = await inspectPage(url, {
+  const { checks } = await inspectPage(url, {
     facts: factsFor(ctx),
     strongestAsset: page.slug === "index" ? ctx.diagnosis.strongestAsset : null,
     logo: ctx.capture.logo,

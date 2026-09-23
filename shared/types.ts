@@ -90,6 +90,8 @@ export interface GateResult {
   pass: boolean;
   attempt: number;
   checks: GateCheck[];
+  /** dHash of the mockup's top fold, for the cross-lead sameness check (see pipeline/signature.ts). */
+  signature?: string;
 }
 
 export interface Benchmark {
