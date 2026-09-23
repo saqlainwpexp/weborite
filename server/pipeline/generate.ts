@@ -56,7 +56,7 @@ export function buildFactsBlock(facts: Fact[]) {
 
 export async function generateMockup(
   leadId: string,
-  input: { capture: Capture; diagnosis: Diagnosis; facts: Fact[]; benchmarks: BenchmarkSet | null; business: string },
+  input: { capture: Capture; diagnosis: Diagnosis; facts: Fact[]; benchmarks: BenchmarkSet | null; business: string; scratch?: boolean },
   retry?: { failures: GateCheck[] },
 ) {
   const dir = leadDir(leadId);
@@ -78,8 +78,14 @@ export async function generateMockup(
 
   const images = [join(dir, "desktop-fold.jpg"), join(dir, "mobile.jpg")].filter(existsSync);
 
-  let prompt = `Rebuild the homepage for "${input.business || capture.title}" (${capture.finalUrl}).
-The file will be saved as mockup/index.html inside the lead folder, so asset paths start with ../assets/.
+  const scratch = Boolean(input.scratch);
+  let prompt = (scratch
+    ? `Design the first website homepage for "${input.business || capture.title}", a ${capture.description.length < 60 ? capture.description : "local business"} that has no website today. Customers only find its Google Maps listing (${capture.finalUrl}).
+The brand colours below were chosen for this business (it has no existing brand); treat them as fixed. The photos are the business's own, from its listing.
+Include the ways people actually act: call (tel: link), get directions (link to the Google Maps listing above), and opening hours if they are in FACTS. Google reviews in FACTS may be used as testimonials, quoted verbatim.`
+    : `Rebuild the homepage for "${input.business || capture.title}" (${capture.finalUrl}).`) + `
+The file will be saved as mockup/index.html inside the lead folder, so asset paths start with ../assets/.`;
+  prompt += `
 
 LOCKED INPUTS (use exactly):
 ${JSON.stringify(locked, null, 2)}
@@ -87,12 +93,12 @@ ${JSON.stringify(locked, null, 2)}
 Contrast of the brand colours (fix failures with a darker shade of the same hue for buttons, or with dark text; never swap in a different hue):
 ${contrastNotes(diagnosis.brand)}
 
-Existing fonts (you may keep or replace them, since typography is open for improvement): ${capture.fonts.map((f) => `${f.usage}: ${f.family}`).join(", ")}
+${scratch ? "Fonts: choose Google Fonts that suit the category." : `Existing fonts (you may keep or replace them, since typography is open for improvement): ${capture.fonts.map((f) => `${f.usage}: ${f.family}`).join(", ")}`}
 
 OTHER REAL ASSETS YOU MAY USE:
 ${JSON.stringify(otherAssets, null, 1)}
 
-ISSUES ON THE CURRENT SITE. The rebuild must fix every one:
+${scratch ? "WHY THEY NEED A SITE. The homepage must answer these:" : "ISSUES ON THE CURRENT SITE. The rebuild must fix every one:"}
 ${diagnosis.issues.map((i) => `- [${i.severity}] ${i.title}: ${i.detail}`).join("\n")}
 
 BENCHMARKS: match or beat the quality of these ${benchmarks?.label ?? ""} homepages (${benchmarks?.register ?? ""}):
@@ -101,7 +107,7 @@ ${(benchmarks?.sites ?? []).map((s) => `- ${s.name} (${s.url}): ${s.why}`).join(
 FACTS: the only copy and claims you may use. Rewrite prose for clarity, but copy every figure, name and claim verbatim.
 ${buildFactsBlock(facts)}
 
-Screenshots of the current site (desktop above the fold, and mobile) are attached for reference.
+${scratch ? "A screenshot of their Google Maps listing is attached for reference." : "Screenshots of the current site (desktop above the fold, and mobile) are attached for reference."}
 
 Return one complete, self-contained HTML document (inline <style>, and inline <script> only if it's needed for the nav) in a single \`\`\`html block. Put nothing else in the reply.`;
 

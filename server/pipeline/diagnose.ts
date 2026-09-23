@@ -172,3 +172,70 @@ Return only JSON:
   const label = (out.vertical?.label || key.replace(/-/g, " ")).trim().split(/\s+/).slice(0, 3).join(" ");
   return { diagnosis, vertical: { key, label, register: out.vertical?.register || "" } };
 }
+
+/**
+ * Design-from-scratch leads have no site to audit. Claude proposes brand colours that suit the
+ * business (and its photos), picks the best photo for the hero, and classifies the vertical.
+ */
+export async function diagnoseScratch(leadId: string, cap: CaptureOutput): Promise<{ diagnosis: Diagnosis; vertical: { key: string; label: string; register: string } }> {
+  const dir = leadDir(leadId);
+  const sets = listBenchmarkSets().map((s) => ({ key: s.vertical, label: s.label, register: s.register, examples: s.sites.slice(0, 3).map((x) => x.name) }));
+  const photos = cap.capture.assets.filter((a) => a.kind === "image");
+  const images = [...photos.slice(0, 4).map((a) => join(dir, a.path)), join(dir, "desktop-fold.jpg")].filter(existsSync);
+  const res = await runClaude({
+    leadId,
+    task: "diagnose",
+    cwd: dir,
+    images,
+    system: "You are a senior brand and web designer planning a first website for a small business that has none. You are precise and brief.",
+    prompt: `Business: ${cap.capture.title}
+Category: ${cap.capture.description}
+It has no website; customers only find its Google Maps listing.
+
+Facts from the listing:
+${cap.facts.map((f) => `- ${f.text}`).join("\n")}
+
+Photos from the listing (in order, paths relative to the lead folder):
+${photos.map((a, i) => `${i + 1}. ${a.path}`).join("\n") || "none"}
+The attached images are the first photos, then a screenshot of the listing.
+
+Existing benchmark verticals:
+${JSON.stringify(sets, null, 1)}
+
+Tasks:
+1. brand: propose a palette for this business: primary, secondary, accent, background (light), text (dark). Base it on the photos (storefront, signage, uniforms, food, interiors) when they show a clear colour identity, otherwise on what suits the category. Hex values. The primary must work as a button colour with white or near-black text.
+2. strongestAsset: the single best photo for the homepage hero (sharp, relevant, not a logo, menu, map or screenshot). Use its exact path, or null if none is usable.
+3. vertical: classify the business by its competitive register (what the buyer is evaluating). Reuse an existing key when it fits, otherwise propose a new kebab-case key, a 1–2 word label ("Pizzeria", "HVAC Contractor") and a one-sentence register.
+
+Return only JSON:
+\`\`\`json
+{"brand": {"primary": "#…", "secondary": "#…", "accent": "#…", "background": "#…", "text": "#…"},
+ "strongestAsset": {"path": "...", "reason": "..."} | null,
+ "vertical": {"key": "...", "label": "...", "register": "..."}}
+\`\`\``,
+  });
+  const out = extractJson<{ brand: Diagnosis["brand"]; strongestAsset: { path: string; reason: string } | null; vertical: { key: string; label: string; register: string } }>(res.text);
+  const hex = (v: unknown, d: string) => (typeof v === "string" && /^#[0-9a-f]{6}$/i.test(v) ? v.toLowerCase() : d);
+  const brand: Diagnosis["brand"] = {
+    primary: hex(out.brand?.primary, "#1f4f46"),
+    secondary: out.brand?.secondary ? hex(out.brand.secondary, "#2f5d50") : undefined,
+    accent: out.brand?.accent ? hex(out.brand.accent, "#c8913a") : undefined,
+    background: hex(out.brand?.background, "#ffffff"),
+    text: hex(out.brand?.text, "#141414"),
+  };
+  const sa = out.strongestAsset && photos.find((a) => a.path === out.strongestAsset!.path);
+  const pick = sa ?? photos[0];
+  const diagnosis: Diagnosis = {
+    lighthouse: null,
+    issues: [
+      { severity: "high", category: "content", title: "No website", detail: "People who search for the business only find its Google Maps listing, with no page of its own to show services, prices, photos or a way to get in touch." },
+      { severity: "medium", category: "seo", title: "Nothing to rank in search", detail: "Without a site the business can't appear in regular Google results for its services, only on the map." },
+    ],
+    strongestAsset: pick ? { path: pick.path, kind: "image", reason: sa ? out.strongestAsset!.reason : "First photo from the listing (automatic pick)." } : null,
+    brand,
+  };
+  writeJson(leadId, "diagnosis.json", diagnosis);
+  const key = (out.vertical?.key || "general-local-business").toLowerCase().replace(/[^a-z0-9-]+/g, "-");
+  const label = (out.vertical?.label || key.replace(/-/g, " ")).trim().split(/\s+/).slice(0, 3).join(" ");
+  return { diagnosis, vertical: { key, label, register: out.vertical?.register || "" } };
+}

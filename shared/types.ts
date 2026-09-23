@@ -34,6 +34,9 @@ export interface Lead {
   status: LeadStatus;
   steps: Step[];
   error?: string;
+  /** "scratch" = the business has no website: designed from its Google Maps listing. */
+  mode?: "rebuild" | "scratch";
+  prospectId?: string;
 }
 
 export interface Issue {

@@ -16,7 +16,7 @@ export interface MapsPlace {
 const pause = (min: number, max: number) => new Promise((r) => setTimeout(r, min + Math.random() * (max - min)));
 
 /** Decline Google's consent screen when it appears (EU). */
-async function passConsent(page: Page) {
+export async function passConsent(page: Page) {
   if (!/consent\.google/.test(page.url())) {
     const btn = page.getByRole("button", { name: /reject all/i }).first();
     if (!(await btn.isVisible().catch(() => false))) return;

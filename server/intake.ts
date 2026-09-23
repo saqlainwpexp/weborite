@@ -34,11 +34,11 @@ export function leadFromFields(fields: Record<string, string>, source: LeadSourc
   };
 }
 
-export function intakeLead(input: NonNullable<ReturnType<typeof leadFromFields>>): { lead: Lead; duplicate: boolean } {
+export function intakeLead(input: NonNullable<ReturnType<typeof leadFromFields>> & { mode?: Lead["mode"]; prospectId?: string }): { lead: Lead; duplicate: boolean } {
   const dup = findDuplicate(input.url, input.email);
   if (dup) return { lead: dup, duplicate: true };
   const lead = createLead(input);
-  addEvent({ leadId: lead.id, kind: "lead", title: "New lead added", detail: `${lead.name || lead.email || "Someone"} submitted ${new URL(lead.url).hostname} via ${input.source}` });
+  addEvent({ leadId: lead.id, kind: "lead", title: "New lead added", detail: lead.mode === "scratch" ? `${lead.business}: no website, designing from its Google Maps listing` : `${lead.name || lead.email || "Someone"} submitted ${new URL(lead.url).hostname} via ${input.source}` });
   enqueue(lead.id);
   return { lead, duplicate: false };
 }

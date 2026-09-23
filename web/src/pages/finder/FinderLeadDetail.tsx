@@ -95,8 +95,8 @@ export default function FinderLeadDetail() {
           {p.mockupLeadId ? (
             <button className="btn btn-ink" onClick={() => nav(`/leads/${p.mockupLeadId}`)}>View mockup <ArrowRight /></button>
           ) : (
-            <button className="btn btn-ink" onClick={() => act("mockup")} disabled={!p.website || busy !== null} title={p.website ? "Send to the Mockups workspace" : "No website to rebuild"}>
-              <Sparkles />{busy === "mockup" ? "Creating…" : "Create mockup"}
+            <button className="btn btn-ink" onClick={() => act("mockup")} disabled={busy !== null} title={p.website ? "Rebuild their homepage in the Mockups workspace" : "Design a first website from their Google Maps listing"}>
+              <Sparkles />{busy === "mockup" ? "Creating…" : p.website ? "Create mockup" : "Design from scratch"}
             </button>
           )}
         </div>
@@ -205,7 +205,7 @@ export default function FinderLeadDetail() {
 
           <div className="card">
             <h3 className="card-title">Mockup</h3>
-            <p className="card-sub">{p.mockup ? "This business is in the Mockups workspace" : p.website ? "Rebuild their homepage in the Mockups workspace" : "Needs a website before a mockup can be made"}</p>
+            <p className="card-sub">{p.mockup ? (p.mockup.mode === "scratch" ? "A first website designed from their Google listing" : "This business is in the Mockups workspace") : p.website ? "Rebuild their homepage in the Mockups workspace" : "No website: design their first one from the Google Maps listing (photos, reviews, hours)"}</p>
             <div style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
               {p.mockup ? (
                 <>
@@ -213,7 +213,7 @@ export default function FinderLeadDetail() {
                   <Link className="link-btn" to={`/leads/${p.mockup.id}`}>Open lead <ArrowRight /></Link>
                 </>
               ) : (
-                <button className="btn btn-accent btn-sm" onClick={() => act("mockup")} disabled={!p.website || busy !== null}><Sparkles />Create mockup</button>
+                <button className="btn btn-accent btn-sm" onClick={() => act("mockup")} disabled={busy !== null}><Sparkles />{p.website ? "Create mockup" : "Design from scratch"}</button>
               )}
             </div>
           </div>

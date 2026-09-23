@@ -28,6 +28,7 @@ const NOT_A_SITE: [RegExp, string][] = [
   [/\.godaddysites\.com$/, "free GoDaddy site"],
   [/\.square\.site$/, "free Square site"],
   [/(^|\.)yelp\.[a-z.]+$|(^|\.)tripadvisor\.[a-z.]+$/, "directory listing"],
+  [/(^|\.)(thuisbezorgd\.nl|takeaway\.com|lieferando\.[a-z]+|just-eat\.[a-z.]+|justeat\.[a-z.]+|ubereats\.com|deliveroo\.[a-z.]+|doordash\.com|grubhub\.com|foodpanda\.[a-z.]+|talabat\.com)$/, "delivery-platform page"],
 ];
 
 // Firewalls and bot checks (Cloudflare, Sucuri, Imperva…). These are not broken sites; they just can't be audited.

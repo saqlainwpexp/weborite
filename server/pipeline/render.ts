@@ -23,7 +23,8 @@ async function shootMockup(dir: string) {
 const img = (p: string) => (existsSync(p) ? `data:image/jpeg;base64,${readFileSync(p).toString("base64")}` : "");
 
 /** Old vs new, desktop and mobile, with the three hard constraints as badges. */
-export async function renderSideBySide(leadId: string, meta: { business: string; url: string; gate: GateResult | null }) {
+export async function renderSideBySide(leadId: string, meta: { business: string; url: string; gate: GateResult | null; scratch?: boolean }) {
+  const now = meta.scratch ? "Today: Google Maps only" : "Current";
   const dir = leadDir(leadId);
   await shootMockup(dir);
   const badge = (name: string) => {
@@ -51,14 +52,14 @@ export async function renderSideBySide(leadId: string, meta: { business: string;
     .frame img{width:100%;display:block}
   </style></head><body>
     <h1>${meta.business.replace(/</g, "&lt;")}</h1>
-    <div class="sub">${meta.url} · current site vs rebuilt mockup</div>
+    <div class="sub">${meta.scratch ? "No website today · designed from the Google Maps listing" : `${meta.url} · current site vs rebuilt mockup`}</div>
     <div class="badges">${badge("Strongest asset kept")}${badge("Brand logo and colours kept")}${badge("Every figure traces to the source site")}</div>
     <div class="row desk">
-      <div class="pane"><div class="label"><b>Current</b><span>Desktop 1440</span></div><div class="frame"><img src="${img(join(dir, "desktop.jpg"))}"></div></div>
+      <div class="pane"><div class="label"><b>${now}</b><span>Desktop 1440</span></div><div class="frame"><img src="${img(join(dir, "desktop.jpg"))}"></div></div>
       <div class="pane"><div class="label"><b>Mockup</b><span>Desktop 1440</span></div><div class="frame"><img src="${img(join(dir, "mockup-desktop.jpg"))}"></div></div>
     </div>
     <div class="row mob">
-      <div class="pane"><div class="label"><b>Current</b><span>Mobile 375</span></div><div class="frame"><img src="${img(join(dir, "mobile.jpg"))}"></div></div>
+      <div class="pane"><div class="label"><b>${now}</b><span>Mobile 375</span></div><div class="frame"><img src="${img(join(dir, "mobile.jpg"))}"></div></div>
       <div class="pane"><div class="label"><b>Mockup</b><span>Mobile 375</span></div><div class="frame"><img src="${img(join(dir, "mockup-mobile.jpg"))}"></div></div>
     </div>
   </body></html>`;

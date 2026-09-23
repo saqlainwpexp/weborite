@@ -1,7 +1,9 @@
 import { addEvent, getLead, readJson, saveLead, writeJson, leadDir } from "./db.ts";
 import { ClaudeUnavailableError } from "./claude/runner.ts";
 import { captureSite, type CaptureOutput } from "./pipeline/capture.ts";
-import { diagnose } from "./pipeline/diagnose.ts";
+import { diagnose, diagnoseScratch } from "./pipeline/diagnose.ts";
+import { captureListing } from "./pipeline/listing.ts";
+import { getProspect } from "./finder/store.ts";
 import { ensureBenchmarks, getBenchmarkSet } from "./pipeline/benchmarks.ts";
 import { generateMockup } from "./pipeline/generate.ts";
 import { runGate } from "./pipeline/gate.ts";
@@ -72,6 +74,7 @@ async function runLead(id: string) {
   lead.status = "running";
   saveLead(lead);
   const label = lead.business || new URL(lead.url).hostname;
+  const scratch = lead.mode === "scratch";
 
   try {
     let cap: CaptureOutput | null = null;
@@ -81,16 +84,22 @@ async function runLead(id: string) {
     };
 
     await doStep(lead, "capture", async () => {
+      if (scratch) {
+        const p = lead.prospectId ? getProspect(lead.prospectId) : null;
+        if (!p) throw new Error("The Lead Finder business behind this lead was removed");
+        cap = await captureListing(id, p);
+        return `No website: ${cap.capture.assets.length} photos and ${cap.facts.length} facts from the Google listing`;
+      }
       cap = await captureSite(id, lead.url);
       return `${cap.capture.assets.length} assets, ${cap.facts.length} text blocks`;
     });
     cap ??= loadCap();
 
     await doStep(lead, "diagnose", async () => {
-      const { diagnosis, vertical } = await diagnose(id, cap!);
+      const { diagnosis, vertical } = scratch ? await diagnoseScratch(id, cap!) : await diagnose(id, cap!);
       writeJson(id, "vertical.json", vertical);
       lead.vertical = vertical.key;
-      return `${diagnosis.issues.length} issues`;
+      return scratch ? `Palette proposed (${diagnosis.brand.primary}), hero photo picked` : `${diagnosis.issues.length} issues`;
     });
     const diagnosis = readJson<Diagnosis>(id, "diagnosis.json")!;
     const vertical = readJson<{ key: string; label: string; register: string }>(id, "vertical.json")!;
@@ -102,7 +111,7 @@ async function runLead(id: string) {
       return created ? `Researched new set: ${set.label}` : `Reused set: ${set.label}`;
     });
     const benchmarks = getBenchmarkSet(vertical.key);
-    const input = { capture: cap.capture, diagnosis, facts: cap.facts, benchmarks, business: lead.business };
+    const input = { capture: cap.capture, diagnosis, facts: cap.facts, benchmarks, business: lead.business, scratch };
 
     await doStep(lead, "generate", async () => {
       await generateMockup(id, input);
@@ -124,7 +133,7 @@ async function runLead(id: string) {
     gate ??= readJson<GateResult>(id, "gate.json");
 
     await doStep(lead, "render", async () => {
-      await renderSideBySide(id, { business: label, url: lead.url, gate });
+      await renderSideBySide(id, { business: label, url: lead.url, gate, scratch });
     });
 
     const passed = (gate as GateResult | null)?.pass ?? false;

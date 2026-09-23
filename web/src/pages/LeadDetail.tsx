@@ -43,6 +43,7 @@ export default function LeadDetail() {
   const { data: lead, error, reload } = usePoll<Detail>(`/api/leads/${id}`, 3000);
   const [view, setView] = useState<View>("desktop");
   const [live, setLive] = useState(false);
+  const scratch = lead?.mode === "scratch";
   const [rerunOpen, setRerunOpen] = useState(false);
   const [bust, setBust] = useState(0);
 
@@ -191,15 +192,15 @@ export default function LeadDetail() {
               <section className="pane" aria-label="Current website">
                 <div className="pane-head">
                   <span className="num">1</span>
-                  <div><b>Current site</b><span>{host(lead.url)} · {live ? "live" : "screenshot"}</span></div>
+                  <div><b>{scratch ? "Today: Google Maps only" : "Current site"}</b><span>{scratch ? "No website · their listing" : `${host(lead.url)} · ${live ? "live" : "screenshot"}`}</span></div>
                   <div className="pane-tools">
-                    <button className="icon-btn" aria-label={live ? "Show screenshot" : "Try live page"} title={live ? "Show screenshot" : "Try live page"} onClick={() => setLive(!live)}>{live ? <ImageIcon /> : <RefreshCw />}</button>
-                    <a className="icon-btn" aria-label="Open current site" href={lead.url} target="_blank" rel="noreferrer"><ArrowUpRight /></a>
+                    {!scratch && <button className="icon-btn" aria-label={live ? "Show screenshot" : "Try live page"} title={live ? "Show screenshot" : "Try live page"} onClick={() => setLive(!live)}>{live ? <ImageIcon /> : <RefreshCw />}</button>}
+                    <a className="icon-btn" aria-label={scratch ? "Open Google Maps listing" : "Open current site"} href={lead.url} target="_blank" rel="noreferrer"><ArrowUpRight /></a>
                   </div>
                 </div>
                 <Viewport view={view}>
                   {(s) =>
-                    live ? (
+                    live && !scratch ? (
                       view === "desktop" ? (
                         <div className="scale-wrap" style={{ ["--s" as string]: s }}><iframe title="Current site" src={lead.url} sandbox="allow-scripts allow-same-origin" /></div>
                       ) : (
@@ -266,7 +267,7 @@ export default function LeadDetail() {
                 )}
                 <div className="guides">
                   <div className="guide">
-                    <h5>Issues found on the current site</h5>
+                    <h5>{scratch ? "Why they need a site" : "Issues found on the current site"}</h5>
                     <ul>
                       {(lead.diagnosis?.issues ?? []).map((i, n) => (
                         <li key={n}><span className={`sev ${i.severity}`} /><div>{i.title}<small>{i.detail}</small></div></li>
@@ -288,7 +289,7 @@ export default function LeadDetail() {
             )}
 
             <div className="bottom-actions">
-              <a className="btn btn-outline" href={lead.url} target="_blank" rel="noreferrer">Open current site</a>
+              <a className="btn btn-outline" href={lead.url} target="_blank" rel="noreferrer">{scratch ? "Open Google listing" : "Open current site"}</a>
               <a className="btn btn-accent" href={fileUrl(lead.id, "mockup/index.html")} target="_blank" rel="noreferrer" style={!lead.hasMockup ? { pointerEvents: "none", opacity: .5 } : undefined}>Open mockup full screen</a>
             </div>
           </div>

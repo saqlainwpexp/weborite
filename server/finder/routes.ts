@@ -103,14 +103,15 @@ finder.delete("/prospects/:id", (req, res) => {
 finder.post("/prospects/:id/mockup", (req, res) => {
   const p = getProspect(req.params.id);
   if (!p) return res.sendStatus(404);
-  if (!p.website) return res.status(400).json({ error: "This business has no website to rebuild" });
-  const fields: Record<string, string> = { Website: p.website, Business: p.name };
+  // No website: design one from scratch from the Google Maps listing.
+  const scratch = !p.website || p.fit?.audit?.socialOnly || req.body?.scratch === true;
+  const fields: Record<string, string> = scratch ? { Business: p.name, "Google Maps": p.mapsUrl, Website: p.website || "None" } : { Website: p.website, Business: p.name };
   if (p.phone) fields.Phone = p.phone;
   if (p.emails[0]) fields.Email = p.emails[0];
   if (p.category) fields.Category = p.category;
   if (p.reviews != null) fields["Google reviews"] = `${p.rating ?? "–"} ★ (${p.reviews})`;
   fields["Found via"] = `Google Maps · ${getSearch(p.searchId)?.query ?? ""}`;
-  const { lead } = intakeLead({ source: "maps", url: p.website, name: "", email: p.emails[0] ?? "", phone: p.phone, business: p.name, fields });
+  const { lead } = intakeLead({ source: "maps", url: scratch ? p.mapsUrl : p.website, name: "", email: p.emails[0] ?? "", phone: p.phone, business: p.name, fields, mode: scratch ? "scratch" : "rebuild", prospectId: p.id });
   p.mockupLeadId = lead.id;
   saveProspect(p);
   res.json({ leadId: lead.id });
