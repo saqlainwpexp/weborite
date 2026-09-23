@@ -80,8 +80,25 @@ export function checkWidgetPhp(name: string, php: string): string[] {
   if (!/class\s+Studio_Widget_\w+/.test(php)) errors.push(`${name}: the class must be named Studio_Widget_<Name>`);
   if (!/extends\s+\\?Elementor\\Widget_Base/.test(php)) errors.push(`${name}: class must extend \\Elementor\\Widget_Base`);
   if (!new RegExp(`return\\s+['"]${name}['"]`).test(php)) errors.push(`${name}: get_name() must return '${name}'`);
-  if (/\b(eval|exec|shell_exec|system|passthru|proc_open|popen|file_put_contents|fopen|unlink|base64_decode|curl_exec|include|require)\s*\(/i.test(php)) errors.push(`${name}: uses a disallowed PHP function`);
-  if (/\$_(GET|POST|REQUEST|COOKIE|SERVER|FILES)\b/.test(php)) errors.push(`${name}: must not read request superglobals`);
+  // This code runs on the client's live site, and what Claude writes is shaped by scraped pages, so
+  // anything that can run commands, touch files, load code, reach the network or change users is out.
+  const banned = [
+    "eval", "assert", "exec", "shell_exec", "system", "passthru", "proc_open", "popen", "pcntl_\\w+", "posix_\\w+", "dl", "create_function",
+    "call_user_func(?:_array)?", "forward_static_call(?:_array)?", "func_get_args", "extract", "parse_str", "unserialize", "putenv", "ini_set", "set_include_path",
+    "file_put_contents", "file_get_contents", "fopen", "fwrite", "fputs", "file", "readfile", "unlink", "rmdir", "mkdir", "rename", "copy", "chmod", "chown", "symlink", "move_uploaded_file", "tempnam",
+    "base64_decode", "gzinflate", "gzuncompress", "gzdecode", "str_rot13", "hex2bin", "convert_uudecode",
+    "curl_\\w+", "fsockopen", "stream_socket_client", "wp_remote_\\w+", "wp_safe_remote_\\w+", "download_url",
+    "update_option", "add_option", "delete_option", "wp_insert_user", "wp_create_user", "wp_update_user", "wp_set_password", "wp_set_current_user", "wp_set_auth_cookie", "add_role", "add_cap", "grant_super_admin",
+    "register_rest_route", "add_rewrite_rule",
+  ];
+  // Scan the code itself: string contents and comments can say anything.
+  const code = php.replace(/"(?:\\[\s\S]|[^"\\])*"|'(?:\\[\s\S]|[^'\\])*'|\/\/[^\n]*|#(?!\[)[^\n]*|\/\*[\s\S]*?\*\//g, (m) => (m[0] === '"' || m[0] === "'" ? "''" : " "));
+  if (new RegExp(`(?<![\\w>:$])(${banned.join("|")})\\s*\\(`, "i").test(code)) errors.push(`${name}: uses a disallowed PHP function`);
+  if (/\b(include|require)(_once)?\b/i.test(code)) errors.push(`${name}: must not include or require other files`);
+  if (/`/.test(code)) errors.push(`${name}: backtick shell commands are not allowed`);
+  if (/(?<![\w>:])\$\w+\s*\(|\$\$\w|\$\{/.test(code)) errors.push(`${name}: variable functions and variable variables are not allowed`);
+  if (/\$wpdb\b/.test(code)) errors.push(`${name}: must not query the database directly`);
+  if (/\$_(GET|POST|REQUEST|COOKIE|SERVER|FILES|ENV)\b|\$GLOBALS\b/.test(php)) errors.push(`${name}: must not read request superglobals`);
   if (/<\?php[\s\S]*<\?php/.test(php)) errors.push(`${name}: one PHP block only`);
   return errors;
 }

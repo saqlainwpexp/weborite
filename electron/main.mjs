@@ -142,7 +142,7 @@ function createWindow() {
     return { action: "deny" };
   });
   win.webContents.on("will-navigate", (e, url) => {
-    if (base && !url.startsWith(base) && !url.startsWith("data:")) {
+    if (base && !url.startsWith(base) && url !== LOADING) {
       e.preventDefault();
       if (/^https?:/i.test(url)) void shell.openExternal(url);
     }
@@ -267,7 +267,13 @@ function createChannel(svc) {
   wc.setUserAgent(CHROME_UA);
   // Sign-in pop-ups stay in the channel's profile; every other link opens in the normal browser.
   wc.setWindowOpenHandler(({ url }) => {
-    if (isAuthUrl(url) || new URL(url).hostname === new URL(entry.svc.url).hostname) {
+    let sameSite = false;
+    try {
+      sameSite = new URL(url).hostname === new URL(entry.svc.url).hostname;
+    } catch {
+      /* not a web address */
+    }
+    if (/^https:/i.test(url) && (isAuthUrl(url) || sameSite)) {
       return { action: "allow", overrideBrowserWindowOptions: { width: 520, height: 720, autoHideMenuBar: true, icon: ICON, webPreferences: { session: ses } } };
     }
     if (/^https?:/i.test(url)) void shell.openExternal(url);

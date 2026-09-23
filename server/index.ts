@@ -22,6 +22,7 @@ import { SEO_DIR } from "./seo/store.ts";
 import { care, startCareTimers } from "./care/routes.ts";
 import { comms } from "./comms.ts";
 import { admin } from "./admin.ts";
+import { assertPublicUrl, localOnly, sandboxFiles } from "./security.ts";
 import { STEPS, type BenchmarkSet, type Capture, type Diagnosis, type GateResult, type LeadDetail, type StepKey, type Usage } from "../shared/types.ts";
 
 const PORT = API_PORT;
@@ -34,6 +35,8 @@ const rawJson = express.json({
 
 // ---- Dashboard + API (local only) ----
 const app = express();
+app.disable("x-powered-by");
+app.use(localOnly);
 app.use(rawJson);
 app.use(express.urlencoded({ extended: true }));
 
@@ -54,13 +57,18 @@ app.get("/api/leads/:id", (req, res) => {
   res.json(detail);
 });
 
-app.post("/api/leads", (req, res) => {
+app.post("/api/leads", async (req, res) => {
   const { url, name = "", email = "", phone = "", business = "" } = req.body ?? {};
   let normalized: string;
   try {
     normalized = normalizeUrl(String(url ?? ""));
   } catch {
     return res.status(400).json({ error: "Enter a valid website URL" });
+  }
+  try {
+    await assertPublicUrl(normalized);
+  } catch (e) {
+    return res.status(400).json({ error: (e as Error).message });
   }
   const { lead, duplicate } = intakeLead({ source: "manual", url: normalized, name, email, phone, business, fields: { Website: normalized, ...(name && { Name: name }), ...(email && { Email: email }), ...(phone && { Phone: phone }), ...(business && { Business: business }) } });
   res.json({ id: lead.id, duplicate });
@@ -141,6 +149,11 @@ app.put("/api/settings", (req, res) => {
   if (typeof body.careAutoStage === "boolean") extra.careAutoStage = body.careAutoStage;
   if (typeof body.careKeepStaging === "boolean") extra.careKeepStaging = body.careKeepStaging;
   if ("brandColor" in patch && !/^#[0-9a-f]{6}$/i.test(patch.brandColor as string)) return res.status(400).json({ error: "Brand colour must be a 6-digit hex like #a36566" });
+  // The Claude path is run through the shell on Windows, so it must be a plain path.
+  if ("claudePath" in patch && (!String(patch.claudePath).trim() || /[&|<>^%!"`$;\r\n]/.test(String(patch.claudePath)))) return res.status(400).json({ error: "The Claude Code path must be a plain file path or command name" });
+  for (const k of ["elementorSecret", "metaVerifyToken"] as const) {
+    if (k in patch && !/^[\w-]{12,128}$/.test(String(patch[k]))) return res.status(400).json({ error: "Webhook secrets need at least 12 letters or numbers" });
+  }
   setSettings(patch);
   res.json(publicSettings());
 });
@@ -191,6 +204,7 @@ app.put("/api/benchmarks/:key", (req, res) => {
 });
 
 // Lead files: screenshots, assets, mockups. Mockups load their assets via ../assets/.
+app.use("/files", sandboxFiles);
 app.use("/files/leads", express.static(LEADS_DIR, { fallthrough: false }));
 app.use("/files/brand", express.static(BRAND_DIR, { fallthrough: false }));
 app.use("/files/builds", express.static(BUILDS_DIR, { fallthrough: false }));
@@ -215,12 +229,14 @@ app.listen(PORT, "127.0.0.1", () => {
 
 // ---- Webhook receiver (the only thing to expose through the tunnel) ----
 const hookApp = express();
+hookApp.disable("x-powered-by");
 hookApp.use(rawJson);
 hookApp.use(express.urlencoded({ extended: true }));
 hookApp.use("/hooks", hooks);
 hookApp.get("/", (_req, res) => res.send("ok"));
+// Localhost only: the tunnel connects from this PC, so nothing on the local network can reach it directly.
 hookApp
-  .listen(HOOK_PORT, (err?: Error) => {
+  .listen(HOOK_PORT, "127.0.0.1", (err?: Error) => {
     if (!err) console.log(`Webhooks       → http://localhost:${HOOK_PORT}/hooks/elementor  and  /hooks/meta`);
   })
   // Another copy of the app (e.g. `npm run dev` next to the desktop app) already receives webhooks.

@@ -6,6 +6,7 @@ export type { Page };
 import { leadDir, writeJson } from "../db.ts";
 import type { Asset, Capture, Fact } from "../../shared/types.ts";
 import { DESKTOP, MOBILE, UA_DESKTOP, UA_MOBILE, newContext, hideOverlays, settle } from "./browser.ts";
+import { assertPublicUrl, blockPrivateNetwork } from "../security.ts";
 
 const MAX_SHOT_HEIGHT = 7000;
 
@@ -253,9 +254,11 @@ export async function captureSite(leadId: string, url: string): Promise<CaptureO
   const dir = leadDir(leadId);
   const assetsDir = join(dir, "assets");
   mkdirSync(assetsDir, { recursive: true });
+  await assertPublicUrl(url);
 
   // ---- desktop ----
   const ctx = await newContext({ viewport: DESKTOP, userAgent: UA_DESKTOP, ignoreHTTPSErrors: true });
+  await blockPrivateNetwork(ctx);
   const page = await ctx.newPage();
   try {
     await page.goto(url, { waitUntil: "domcontentloaded", timeout: 45000 });
@@ -331,6 +334,7 @@ export async function captureSite(leadId: string, url: string): Promise<CaptureO
 
   // ---- mobile ----
   const mctx = await newContext({ viewport: MOBILE, userAgent: UA_MOBILE, isMobile: true, hasTouch: true, deviceScaleFactor: 1, ignoreHTTPSErrors: true });
+  await blockPrivateNetwork(mctx);
   const mpage = await mctx.newPage();
   await mpage.goto(finalUrl, { waitUntil: "domcontentloaded", timeout: 45000 });
   await mpage.waitForLoadState("networkidle", { timeout: 15000 }).catch(() => {});

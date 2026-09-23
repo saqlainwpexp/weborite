@@ -2,6 +2,7 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 import { Router, type Request } from "express";
 import { addEvent, createLead, findDuplicate, getSettings, normalizeUrl } from "./db.ts";
 import { enqueue } from "./queue.ts";
+import { assertPublicUrl, secretMatches } from "./security.ts";
 import type { Lead, LeadSource } from "../shared/types.ts";
 
 const pick = (fields: Record<string, string>, re: RegExp) => Object.entries(fields).find(([k, v]) => re.test(k) && v.trim())?.[1]?.trim() ?? "";
@@ -61,15 +62,27 @@ function flattenElementor(body: Record<string, unknown>): Record<string, string>
 
 export const hooks = Router();
 
-hooks.post("/elementor", (req, res) => {
+/** Webhook leads come from strangers: never let one point the scraper at this PC or the local network. */
+async function publicOrSkip(url: string, source: string) {
+  try {
+    await assertPublicUrl(url);
+    return true;
+  } catch (e) {
+    addEvent({ leadId: null, kind: "info", title: `${source} lead skipped`, detail: (e as Error).message.slice(0, 140) });
+    return false;
+  }
+}
+
+hooks.post("/elementor", async (req, res) => {
   const s = getSettings();
-  if (req.query.key !== s.elementorSecret) return res.status(403).json({ error: "bad key" });
+  if (!secretMatches(req.query.key, s.elementorSecret)) return res.status(403).json({ error: "bad key" });
   const fields = flattenElementor(req.body ?? {});
   const input = leadFromFields(fields, "elementor");
   if (!input) {
     addEvent({ leadId: null, kind: "info", title: "Elementor submission skipped", detail: "No website URL field found" });
     return res.json({ ok: true, skipped: "no url" });
   }
+  if (!(await publicOrSkip(input.url, "Elementor"))) return res.json({ ok: true, skipped: "not a public website" });
   const { lead, duplicate } = intakeLead(input);
   res.json({ ok: true, id: lead.id, duplicate });
 });
@@ -77,8 +90,8 @@ hooks.post("/elementor", (req, res) => {
 // Meta webhook verification handshake.
 hooks.get("/meta", (req, res) => {
   const s = getSettings();
-  if (req.query["hub.mode"] === "subscribe" && req.query["hub.verify_token"] === s.metaVerifyToken) {
-    return res.status(200).send(String(req.query["hub.challenge"]));
+  if (req.query["hub.mode"] === "subscribe" && secretMatches(req.query["hub.verify_token"], s.metaVerifyToken)) {
+    return res.status(200).type("text/plain").send(String(req.query["hub.challenge"]));
   }
   res.sendStatus(403);
 });
@@ -111,6 +124,7 @@ hooks.post("/meta", async (req, res) => {
         addEvent({ leadId: null, kind: "info", title: "Meta lead skipped", detail: "The lead form has no website URL answer" });
         continue;
       }
+      if (!(await publicOrSkip(input.url, "Meta"))) continue;
       intakeLead(input);
     } catch (e) {
       addEvent({ leadId: null, kind: "failed", title: "Meta lead fetch failed", detail: (e as Error).message.slice(0, 140) });

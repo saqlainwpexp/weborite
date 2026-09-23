@@ -1,6 +1,9 @@
 // Bridge for the dashboard window: only these calls reach the desktop side.
 const { contextBridge, ipcRenderer } = require("electron");
 
+// Generated pages (mockups, builds) opened in their own window never get the bridge.
+if (location.pathname.startsWith("/files/")) return;
+
 const listen = (channel) => (cb) => {
   const h = (_e, v) => cb(v);
   ipcRenderer.on(channel, h);

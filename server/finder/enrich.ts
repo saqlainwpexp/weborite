@@ -1,4 +1,5 @@
 import { newContext } from "../pipeline/browser.ts";
+import { blockPrivateNetwork, isPrivateHost } from "../security.ts";
 import type { WhatsappStatus } from "../../shared/types.ts";
 
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36";
@@ -9,6 +10,7 @@ const WA_LINK = /(?:wa\.me\/|api\.whatsapp\.com\/send|web\.whatsapp\.com\/send|w
 
 async function fetchHtml(url: string): Promise<{ html: string; finalUrl: string } | null> {
   try {
+    if (isPrivateHost(new URL(url).hostname)) return null;
     const res = await fetch(url, {
       headers: { "User-Agent": UA, "Accept": "text/html,application/xhtml+xml", "Accept-Language": "en-US,en;q=0.8,nl;q=0.6" },
       redirect: "follow",
@@ -25,6 +27,7 @@ async function fetchHtml(url: string): Promise<{ html: string; finalUrl: string 
 /** Fallback for JS-rendered or bot-protected sites. */
 async function renderHtml(url: string): Promise<{ html: string; finalUrl: string } | null> {
   const ctx = await newContext({ userAgent: UA, locale: "en-US" });
+  await blockPrivateNetwork(ctx);
   try {
     const page = await ctx.newPage();
     await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });

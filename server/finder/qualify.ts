@@ -2,6 +2,7 @@ import { mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { DATA } from "../db.ts";
 import { hideOverlays, newContext, UA_DESKTOP, UA_MOBILE } from "../pipeline/browser.ts";
+import { blockPrivateNetwork } from "../security.ts";
 import { extractJson, runClaude } from "../claude/runner.ts";
 import type { FitGrade, Prospect, ProspectAudit, ProspectFit } from "../../shared/types.ts";
 import { getProspect, saveProspect } from "./store.ts";
@@ -71,6 +72,7 @@ export async function auditWebsite(id: string, website: string): Promise<Prospec
 
   a.sslError = await certProblem(url);
   const ctx = await newContext({ viewport: { width: 390, height: 844 }, userAgent: UA_MOBILE, isMobile: true, hasTouch: true, ignoreHTTPSErrors: true });
+  await blockPrivateNetwork(ctx);
   try {
     const page = await ctx.newPage();
     let bytes = 0;
@@ -191,6 +193,7 @@ export async function auditWebsite(id: string, website: string): Promise<Prospec
 
   // What a visitor on a laptop sees first, for the design review.
   const desk = await newContext({ viewport: { width: 1366, height: 850 }, userAgent: UA_DESKTOP, ignoreHTTPSErrors: true });
+  await blockPrivateNetwork(desk);
   try {
     const page = await desk.newPage();
     await page.goto(a.finalUrl, { waitUntil: "domcontentloaded", timeout: 30000 });
