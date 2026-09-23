@@ -112,7 +112,19 @@ export async function inspectPage(url: string, input: InspectOptions): Promise<G
       }
     });
     const hasSvgLogo = !!document.querySelector("header svg, [class*='logo' i] svg");
+    // Real, sizable video/embed elements (so a hero video can't be silently downgraded to a still).
+    const videoEls: { srcs: string[]; w: number; h: number }[] = [];
+    document.querySelectorAll("video").forEach((v) => {
+      const r = v.getBoundingClientRect();
+      const srcs = [v.getAttribute("src") || "", v.getAttribute("poster") || "", ...Array.from(v.querySelectorAll("source")).map((s) => s.getAttribute("src") || "")].filter(Boolean);
+      videoEls.push({ srcs, w: r.width, h: r.height });
+    });
+    document.querySelectorAll("iframe").forEach((f) => {
+      const r = f.getBoundingClientRect();
+      videoEls.push({ srcs: [f.getAttribute("src") || ""], w: r.width, h: r.height });
+    });
     return {
+      videoEls,
       text: document.body.innerText,
       html: document.documentElement.outerHTML,
       undefinedClasses,
@@ -179,12 +191,28 @@ export async function inspectPage(url: string, input: InspectOptions): Promise<G
   const sa = input.strongestAsset;
   if (sa) {
     const needle = /^https?:/.test(sa.path) ? (sa.path.match(/(?:embed\/|vimeo\.com\/(?:video\/)?)([\w-]+)/)?.[1] ?? sa.path) : basename(sa.path);
-    const present = dom.refs.some((r) => r.includes(needle));
-    checks.push({
-      name: "Strongest asset kept",
-      pass: present,
-      detail: present ? `${sa.kind} ${needle} is used in the mockup` : `${sa.kind} ${needle} is missing from the mockup`,
-    });
+    if (sa.kind === "video") {
+      // The live site's hero was a video: it must survive as a real, sizable video/embed, not a still.
+      // (A dropped-to-image hero is this project's most costly, and most common, generator failure.)
+      const asVideo = dom.videoEls.find((v) => v.w >= 240 && v.h >= 135 && v.srcs.some((s) => s.includes(needle)));
+      const asStill = !asVideo && dom.refs.some((r) => r.includes(needle));
+      checks.push({
+        name: "Hero video kept",
+        pass: Boolean(asVideo),
+        detail: asVideo
+          ? `Hero video ${needle} is embedded and plays (${Math.round(asVideo.w)}×${Math.round(asVideo.h)})`
+          : asStill
+            ? `Hero video ${needle} was downgraded to a static image — restore it as a <video> or embed`
+            : `Hero video ${needle} is missing from the mockup`,
+      });
+    } else {
+      const present = dom.refs.some((r) => r.includes(needle));
+      checks.push({
+        name: "Strongest asset kept",
+        pass: present,
+        detail: present ? `${sa.kind} ${needle} is used in the mockup` : `${sa.kind} ${needle} is missing from the mockup`,
+      });
+    }
   }
 
   // 6. Brand: logo and palette
