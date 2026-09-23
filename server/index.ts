@@ -21,6 +21,8 @@ import { seo } from "./seo/routes.ts";
 import { SEO_DIR } from "./seo/store.ts";
 import { care, startCareTimers } from "./care/routes.ts";
 import { comms } from "./comms.ts";
+import { bidder } from "./bidder/routes.ts";
+import { startBidder } from "./bidder/engine.ts";
 import { admin } from "./admin.ts";
 import { STEPS, type BenchmarkSet, type Capture, type Diagnosis, type GateResult, type LeadDetail, type StepKey, type Usage } from "../shared/types.ts";
 
@@ -107,6 +109,7 @@ app.use("/api/wp", wp);
 app.use("/api/seo", seo);
 app.use("/api/care", care);
 app.use("/api/comms", comms);
+app.use("/api/bidder", bidder);
 app.use("/api/admin", admin);
 
 app.get("/api/events", (_req, res) => res.json(listEvents(40)));
@@ -211,6 +214,7 @@ app.listen(PORT, "127.0.0.1", () => {
   resumeBuilds();
   resumeWp();
   startCareTimers();
+  startBidder();
 });
 
 // ---- Webhook receiver (the only thing to expose through the tunnel) ----

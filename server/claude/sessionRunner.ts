@@ -14,16 +14,18 @@ export function runSession(req: RunRequest, opts: { claudePath: string; model: s
     : "";
   const prompt = `${req.prompt}${imageNote}\n\nReply with the final answer only, in the exact format requested.`;
 
-  const tools = ["Read", "Glob", "Grep"];
-  if (req.web) tools.push("WebSearch", "WebFetch");
+  const tools = req.noTools ? [] : ["Read", "Glob", "Grep"];
+  if (req.web && !req.noTools) tools.push("WebSearch", "WebFetch");
+  const blocked = ["Bash", "Edit", "Write", "NotebookEdit"];
+  if (req.noTools) blocked.push("Read", "Glob", "Grep", "WebSearch", "WebFetch", "Task", "Agent");
 
   const args = [
     "-p",
     "--output-format", "json",
     "--model", opts.model,
-    "--allowedTools", tools.join(","),
-    "--disallowedTools", "Bash,Edit,Write,NotebookEdit",
-    "--max-turns", req.web ? "40" : "12",
+    ...(tools.length ? ["--allowedTools", tools.join(",")] : []),
+    "--disallowedTools", blocked.join(","),
+    "--max-turns", req.noTools ? "2" : req.web ? "40" : "12",
   ];
 
   return new Promise((resolve, reject) => {

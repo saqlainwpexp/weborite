@@ -813,3 +813,88 @@ export interface AdminOverview {
   activity: EventItem[];
   topClients: AdminClient[];
 }
+
+/* ---------- Freelancer Bids workspace ---------- */
+
+export type BidMode = "review" | "auto";
+export type BidProjectStatus = "new" | "drafting" | "ready" | "bidding" | "bid" | "skipped" | "failed";
+
+export interface BidderConfig {
+  tokenSet: boolean;
+  /** "live" = freelancer.com, "sandbox" = freelancer-sandbox.com for testing without real bids. */
+  env: "live" | "sandbox";
+  /** The poller checks for new projects only while this is on. */
+  enabled: boolean;
+  /** review: Claude drafts, you approve each bid. auto: bids go out on their own. */
+  mode: BidMode;
+  pollMinutes: number;
+  /** Freelancer "jobs" (skills) to watch. */
+  skills: { id: number; name: string }[];
+  /** Extra search words, e.g. "wordpress elementor". Empty = only the skills. */
+  query: string;
+  /** Skip a project when its title or description contains any of these (one per line). */
+  exclude: string[];
+  types: { fixed: boolean; hourly: boolean };
+  /** Budgets are compared in USD using Freelancer's exchange rate. */
+  minFixedUsd: number;
+  minHourlyUsd: number;
+  maxBidCount: number;
+  /** Only bid on projects posted in the last N minutes (stops a backlog flood on the first run). */
+  maxAgeMinutes: number;
+  requirePaymentVerified: boolean;
+  excludeCountries: string[];
+  dailyBidLimit: number;
+  /** Where in the client's range to bid: simplest job → floorPct, hardest → ceilPct (percent of the range). */
+  floorPct: number;
+  ceilPct: number;
+  /** When a project gives only a minimum, treat max as minimum × this. */
+  openBudgetFactor: number;
+  /** Who you are, for Claude: skills, experience, portfolio links. */
+  profile: string;
+  /** A few of your best past proposals, so Claude matches your voice. */
+  samples: string;
+  /** Your freelancer.com user (filled in when the token is tested). */
+  user: { id: number; username: string; displayName: string } | null;
+}
+
+export interface BidDraft {
+  shouldBid: boolean;
+  reason: string;
+  /** 0 = simple, 1 = complex; drives where in the range the bid lands. */
+  complexity: number;
+  days: number;
+  proposal: string;
+  at: string;
+}
+
+export interface BidProject {
+  id: number; // freelancer.com project id
+  title: string;
+  url: string;
+  description: string;
+  type: "fixed" | "hourly";
+  currency: { code: string; sign: string; usdRate: number };
+  budget: { min: number; max: number | null };
+  bidCount: number;
+  bidAvg: number | null;
+  skills: string[];
+  client: { id: number; username: string; country: string; paymentVerified: boolean; rating: number | null; reviews: number | null };
+  postedAt: string;
+  foundAt: string;
+  status: BidProjectStatus;
+  /** Why it was skipped, why a bid failed, or other notes. */
+  note?: string;
+  draft?: BidDraft;
+  /** Final numbers (Claude's suggestion, or your edit). */
+  amount?: number;
+  days?: number;
+  proposal?: string;
+  bidId?: number;
+  bidAt?: string;
+}
+
+export interface BidderState {
+  config: BidderConfig;
+  poller: { running: boolean; lastPollAt: string | null; nextPollAt: string | null; lastError: string | null; lastFound: number };
+  stats: { total: number; ready: number; bidToday: number; bidTotal: number; skipped: number; failed: number };
+}

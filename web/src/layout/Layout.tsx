@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { NavLink, Outlet, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import {
   ArrowRight, Bell, CalendarDays, Check, ChevronDown, Home, Layers, MapPinned, MoreHorizontal, PanelLeftClose, PanelLeftOpen, UserCog,
-  Banknote, Blocks, ChartColumn, ClipboardCheck, Contact, Crown, FilePlus2, MessagesSquare, Gauge, ListChecks, PanelsTopLeft, Plus, Radar, Search, Server, Settings as SettingsIcon, Sparkles, UserPlus, Users, Wrench,
+  Banknote, BadgeDollarSign, Blocks, ChartColumn, ClipboardCheck, Contact, Crown, FilePlus2, MessagesSquare, Gauge, ListChecks, PanelsTopLeft, Plus, Radar, Search, Server, Settings as SettingsIcon, Sparkles, UserPlus, Users, Wrench,
 } from "lucide-react";
-import type { BenchmarkSet, Build, BuildStats, CommsService, EventItem, FinderSearch, FinderStats, Lead, Prospect, SeoSite, Settings, Usage, WpConversion } from "../../../shared/types";
+import type { BenchmarkSet, BidderState, BidProject, Build, BuildStats, CommsService, EventItem, FinderSearch, FinderStats, Lead, Prospect, SeoSite, Settings, Usage, WpConversion } from "../../../shared/types";
 import { api, host, timeAgo, usePoll } from "../lib/api";
 import { AddLeadModal, EventIcon, Logo, StatusPill } from "../components/ui";
 import { NewSearchModal } from "../components/finder";
@@ -15,7 +15,7 @@ import { careState, type CareView } from "../pages/care/CareList";
 import { desktop, type ChannelState } from "../lib/desktop";
 import { ChannelTile, UnreadBadge } from "../pages/comms/CommsHome";
 
-export type Workspace = "admin" | "mockups" | "finder" | "builds" | "wordpress" | "seo" | "care" | "comms";
+export type Workspace = "admin" | "mockups" | "finder" | "builds" | "wordpress" | "seo" | "care" | "comms" | "bidder";
 
 export interface LayoutCtx {
   leads: Lead[] | null;
@@ -33,6 +33,8 @@ export interface LayoutCtx {
   careSites: CareView[] | null;
   commsServices: CommsService[] | null;
   commsState: Record<string, ChannelState>;
+  bidProjects: BidProject[] | null;
+  bidder: BidderState | null;
   /** A popover or modal is open: native channel views must step aside so it isn't hidden under them. */
   overlay: boolean;
   workspace: Workspace;
@@ -49,6 +51,7 @@ const WORKSPACES: { key: Workspace; label: string; hint: string; home: string; i
   { key: "seo", label: "Launch & SEO", hint: "Post-launch QA, speed and on-page SEO", home: "/seo", icon: Gauge },
   { key: "care", label: "Maintenance", hint: "Monthly updates tested on staging, security, health", home: "/care", icon: Wrench },
   { key: "comms", label: "Communication", hint: "WhatsApp, email, Messenger, Discord… in one place", home: "/comms", icon: MessagesSquare },
+  { key: "bidder", label: "Freelancer Bids", hint: "Claude writes and places bids on new Freelancer.com projects", home: "/bidder", icon: BadgeDollarSign },
 ];
 
 const CARE_DOT: Record<string, string> = {
@@ -97,10 +100,10 @@ export default function Layout() {
   // Settings are shared, so they keep whichever workspace you came from.
   const [lastWorkspace, setLastWorkspace] = useState<Workspace>(() => {
     const w = readLocal("studio.workspace", "mockups");
-    return w === "finder" || w === "builds" || w === "wordpress" || w === "seo" || w === "care" || w === "comms" || w === "admin" ? w : "mockups";
+    return w === "finder" || w === "builds" || w === "wordpress" || w === "seo" || w === "care" || w === "comms" || w === "admin" || w === "bidder" ? w : "mockups";
   });
   const path = location.pathname;
-  const workspace: Workspace = path.startsWith("/finder") ? "finder" : path.startsWith("/builds") ? "builds" : path.startsWith("/wp") ? "wordpress" : path.startsWith("/seo") ? "seo" : path.startsWith("/care") ? "care" : path.startsWith("/comms") ? "comms" : path.startsWith("/admin") ? "admin" : path.startsWith("/settings") ? lastWorkspace : "mockups";
+  const workspace: Workspace = path.startsWith("/finder") ? "finder" : path.startsWith("/builds") ? "builds" : path.startsWith("/wp") ? "wordpress" : path.startsWith("/seo") ? "seo" : path.startsWith("/care") ? "care" : path.startsWith("/comms") ? "comms" : path.startsWith("/admin") ? "admin" : path.startsWith("/bidder") ? "bidder" : path.startsWith("/settings") ? lastWorkspace : "mockups";
   useEffect(() => {
     if (!path.startsWith("/settings")) {
       setLastWorkspace(workspace);
@@ -114,6 +117,7 @@ export default function Layout() {
   const isCare = workspace === "care";
   const isComms = workspace === "comms";
   const isAdmin = workspace === "admin";
+  const isBidder = workspace === "bidder";
 
   const leads = usePoll<Lead[]>("/api/leads", 5000);
   const events = usePoll<EventItem[]>("/api/events", 5000);
@@ -143,6 +147,8 @@ export default function Layout() {
   const commsUnread = (commsServices.data ?? []).reduce((a, x) => a + (x.muted ? 0 : Math.max(0, commsState[x.id]?.unread ?? 0)), 0);
   const commsActivity = (commsServices.data ?? []).some((x) => !x.muted && (commsState[x.id]?.unread ?? 0) !== 0);
   const buildStats = usePoll<BuildStats>(isBuilds ? "/api/builds/stats" : null, 4000);
+  const bidProjects = usePoll<BidProject[]>(isBidder ? "/api/bidder/projects" : null, 4000);
+  const bidder = usePoll<BidderState>(isBidder ? "/api/bidder/state" : null, 4000);
 
   const [adding, setAdding] = useState(false);
   const [collapsed, setCollapsed] = useState(() => readLocal("studio.sidebar", "open") === "collapsed");
@@ -160,7 +166,7 @@ export default function Layout() {
   const wsRef = useClickAway(() => popover === "workspace" && close());
 
   const reloadAll = () => {
-    for (const p of [leads, events, usage, benchmarks, settings, prospects, searches, finderStats, builds, buildStats, conversions, seoSites, careSites, commsServices]) void p.reload();
+    for (const p of [leads, events, usage, benchmarks, settings, prospects, searches, finderStats, builds, buildStats, conversions, seoSites, careSites, commsServices, bidProjects, bidder]) void p.reload();
   };
 
   const ctx: LayoutCtx = {
@@ -179,10 +185,12 @@ export default function Layout() {
     careSites: careSites.data,
     commsServices: commsServices.data,
     commsState,
+    bidProjects: bidProjects.data,
+    bidder: bidder.data,
     overlay: popover !== null || adding,
     workspace,
     reloadAll,
-    openAdd: () => (isAdmin ? nav("/admin/revenue?new=1") : isComms ? nav("/comms/new") : isCare ? nav("/care/new") : isSeo ? nav("/seo/new") : isWp ? nav("/wp/new") : isBuilds ? nav("/builds/new") : setAdding(true)),
+    openAdd: () => (isBidder ? nav("/bidder/settings") : isAdmin ? nav("/admin/revenue?new=1") : isComms ? nav("/comms/new") : isCare ? nav("/care/new") : isSeo ? nav("/seo/new") : isWp ? nav("/wp/new") : isBuilds ? nav("/builds/new") : setAdding(true)),
   };
 
   const needle = q.trim().toLowerCase();
@@ -192,14 +200,15 @@ export default function Layout() {
   const seoResults = (seoSites.data ?? []).filter((x) => !needle || [x.name, x.siteUrl].join(" ").toLowerCase().includes(needle)).slice(0, 8);
   const wpResults = (conversions.data ?? []).filter((c) => !needle || [c.business, c.siteUrl].join(" ").toLowerCase().includes(needle)).slice(0, 8);
   const buildResults = (builds.data ?? []).filter((b) => !needle || [b.business, b.url].join(" ").toLowerCase().includes(needle)).slice(0, 8);
+  const bidResults = (bidProjects.data ?? []).filter((p) => !needle || [p.title, p.skills.join(" "), p.client.country].join(" ").toLowerCase().includes(needle)).slice(0, 8);
   const finderResults = (prospects.data ?? []).filter((p) => !needle || [p.name, p.category, p.website, p.phone, p.emails.join(" ")].join(" ").toLowerCase().includes(needle)).slice(0, 8);
 
   // The date button filters the current workspace's leads by the day they came in.
-  const leadsPath = isFinder ? "/finder/leads" : isBuilds ? "/builds/all" : isWp ? "/wp/all" : isSeo ? "/seo/all" : isCare ? "/care/all" : "/leads";
+  const leadsPath = isBidder ? "/bidder/projects" : isFinder ? "/finder/leads" : isBuilds ? "/builds/all" : isWp ? "/wp/all" : isSeo ? "/seo/all" : isCare ? "/care/all" : "/leads";
   const selectedDay = path === leadsPath ? params.get("date") : null;
   const shownDate = (selectedDay ? parseDayKey(selectedDay) : new Date()).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }).replace(",", ".");
   const perDay: Record<string, number> = {};
-  for (const item of isFinder ? prospects.data ?? [] : isBuilds ? builds.data ?? [] : isWp ? conversions.data ?? [] : isSeo ? seoSites.data ?? [] : isCare ? careSites.data ?? [] : leads.data ?? []) perDay[dayKey(item.createdAt)] = (perDay[dayKey(item.createdAt)] ?? 0) + 1;
+  for (const item of isBidder ? (bidProjects.data ?? []).map((p) => ({ createdAt: p.foundAt })) : isFinder ? prospects.data ?? [] : isBuilds ? builds.data ?? [] : isWp ? conversions.data ?? [] : isSeo ? seoSites.data ?? [] : isCare ? careSites.data ?? [] : leads.data ?? []) perDay[dayKey(item.createdAt)] = (perDay[dayKey(item.createdAt)] ?? 0) + 1;
   const pickDay = (k: string | null) => {
     close();
     const next = new URLSearchParams(path === leadsPath ? params : undefined);
@@ -260,9 +269,15 @@ export default function Layout() {
           <button className="btn btn-chip" onClick={() => setPopover(popover === "search" ? null : "search")}><Search /><span className="label-sm-hide">Search</span></button>
           {popover === "search" && (
             <div className="popover">
-              <input className="input" placeholder={isComms ? "Search channels" : isSeo || isCare ? "Search sites" : isWp ? "Search conversions" : isBuilds ? "Search builds" : isFinder ? "Search businesses, phones, emails" : "Search leads, URLs, emails"} value={q} onChange={(e) => setQ(e.target.value)} autoFocus />
+              <input className="input" placeholder={isBidder ? "Search projects" : isComms ? "Search channels" : isSeo || isCare ? "Search sites" : isWp ? "Search conversions" : isBuilds ? "Search builds" : isFinder ? "Search businesses, phones, emails" : "Search leads, URLs, emails"} value={q} onChange={(e) => setQ(e.target.value)} autoFocus />
               <div className="search-results" style={{ marginTop: 8 }}>
-                {isComms
+                {isBidder
+                  ? bidResults.map((p) => (
+                      <button key={p.id} className="notif" style={{ border: 0, background: "none", textAlign: "left", gridTemplateColumns: "minmax(0,1fr)" }} onClick={() => { close(); nav(`/bidder/projects/${p.id}`); }}>
+                        <div><b>{p.title}</b><span>{p.bidCount} bids · {p.status}</span></div>
+                      </button>
+                    ))
+                  : isComms
                   ? commsResults.map((x) => (
                       <button key={x.id} className="notif" style={{ border: 0, background: "none", textAlign: "left", gridTemplateColumns: "minmax(0,1fr) auto" }} onClick={() => { close(); nav(`/comms/${x.id}`); }}>
                         <div><b>{x.name}</b><span>{host(x.url)}</span></div>
@@ -305,13 +320,13 @@ export default function Layout() {
                         <StatusPill status={l.status} />
                       </button>
                     ))}
-                {!(isComms ? commsResults : isCare ? careResults : isSeo ? seoResults : isWp ? wpResults : isBuilds ? buildResults : isFinder ? finderResults : mockupResults).length && <p className="side-empty" style={{ padding: 12 }}>No matches</p>}
+                {!(isBidder ? bidResults : isComms ? commsResults : isCare ? careResults : isSeo ? seoResults : isWp ? wpResults : isBuilds ? buildResults : isFinder ? finderResults : mockupResults).length && <p className="side-empty" style={{ padding: 12 }}>No matches</p>}
               </div>
             </div>
           )}
         </div>
 
-        <button className="btn btn-chip hide-sm" onClick={ctx.openAdd}>{isAdmin ? <Banknote /> : isComms ? <MessagesSquare /> : isCare ? <Server /> : isSeo ? <Gauge /> : isWp ? <PanelsTopLeft /> : isBuilds ? <FilePlus2 /> : isFinder ? <MapPinned /> : <UserPlus />}{isAdmin ? "Record payment" : isComms ? "Add channel" : isCare ? "Add site" : isSeo ? "Add live site" : isWp ? "New conversion" : isBuilds ? "New build" : isFinder ? "New search" : "Add lead"}</button>
+        <button className="btn btn-chip hide-sm" onClick={ctx.openAdd}>{isBidder ? <SettingsIcon /> : isAdmin ? <Banknote /> : isComms ? <MessagesSquare /> : isCare ? <Server /> : isSeo ? <Gauge /> : isWp ? <PanelsTopLeft /> : isBuilds ? <FilePlus2 /> : isFinder ? <MapPinned /> : <UserPlus />}{isBidder ? "Bid settings" : isAdmin ? "Record payment" : isComms ? "Add channel" : isCare ? "Add site" : isSeo ? "Add live site" : isWp ? "New conversion" : isBuilds ? "New build" : isFinder ? "New search" : "Add lead"}</button>
         <span className="top-divider hide-sm" />
 
         <div className="pop-anchor" ref={notifRef}>
@@ -320,7 +335,7 @@ export default function Layout() {
             <div className="popover">
               <div className="notif-list search-results">
                 {(events.data ?? []).slice(0, 12).map((e) => (
-                  <button key={e.id} className="notif" style={{ border: 0, background: "none", textAlign: "left" }} onClick={() => { close(); if (e.leadId) nav(`/leads/${e.leadId}`); else if (/lead search/i.test(e.title)) nav("/finder/searches"); }}>
+                  <button key={e.id} className="notif" style={{ border: 0, background: "none", textAlign: "left" }} onClick={() => { close(); if (e.leadId) nav(`/leads/${e.leadId}`); else if (/lead search/i.test(e.title)) nav("/finder/searches"); else if (/freelancer/i.test(e.title)) nav("/bidder/projects"); }}>
                     <span className="tile"><EventIcon kind={e.kind} /></span>
                     <div><b>{e.title}</b><span>{e.detail}</span></div>
                     <span style={{ fontSize: 12 }} className="muted">{timeAgo(e.at)}</span>
@@ -364,7 +379,7 @@ export default function Layout() {
             </div>
           )}
         </div>
-        <button className="btn btn-ink btn-wide" onClick={isCare ? () => nav("/care/all?show=approve") : isComms ? () => nav("/comms") : isAdmin ? () => nav("/admin/clients") : ctx.openAdd}>{isAdmin ? "Clients" : isComms ? (commsUnread ? `${commsUnread} unread` : "All channels") : isCare ? "Approvals" : isSeo ? "Audit a site" : isWp ? "Convert" : isBuilds ? "New build" : isFinder ? "Find leads" : "Create"} <ArrowRight /></button>
+        <button className="btn btn-ink btn-wide" onClick={isBidder ? () => nav("/bidder/projects?show=ready") : isCare ? () => nav("/care/all?show=approve") : isComms ? () => nav("/comms") : isAdmin ? () => nav("/admin/clients") : ctx.openAdd}>{isBidder ? "Review bids" : isAdmin ? "Clients" : isComms ? (commsUnread ? `${commsUnread} unread` : "All channels") : isCare ? "Approvals" : isSeo ? "Audit a site" : isWp ? "Convert" : isBuilds ? "New build" : isFinder ? "Find leads" : "Create"} <ArrowRight /></button>
       </header>
 
       <div className={`shell${collapsed ? " is-collapsed" : ""}`}>
@@ -376,7 +391,23 @@ export default function Layout() {
             </button>
           </div>
 
-          {isAdmin ? (
+          {isBidder ? (
+            <>
+              <NavLink to="/bidder" end className="nav-item" title="Dashboard"><Home /><span className="label">Dashboard</span></NavLink>
+              <NavLink to="/bidder/projects" className="nav-item" title="Projects"><ListChecks /><span className="label">Projects</span><span className="count">{bidder.data?.stats.ready || ""}</span></NavLink>
+              <NavLink to="/bidder/settings" className="nav-item" title="Bid settings"><SettingsIcon /><span className="label">Bid settings</span></NavLink>
+
+              <div className="side-divider" />
+              <div className="side-label"><span className="label">To review</span></div>
+              {(bidProjects.data ?? []).filter((p) => p.status === "ready").slice(0, 8).map((p) => (
+                <NavLink key={p.id} to={`/bidder/projects/${p.id}`} className="vertical-item" title={p.title}>
+                  <span className="sq round" style={{ background: "var(--orange)" }} />
+                  <span className="name">{p.title}</span>
+                </NavLink>
+              ))}
+              {!(bidProjects.data ?? []).some((p) => p.status === "ready") && <p className="side-empty">Drafted proposals waiting for you show up here.</p>}
+            </>
+          ) : isAdmin ? (
             <>
               <NavLink to="/admin" end className="nav-item" title="Overview"><ChartColumn /><span className="label">Overview</span></NavLink>
               <NavLink to="/admin/clients" className="nav-item" title="Clients"><Contact /><span className="label">Clients</span></NavLink>

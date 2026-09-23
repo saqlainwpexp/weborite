@@ -4,7 +4,7 @@ import { runApi } from "./apiRunner.ts";
 
 export interface RunRequest {
   leadId: string;
-  task: "diagnose" | "vertical" | "benchmarks" | "generate" | "build" | "seo" | "qualify";
+  task: "diagnose" | "vertical" | "benchmarks" | "generate" | "build" | "seo" | "qualify" | "bid";
   system: string;
   prompt: string;
   /** Absolute paths to PNG/JPEG files Claude should look at. */
@@ -15,6 +15,8 @@ export interface RunRequest {
   cwd: string;
   /** Use the heavier generation model (otherwise the fast model). */
   heavy?: boolean;
+  /** Text-only answer with every tool switched off (the prompt holds untrusted third-party text). */
+  noTools?: boolean;
 }
 
 export interface RunResult {

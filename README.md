@@ -109,6 +109,18 @@ Converts a finished build into Elementor pages on the client's WordPress site, o
    - Without Pro, anything that needs a Pro widget becomes a custom `Studio_Widget_*` Elementor widget. It's added to the connector plugin, so install the updated plugin when the dashboard asks.
 4. **Review:** the page is pushed as a **draft**, screenshotted through a private preview link, and compared pixel by pixel with the HTML at desktop and mobile width. **Approve** starts the next page; **Request changes** sends feedback for the whole page or one section.
 
+## Freelancer Bids workspace
+
+Watches freelancer.com for new projects that match your skills, has Claude write a proposal for each one, and places the bid. Claude runs through the same Session or API mode as the rest of the studio.
+
+1. **Connect:** create an app at freelancer.com → Settings → Developer, tick the scopes *Manage your projects, bids and milestones* and *View your user and profile information*, and generate a token. Paste it in **Bid settings** and choose **Sandbox** (freelancer-sandbox.com, needs its own account and token) or **Live**. The token is stored only in the local database.
+2. **Choose what to bid on:** Freelancer skills, optional search words, words to avoid, fixed or hourly, minimum budget (compared in USD), maximum existing bids, verified clients only, and countries to skip. Only projects posted in the last hour (configurable) are picked up, so the first run doesn't bid on a backlog.
+3. **About you:** your profile and a few past proposals. Claude only claims experience that's written here, and it skips jobs that don't fit, look like scams, or are underpriced.
+4. **Pricing:** Claude rates each job's complexity from 0 to 1. The bid lands between *simple* (default 50% of the client's range) and *complex* (default 90%), rounded to a normal price and always kept inside the range. A "$300+" budget with no maximum is capped at the minimum × 1.3.
+5. **Review or automatic:** in review mode each draft waits in **Projects → To review**, where you can edit the text, amount and delivery time, then place the bid. Automatic mode sends bids on its own, up to a daily limit; after that, drafts wait for you.
+
+The project text comes from the client, so Claude writes proposals with every tool switched off, in an empty folder.
+
 ## Notes
 
 - The brand palette is derived deterministically from the live page, never by Claude. In the dashboard, the lead page shows it as **Locked brand**.

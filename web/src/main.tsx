@@ -36,6 +36,10 @@ import CommsView from "./pages/comms/CommsView";
 import AdminOverview from "./pages/admin/AdminOverview";
 import AdminClients from "./pages/admin/AdminClients";
 import AdminRevenue from "./pages/admin/AdminRevenue";
+import BidderDashboard from "./pages/bidder/BidderDashboard";
+import BidderProjects from "./pages/bidder/BidderProjects";
+import BidderProject from "./pages/bidder/BidderProject";
+import BidderSettings from "./pages/bidder/BidderSettings";
 import { applyStoredBrand } from "./lib/brand";
 
 applyStoredBrand();
@@ -78,6 +82,10 @@ createRoot(document.getElementById("root")!).render(
           <Route path="comms/new" element={<CommsAdd />} />
           <Route path="comms/:id" element={<CommsView />} />
           <Route path="admin" element={<AdminOverview />} />
+          <Route path="bidder" element={<BidderDashboard />} />
+          <Route path="bidder/projects" element={<BidderProjects />} />
+          <Route path="bidder/projects/:id" element={<BidderProject />} />
+          <Route path="bidder/settings" element={<BidderSettings />} />
           <Route path="admin/clients" element={<AdminClients />} />
           <Route path="admin/revenue" element={<AdminRevenue />} />
         </Route>
