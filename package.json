@@ -10,24 +10,24 @@
     "build": "vite build",
     "start": "tsx server/index.ts",
     "typecheck": "tsc --noEmit",
-    "dev:api:watch": "node --import tsx --watch-path=server --watch-path=shared server/index.ts"
+    "dev:api:watch": "node --import tsx --watch-path=server --watch-path=shared server/index.ts",
+    "build:server": "node scripts/build-server.mjs",
+    "desktop": "vite build && node scripts/build-server.mjs && electron .",
+    "dist": "vite build && node scripts/build-server.mjs && electron-builder --win",
+    "icon": "node scripts/make-icon.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.128.0",
-    "@fontsource-variable/inter": "^5.3.0",
     "archiver": "^8.0.0",
     "axe-core": "^4.13.0",
     "express": "^5.2.1",
     "lighthouse": "^13.5.0",
-    "lucide-react": "^1.47.0",
     "pixelmatch": "^7.2.0",
     "playwright": "^1.63.0",
-    "pngjs": "^7.0.0",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0",
-    "react-router-dom": "^7.18.4"
+    "pngjs": "^7.0.0"
   },
   "devDependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
     "@types/express": "^5.0.6",
     "@types/node": "^26.6.2",
     "@types/pngjs": "^6.0.5",
@@ -35,9 +35,60 @@
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.1",
     "concurrently": "^10.0.5",
+    "electron": "^44.4.4",
+    "electron-builder": "^26.15.3",
+    "esbuild": "^0.28.2",
+    "lucide-react": "^1.47.0",
     "php-parser": "^3.7.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-router-dom": "^7.18.4",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2",
     "vite": "^8.3.0"
+  },
+  "productName": "Weborite Studio",
+  "description": "Weborite Studio: mockups, builds, WordPress, SEO, maintenance and communication",
+  "author": "Weborite Solutions",
+  "main": "electron/main.mjs",
+  "build": {
+    "appId": "com.weborite.studio",
+    "productName": "Weborite Studio",
+    "copyright": "Weborite Solutions",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "asar": false,
+    "files": [
+      "electron/**",
+      "app-dist/**",
+      "dist/**",
+      "server/wp/php/**",
+      "build/icon.png",
+      "package.json",
+      "!**/*.map"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png",
+      "executableName": "WeboriteStudio"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Weborite Studio",
+      "runAfterFinish": true
+    }
   }
 }

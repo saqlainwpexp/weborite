@@ -782,6 +782,47 @@ small.warn, span.warn, .warn { color: var(--amber); }
   .setup-steps li > .btn { grid-column: 2; justify-self: start; }
 }
 
+/* ---------- Communication ---------- */
+.ch-tile { display: inline-grid; place-items: center; border-radius: 28%; color: #fff; font-weight: 500; font-size: 15px; flex: none; overflow: hidden; }
+.ch-tile img { width: 72%; height: 72%; object-fit: contain; }
+.unread { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 10px; background: #dc3545; color: #fff; font-size: 11.5px; font-weight: 600; line-height: 1; margin-left: auto; }
+.unread:empty { min-width: 10px; width: 10px; height: 10px; padding: 0; }
+.unread.dot { min-width: 8px; width: 8px; height: 8px; padding: 0; margin-left: 2px; }
+.ch-side { display: flex; align-items: center; gap: 10px; }
+.ch-side .ch-tile { font-size: 11px; }
+.sidebar.collapsed .ch-side .unread { position: absolute; margin: -18px 0 0 16px; }
+.ch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px; }
+.ch-card { border: 0; text-align: left; display: flex; flex-direction: column; gap: 4px; cursor: pointer; transition: transform .12s ease, box-shadow .12s ease; }
+.ch-card:hover { transform: translateY(-2px); }
+.ch-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; }
+.ch-card b { font-weight: 450; font-size: 16px; }
+.ch-card .muted { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ch-status { font-size: 13px; color: var(--text-2); margin-top: 10px; display: inline-flex; gap: 6px; align-items: center; }
+.ch-add { align-items: center; justify-content: center; text-align: center; border: 1px dashed var(--hairline); background: transparent; box-shadow: none; min-height: 170px; }
+.ch-add svg { width: 22px; height: 22px; margin-bottom: 6px; }
+.link-btn { border: 0; background: none; padding: 0; color: var(--text); text-decoration: underline; cursor: pointer; font: inherit; }
+.preset-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+.preset-card { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--hairline); border-radius: 14px; background: var(--card); cursor: pointer; text-align: left; }
+.preset-card:hover { border-color: var(--accent-soft); background: var(--accent-softer); }
+.preset-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.preset-main b { font-weight: 450; font-size: 15px; }
+.preset-main small { font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.comms-view { display: flex; flex-direction: column; gap: 12px; min-height: 0; }
+.ch-bar { display: flex; align-items: center; gap: 12px; }
+.ch-name { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.ch-name b { font-weight: 450; font-size: 18px; }
+.ch-name span { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ch-rename { flex: 1; display: flex; gap: 8px; align-items: center; }
+.ch-rename .input { max-width: 280px; height: 38px; }
+.ch-tools { display: flex; gap: 6px; align-items: center; }
+.icon-btn.sm { width: 36px; height: 36px; border-radius: 10px; }
+.icon-btn.sm svg { width: 17px; height: 17px; }
+.icon-btn:disabled { opacity: .4; cursor: default; }
+.ch-host { position: relative; border-radius: 16px; background: var(--card); overflow: hidden; box-shadow: var(--shadow-card); min-height: 320px; }
+.ch-host-msg { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 12px; }
+.menu-row { border: 0; background: none; width: 100%; }
+.menu-row.danger { color: var(--red); }
+
 /* ---------- Brand chrome: top bar + sidebar in the brand colour ---------- */
 .topbar {
   background: var(--brand); border-radius: 20px; padding: 10px 12px; color: var(--on-brand);

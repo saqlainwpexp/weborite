@@ -2,17 +2,19 @@ import { useEffect, useRef, useState } from "react";
 import { NavLink, Outlet, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import {
   ArrowRight, Bell, CalendarDays, Check, ChevronDown, Home, Layers, MapPinned, MoreHorizontal, PanelLeftClose, PanelLeftOpen, UserCog,
-  Blocks, ClipboardCheck, FilePlus2, Gauge, ListChecks, PanelsTopLeft, Plus, Radar, Search, Server, Settings as SettingsIcon, Sparkles, UserPlus, Users, Wrench,
+  Blocks, ClipboardCheck, FilePlus2, MessagesSquare, Gauge, ListChecks, PanelsTopLeft, Plus, Radar, Search, Server, Settings as SettingsIcon, Sparkles, UserPlus, Users, Wrench,
 } from "lucide-react";
-import type { BenchmarkSet, Build, BuildStats, EventItem, FinderSearch, FinderStats, Lead, Prospect, SeoSite, Settings, Usage, WpConversion } from "../../../shared/types";
+import type { BenchmarkSet, Build, BuildStats, CommsService, EventItem, FinderSearch, FinderStats, Lead, Prospect, SeoSite, Settings, Usage, WpConversion } from "../../../shared/types";
 import { api, host, timeAgo, usePoll } from "../lib/api";
 import { AddLeadModal, EventIcon, Logo, StatusPill } from "../components/ui";
 import { NewSearchModal } from "../components/finder";
 import { Calendar, dayKey, parseDayKey } from "../components/Calendar";
 import { applyBrand } from "../lib/brand";
 import { careState, type CareView } from "../pages/care/CareList";
+import { desktop, type ChannelState } from "../lib/desktop";
+import { ChannelTile, UnreadBadge } from "../pages/comms/CommsHome";
 
-export type Workspace = "mockups" | "finder" | "builds" | "wordpress" | "seo" | "care";
+export type Workspace = "mockups" | "finder" | "builds" | "wordpress" | "seo" | "care" | "comms";
 
 export interface LayoutCtx {
   leads: Lead[] | null;
@@ -28,6 +30,10 @@ export interface LayoutCtx {
   conversions: WpConversion[] | null;
   seoSites: SeoSite[] | null;
   careSites: CareView[] | null;
+  commsServices: CommsService[] | null;
+  commsState: Record<string, ChannelState>;
+  /** A popover or modal is open: native channel views must step aside so it isn't hidden under them. */
+  overlay: boolean;
   workspace: Workspace;
   reloadAll: () => void;
   openAdd: () => void;
@@ -40,6 +46,7 @@ const WORKSPACES: { key: Workspace; label: string; hint: string; home: string; i
   { key: "wordpress", label: "WordPress", hint: "Convert builds into Elementor pages", home: "/wp", icon: PanelsTopLeft },
   { key: "seo", label: "Launch & SEO", hint: "Post-launch QA, speed and on-page SEO", home: "/seo", icon: Gauge },
   { key: "care", label: "Maintenance", hint: "Monthly updates tested on staging, security, health", home: "/care", icon: Wrench },
+  { key: "comms", label: "Communication", hint: "WhatsApp, email, Messenger, Discord… in one place", home: "/comms", icon: MessagesSquare },
 ];
 
 const CARE_DOT: Record<string, string> = {
@@ -88,10 +95,10 @@ export default function Layout() {
   // Settings are shared, so they keep whichever workspace you came from.
   const [lastWorkspace, setLastWorkspace] = useState<Workspace>(() => {
     const w = readLocal("studio.workspace", "mockups");
-    return w === "finder" || w === "builds" || w === "wordpress" || w === "seo" || w === "care" ? w : "mockups";
+    return w === "finder" || w === "builds" || w === "wordpress" || w === "seo" || w === "care" || w === "comms" ? w : "mockups";
   });
   const path = location.pathname;
-  const workspace: Workspace = path.startsWith("/finder") ? "finder" : path.startsWith("/builds") ? "builds" : path.startsWith("/wp") ? "wordpress" : path.startsWith("/seo") ? "seo" : path.startsWith("/care") ? "care" : path.startsWith("/settings") ? lastWorkspace : "mockups";
+  const workspace: Workspace = path.startsWith("/finder") ? "finder" : path.startsWith("/builds") ? "builds" : path.startsWith("/wp") ? "wordpress" : path.startsWith("/seo") ? "seo" : path.startsWith("/care") ? "care" : path.startsWith("/comms") ? "comms" : path.startsWith("/settings") ? lastWorkspace : "mockups";
   useEffect(() => {
     if (!path.startsWith("/settings")) {
       setLastWorkspace(workspace);
@@ -103,6 +110,7 @@ export default function Layout() {
   const isWp = workspace === "wordpress";
   const isSeo = workspace === "seo";
   const isCare = workspace === "care";
+  const isComms = workspace === "comms";
 
   const leads = usePoll<Lead[]>("/api/leads", 5000);
   const events = usePoll<EventItem[]>("/api/events", 5000);
@@ -116,6 +124,21 @@ export default function Layout() {
   const conversions = usePoll<WpConversion[]>(isWp || isSeo ? "/api/wp" : null, 3000);
   const seoSites = usePoll<SeoSite[]>(isSeo ? "/api/seo" : null, 3000);
   const careSites = usePoll<CareView[]>(isCare ? "/api/care" : null, 4000);
+  const commsServices = usePoll<CommsService[]>(isComms || desktop ? "/api/comms" : null, isComms ? 5000 : 30000);
+  const [commsState, setCommsState] = useState<Record<string, ChannelState>>({});
+  useEffect(() => {
+    if (!desktop) return;
+    void desktop.comms.state().then(setCommsState);
+    const offState = desktop.comms.onState(setCommsState);
+    // Clicking a message notification opens that channel.
+    const offOpen = desktop.comms.onOpen((id) => nav(`/comms/${id}`));
+    return () => {
+      offState();
+      offOpen();
+    };
+  }, [nav]);
+  const commsUnread = (commsServices.data ?? []).reduce((a, x) => a + (x.muted ? 0 : Math.max(0, commsState[x.id]?.unread ?? 0)), 0);
+  const commsActivity = (commsServices.data ?? []).some((x) => !x.muted && (commsState[x.id]?.unread ?? 0) !== 0);
   const buildStats = usePoll<BuildStats>(isBuilds ? "/api/builds/stats" : null, 4000);
 
   const [adding, setAdding] = useState(false);
@@ -135,7 +158,7 @@ export default function Layout() {
   const wsRef = useClickAway(() => popover === "workspace" && close());
 
   const reloadAll = () => {
-    for (const p of [leads, events, usage, benchmarks, settings, prospects, searches, finderStats, builds, buildStats, conversions, seoSites, careSites]) void p.reload();
+    for (const p of [leads, events, usage, benchmarks, settings, prospects, searches, finderStats, builds, buildStats, conversions, seoSites, careSites, commsServices]) void p.reload();
   };
 
   const ctx: LayoutCtx = {
@@ -152,13 +175,17 @@ export default function Layout() {
     conversions: conversions.data,
     seoSites: seoSites.data,
     careSites: careSites.data,
+    commsServices: commsServices.data,
+    commsState,
+    overlay: popover !== null || adding,
     workspace,
     reloadAll,
-    openAdd: () => (isCare ? nav("/care/new") : isSeo ? nav("/seo/new") : isWp ? nav("/wp/new") : isBuilds ? nav("/builds/new") : setAdding(true)),
+    openAdd: () => (isComms ? nav("/comms/new") : isCare ? nav("/care/new") : isSeo ? nav("/seo/new") : isWp ? nav("/wp/new") : isBuilds ? nav("/builds/new") : setAdding(true)),
   };
 
   const needle = q.trim().toLowerCase();
   const mockupResults = (leads.data ?? []).filter((l) => !needle || [l.business, l.name, l.email, l.url].join(" ").toLowerCase().includes(needle)).slice(0, 8);
+  const commsResults = (commsServices.data ?? []).filter((x) => !needle || [x.name, x.url].join(" ").toLowerCase().includes(needle)).slice(0, 8);
   const careResults = (careSites.data ?? []).filter((x) => !needle || [x.name, x.client, x.siteUrl].join(" ").toLowerCase().includes(needle)).slice(0, 8);
   const seoResults = (seoSites.data ?? []).filter((x) => !needle || [x.name, x.siteUrl].join(" ").toLowerCase().includes(needle)).slice(0, 8);
   const wpResults = (conversions.data ?? []).filter((c) => !needle || [c.business, c.siteUrl].join(" ").toLowerCase().includes(needle)).slice(0, 8);
@@ -209,7 +236,7 @@ export default function Layout() {
 
         <div className="pop-anchor" ref={wsRef}>
           <button className="btn btn-chip ws-trigger" aria-haspopup="menu" aria-expanded={popover === "workspace"} onClick={() => setPopover(popover === "workspace" ? null : "workspace")}>
-            <CurrentIcon /><span className="label-sm-hide">{current.label}</span><ChevronDown className="dd-chevron" />
+            <CurrentIcon /><span className="label-sm-hide">{current.label}</span>{!isComms && commsActivity && <span className="unread dot" aria-label="Unread messages" />}<ChevronDown className="dd-chevron" />
           </button>
           {popover === "workspace" && (
             <div className="popover menu" style={{ width: 300 }} role="menu" aria-label="Switch workspace">
@@ -219,7 +246,7 @@ export default function Layout() {
                   <button key={w.key} type="button" role="menuitemradio" aria-checked={w.key === workspace} className={`menu-item${w.key === workspace ? " on" : ""}`} onClick={() => { close(); nav(w.home); }}>
                     <span className="ws-icon"><Icon /></span>
                     <span className="menu-text"><b>{w.label}</b><small>{w.hint}</small></span>
-                    {w.key === workspace && <Check className="menu-check" />}
+                    {w.key === "comms" && w.key !== workspace && commsActivity ? <span className="unread">{commsUnread || ""}</span> : w.key === workspace && <Check className="menu-check" />}
                   </button>
                 );
               })}
@@ -231,9 +258,16 @@ export default function Layout() {
           <button className="btn btn-chip" onClick={() => setPopover(popover === "search" ? null : "search")}><Search /><span className="label-sm-hide">Search</span></button>
           {popover === "search" && (
             <div className="popover">
-              <input className="input" placeholder={isSeo || isCare ? "Search sites" : isWp ? "Search conversions" : isBuilds ? "Search builds" : isFinder ? "Search businesses, phones, emails" : "Search leads, URLs, emails"} value={q} onChange={(e) => setQ(e.target.value)} autoFocus />
+              <input className="input" placeholder={isComms ? "Search channels" : isSeo || isCare ? "Search sites" : isWp ? "Search conversions" : isBuilds ? "Search builds" : isFinder ? "Search businesses, phones, emails" : "Search leads, URLs, emails"} value={q} onChange={(e) => setQ(e.target.value)} autoFocus />
               <div className="search-results" style={{ marginTop: 8 }}>
-                {isCare
+                {isComms
+                  ? commsResults.map((x) => (
+                      <button key={x.id} className="notif" style={{ border: 0, background: "none", textAlign: "left", gridTemplateColumns: "minmax(0,1fr) auto" }} onClick={() => { close(); nav(`/comms/${x.id}`); }}>
+                        <div><b>{x.name}</b><span>{host(x.url)}</span></div>
+                        <UnreadBadge n={commsState[x.id]?.unread} muted={x.muted} />
+                      </button>
+                    ))
+                  : isCare
                   ? careResults.map((x) => (
                       <button key={x.id} className="notif" style={{ border: 0, background: "none", textAlign: "left", gridTemplateColumns: "minmax(0,1fr)" }} onClick={() => { close(); nav(`/care/${x.id}`); }}>
                         <div><b>{x.name}</b><span>{host(x.siteUrl)} · {careState(x).label}</span></div>
@@ -269,13 +303,13 @@ export default function Layout() {
                         <StatusPill status={l.status} />
                       </button>
                     ))}
-                {!(isCare ? careResults : isSeo ? seoResults : isWp ? wpResults : isBuilds ? buildResults : isFinder ? finderResults : mockupResults).length && <p className="side-empty" style={{ padding: 12 }}>No matches</p>}
+                {!(isComms ? commsResults : isCare ? careResults : isSeo ? seoResults : isWp ? wpResults : isBuilds ? buildResults : isFinder ? finderResults : mockupResults).length && <p className="side-empty" style={{ padding: 12 }}>No matches</p>}
               </div>
             </div>
           )}
         </div>
 
-        <button className="btn btn-chip hide-sm" onClick={ctx.openAdd}>{isCare ? <Server /> : isSeo ? <Gauge /> : isWp ? <PanelsTopLeft /> : isBuilds ? <FilePlus2 /> : isFinder ? <MapPinned /> : <UserPlus />}{isCare ? "Add site" : isSeo ? "Add live site" : isWp ? "New conversion" : isBuilds ? "New build" : isFinder ? "New search" : "Add lead"}</button>
+        <button className="btn btn-chip hide-sm" onClick={ctx.openAdd}>{isComms ? <MessagesSquare /> : isCare ? <Server /> : isSeo ? <Gauge /> : isWp ? <PanelsTopLeft /> : isBuilds ? <FilePlus2 /> : isFinder ? <MapPinned /> : <UserPlus />}{isComms ? "Add channel" : isCare ? "Add site" : isSeo ? "Add live site" : isWp ? "New conversion" : isBuilds ? "New build" : isFinder ? "New search" : "Add lead"}</button>
         <span className="top-divider hide-sm" />
 
         <div className="pop-anchor" ref={notifRef}>
@@ -350,7 +384,7 @@ export default function Layout() {
             </div>
           )}
         </div>
-        <button className="btn btn-ink btn-wide" onClick={isCare ? () => nav("/care/all?show=approve") : ctx.openAdd}>{isCare ? "Approvals" : isSeo ? "Audit a site" : isWp ? "Convert" : isBuilds ? "New build" : isFinder ? "Find leads" : "Create"} <ArrowRight /></button>
+        <button className="btn btn-ink btn-wide" onClick={isCare ? () => nav("/care/all?show=approve") : isComms ? () => nav("/comms") : ctx.openAdd}>{isComms ? (commsUnread ? `${commsUnread} unread` : "All channels") : isCare ? "Approvals" : isSeo ? "Audit a site" : isWp ? "Convert" : isBuilds ? "New build" : isFinder ? "Find leads" : "Create"} <ArrowRight /></button>
       </header>
 
       <div className={`shell${collapsed ? " is-collapsed" : ""}`}>
@@ -362,7 +396,24 @@ export default function Layout() {
             </button>
           </div>
 
-          {isCare ? (
+          {isComms ? (
+            <>
+              <NavLink to="/comms" end className="nav-item" title="All channels"><Home /><span className="label">All channels</span>{commsActivity && <span className="count">{commsUnread || "•"}</span>}</NavLink>
+              <NavLink to="/comms/new" className="nav-item" title="Add channel"><Plus /><span className="label">Add channel</span></NavLink>
+              <NavLink to="/settings" className="nav-item" title="Settings"><SettingsIcon /><span className="label">Settings</span></NavLink>
+
+              <div className="side-divider" />
+              <div className="side-label"><span className="label">Channels</span></div>
+              {(commsServices.data ?? []).map((x) => (
+                <NavLink key={x.id} to={`/comms/${x.id}`} className="vertical-item ch-side" title={x.name}>
+                  <ChannelTile svc={x} state={commsState[x.id]} size={22} />
+                  <span className="name">{x.name}</span>
+                  <UnreadBadge n={commsState[x.id]?.unread} muted={x.muted} />
+                </NavLink>
+              ))}
+              {!commsServices.data?.length && <p className="side-empty">Channels you add show up here.</p>}
+            </>
+          ) : isCare ? (
             <>
               <NavLink to="/care" end className="nav-item" title="Dashboard"><Home /><span className="label">Dashboard</span></NavLink>
               <NavLink to="/care/all" end className="nav-item" title="Sites"><Server /><span className="label">Sites</span><span className="count">{careSites.data?.length ?? ""}</span></NavLink>

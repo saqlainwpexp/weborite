@@ -1,5 +1,6 @@
 import { createWriteStream, readFileSync } from "node:fs";
 import { join } from "node:path";
+import { ROOT } from "../db.ts";
 // @ts-expect-error archiver v8 ships without type declarations
 import { ZipArchive } from "archiver";
 import type { WpCustomWidget } from "../../shared/types.ts";
@@ -363,7 +364,7 @@ add_action( 'wp_head', function () {
 `;
 }
 
-const PHP_DIR = join(import.meta.dirname, "php");
+const PHP_DIR = join(ROOT, "server", "wp", "php");
 
 /** Generated widget PHP must declare a Studio_Widget_* class; wrap it with an ABSPATH guard. */
 function widgetPhp(w: WpCustomWidget, php: string) {

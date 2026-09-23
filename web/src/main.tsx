@@ -30,6 +30,9 @@ import CareDashboard from "./pages/care/CareDashboard";
 import CareList from "./pages/care/CareList";
 import CareNew from "./pages/care/CareNew";
 import CareDetail from "./pages/care/CareDetail";
+import CommsHome from "./pages/comms/CommsHome";
+import CommsAdd from "./pages/comms/CommsAdd";
+import CommsView from "./pages/comms/CommsView";
 import { applyStoredBrand } from "./lib/brand";
 
 applyStoredBrand();
@@ -68,6 +71,9 @@ createRoot(document.getElementById("root")!).render(
           <Route path="care/all" element={<CareList />} />
           <Route path="care/new" element={<CareNew />} />
           <Route path="care/:id" element={<CareDetail />} />
+          <Route path="comms" element={<CommsHome />} />
+          <Route path="comms/new" element={<CommsAdd />} />
+          <Route path="comms/:id" element={<CommsView />} />
         </Route>
       </Routes>
     </BrowserRouter>

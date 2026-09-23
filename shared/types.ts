@@ -668,3 +668,16 @@ export interface CareSite {
   lastScan: string | null;
   createdAt: string;
 }
+
+/* ---------- Communication (desktop app) ---------- */
+
+export interface CommsService {
+  id: string;
+  kind: string; // preset key (whatsapp, gmail, …) or "custom"
+  name: string;
+  url: string;
+  color: string;
+  notify: boolean;
+  muted: boolean; // no unread badge, no notifications
+  createdAt: string;
+}

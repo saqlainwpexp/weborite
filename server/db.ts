@@ -4,8 +4,9 @@ import { join, resolve } from "node:path";
 import { randomUUID } from "node:crypto";
 import { STEPS, type EventItem, type Lead, type Settings } from "../shared/types.ts";
 
-export const ROOT = resolve(import.meta.dirname, "..");
-export const DATA = join(ROOT, "data");
+// The desktop app passes its own folders; from the project folder these default to ./ and ./data.
+export const ROOT = process.env.STUDIO_ROOT ?? resolve(import.meta.dirname, "..");
+export const DATA = process.env.STUDIO_DATA ?? join(ROOT, "data");
 export const LEADS_DIR = join(DATA, "leads");
 export const BENCH_DIR = join(DATA, "benchmarks");
 export const BRAND_DIR = join(DATA, "brand");

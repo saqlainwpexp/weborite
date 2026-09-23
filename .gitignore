@@ -8,3 +8,8 @@ dist
 data/*
 # The benchmark library is reusable research, safe to keep.
 !data/benchmarks/
+
+# Desktop build output
+app-dist
+release
+electron/build-info.json

@@ -20,6 +20,7 @@ import { WP_DIR } from "./wp/store.ts";
 import { seo } from "./seo/routes.ts";
 import { SEO_DIR } from "./seo/store.ts";
 import { care, startCareTimers } from "./care/routes.ts";
+import { comms } from "./comms.ts";
 import { STEPS, type BenchmarkSet, type Capture, type Diagnosis, type GateResult, type LeadDetail, type StepKey, type Usage } from "../shared/types.ts";
 
 const PORT = API_PORT;
@@ -104,6 +105,7 @@ app.use("/api/builds", builds);
 app.use("/api/wp", wp);
 app.use("/api/seo", seo);
 app.use("/api/care", care);
+app.use("/api/comms", comms);
 
 app.get("/api/events", (_req, res) => res.json(listEvents(40)));
 
@@ -213,6 +215,9 @@ hookApp.use(rawJson);
 hookApp.use(express.urlencoded({ extended: true }));
 hookApp.use("/hooks", hooks);
 hookApp.get("/", (_req, res) => res.send("ok"));
-hookApp.listen(HOOK_PORT, () => {
-  console.log(`Webhooks       → http://localhost:${HOOK_PORT}/hooks/elementor  and  /hooks/meta`);
-});
+hookApp
+  .listen(HOOK_PORT, (err?: Error) => {
+    if (!err) console.log(`Webhooks       → http://localhost:${HOOK_PORT}/hooks/elementor  and  /hooks/meta`);
+  })
+  // Another copy of the app (e.g. `npm run dev` next to the desktop app) already receives webhooks.
+  .on("error", (e: NodeJS.ErrnoException) => console.warn(`Webhooks not started: port ${HOOK_PORT} ${e.code === "EADDRINUSE" ? "is in use by another copy of the app" : e.message}`));
