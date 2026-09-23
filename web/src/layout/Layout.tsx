@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { NavLink, Outlet, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import {
   ArrowRight, Bell, CalendarDays, Check, ChevronDown, Home, Layers, MapPinned, MoreHorizontal, PanelLeftClose, PanelLeftOpen, UserCog,
-  Blocks, ClipboardCheck, FilePlus2, MessagesSquare, Gauge, ListChecks, PanelsTopLeft, Plus, Radar, Search, Server, Settings as SettingsIcon, Sparkles, UserPlus, Users, Wrench,
+  Banknote, Blocks, ChartColumn, ClipboardCheck, Contact, Crown, FilePlus2, MessagesSquare, Gauge, ListChecks, PanelsTopLeft, Plus, Radar, Search, Server, Settings as SettingsIcon, Sparkles, UserPlus, Users, Wrench,
 } from "lucide-react";
 import type { BenchmarkSet, Build, BuildStats, CommsService, EventItem, FinderSearch, FinderStats, Lead, Prospect, SeoSite, Settings, Usage, WpConversion } from "../../../shared/types";
 import { api, host, timeAgo, usePoll } from "../lib/api";
@@ -14,7 +14,7 @@ import { careState, type CareView } from "../pages/care/CareList";
 import { desktop, type ChannelState } from "../lib/desktop";
 import { ChannelTile, UnreadBadge } from "../pages/comms/CommsHome";
 
-export type Workspace = "mockups" | "finder" | "builds" | "wordpress" | "seo" | "care" | "comms";
+export type Workspace = "admin" | "mockups" | "finder" | "builds" | "wordpress" | "seo" | "care" | "comms";
 
 export interface LayoutCtx {
   leads: Lead[] | null;
@@ -40,6 +40,7 @@ export interface LayoutCtx {
 }
 
 const WORKSPACES: { key: Workspace; label: string; hint: string; home: string; icon: typeof Sparkles }[] = [
+  { key: "admin", label: "Super admin", hint: "Earnings, leads, progress and reports across everything", home: "/admin", icon: Crown },
   { key: "mockups", label: "Mockups", hint: "Rebuild lead homepages with Claude", home: "/", icon: Sparkles },
   { key: "finder", label: "Lead Finder", hint: "Find businesses on Google Maps", home: "/finder", icon: Radar },
   { key: "builds", label: "Builds", hint: "Turn approved mockups into full websites", home: "/builds", icon: Blocks },
@@ -95,10 +96,10 @@ export default function Layout() {
   // Settings are shared, so they keep whichever workspace you came from.
   const [lastWorkspace, setLastWorkspace] = useState<Workspace>(() => {
     const w = readLocal("studio.workspace", "mockups");
-    return w === "finder" || w === "builds" || w === "wordpress" || w === "seo" || w === "care" || w === "comms" ? w : "mockups";
+    return w === "finder" || w === "builds" || w === "wordpress" || w === "seo" || w === "care" || w === "comms" || w === "admin" ? w : "mockups";
   });
   const path = location.pathname;
-  const workspace: Workspace = path.startsWith("/finder") ? "finder" : path.startsWith("/builds") ? "builds" : path.startsWith("/wp") ? "wordpress" : path.startsWith("/seo") ? "seo" : path.startsWith("/care") ? "care" : path.startsWith("/comms") ? "comms" : path.startsWith("/settings") ? lastWorkspace : "mockups";
+  const workspace: Workspace = path.startsWith("/finder") ? "finder" : path.startsWith("/builds") ? "builds" : path.startsWith("/wp") ? "wordpress" : path.startsWith("/seo") ? "seo" : path.startsWith("/care") ? "care" : path.startsWith("/comms") ? "comms" : path.startsWith("/admin") ? "admin" : path.startsWith("/settings") ? lastWorkspace : "mockups";
   useEffect(() => {
     if (!path.startsWith("/settings")) {
       setLastWorkspace(workspace);
@@ -111,6 +112,7 @@ export default function Layout() {
   const isSeo = workspace === "seo";
   const isCare = workspace === "care";
   const isComms = workspace === "comms";
+  const isAdmin = workspace === "admin";
 
   const leads = usePoll<Lead[]>("/api/leads", 5000);
   const events = usePoll<EventItem[]>("/api/events", 5000);
@@ -180,7 +182,7 @@ export default function Layout() {
     overlay: popover !== null || adding,
     workspace,
     reloadAll,
-    openAdd: () => (isComms ? nav("/comms/new") : isCare ? nav("/care/new") : isSeo ? nav("/seo/new") : isWp ? nav("/wp/new") : isBuilds ? nav("/builds/new") : setAdding(true)),
+    openAdd: () => (isAdmin ? nav("/admin/revenue?new=1") : isComms ? nav("/comms/new") : isCare ? nav("/care/new") : isSeo ? nav("/seo/new") : isWp ? nav("/wp/new") : isBuilds ? nav("/builds/new") : setAdding(true)),
   };
 
   const needle = q.trim().toLowerCase();
@@ -309,7 +311,7 @@ export default function Layout() {
           )}
         </div>
 
-        <button className="btn btn-chip hide-sm" onClick={ctx.openAdd}>{isComms ? <MessagesSquare /> : isCare ? <Server /> : isSeo ? <Gauge /> : isWp ? <PanelsTopLeft /> : isBuilds ? <FilePlus2 /> : isFinder ? <MapPinned /> : <UserPlus />}{isComms ? "Add channel" : isCare ? "Add site" : isSeo ? "Add live site" : isWp ? "New conversion" : isBuilds ? "New build" : isFinder ? "New search" : "Add lead"}</button>
+        <button className="btn btn-chip hide-sm" onClick={ctx.openAdd}>{isAdmin ? <Banknote /> : isComms ? <MessagesSquare /> : isCare ? <Server /> : isSeo ? <Gauge /> : isWp ? <PanelsTopLeft /> : isBuilds ? <FilePlus2 /> : isFinder ? <MapPinned /> : <UserPlus />}{isAdmin ? "Record payment" : isComms ? "Add channel" : isCare ? "Add site" : isSeo ? "Add live site" : isWp ? "New conversion" : isBuilds ? "New build" : isFinder ? "New search" : "Add lead"}</button>
         <span className="top-divider hide-sm" />
 
         <div className="pop-anchor" ref={notifRef}>
@@ -384,7 +386,7 @@ export default function Layout() {
             </div>
           )}
         </div>
-        <button className="btn btn-ink btn-wide" onClick={isCare ? () => nav("/care/all?show=approve") : isComms ? () => nav("/comms") : ctx.openAdd}>{isComms ? (commsUnread ? `${commsUnread} unread` : "All channels") : isCare ? "Approvals" : isSeo ? "Audit a site" : isWp ? "Convert" : isBuilds ? "New build" : isFinder ? "Find leads" : "Create"} <ArrowRight /></button>
+        <button className="btn btn-ink btn-wide" onClick={isCare ? () => nav("/care/all?show=approve") : isComms ? () => nav("/comms") : isAdmin ? () => nav("/admin/clients") : ctx.openAdd}>{isAdmin ? "Clients" : isComms ? (commsUnread ? `${commsUnread} unread` : "All channels") : isCare ? "Approvals" : isSeo ? "Audit a site" : isWp ? "Convert" : isBuilds ? "New build" : isFinder ? "Find leads" : "Create"} <ArrowRight /></button>
       </header>
 
       <div className={`shell${collapsed ? " is-collapsed" : ""}`}>
@@ -396,7 +398,23 @@ export default function Layout() {
             </button>
           </div>
 
-          {isComms ? (
+          {isAdmin ? (
+            <>
+              <NavLink to="/admin" end className="nav-item" title="Overview"><ChartColumn /><span className="label">Overview</span></NavLink>
+              <NavLink to="/admin/clients" className="nav-item" title="Clients"><Contact /><span className="label">Clients</span></NavLink>
+              <NavLink to="/admin/revenue" className="nav-item" title="Revenue"><Banknote /><span className="label">Revenue</span></NavLink>
+              <NavLink to="/settings" className="nav-item" title="Settings"><SettingsIcon /><span className="label">Settings</span></NavLink>
+
+              <div className="side-divider" />
+              <div className="side-label"><span className="label">Workspaces</span></div>
+              {WORKSPACES.filter((w) => w.key !== "admin").map((w) => (
+                <NavLink key={w.key} to={w.home} className="vertical-item" title={w.label}>
+                  <w.icon size={16} style={{ flex: "none", opacity: 0.85 }} />
+                  <span className="name">{w.label}</span>
+                </NavLink>
+              ))}
+            </>
+          ) : isComms ? (
             <>
               <NavLink to="/comms" end className="nav-item" title="All channels"><Home /><span className="label">All channels</span>{commsActivity && <span className="count">{commsUnread || "•"}</span>}</NavLink>
               <NavLink to="/comms/new" className="nav-item" title="Add channel"><Plus /><span className="label">Add channel</span></NavLink>

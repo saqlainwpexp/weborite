@@ -823,6 +823,54 @@ small.warn, span.warn, .warn { color: var(--amber); }
 .menu-row { border: 0; background: none; width: 100%; }
 .menu-row.danger { color: var(--red); }
 
+/* ---------- Super admin ---------- */
+.stat .top { display: flex; justify-content: space-between; align-items: flex-start; }
+.stat small { display: block; font-size: 12.5px; margin-top: 2px; }
+.four.three { grid-template-columns: repeat(3, 1fr); }
+.delta { font-size: 12.5px; font-weight: 500; padding: 3px 8px; border-radius: 8px; background: var(--inset); color: var(--text-2); white-space: nowrap; }
+.delta.up { background: #e5f4ea; color: #25683f; }
+.delta.down { background: #f7e6e6; color: #9b3434; }
+.chart { position: relative; margin-top: 12px; }
+.chart-bar { display: flex; justify-content: space-between; align-items: center; font-size: 13px; margin: 12px 0 6px; }
+.chart-plot { position: relative; }
+.chart-plot svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart-grid { stroke: var(--hairline); stroke-width: 1; }
+.chart-base { stroke: #cfcccd; stroke-width: 1; }
+.chart-axis { fill: var(--muted); font-size: 11px; font-family: inherit; }
+.chart-col { fill: var(--accent); opacity: .85; transition: opacity .12s; }
+.chart-col.on { opacity: 1; }
+.chart-plot g:focus { outline: none; }
+.chart-plot g:focus-visible .chart-col { opacity: 1; stroke: var(--text); stroke-width: 1.5; }
+.chart-tip { position: absolute; transform: translate(-50%, calc(-100% - 10px)); background: var(--ink); color: #fff; border-radius: 10px; padding: 6px 10px; font-size: 12.5px; pointer-events: none; white-space: nowrap; display: flex; flex-direction: column; align-items: center; box-shadow: 0 6px 20px rgba(0,0,0,.15); }
+.chart-tip b { font-weight: 500; font-size: 14px; }
+.chart-tip span { opacity: .75; }
+.chart-table td, .chart-table th { padding-top: 8px; padding-bottom: 8px; }
+.funnel { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.funnel li, .hbar-list li { display: grid; grid-template-columns: 118px minmax(0, 1fr) 42px 38px; gap: 10px; align-items: center; font-size: 13.5px; }
+.funnel-label { color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.funnel-track { height: 10px; border-radius: 5px; background: var(--inset); overflow: hidden; }
+.funnel-fill { display: block; height: 100%; border-radius: 5px; background: var(--accent); }
+.funnel-count { font-weight: 500; text-align: right; font-variant-numeric: tabular-nums; }
+.funnel-rate { font-size: 12px; text-align: right; }
+.hbar-list { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.hbar-list li { grid-template-columns: 96px minmax(0, 1fr) auto; }
+.hbar-list b { font-weight: 500; font-variant-numeric: tabular-nums; }
+.activity { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; }
+.activity li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; padding: 10px 0; border-top: 1px solid var(--hairline); font-size: 13.5px; }
+.activity li:first-child { border-top: 0; }
+.activity b { font-weight: 450; }
+.activity span { grid-column: 1; font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.activity time { grid-column: 2; grid-row: 1; font-size: 12px; }
+.stage-th, .stage-td { text-align: center; }
+.stage-dot { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; border: 1.5px dashed #d6d3d4; background: none; padding: 0; }
+.stage-dot.on { border: 0; background: var(--accent); color: #fff; cursor: pointer; }
+.stage-dot.on svg { width: 13px; height: 13px; stroke-width: 2.5; }
+.retainer-list { display: flex; flex-direction: column; margin-top: 12px; }
+.retainer-row { display: grid; grid-template-columns: minmax(0, 1fr) 90px auto; gap: 8px; align-items: center; padding: 10px 0; border-top: 1px solid var(--hairline); }
+.retainer-row:first-child { border-top: 0; }
+.retainer-row .input { height: 36px; }
+@media (max-width: 900px) { .four.three { grid-template-columns: 1fr; } .funnel li { grid-template-columns: 96px minmax(0, 1fr) 36px 34px; } }
+
 /* ---------- Brand chrome: top bar + sidebar in the brand colour ---------- */
 .topbar {
   background: var(--brand); border-radius: 20px; padding: 10px 12px; color: var(--on-brand);
@@ -893,3 +941,4 @@ small.warn, span.warn, .warn { color: var(--amber); }
   .lead-cell b, .lead-cell span { overflow-wrap: anywhere; }
   .viewport { height: 520px; }
 }
+.table td .icon-btn { display: inline-grid; vertical-align: middle; margin-left: 4px; }

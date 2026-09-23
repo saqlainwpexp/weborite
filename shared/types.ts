@@ -145,6 +145,8 @@ export interface Settings {
   careAutoStage: boolean; // also clone to staging and test updates automatically
   careDiffThreshold: number; // % of pixels allowed to change before a page needs review
   careKeepStaging: boolean; // keep the staging copy after the live update
+  /** Super admin */
+  currency: string; // ISO code for revenue, e.g. USD
 }
 
 export interface LeadDetail extends Lead {
@@ -680,4 +682,90 @@ export interface CommsService {
   notify: boolean;
   muted: boolean; // no unread badge, no notifications
   createdAt: string;
+}
+
+/* ---------- Super admin ---------- */
+
+export type ServiceKind = "mockup" | "website" | "wordpress" | "seo" | "maintenance" | "hosting" | "other";
+
+export interface Payment {
+  id: string;
+  date: string; // YYYY-MM-DD
+  client: string;
+  domain: string; // links the payment to a client's other work
+  service: ServiceKind;
+  amount: number;
+  status: "paid" | "pending";
+  note: string;
+  careId?: string; // retainer invoices
+  period?: string; // YYYY-MM for retainer invoices
+  createdAt: string;
+}
+
+export interface Retainer {
+  careId: string;
+  fee: number; // per month
+  active: boolean;
+  since: string;
+}
+
+export interface AdminClient {
+  key: string; // domain
+  name: string;
+  url: string;
+  source: string;
+  stages: { lead: boolean; mockup: boolean; build: boolean; wordpress: boolean; live: boolean; maintenance: boolean };
+  links: { lead?: string; build?: string; wordpress?: string; seo?: string; care?: string };
+  lastActivity: string;
+  paid: number;
+  pending: number;
+  retainer: number;
+}
+
+export interface AdminOverview {
+  range: number; // days, 0 = all time
+  currency: string;
+  revenue: {
+    paid: number;
+    paidPrev: number | null;
+    pending: number;
+    mrr: number;
+    allTime: number;
+    months: { key: string; label: string; paid: number }[];
+    byService: { service: ServiceKind; paid: number }[];
+  };
+  leads: {
+    total: number;
+    prev: number | null;
+    bySource: { source: LeadSource; count: number }[];
+    ready: number;
+    review: number;
+    failed: number;
+    prospects: number;
+    prospectsContactable: number;
+    prospectsToMockup: number;
+    weeks: { label: string; leads: number; prospects: number }[];
+  };
+  work: {
+    builds: number;
+    buildsReady: number;
+    buildsActive: number;
+    pagesBuilt: number;
+    conversions: number;
+    conversionsDone: number;
+    wpPagesApproved: number;
+    seoSites: number;
+    seoSignedOff: number;
+    seoFixed: number;
+    careSites: number;
+    careUpdates: number;
+    careWaiting: number;
+    careVulnerable: number;
+    uptime: number | null;
+  };
+  usage: { jobs: number; apiCost: number };
+  funnel: { stage: string; count: number }[];
+  attention: { kind: "approve" | "failed" | "security" | "money"; title: string; detail?: string; link: string }[];
+  activity: EventItem[];
+  topClients: AdminClient[];
 }

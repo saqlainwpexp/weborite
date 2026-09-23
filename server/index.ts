@@ -21,6 +21,7 @@ import { seo } from "./seo/routes.ts";
 import { SEO_DIR } from "./seo/store.ts";
 import { care, startCareTimers } from "./care/routes.ts";
 import { comms } from "./comms.ts";
+import { admin } from "./admin.ts";
 import { STEPS, type BenchmarkSet, type Capture, type Diagnosis, type GateResult, type LeadDetail, type StepKey, type Usage } from "../shared/types.ts";
 
 const PORT = API_PORT;
@@ -106,6 +107,7 @@ app.use("/api/wp", wp);
 app.use("/api/seo", seo);
 app.use("/api/care", care);
 app.use("/api/comms", comms);
+app.use("/api/admin", admin);
 
 app.get("/api/events", (_req, res) => res.json(listEvents(40)));
 
@@ -122,6 +124,8 @@ app.put("/api/settings", (req, res) => {
     "studioName", "brandColor", "firstName", "lastName", "userEmail", "userPhone",
     "psiKey", "gtmetrixKey", "qaEmail",
   ];
+  if (typeof req.body?.currency === "string" && !/^[A-Z]{3}$/.test(req.body.currency)) return res.status(400).json({ error: "Currency must be a 3-letter code like USD" });
+  if (typeof req.body?.currency === "string") allowed.push("currency");
   const patch = Object.fromEntries(Object.entries(req.body ?? {}).filter(([k, v]) => allowed.includes(k) && typeof v === "string"));
   const list = req.body?.seoChecklist;
   if (Array.isArray(list)) {

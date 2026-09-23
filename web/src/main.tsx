@@ -33,6 +33,9 @@ import CareDetail from "./pages/care/CareDetail";
 import CommsHome from "./pages/comms/CommsHome";
 import CommsAdd from "./pages/comms/CommsAdd";
 import CommsView from "./pages/comms/CommsView";
+import AdminOverview from "./pages/admin/AdminOverview";
+import AdminClients from "./pages/admin/AdminClients";
+import AdminRevenue from "./pages/admin/AdminRevenue";
 import { applyStoredBrand } from "./lib/brand";
 
 applyStoredBrand();
@@ -74,6 +77,9 @@ createRoot(document.getElementById("root")!).render(
           <Route path="comms" element={<CommsHome />} />
           <Route path="comms/new" element={<CommsAdd />} />
           <Route path="comms/:id" element={<CommsView />} />
+          <Route path="admin" element={<AdminOverview />} />
+          <Route path="admin/clients" element={<AdminClients />} />
+          <Route path="admin/revenue" element={<AdminRevenue />} />
         </Route>
       </Routes>
     </BrowserRouter>

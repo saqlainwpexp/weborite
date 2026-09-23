@@ -159,6 +159,7 @@ const DEFAULTS: StoredSettings = {
   careAutoStage: true,
   careDiffThreshold: 1,
   careKeepStaging: false,
+  currency: "USD",
 };
 
 export function getSettings(): StoredSettings {
