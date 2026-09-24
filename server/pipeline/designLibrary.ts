@@ -39,8 +39,8 @@ export function listDesignSystems(): DesignSystem[] {
     if (!existsSync(specPath)) continue;
     try {
       const json = JSON.parse(readFileSync(specPath, "utf8")) as { name?: string; character?: string; reuse?: string };
-      const ref = ["reference.png", "ref.png"].map((f) => join(dir, f)).find(existsSync)
-        ?? readdirSync(dir).filter((f) => /\.(png|jpe?g)$/i.test(f)).map((f) => join(dir, f))[0]
+      const ref = ["reference.png", "reference.webp", "reference.jpg", "ref.png"].map((f) => join(dir, f)).find(existsSync)
+        ?? readdirSync(dir).filter((f) => /\.(png|jpe?g|webp)$/i.test(f) && !/^spec-/i.test(f)).sort((a, b) => parseInt(a) - parseInt(b)).map((f) => join(dir, f))[0]
         ?? null;
       out.push({ slug, dir, name: json.name ?? slug, character: json.character ?? "", reuse: json.reuse ?? "", referenceImage: ref, json });
     } catch {

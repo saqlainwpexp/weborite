@@ -1,51 +1,54 @@
 {
   "name": "HVAC / Home Services",
-  "source": { "readFrom": "Synthesized from established HVAC / home-services web conventions (not copied from any specific design). Add real reference images to design-library/hvac/ to refine.", "extractedAt": "2026-09-24" },
-  "character": "Trust-first HVAC / home-services site built to make the phone ring. Clean and confident, blue for cooling + a warm red/orange for heating, big legible type, prominent phone number and 'Schedule Service' CTA, licensed/insured trust signals everywhere, and real technician/equipment photos. Best for HVAC, plumbing, electrical, roofing, garage-door, pest-control and similar local home-services trades.",
+  "source": { "readFrom": "Grounded in 21 real HVAC website references uploaded to this folder (see the .webp files) plus established home-services conventions.", "extractedAt": "2026-09-24" },
+  "character": "Trust-first HVAC / home-services site built to make the phone ring. Heavy REAL technician & equipment photography, house/hexagon-shaped trust badges, prominent phone number and estimate CTA, service cards, service-area coverage, and Google reviews. Two proven palette directions: (A) NAVY + YELLOW or (B) BLUE + WHITE — both read dependable. Best for HVAC, plumbing, electrical, roofing, garage-door and similar local trades.",
   "typography": {
-    "primary": { "family": "Inter", "weights": [400, 600, 700, 800], "note": "A strong grotesk (Inter, Manrope, or a condensed like Oswald/Anton for headings) reads dependable. Avoid thin or decorative fonts." },
+    "primary": { "family": "Inter", "weights": [400, 600, 700, 800], "note": "A strong grotesk (Inter / Manrope / Poppins). Headings are heavy (700–800); one hero word is often italic for emphasis. Avoid thin or decorative fonts." },
     "scale": [
-      { "role": "display", "size": 56, "weight": 800, "note": "Hero value prop, tight." },
+      { "role": "display", "size": 56, "weight": 800, "note": "Hero value prop; a word may be italic ('Personalized HVAC')." },
       { "role": "h2", "size": 36, "weight": 700 },
-      { "role": "h3", "size": 22, "weight": 700 },
-      { "role": "eyebrow", "size": 13, "weight": 700, "transform": "uppercase", "note": "Small label above headings ('24/7 EMERGENCY SERVICE')." },
-      { "role": "phone", "size": 22, "weight": 800, "note": "The phone number is a headline-weight element in the header and CTAs." },
-      { "role": "body", "size": 17, "weight": 400 },
+      { "role": "h3", "size": 20, "weight": 700 },
+      { "role": "eyebrow", "size": 13, "weight": 700, "transform": "uppercase", "note": "Small label above headings (ABOUT US, SERVICE AREA)." },
+      { "role": "phone", "size": 20, "weight": 800, "note": "Header phone number is headline-weight." },
+      { "role": "body", "size": 16, "weight": 400 },
       { "role": "small", "size": 14, "weight": 400 }
-    ],
-    "notes": "Big, bold, legible. The phone number is treated as a first-class heading element, not fine print. Uppercase eyebrows for urgency/credentials."
+    ]
   },
   "color": {
-    "ink": "#0f1b2d", "surface": "#ffffff", "surfaceAlt": "#f2f6fb",
-    "primary": "#1667d6", "primaryDeep": "#0f4aa0",
-    "heat": "#e4491c",
+    "directions": {
+      "navy-yellow": { "ink": "#1b1b4b", "surface": "#ffffff", "surfaceAlt": "#f4f1ea", "primary": "#1b1b4b", "accent": "#f6c445", "note": "Navy sections + a bright yellow CTA/accent; cream off-white backgrounds. (Reference image 1.)" },
+      "blue-white": { "ink": "#0f1b2d", "surface": "#ffffff", "surfaceAlt": "#f2f6fb", "primary": "#2563eb", "accent": "#e4491c", "note": "Clean blue primary on white, warm-red accent for urgency, dark photo hero. (Reference image 5.)" }
+    },
     "trust": "#1f9d55",
-    "notes": "Cool BLUE primary (trust, cooling) with a warm RED/ORANGE 'heat' accent for heating/urgency (emergency banners, hot deals) and a green for 'licensed/verified' ticks. Near-navy ink on white / pale-blue surfaces. REUSE this cool-primary + warm-accent structure; put the lead's real brand colour in the blue slot and keep a warm accent for urgency."
+    "notes": "Pick ONE direction to fit the lead's brand. Put the lead's real brand colour in the primary slot; keep a bright/warm accent for CTAs and urgency. Real photography carries the colour more than fills do — keep surfaces calm."
   },
-  "spacing": { "base": 4, "scale": [4, 8, 16, 24, 32, 48, 64, 80], "sectionPaddingY": [64, 80], "contentGaps": [16, 24, 32], "cardPadding": [24, 32], "notes": "Roomy ~64–80px sections, white cards with soft shadow, ~1200px column. Comfortable and uncluttered — trades customers scan fast." },
+  "spacing": { "base": 4, "scale": [4, 8, 16, 24, 32, 48, 64, 80], "sectionPaddingY": [64, 80], "contentGaps": [16, 24, 32], "cardPadding": [24, 32], "notes": "Roomy ~64–80px sections, white cards with soft shadow, ~1200px column. Uncluttered — trades customers scan fast." },
   "components": {
-    "header": { "note": "STICKY header with a top utility strip (hours + '24/7 Emergency') and, in the main bar, the logo, nav, a bold click-to-call phone number, and a solid 'Schedule Service' button. The phone + CTA are always visible." },
-    "button": { "shape": "Solid, rounded, high-contrast.", "fills": ["primary = blue 'Schedule Service' / 'Book Online'", "warm = red 'Call Now' for urgency"], "notes": "Every section ends with a call or booking CTA." },
-    "card": { "shape": "White, soft shadow, rounded; blue icon.", "types": ["service card (AC / Heating / Install / Maintenance)", "trust/why-us card", "review card", "coupon/financing card"] },
-    "badges": { "note": "Licensed · Insured · BBB · financing · warranty · brand-certified (Carrier/Trane) badges near the hero and footer." }
+    "header": { "note": "Sticky. Logo, nav, a bold click-to-call PHONE NUMBER, and a bright 'Get Free Estimate' / 'Book Service' button always visible. Often a service tabs/pills bar (Maintenance · Cooling · Heating · Installation) just under the hero." },
+    "button": { "shape": "Solid, rounded/pill, high-contrast.", "fills": ["primary/accent = 'Get Free Estimate' / 'Book Service'", "'Call Now' with a phone icon on cards"], "notes": "Service cards carry BOTH 'Learn More' and 'Call Now'." },
+    "trustBadge": { "shape": "House- or hexagon-shaped badge with an icon.", "examples": ["15+ Years Experience", "8,000+ Systems Installed", "Certified & Accredited", "Fully Insured"] },
+    "card": { "shape": "White, soft shadow, rounded; photo or icon on top.", "types": ["service card (photo → title → copy → Learn More + Call Now)", "review card (avatar → stars → quote)", "team member photo"] }
   },
   "sectionLayouts": {
     "order": [
-      { "role": "header", "layout": "Sticky. Utility strip (hours + emergency line) on top; main bar: logo · nav · bold phone number · 'Schedule Service' button." },
-      { "role": "hero", "layout": "Left: eyebrow (e.g. '24/7 EMERGENCY HVAC') + big value-prop heading + one line + two CTAs (Call Now / Book Online) + a row of trust badges (Licensed, Insured, ★ reviews). Right: a real technician / HVAC-unit photo, or a short 'request service' form." },
-      { "role": "trust-strip", "layout": "A slim band of proof: years in business, jobs completed, star rating, brand-certified logos." },
-      { "role": "services", "layout": "Heading + a grid of service cards (AC Repair, Heating, Installation, Maintenance, Indoor Air Quality) — icon → title → one line → 'Learn more'." },
-      { "role": "why-us", "layout": "Two columns: a real photo beside a checklist of differentiators (upfront pricing, same-day service, satisfaction guarantee, certified techs)." },
-      { "role": "process", "layout": "3–4 numbered steps: Book → Diagnose → Fix → Relax." },
-      { "role": "offers", "layout": "A warm-accent band with a coupon / seasonal tune-up offer and financing ('$0 down, low monthly')." },
-      { "role": "service-area", "layout": "A map or a list of towns/zip codes served, with a 'Not sure if we cover you? Call us' CTA." },
-      { "role": "reviews", "layout": "Star rating summary + a row of real Google review cards (quote → name → town)." },
-      { "role": "cta-band", "layout": "Full-width primary band: big 'Need service today?' heading + phone number + Book button." },
-      { "role": "footer", "layout": "Contact, hours, service area, license number, brand certifications, quick links; the phone number repeated large." }
+      { "role": "header", "layout": "Sticky: logo · nav · bold phone number · bright estimate CTA. Optional top strip with hours / rating." },
+      { "role": "hero", "layout": "Two proven forms: (A) split — heading (a word italic) + rating + technician photo on the left, and an inline 'Get a Free Estimate' FORM (name, phone, email, zip) on the right; or (B) full-bleed technician photo with dark overlay + heading + 'Book Service'. Both foreground REAL technician photos." },
+      { "role": "service-tabs", "layout": "A slim icon tab/pill bar: Maintenance · Renovation · Installation · Cooling · Heating." },
+      { "role": "trust-badges", "layout": "A row of 4 house/hexagon badges: years, installs, certified, insured." },
+      { "role": "about", "layout": "'Providing <City> with … Since <year>' — technician photos beside a numbered accordion of differentiators (Family-Owned, Best-Price, Top-Rated)." },
+      { "role": "services", "layout": "Heading + a grid/carousel of service cards (photo → title → copy → Learn More + Call Now); often on a navy band." },
+      { "role": "features", "layout": "Alternating text / real-photo rows (Fresh Air, Energy Efficient, Commissioning) — numbered." },
+      { "role": "service-area", "layout": "A map beside a '<State> Neighborhoods We Proudly Serve' accordion list of towns." },
+      { "role": "reviews", "layout": "'What Our Customers Say' + Google rating + a carousel of review cards (avatar → stars → quote → name)." },
+      { "role": "team", "layout": "'Meet Our Dedicated Team' — a row of technician photos." },
+      { "role": "partners", "layout": "'Proud To Partner With The Best' — a row of brand/manufacturer logos (Carrier, Trane, …)." },
+      { "role": "video", "layout": "Optional: a 'See us in action' technician video with a play button." },
+      { "role": "cta-band", "layout": "Full-width band: 'Get the Best Heating & Air Conditioning Services' + estimate field/CTA + technician photo." },
+      { "role": "footer", "layout": "Logo + social, Company / Services / Contact columns, address, hours, license number; phone repeated." }
     ],
-    "reusableArchetypes": ["sticky phone-CTA header with emergency strip", "hero with trust badges + call/book CTAs + technician photo (or inline request form)", "proof trust-strip (years / jobs / rating / certifications)", "service card grid", "photo + differentiator checklist", "numbered how-it-works", "coupon + financing band", "service-area map/list", "Google-review cards", "phone CTA band", "license/certification footer"],
-    "craftNotes": ["The phone number and 'Schedule Service' CTA must be visible at all times — home-services convert by call/booking.", "Trust signals (licensed, insured, reviews, brand-certified, warranty, financing) appear early and often.", "Use the lead's REAL technician/team/equipment photos; stock-feeling imagery kills trust.", "One cool primary for calm/trust + a warm accent strictly for urgency and offers."]
+    "reusableArchetypes": ["sticky phone-CTA header + service tabs bar", "hero with inline estimate form (or full-bleed technician-photo hero)", "house/hexagon trust badges (years/installs/certified/insured)", "About with numbered differentiator accordion", "service card grid/carousel with Learn More + Call Now", "alternating text/photo feature rows", "service-area map + neighborhood accordion", "Google-review carousel", "technician team row", "manufacturer partner logos", "video-in-action", "estimate CTA band", "license/hours footer"],
+    "craftNotes": ["REAL technician / equipment / team photos everywhere — this niche sells on proof, not illustration.", "Phone number + estimate CTA visible at all times; service cards add a 'Call Now'.", "Trust signals early and often: years, installs, certified, insured, brand-certified, Google rating.", "One cool primary (navy or blue) + a bright/warm accent strictly for CTAs and urgency."]
   },
-  "referenceImages": {},
-  "reuse": "Use for HVAC / plumbing / electrical / roofing / and similar local home-services trades. Take the sticky phone-CTA header, trust-badge hero, service grid, offers/financing band, service-area section and review cards. Put the lead's brand colour in the blue slot, keep a warm accent for urgency, and use their real photos and real phone number, license and service area from FACTS."
+  "referenceImages": { "note": "21 real HVAC pages are in this folder as .webp (1–21). Generation attaches one as the visual bar; 1.webp (navy+yellow, form-in-hero) and 5.webp (blue+white, photo hero) are the most complete." },
+  "reuse": "Use for HVAC / plumbing / electrical / roofing / garage-door and similar local trades. Take the sticky phone-CTA header, estimate-form hero (or photo hero), house-shaped trust badges, service cards with Call Now, service-area accordion, review carousel, team + partner logos. Put the lead's brand colour in the primary slot, keep a bright accent for CTAs, and use the lead's REAL photos and their real phone, license, hours and service area from FACTS."
 }

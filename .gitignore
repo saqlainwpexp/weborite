@@ -20,5 +20,7 @@ figma-token.txt
 design-library/**/*.png
 design-library/**/*.jpg
 design-library/**/*.jpeg
+design-library/**/*.webp
+design-library/**/_thumbs/**
 design-library/**/_raw.json
 design-library/_progress.log
