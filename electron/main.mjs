@@ -77,7 +77,7 @@ async function startServer() {
   server = utilityProcess.fork(join(ROOT, "app-dist", "server.mjs"), [], {
     serviceName: "Weborite server",
     stdio: "pipe",
-    env: { ...process.env, STUDIO_ROOT: ROOT, STUDIO_DATA: DATA, API_PORT: String(port), STUDIO_DESKTOP: "1" },
+    env: { ...process.env, STUDIO_ROOT: ROOT, STUDIO_DATA: DATA, API_PORT: String(port), STUDIO_DESKTOP: "1", ...(DEV && { STUDIO_LICENSE_BYPASS: "1" }) },
   });
   server.stdout?.on("data", (d) => log.write(d));
   server.stderr?.on("data", (d) => log.write(d));

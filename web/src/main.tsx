@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+import { StrictMode, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "@fontsource-variable/inter";
@@ -39,6 +39,8 @@ import AdminOverview from "./pages/admin/AdminOverview";
 import AdminClients from "./pages/admin/AdminClients";
 import AdminRevenue from "./pages/admin/AdminRevenue";
 import { applyStoredBrand } from "./lib/brand";
+import { Activation, type LicenseStatus } from "./pages/Activation";
+import { api } from "./lib/api";
 
 applyStoredBrand();
 
@@ -52,9 +54,8 @@ function dismissSplash() {
   }));
 }
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <BrowserRouter>
+const DASHBOARD = (
+  <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Dashboard />} />
@@ -96,8 +97,27 @@ createRoot(document.getElementById("root")!).render(
           <Route path="admin/revenue" element={<AdminRevenue />} />
         </Route>
       </Routes>
-    </BrowserRouter>
-  </StrictMode>,
+  </BrowserRouter>
 );
 
-dismissSplash();
+/** License gate: activate before the dashboard loads; re-checks so a lapsed subscription locks it. */
+function Root() {
+  const [lic, setLic] = useState<LicenseStatus | null>(null);
+  const check = () =>
+    api<LicenseStatus>("/api/license/status")
+      .then(setLic)
+      .catch(() => setLic({ bypass: false, activated: false, licensed: false, status: "none", name: "", unreachable: true }));
+  useEffect(() => void check(), []);
+  useEffect(() => {
+    if (lic) dismissSplash();
+  }, [lic]);
+  if (!lic) return null; // splash stays up until we know
+  if (!lic.licensed) return <Activation status={lic} onActivated={check} />;
+  return DASHBOARD;
+}
+
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <Root />
+  </StrictMode>,
+);

@@ -24,6 +24,7 @@ import { comms } from "./comms.ts";
 import { admin } from "./admin.ts";
 import { agent } from "./agent/routes.ts";
 import { campaigns, startCampaignTimers } from "./campaigns/index.ts";
+import { license, requireLicense, startLicenseTimers } from "./license/index.ts";
 import { assertPublicUrl, localOnly, sandboxFiles } from "./security.ts";
 import { STEPS, type BenchmarkSet, type Capture, type Diagnosis, type GateResult, type LeadDetail, type StepKey, type Usage } from "../shared/types.ts";
 
@@ -44,6 +45,9 @@ app.disable("x-powered-by");
 app.use(localOnly);
 app.use(rawJson);
 app.use(express.urlencoded({ extended: true }));
+// Gate the API for unlicensed installs; the license routes themselves stay reachable.
+app.use("/api/license", license);
+app.use(requireLicense(/^\/api\/license\//));
 
 app.get("/api/leads", (_req, res) => res.json(listLeads()));
 
@@ -233,6 +237,7 @@ app.listen(PORT, "127.0.0.1", () => {
   resumeWp();
   startCareTimers();
   startCampaignTimers();
+  startLicenseTimers();
 });
 
 // ---- Webhook receiver (the only thing to expose through the tunnel) ----
