@@ -29,6 +29,19 @@ function libraryDir(): string | null {
   return null;
 }
 
+/**
+ * In the packaged app the library ships inside app.asar but is asarUnpack'd, so the real files live
+ * under app.asar.unpacked. Reference images are handed to the (external) Claude CLI as a path, which
+ * can't read inside the archive — so return the real unpacked path.
+ */
+function realPath(p: string): string {
+  if (/app\.asar[\\/]/.test(p) && !p.includes("app.asar.unpacked")) {
+    const u = p.replace(/app\.asar([\\/])/, "app.asar.unpacked$1");
+    if (existsSync(u)) return u;
+  }
+  return p;
+}
+
 export function listDesignSystems(): DesignSystem[] {
   const base = libraryDir();
   if (!base) return [];
@@ -42,7 +55,7 @@ export function listDesignSystems(): DesignSystem[] {
       const ref = ["reference.png", "reference.webp", "reference.jpg", "ref.png"].map((f) => join(dir, f)).find(existsSync)
         ?? readdirSync(dir).filter((f) => /\.(png|jpe?g|webp)$/i.test(f) && !/^spec-/i.test(f)).sort((a, b) => parseInt(a) - parseInt(b)).map((f) => join(dir, f))[0]
         ?? null;
-      out.push({ slug, dir, name: json.name ?? slug, character: json.character ?? "", reuse: json.reuse ?? "", referenceImage: ref, json });
+      out.push({ slug, dir, name: json.name ?? slug, character: json.character ?? "", reuse: json.reuse ?? "", referenceImage: ref ? realPath(ref) : null, json });
     } catch {
       /* skip a malformed spec */
     }

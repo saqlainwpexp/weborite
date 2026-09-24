@@ -65,7 +65,8 @@
       "**/node_modules/playwright-core/**",
       "**/node_modules/puppeteer-core/**",
       "**/node_modules/lighthouse/**",
-      "**/node_modules/chrome-launcher/**"
+      "**/node_modules/chrome-launcher/**",
+      "design-library/**"
     ],
     "electronLanguages": [
       "en-US"
@@ -78,6 +79,10 @@
       "server/wp/php/**",
       "build/icon.png",
       "package.json",
+      "design-library/**",
+      "!design-library/**/_thumbs/**",
+      "!design-library/**/_raw.json",
+      "!design-library/_progress.log",
       "!**/*.map",
       "!**/*.md",
       "!**/*.markdown",
