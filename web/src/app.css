@@ -1018,3 +1018,53 @@ small.warn, span.warn, .warn { color: var(--amber); }
   .viewport { height: 520px; }
 }
 .table td .icon-btn { display: inline-grid; vertical-align: middle; margin-left: 4px; }
+
+/* ---------- Automations (Campaigns) ---------- */
+.page { display: flex; flex-direction: column; gap: 18px; }
+.page-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.page-head h1 { display: flex; align-items: center; gap: 10px; font-size: 24px; margin: 0 0 4px; }
+.page-head-icon, .page-head h1 svg { width: 22px; height: 22px; color: var(--brand-ink); }
+.page-head p { margin: 0; max-width: 640px; }
+.back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 13px; text-decoration: none; width: fit-content; }
+.back-link:hover { color: var(--text); }
+.back-link svg { width: 15px; height: 15px; }
+
+.camp-new { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.camp-new-label { font-weight: 650; font-size: 13px; }
+.camp-new-row { display: flex; gap: 10px; }
+.camp-new-input { flex: 1; }
+.camp-new-hint, .camp-new-row + .camp-new-hint { font-size: 12.5px; }
+.camp-err { color: var(--red); font-size: 13px; }
+
+.camp-list { display: flex; flex-direction: column; gap: 10px; }
+.camp-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 16px; text-decoration: none; color: var(--text); transition: box-shadow .12s; }
+.camp-row:hover { box-shadow: var(--shadow-pop); }
+.camp-row-title { font-weight: 640; }
+.camp-row-note { font-size: 12.5px; margin-top: 2px; }
+.camp-row-meta { display: flex; align-items: center; gap: 14px; font-size: 12.5px; flex: none; }
+.camp-row-arrow { width: 16px; height: 16px; color: var(--faint); }
+
+.camp-pill { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; background: var(--inset); color: var(--text-2); text-transform: capitalize; }
+.camp-pill.scraping, .camp-pill.generating, .camp-pill.sending { background: color-mix(in srgb, var(--amber) 18%, var(--card)); color: var(--amber); }
+.camp-pill.ready, .camp-pill.done { background: color-mix(in srgb, var(--green) 18%, var(--card)); color: var(--green); }
+.camp-pill.armed { background: color-mix(in srgb, var(--brand) 16%, var(--card)); color: var(--brand-ink); }
+.camp-pill.failed { background: color-mix(in srgb, var(--red) 15%, var(--card)); color: var(--red); }
+
+.camp-detail-actions { display: flex; align-items: center; gap: 10px; flex: none; }
+.camp-working { display: flex; align-items: center; gap: 10px; padding: 16px; color: var(--muted); }
+.camp-armed { padding: 16px; font-size: 13.5px; line-height: 1.5; border-left: 3px solid var(--brand); }
+
+.camp-board { display: flex; flex-direction: column; gap: 8px; }
+.camp-board-head, .camp-board-row { display: grid; grid-template-columns: 1fr 150px 1.2fr auto; gap: 12px; align-items: center; }
+.camp-board-head { padding: 0 16px; font-size: 11.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--faint); }
+.camp-board-row { padding: 12px 16px; }
+.camp-biz-name { font-weight: 600; }
+.camp-biz-url { font-size: 12px; }
+.camp-mockup { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 550; }
+.camp-mockup svg { width: 15px; height: 15px; }
+.camp-mockup.ready, .camp-mockup.review { color: var(--green); }
+.camp-mockup.generating { color: var(--amber); }
+.camp-mockup.failed { color: var(--red); }
+.camp-mockup.pending { color: var(--muted); }
+.camp-contact { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.camp-actions { display: flex; justify-content: flex-end; }

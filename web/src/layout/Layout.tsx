@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { NavLink, Outlet, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import {
   ArrowRight, Bell, CalendarDays, Check, ChevronDown, Home, Layers, MapPinned, MoreHorizontal, PanelLeftClose, PanelLeftOpen, UserCog,
-  Banknote, Blocks, ChartColumn, ClipboardCheck, Contact, Crown, FilePlus2, MessagesSquare, Gauge, ListChecks, PanelsTopLeft, Plus, Radar, Search, Server, Settings as SettingsIcon, Sparkles, UserPlus, Users, Wrench,
+  Banknote, Blocks, ChartColumn, ClipboardCheck, Contact, Crown, FilePlus2, MessagesSquare, Gauge, ListChecks, PanelsTopLeft, Plus, Radar, Search, Server, Settings as SettingsIcon, Sparkles, UserPlus, Users, Workflow, Wrench,
 } from "lucide-react";
 import type { BenchmarkSet, Build, BuildStats, CommsService, EventItem, FinderSearch, FinderStats, Lead, Prospect, SeoSite, Settings, Usage, WpConversion } from "../../../shared/types";
 import { api, host, timeAgo, usePoll } from "../lib/api";
@@ -16,7 +16,7 @@ import { careState, type CareView } from "../pages/care/CareList";
 import { desktop, type ChannelState } from "../lib/desktop";
 import { ChannelTile, UnreadBadge } from "../pages/comms/CommsHome";
 
-export type Workspace = "admin" | "mockups" | "finder" | "builds" | "wordpress" | "seo" | "care" | "comms";
+export type Workspace = "admin" | "mockups" | "automations" | "finder" | "builds" | "wordpress" | "seo" | "care" | "comms";
 
 export interface LayoutCtx {
   leads: Lead[] | null;
@@ -44,6 +44,7 @@ export interface LayoutCtx {
 const WORKSPACES: { key: Workspace; label: string; hint: string; home: string; icon: typeof Sparkles }[] = [
   { key: "admin", label: "Super admin", hint: "Earnings, leads, progress and reports across everything", home: "/admin", icon: Crown },
   { key: "mockups", label: "Mockups", hint: "Rebuild lead homepages with Claude", home: "/", icon: Sparkles },
+  { key: "automations", label: "Automations", hint: "Prompt → scrape → auto-mockups → outreach", home: "/campaigns", icon: Workflow },
   { key: "finder", label: "Lead Finder", hint: "Find businesses on Google Maps", home: "/finder", icon: Radar },
   { key: "builds", label: "Builds", hint: "Turn approved mockups into full websites", home: "/builds", icon: Blocks },
   { key: "wordpress", label: "WordPress", hint: "Convert builds into Elementor pages", home: "/wp", icon: PanelsTopLeft },
@@ -101,7 +102,7 @@ export default function Layout() {
     return w === "finder" || w === "builds" || w === "wordpress" || w === "seo" || w === "care" || w === "comms" || w === "admin" ? w : "mockups";
   });
   const path = location.pathname;
-  const workspace: Workspace = path.startsWith("/finder") ? "finder" : path.startsWith("/builds") ? "builds" : path.startsWith("/wp") ? "wordpress" : path.startsWith("/seo") ? "seo" : path.startsWith("/care") ? "care" : path.startsWith("/comms") ? "comms" : path.startsWith("/admin") ? "admin" : path.startsWith("/settings") ? lastWorkspace : "mockups";
+  const workspace: Workspace = path.startsWith("/campaigns") ? "automations" : path.startsWith("/finder") ? "finder" : path.startsWith("/builds") ? "builds" : path.startsWith("/wp") ? "wordpress" : path.startsWith("/seo") ? "seo" : path.startsWith("/care") ? "care" : path.startsWith("/comms") ? "comms" : path.startsWith("/admin") ? "admin" : path.startsWith("/settings") ? lastWorkspace : "mockups";
   useEffect(() => {
     if (!path.startsWith("/settings")) {
       setLastWorkspace(workspace);

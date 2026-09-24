@@ -33,6 +33,8 @@ import CareDetail from "./pages/care/CareDetail";
 import CommsHome from "./pages/comms/CommsHome";
 import CommsAdd from "./pages/comms/CommsAdd";
 import CommsView from "./pages/comms/CommsView";
+import Campaigns from "./pages/campaigns/Campaigns";
+import CampaignDetail from "./pages/campaigns/CampaignDetail";
 import AdminOverview from "./pages/admin/AdminOverview";
 import AdminClients from "./pages/admin/AdminClients";
 import AdminRevenue from "./pages/admin/AdminRevenue";
@@ -87,6 +89,8 @@ createRoot(document.getElementById("root")!).render(
           <Route path="comms" element={<CommsHome />} />
           <Route path="comms/new" element={<CommsAdd />} />
           <Route path="comms/:id" element={<CommsView />} />
+          <Route path="campaigns" element={<Campaigns />} />
+          <Route path="campaigns/:id" element={<CampaignDetail />} />
           <Route path="admin" element={<AdminOverview />} />
           <Route path="admin/clients" element={<AdminClients />} />
           <Route path="admin/revenue" element={<AdminRevenue />} />

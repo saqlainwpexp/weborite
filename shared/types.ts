@@ -176,6 +176,30 @@ export interface Usage {
 export type SearchSource = "google_maps";
 export type SearchStatus = "queued" | "searching" | "enriching" | "scoring" | "done" | "failed";
 
+export type CampaignStatus = "scraping" | "generating" | "ready" | "armed" | "sending" | "done" | "failed";
+export interface CampaignItem {
+  prospectId: string;
+  business: string;
+  url: string;
+  scratch: boolean;
+  email: string;
+  phone: string;
+  mockupLeadId: string | null;
+  mockupStatus: "pending" | "generating" | "ready" | "review" | "failed";
+  emailStatus: "none" | "drafted" | "sent" | "replied" | "skipped";
+}
+export interface Campaign {
+  id: string;
+  prompt: string;
+  query: string;
+  max: number;
+  status: CampaignStatus;
+  searchId: string;
+  note: string;
+  createdAt: string;
+  items: CampaignItem[];
+}
+
 export interface FinderSearch {
   id: string;
   query: string;
