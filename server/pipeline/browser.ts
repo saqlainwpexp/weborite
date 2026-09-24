@@ -1,9 +1,51 @@
 import { chromium, type Browser } from "playwright";
+import { execFile } from "node:child_process";
+import { createRequire } from "node:module";
+import { dirname, join } from "node:path";
 
 let browser: Browser | null = null;
+let healing: Promise<void> | null = null;
+
+/** True for the "browser isn't installed / was just updated" launch error. */
+const isMissingBrowser = (msg: string) => /Executable doesn't exist|npx playwright install|please run the following command|was just installed or updated|Failed to launch|ENOENT/i.test(msg);
+
+/**
+ * Install the Chromium build this Playwright version needs. Playwright's browser lives in a shared
+ * cache, and every Playwright update expects a new build — so after an npm/app update the old browser
+ * no longer matches and scraping breaks. This reinstalls it on demand (once) so lead search, captures
+ * and SEO keep working without the user running any command.
+ */
+function installChromium(): Promise<void> {
+  if (healing) return healing;
+  healing = new Promise((resolve, reject) => {
+    let cli: string;
+    try {
+      const require = createRequire(import.meta.url);
+      cli = join(dirname(require.resolve("playwright/package.json")), "cli.js");
+    } catch (e) {
+      return reject(new Error(`Can't locate the Playwright CLI to install the browser: ${(e as Error).message}`));
+    }
+    console.log("Installing the Chromium browser Playwright needs (one-time, ~150 MB)…");
+    // ELECTRON_RUN_AS_NODE lets the packaged app run the CLI with its bundled Node.
+    execFile(process.execPath, [cli, "install", "chromium"], { env: { ...process.env, ELECTRON_RUN_AS_NODE: "1" }, timeout: 5 * 60000, windowsHide: true }, (err, _out, stderr) => {
+      if (err) return reject(new Error(`Couldn't install the browser automatically: ${(stderr || err.message).slice(0, 300)}. Run "npx playwright install chromium" once.`));
+      console.log("Chromium installed.");
+      resolve();
+    });
+  });
+  return healing;
+}
 
 export async function getBrowser() {
-  if (!browser || !browser.isConnected()) browser = await chromium.launch({ headless: true });
+  if (browser && browser.isConnected()) return browser;
+  try {
+    browser = await chromium.launch({ headless: true });
+  } catch (e) {
+    if (!isMissingBrowser((e as Error).message)) throw e;
+    await installChromium();
+    healing = null; // allow a fresh attempt if a future update breaks it again
+    browser = await chromium.launch({ headless: true });
+  }
   return browser;
 }
 
