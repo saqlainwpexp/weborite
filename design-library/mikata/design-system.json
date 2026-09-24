@@ -1,0 +1,50 @@
+{
+  "name": "Mikata / Suzuden (スズデン)",
+  "source": { "fileKey": "OduCUcDqD1TRiRMrx1hwwo", "readFrom": "Extracted from the desktop design frame.", "extractedAt": "2026-09-24" },
+  "character": "Japanese CORPORATE / green-energy / sustainability site. Calm, minimalist, refined, and information-dense in the Japanese style. Soft green gradients, generous white space, small precise type, image-led 'works/partners' sections. Best for energy, manufacturing, B2B corporate, environmental, and any brand that wants a serious, established, eco feel.",
+  "typography": {
+    "primary": { "family": "Noto Sans JP", "weights": [400, 500, 700], "note": "For Latin/English leads use Inter or Noto Sans as the equivalent; keep the same restraint and small sizes." },
+    "scale": [
+      { "role": "display", "size": 40, "weight": 700, "note": "Section titles like 'OUR WORKS', often with a small English eyebrow above." },
+      { "role": "h2", "size": 28, "weight": 700 },
+      { "role": "h3", "size": 18, "weight": 500 },
+      { "role": "body", "size": 15, "weight": 400, "note": "Small, precise, generous line-height — Japanese-web density." },
+      { "role": "eyebrow", "size": 12, "weight": 500, "transform": "uppercase", "note": "Small English label above a Japanese heading (CREATE, FLOW, PARTNERS…)." }
+    ],
+    "notes": "Small, calm type with lots of air; English eyebrows over the main heading are a signature. Restraint is the whole point — nothing shouts."
+  },
+  "color": {
+    "ink": "#2a2f2c", "surface": "#ffffff", "surfaceAlt": "#f4f7f4",
+    "primary": "#3fbf7f", "primaryDeep": "#1f8f5a",
+    "gradient": "soft green→teal gradient (hero and full-width bands)",
+    "notes": "Near-black-green ink on white / pale-green surfaces, one green primary used in soft gradients for the hero and full-width bands (BEYOND WORKS, JOIN US). Calm and natural. REUSE the light + soft-green-gradient structure; swap green for the lead's brand colour."
+  },
+  "spacing": { "base": 8, "scale": [8, 16, 24, 40, 64, 96], "sectionPaddingY": [80, 96], "contentGaps": [16, 24, 40], "notes": "Very generous vertical rhythm (~80–96px) with small, dense content blocks inside — the calm-but-information-rich Japanese balance. ~1100px content column." },
+  "components": {
+    "button": { "shape": "Slim, minimal, often just a labelled arrow link or a thin pill.", "notes": "Understated CTAs; the design relies on hierarchy, not loud buttons." },
+    "card": { "shape": "Flat, hairline-bordered or borderless, generous padding.", "types": ["value card", "stat/spec table row", "work/partner image card"] },
+    "table": { "note": "Clean spec/stat tables (hairline rules) are common — good for numbers, specs, comparisons." }
+  },
+  "sectionLayouts": {
+    "order": [
+      { "role": "header", "layout": "Logo left, minimal nav + small CTAs right." },
+      { "role": "hero", "layout": "Soft green gradient band; a small English eyebrow (CREATE) over a short Japanese/heading, right- or center-aligned; very minimal, lots of air." },
+      { "role": "intro", "layout": "A centered paragraph statement of purpose." },
+      { "role": "value-cards", "layout": "A row of 2–3 flat cards (icon → heading → copy) on a pale surface." },
+      { "role": "stats-table", "layout": "A clean hairline table of key numbers/specs." },
+      { "role": "explainer-grid", "layout": "Heading + a multi-cell FAQ/benefit grid (dense, calm)." },
+      { "role": "process-band", "layout": "A darker green band: an eyebrow (FLOW) + a numbered step-by-step process." },
+      { "role": "trust-points", "layout": "A row of short trust/quality points." },
+      { "role": "works", "layout": "'OUR WORKS' — an eyebrow + 3 labelled columns (each a category with a real photo + short copy)." },
+      { "role": "partners", "layout": "'PARTNERS' — a row of 3 image cards with captions." },
+      { "role": "skills-table", "layout": "A two-column list/table of capabilities." },
+      { "role": "feature-band", "layout": "A full-width green image band (nature/site photo) with an overlaid statement." },
+      { "role": "join-cta", "layout": "A green 'JOIN US' band with an inline input/recruitment CTA." },
+      { "role": "footer", "layout": "An oversized brand wordmark + link columns + fine print." }
+    ],
+    "reusableArchetypes": ["soft green-gradient minimal hero with an English eyebrow", "flat value cards", "hairline stat/spec tables", "dense calm explainer grid", "dark-band numbered process (FLOW)", "3-column labelled WORKS with real photos", "3 image partner cards", "full-width photo band with overlaid statement", "inline recruitment/CTA band", "oversized-wordmark footer"],
+    "craftNotes": ["Restraint + air: small type, hairline rules, soft gradients — nothing loud.", "English eyebrows over the main heading give it a refined corporate feel.", "Real photography (sites, people, product) carries the WORKS/PARTNERS sections.", "Spec/stat tables are a strong device for data-heavy or technical leads."]
+  },
+  "referenceImages": { "reference.png": "Full desktop page." },
+  "reuse": "Use for corporate / energy / manufacturing / environmental / B2B / technical leads that want a calm, established, refined feel (and for any brand suited to an understated, information-dense layout). Take the light + soft-green-gradient palette, English-eyebrow headings, hairline tables, WORKS/PARTNERS photo sections and generous rhythm. Swap green for the lead's brand colour; for non-Japanese leads use Inter/Noto Sans and keep the restraint."
+}

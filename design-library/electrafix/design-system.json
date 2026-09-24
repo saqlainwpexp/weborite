@@ -1,0 +1,49 @@
+{
+  "name": "ElectraFix — Electrical Equipment Repair",
+  "source": { "fileKey": "txg9RQAWyh9yMcuCiZRP6r", "readFrom": "Extracted tokens + section structure from the Home Page frame (visual not captured; section layouts inferred from the frame tree).", "extractedAt": "2026-09-24" },
+  "character": "Bold, industrial TRADES / REPAIR / automotive look. Condensed all-caps display type, high-contrast near-black + white, a strong red primary with an orange secondary. Reads confident, hands-on and dependable. Best for electricians, mechanics, HVAC, repair shops, construction, equipment and industrial-service businesses.",
+  "typography": {
+    "display": { "family": "Bebas Neue", "usedFor": "Headings — condensed, ALL-CAPS, high impact.", "sizes": [56, 48, 32, 24] },
+    "primary": { "family": "Inter", "weights": [400, 500, 600], "usedFor": "Body and UI." },
+    "labels": { "family": "Inter Tight", "weight": 500, "usedFor": "Small labels / eyebrows." },
+    "scale": [
+      { "role": "display", "family": "Bebas Neue", "size": 56, "lineHeightPx": 67, "transform": "uppercase" },
+      { "role": "h1", "family": "Bebas Neue", "size": 48, "lineHeightPx": 58, "transform": "uppercase" },
+      { "role": "h2", "family": "Bebas Neue", "size": 32, "transform": "uppercase" },
+      { "role": "h3", "family": "Bebas Neue", "size": 24, "transform": "uppercase" },
+      { "role": "body", "family": "Inter", "size": 16, "lineHeightPx": 24, "weight": 400 },
+      { "role": "small", "family": "Inter", "size": 14, "lineHeightPx": 20, "weight": 400 }
+    ],
+    "notes": "The condensed ALL-CAPS Bebas Neue display over calm Inter body is the signature contrast — big, punchy headings, quiet readable text. A serif or a soft rounded font would break the industrial feel."
+  },
+  "color": {
+    "ink": "#070707", "inkSoft": "#3a3a3c", "muted": "#575757",
+    "surface": "#ffffff", "surfaceAlt": "#f5f5f5",
+    "primary": "#ef3e2c", "secondary": "#f57c3c",
+    "notes": "High-contrast near-black on white, a bold RED primary (CTAs, key headings, accents) with an ORANGE secondary for support. Dark near-black sections for contrast. REUSE the high-contrast + bold-warm-accent structure; put the lead's brand colour in the red slot (this system suits warm/bold brands; for a soft/pastel brand pick a calmer system)."
+  },
+  "spacing": { "base": 2, "scale": [4, 8, 12, 14, 24, 40, 60], "sectionPaddingY": [60, 80], "contentGaps": [12, 24, 60], "cardPadding": [24], "notes": "Firm ~60–80px sections, 24px content gaps. Content on a ~1200px column in a 1440 frame." },
+  "components": {
+    "button": { "shape": "Rectangular or slightly-rounded, solid red primary; outline/ghost secondary.", "notes": "High-contrast, confident CTAs; often ALL-CAPS label." },
+    "card": { "shape": "White or dark card, thin border or flat, square-ish corners.", "types": ["service card", "stat cell", "gallery/work image"] }
+  },
+  "sectionLayouts": {
+    "note": "Inferred from the frame structure (12 full-height sections). Reuse the industrial-service archetypes below; swap in the lead's brand + real photos.",
+    "order": [
+      { "role": "header", "layout": "Logo left, nav + a bold CTA right; dark or white bar." },
+      { "role": "hero", "layout": "Big ALL-CAPS condensed headline + short lead + red CTA, with a strong equipment/work photo (often near-full-bleed or split)." },
+      { "role": "services", "layout": "Section heading + a row/grid of service cards (icon or photo → title → short copy)." },
+      { "role": "why-us", "layout": "Text + supporting image; bold stat or promise callouts." },
+      { "role": "stats", "layout": "A row of big numbers (jobs done, years, response time)." },
+      { "role": "process", "layout": "Numbered steps of how the service works." },
+      { "role": "work-gallery", "layout": "A grid of real job/equipment photos (before/after or portfolio)." },
+      { "role": "testimonial", "layout": "Customer quotes / trust band." },
+      { "role": "cta", "layout": "Bold red band: big heading + phone/booking CTA." },
+      { "role": "footer", "layout": "Dark footer: contact details, hours, service area, links." }
+    ],
+    "reusableArchetypes": ["ALL-CAPS condensed hero with a strong equipment photo", "service card row", "big-number stats", "numbered process", "real-work photo gallery", "bold red CTA band", "dark contact footer"],
+    "craftNotes": ["Condensed ALL-CAPS headings + high contrast do the heavy lifting — keep body calm.", "Use the lead's REAL equipment/work photos prominently (this niche sells on proof).", "Red primary for action, near-black/white for everything else."]
+  },
+  "referenceImages": {},
+  "reuse": "Use for trades / repair / mechanic / HVAC / electrician / construction / industrial-service leads. Take the Bebas-Neue-ALL-CAPS + Inter pairing, high-contrast palette with a bold warm accent, and the service/stats/process/gallery archetypes. Put the lead's brand colour in the red slot and use their real work photos."
+}
