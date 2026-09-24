@@ -1,0 +1,47 @@
+{
+  "name": "CRUX website",
+  "source": { "fileKey": "ED3qdhTuol7mRIYBn7UxtC", "readFrom": "Extracted from the Desktop design frame.", "extractedAt": "2026-09-24" },
+  "character": "DARK-MODE premium tech / software agency. Deep navy-black throughout, electric-blue accent, white text, glassy dark cards with subtle borders and radial-glow lighting. Reads high-end, technical, expensive. Best for software, dev shops, B2B SaaS, fintech, or any brand that wants a 'serious engineering' feel.",
+  "typography": {
+    "primary": { "family": "DM Sans", "weights": [400, 500, 600, 700] },
+    "scale": [
+      { "role": "display", "size": 56, "weight": 700, "note": "Hero, part of the headline in blue." },
+      { "role": "h2", "size": 36, "weight": 600 },
+      { "role": "h3", "size": 22, "weight": 600 },
+      { "role": "body", "size": 16, "weight": 400 },
+      { "role": "small", "size": 14, "weight": 400 }
+    ],
+    "notes": "Single geometric sans (DM Sans). One word of the hero headline is set in the blue accent."
+  },
+  "color": {
+    "ink": "#e8eefc", "inkOnDark": "#ffffff",
+    "bg": "#05070d", "surfaceDark": ["#0a0e1a", "#0e1424"],
+    "primary": "#2f6bff", "primaryAlt": "#3b82f6",
+    "border": "rgba(255,255,255,0.08)",
+    "notes": "DARK theme: near-black navy bg, white/soft-white text, one electric-blue accent for CTAs, filled stat cards, links and headline highlights. Cards are dark with a faint light border + inner glow. REUSE the dark-glass structure; put the lead's brand colour in the blue slot (only if the lead suits dark mode — otherwise use a light system)."
+  },
+  "spacing": { "base": 8, "scale": [8, 16, 24, 32, 48, 64, 96, 120], "sectionPaddingY": [96, 120], "contentGaps": [24, 32, 48], "cardPadding": [24, 32], "notes": "Very generous dark sections (~96–120px), roomy cards, ~1200px content column with a wide dark gutter." },
+  "components": {
+    "button": { "shape": "Pill.", "fills": ["primary = blue", "ghost/outline with light border"], "notes": "Blue primary + outline secondary side by side in the hero." },
+    "card": { "shape": "Dark glass: dark fill, 1px translucent-white border, rounded, subtle inner glow.", "types": ["service card (blue icon + title + desc + link)", "filled-blue stat card", "dark testimonial card", "team photo card"] }
+  },
+  "sectionLayouts": {
+    "order": [
+      { "role": "header", "layout": "Dark bar: logo left, nav center, blue 'Get Started' pill right." },
+      { "role": "hero", "layout": "Full dark hero with a blue radial glow; large centered headline (one word blue) + subhead + two buttons (blue + outline); two feature cards below (one with a product/tech image)." },
+      { "role": "logos", "layout": "Greyscale tech-brand logo row on dark (Google, AWS, Stripe…)." },
+      { "role": "about-stats", "layout": "Two columns: left heading + paragraph, right a 2×2 grid of filled-blue stat cards (9+, 500+, 45+, 25)." },
+      { "role": "expertise-grid", "layout": "Heading + a 2×3 grid of dark service cards (blue icon → title → description → link)." },
+      { "role": "feature-split", "layout": "Left a team photo in a rounded frame with a floating stat badge; right heading + 3 icon bullet points." },
+      { "role": "testimonial", "layout": "Centered heading + one large filled-blue quote card (quote → avatar → name), carousel dots." },
+      { "role": "team", "layout": "Heading + a row of 3 team photo cards (photo → name → role)." },
+      { "role": "cta", "layout": "Centered heading + blue button on dark." },
+      { "role": "faq", "layout": "Dark accordion rows." },
+      { "role": "footer", "layout": "Dark multi-column link footer." }
+    ],
+    "reusableArchetypes": ["dark hero with radial glow + blue-highlighted headline", "greyscale logo row on dark", "2×2 filled-accent stat grid", "2×3 dark service-card grid", "photo + icon-bullets feature split", "single filled-accent testimonial card", "3 team cards", "dark FAQ accordion"],
+    "craftNotes": ["Dark glass cards (faint white border + inner glow) instead of solid boxes.", "One electric-blue accent does all the highlighting; everything else is monochrome dark.", "Radial glows behind the hero and section headers add depth."]
+  },
+  "referenceImages": { "reference.png": "Full dark desktop page." },
+  "reuse": "Use for software / SaaS / B2B / fintech leads that suit a dark, premium look. Take the dark-glass card system, blue-accent discipline, stat-grid + expertise-grid + single-testimonial archetypes. Swap blue for the lead's brand colour. Only pick this system when dark mode fits the brand."
+}

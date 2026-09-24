@@ -1,0 +1,78 @@
+{
+  "name": "The Agency Landing Page",
+  "source": { "figmaFile": "The Agency Landing Page", "fileKey": "EhLdi1j1V8q4j166HbwtwE", "readFrom": "Extracted from the Desktop design frame (no separate design-system page).", "extractedAt": "2026-09-24" },
+  "character": "Bold, playful NEO-BRUTALIST agency style. Hard 2–3px black borders, chunky offset drop-shadows, bright multi-colour accents, extra-bold Montserrat display, pill 'badge' section titles, and hand-drawn doodle accents (squiggles, stars, blobs). Confident and fun, not corporate. Good reference for creative / agency / bold-brand leads.",
+
+  "typography": {
+    "primary": { "family": "Montserrat", "weights": [400, 600, 700, 800] },
+    "scale": [
+      { "role": "display-xl", "family": "Montserrat", "weight": 800, "size": 90, "lineHeightPx": 90, "note": "Hero, extra tight." },
+      { "role": "display", "family": "Montserrat", "weight": 800, "size": 64, "lineHeightPx": 78 },
+      { "role": "h1", "family": "Montserrat", "weight": 800, "size": 40, "lineHeightPx": 49 },
+      { "role": "h2", "family": "Montserrat", "weight": 800, "size": 32, "lineHeightPx": 39 },
+      { "role": "h3", "family": "Montserrat", "weight": 700, "size": 24, "lineHeightPx": 29 },
+      { "role": "lead", "family": "Montserrat", "weight": 400, "size": 20, "lineHeightPx": 24 },
+      { "role": "body", "family": "Montserrat", "weight": 400, "size": 14, "lineHeightPx": 17 },
+      { "role": "label", "family": "Montserrat", "weight": 600, "size": 14, "lineHeightPx": 17 }
+    ],
+    "notes": "One family, carried by weight (extra-bold 800 for all display, regular 400 for body). Hero words get a colour highlight (e.g. one word in yellow). No serif, no mono."
+  },
+
+  "color": {
+    "ink": "#0b0f17",
+    "surface": "#ffffff",
+    "primary": "#ffdb58",
+    "accents": { "orange": "#fe682f", "salmon": "#ffa07a", "green": "#bafca2", "purple": "#a388ee", "red": "#ff4545" },
+    "neutral": ["#d9d9d9", "#eaeaea", "#bababa"],
+    "notes": "Near-black navy ink #0b0f17 on white, with a warm YELLOW primary and a whole playful accent set (orange, salmon, green, purple) used on cards, bands and icon tiles. Full-width colour BANDS (orange, yellow) separate major sections. REUSE the structure and the black-border/shadow treatment; put the lead's own brand colour in the primary slot and pull the accent set toward it."
+  },
+
+  "spacing": {
+    "base": 5,
+    "scale": [5, 10, 20, 24, 30, 40, 60, 125],
+    "sectionPaddingY": [80, 125],
+    "contentGaps": [16, 20, 24, 30],
+    "cardPadding": [20, 30],
+    "notes": "Generous section padding (~125px). Cards are roomy (20–30px). Content on a ~1200px column in a 1440 frame."
+  },
+
+  "components": {
+    "signatureStyle": "NEO-BRUTALIST: every card / button / badge / input has a solid 2–3px BLACK border and a hard offset drop-shadow (e.g. 4px 4px 0 #000), fully-squared or gently-rounded corners. No soft blurred shadows.",
+    "button": { "shape": "Rounded rect with black border + offset shadow.", "fills": ["primary = yellow", "white (secondary)"], "notes": "Label only or label + arrow. Two side-by-side in the hero (white secondary + coloured primary)." },
+    "card": { "shape": "White, black border, offset shadow, rounded corners.", "contents": "Icon tile (coloured, rounded) → heading → short body; project cards add an image slot + circular arrow button." },
+    "badge": { "shape": "Pill with black border used as a SECTION TITLE (e.g. 'Our Best Service', 'Latest Project' with sparkles).", "note": "This replaces plain centered headings — a signature of this system." },
+    "pricingCard": { "shape": "Coloured card (green / white-recommended / purple), black border, big price, feature bullets, dark 'Select Plan' button; 'Recommended' tag + starburst on the middle one." }
+  },
+
+  "sectionLayouts": {
+    "note": "Real top-to-bottom recipe. Reuse the archetypes + the neo-brutalist treatment; swap in the lead's brand + content.",
+    "order": [
+      { "role": "header", "layout": "Floating pill nav bar (black border + shadow): logo left, nav links right. Doodle/blob accents behind." },
+      { "role": "hero", "layout": "Asymmetric. Left: huge extra-bold stacked heading (one word colour-highlighted) + short lead + two buttons (white secondary + coloured primary). Right: a big rounded image card with sparkle/star doodles around it." },
+      { "role": "trust-partners", "layout": "Centered heading + a row of greyscale logo placeholders." },
+      { "role": "services", "layout": "On a full-width COLOUR band. Pill badge title, then 3 white bordered cards, each: coloured icon tile → heading → description." },
+      { "role": "projects", "layout": "Pill badge title (with sparkles), then a 2-row × 3-col grid of project cards (image slot + title + blurb + circular arrow button)." },
+      { "role": "pricing", "layout": "On a full-width COLOUR band. Pill badge title, then 3 pricing cards (coloured), middle one 'Recommended' with a starburst; each: name, big price, billing note, feature bullets, dark Select-Plan button." },
+      { "role": "cta", "layout": "Huge centered heading (one word colour-highlighted) + a single coloured button. Doodle squiggles around." },
+      { "role": "footer", "layout": "Colour band: copyright left, circular bordered social icons right." }
+    ],
+    "reusableArchetypes": [
+      "floating pill nav bar with border+shadow",
+      "asymmetric hero with colour-highlighted word + doodle accents",
+      "pill 'badge' section titles instead of plain headings",
+      "full-width colour bands separating sections",
+      "3 bordered service cards with coloured icon tiles",
+      "2×3 project grid with circular arrow buttons",
+      "3-tier pricing with a highlighted middle card + starburst",
+      "big colour-highlighted CTA line"
+    ],
+    "craftNotes": [
+      "Hard black borders + offset shadows on everything is the defining move — never soft/blurred shadows.",
+      "Hand-drawn doodles (squiggles, stars, blobs) float behind hero and CTA for playfulness.",
+      "Full-width colour bands (orange, yellow) give rhythm; the yellow primary highlights key words."
+    ]
+  },
+
+  "referenceImages": { "reference.png": "The full desktop landing page showing the neo-brutalist system in use." },
+  "reuse": "Great for creative/agency/bold-brand leads. Take the neo-brutalist card/button treatment (black border + offset shadow), pill badge titles, colour-band rhythm, extra-bold Montserrat scale, and the section archetypes. Put the lead's brand colour in the yellow/primary slot; keep the black-border treatment."
+}

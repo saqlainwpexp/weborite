@@ -1,0 +1,44 @@
+{
+  "name": "EK-moveGo",
+  "source": { "fileKey": "WpYEjkKqN9q1ZvoZ8ypYFx", "readFrom": "Extracted from the Desktop design frame.", "extractedAt": "2026-09-24" },
+  "character": "Clean, trustworthy CORPORATE / app-launch landing (ride-hailing app). Light, navy-blue primary, Inter, white cards with soft shadows and blue icon chips, a stat bar, a numbered step process, and a dark footer. Professional and reassuring. Best for apps, startups, services, logistics, healthcare, finance — anything that needs to look established and safe.",
+  "typography": {
+    "primary": { "family": "Inter", "weights": [400, 500, 600, 700] },
+    "scale": [
+      { "role": "display", "size": 48, "weight": 700, "note": "Hero; one word in blue." },
+      { "role": "h2", "size": 32, "weight": 700 },
+      { "role": "h3", "size": 20, "weight": 600 },
+      { "role": "stat", "size": 40, "weight": 700 },
+      { "role": "body", "size": 16, "weight": 400 },
+      { "role": "small", "size": 14, "weight": 400 }
+    ]
+  },
+  "color": {
+    "ink": "#0f172a", "surface": "#ffffff", "surfaceAlt": "#f4f7fb",
+    "primary": "#1e40af", "primaryAlt": "#2563eb",
+    "footer": "#0b1220",
+    "notes": "Navy ink on white / very-light-blue surfaces, one navy-blue primary for CTAs, icon chips, step numbers and links. Dark navy footer. REUSE the light + one-navy-accent structure; swap navy for the lead's brand colour."
+  },
+  "spacing": { "base": 4, "scale": [4, 8, 16, 24, 32, 48, 64, 80], "sectionPaddingY": [64, 80], "contentGaps": [16, 24, 32], "cardPadding": [24, 32], "notes": "Comfortable ~64–80px sections, white cards with soft shadow, ~1200px column." },
+  "components": {
+    "button": { "shape": "Rounded rect, solid blue primary; a white/ghost secondary.", "notes": "Primary CTA repeated at key points (hero, steps, forms)." },
+    "card": { "shape": "White, soft shadow, rounded; blue icon chip at top.", "types": ["feature card", "form card", "stat cell"] },
+    "form": { "label": "Small label above field.", "field": "Rounded input, light border; solid blue submit button." }
+  },
+  "sectionLayouts": {
+    "order": [
+      { "role": "header", "layout": "Logo left, nav center, blue 'Download App'/CTA right." },
+      { "role": "hero", "layout": "Light gradient. Left: a small badge, big heading (one word blue) + subhead + blue CTA. Right: product visuals (phone mockups + a real photo) floating." },
+      { "role": "stat-bar", "layout": "A row of 4 stats separated by thin dividers (number + caption)." },
+      { "role": "features", "layout": "Centered heading + subhead, then a 3+2 grid of white feature cards (blue icon chip → title → description)." },
+      { "role": "steps", "layout": "Centered heading, a 3-step horizontal process (numbered blue circles joined by a dashed line, title + text each) + a CTA button." },
+      { "role": "dual-forms", "layout": "Two white cards side by side: a newsletter/notify signup and a partner/contact form." },
+      { "role": "cta-band", "layout": "A full-width photo band with dark overlay: heading + subhead + white button." },
+      { "role": "footer", "layout": "Dark navy footer: logo + address + social, multi-column links, app-store badges, language selector." }
+    ],
+    "reusableArchetypes": ["light hero with floating product visuals + one blue word", "4-stat divider bar", "3+2 white feature-card grid with icon chips", "numbered 3-step process with dashed connector", "dual side-by-side forms", "photo CTA band with dark overlay", "dark multi-column footer with app badges"],
+    "craftNotes": ["One navy accent + neutral greys keeps it calm and credible.", "White cards with soft shadows (not hard borders); blue icon chips unify the feature grid.", "Stat bar and numbered steps do the 'trust + how it works' job simply."]
+  },
+  "referenceImages": { "reference.png": "Full light desktop page." },
+  "reuse": "Great default for professional service / app / startup leads that need to look established. Take the light + one-navy-accent palette, icon-chip feature cards, stat bar, numbered steps, dual forms and dark footer. Swap navy for the lead's brand colour."
+}

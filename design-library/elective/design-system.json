@@ -1,0 +1,124 @@
+{
+  "name": "Elective",
+  "source": {
+    "figmaFile": "Elective",
+    "fileKey": "k9ARgR5aYSIUPQEtUXyi67",
+    "readFrom": "The file's own 'Design System' page (foundations, buttons & inputs) plus a real product page for section layouts.",
+    "extractedAt": "2026-09-24"
+  },
+  "character": "Premium healthcare / SaaS. Calm, clinical-but-warm, high-trust. Near-black ink on airy off-white surfaces, one confident mint accent (amber as a rare secondary), tight display headings, and lots of vertical breathing room. The opposite of a cramped AI template.",
+
+  "typography": {
+    "primary": { "family": "Hanken Grotesk", "weights": [400, 500, 600, 700] },
+    "displaySecondary": { "family": "DM Sans", "usedFor": "Heading 5 only" },
+    "mono": { "family": "DM Mono", "usedFor": "Utility labels / eyebrows — ALWAYS UPPERCASE", "weights": [500] },
+    "scale": [
+      { "role": "Heading 1", "family": "Hanken Grotesk", "weight": 400, "size": 60, "lineHeightPct": 110 },
+      { "role": "Heading 2", "family": "Hanken Grotesk", "weight": 500, "size": 52, "lineHeightPct": 120 },
+      { "role": "Heading 3", "family": "Hanken Grotesk", "weight": 600, "size": 40, "lineHeightPct": 120 },
+      { "role": "Heading 4", "family": "Hanken Grotesk", "weight": 500, "size": 28, "lineHeightPct": 110 },
+      { "role": "Heading 5", "family": "DM Sans", "weight": 500, "size": 22, "lineHeightPct": 120 },
+      { "role": "Sub-Heading", "family": "Hanken Grotesk", "weight": 400, "size": 18, "lineHeightPct": 145 },
+      { "role": "Body L", "family": "Hanken Grotesk", "weight": "500/700", "size": 18, "lineHeightPct": 150 },
+      { "role": "Body M", "family": "Hanken Grotesk", "weight": "400/500", "size": 16, "lineHeightPct": 145 },
+      { "role": "Body S", "family": "Hanken Grotesk", "weight": "400/500", "size": 14, "lineHeightPct": 145 },
+      { "role": "Body XS", "family": "Hanken Grotesk", "weight": 400, "size": 12, "lineHeightPct": 145 },
+      { "role": "Utility L", "family": "DM Mono", "weight": 500, "size": 16, "lineHeightPct": 135, "transform": "uppercase" },
+      { "role": "Utility M", "family": "DM Mono", "weight": 500, "size": 14, "lineHeightPct": 135, "transform": "uppercase" },
+      { "role": "Utility S", "family": "DM Mono", "weight": 500, "size": 12, "lineHeightPct": 135, "transform": "uppercase" }
+    ],
+    "notes": "On large display headings the file tracks LETTER-SPACING negative (~ -0.9 to -1.5px at 40-60px). Tight display tracking + the mono uppercase eyebrow are the two biggest 'designed, not generic' signals."
+  },
+
+  "color": {
+    "model": "Named ramps, each with AA/AAA contrast baked in.",
+    "ink": { "role": "Dark ramp — text & dark surfaces", "main": "#23252a", "black": "#0b0c0d", "scale": "Dark 100 (lightest grey) → Dark 900 (near-black)" },
+    "surface": { "role": "Backgrounds", "white": "#ffffff", "offwhite": ["#f9fafb", "#f5f7f9", "#fafafa"], "scale": "Surface 100 → Surface 800" },
+    "neutral": ["#646a78", "#8e98a8", "#abafb6", "#b9bcc2"],
+    "border": "#ebeef2",
+    "primary": { "role": "Brand accent (Mint)", "main": "#00c2a2", "alt": ["#37c1aa", "#34bea7"], "tints": ["#cafff6", "#ebf9f7", "#e1f6f2", "#c1ece5"], "scale": "Mint 100 → Mint 1000, Mint 400 = main" },
+    "secondary": { "role": "Rare warm accent (Yellow/amber)", "note": "Yellow 400 = main; used sparingly, e.g. an alternate CTA gradient.", "muted": "#aa9c75" },
+    "gradients": { "primary": "teal/mint gradient (buttons, bands)", "secondary": "amber/yellow gradient" },
+    "error": "#9b0b29",
+    "notes": "Text ink is #23252a, never pure #000. Surfaces alternate white and barely-there off-white to separate sections without borders. ONE accent lands because the rest is calm neutral. REUSE this structure, put the LEAD'S OWN brand colour in the primary/accent slot — do not copy the mint."
+  },
+
+  "spacing": {
+    "base": 4,
+    "scale": [4, 8, 12, 16, 24, 32, 40, 56, 64, 80, 120],
+    "sectionPaddingY": [80, 120],
+    "contentGaps": [24, 32, 48, 64],
+    "cardPadding": [24, 32],
+    "tightGaps": [8, 12, 16],
+    "notes": "Sections breathe: 80–120px top/bottom, not 40. Related items 24–32px apart, blocks 48–64px. Content in a centered ~1200px column inside a 1440 frame."
+  },
+
+  "components": {
+    "button": {
+      "shape": "Pill (border-radius 100). Label + trailing chevron inside a small circle.",
+      "sizes": [
+        { "name": "small", "height": 32, "paddingX": 12, "paddingY": 8, "iconGap": 4 },
+        { "name": "large", "height": 40, "paddingX": 16, "paddingY": 14, "iconGap": 6 }
+      ],
+      "fills": ["primary = teal/mint gradient", "secondary = amber gradient", "white", "light-grey", "ghost/text"],
+      "states": {
+        "hover": "rotate the gradient by 180deg; text opacity 75%",
+        "pressed": "button opacity 75%",
+        "disabled": "button opacity 50%"
+      }
+    },
+    "input": {
+      "label": "Small UPPERCASE mono (Utility) label ABOVE the field, with a required asterisk.",
+      "labelGap": 10,
+      "variants": [
+        { "name": "pill", "height": 55, "radius": 100, "paddingX": 24, "paddingY": 16 },
+        { "name": "rounded-rect (multiline)", "height": 100, "radius": 16, "paddingX": 24, "paddingY": 16 }
+      ],
+      "error": "Red (#9b0b29) UPPERCASE mono message directly below the field.",
+      "states": ["default", "filled", "focus", "disabled (faded)", "error"]
+    }
+  },
+
+  "sectionLayouts": {
+    "note": "Real top-to-bottom section recipe of a page in this system. Reuse the ARCHETYPES and their composition/rhythm; swap in the lead's own content, brand colour and photos.",
+    "order": [
+      { "role": "header", "layout": "Logo left · centered nav links · one filled CTA right. On a soft brand-tinted gradient, not a hard bar." },
+      { "role": "hero", "layout": "Asymmetric ~50/50. Left: big tight-tracked heading + one-line lead + single primary CTA. Right: the subject in a device or rounded frame, floating with a soft shadow over a brand-tinted gradient that fades to white." },
+      { "role": "trust-logos", "layout": "Right after the hero: one calm row of ~8-10 greyscale partner logos with a short label above." },
+      { "role": "comparison", "layout": "Centered heading, then two columns: left red ✕ pain points, right brand ✓ benefits. Soft panels, no hard borders." },
+      { "role": "stats-band", "layout": "Full-width panel in the brand colour (white text). Three oversized stats in a row, then 3-4 supporting feature cards beneath." },
+      { "role": "feature-explorer", "layout": "Centered heading + subhead, optional horizontal tab bar, then two columns: text (heading, ✓ bullets, CTA) beside a real product screenshot in a rounded frame." },
+      { "role": "testimonial", "layout": "Two columns: a single rounded portrait beside one substantial quote with name/role. NOT a wall or carousel." },
+      { "role": "cta-band", "layout": "Recurring full-width brand-colour band used as punctuation: big heading left, CTA right; sometimes a screenshot to the side. Appears 2-3 times down the page." },
+      { "role": "media-demo", "layout": "Centered heading + a single product UI card with generous margins." },
+      { "role": "faq", "layout": "Centered heading, then a stacked accordion of 4-6 rows, first expanded." },
+      { "role": "cross-sell", "layout": "Centered heading + a row of 3 icon-label link cards, above the footer." },
+      { "role": "footer", "layout": "Large brand-colour footer: newsletter row on top, a 4-5 column link grid, an oversized wordmark, bottom legal row with social icons." }
+    ],
+    "reusableArchetypes": [
+      "asymmetric hero with device/rounded-frame visual on a gradient",
+      "trust logo bar right after hero",
+      "two-column old-vs-new comparison (✕ / ✓)",
+      "brand-colour stat band (3 big numbers) + supporting cards",
+      "tabbed feature explorer: copy beside a product screenshot",
+      "single portrait testimonial",
+      "recurring full-width CTA bands as rhythm",
+      "FAQ accordion",
+      "3-card cross-sell row before footer",
+      "rich multi-column footer with newsletter + oversized wordmark"
+    ],
+    "craftNotes": [
+      "Product/subject visuals sit in device frames or rounded cards with soft shadows over tinted backgrounds — never raw full-bleed screenshots.",
+      "Sections are separated by alternating white / off-white / brand-colour surfaces, not by boxes and hard borders.",
+      "The brand colour appears as full-bleed bands a few times down the page; the rest is calm neutral so the accent lands."
+    ]
+  },
+
+  "referenceImages": {
+    "spec-foundations.png": "The file's own foundations: full type scale + Dark/Surface/Mint/Yellow colour ramps + gradients.",
+    "spec-buttons-inputs.png": "Button and form-input spec: shapes, sizes, states, error handling.",
+    "ref-1944-48096.png": "A real product landing page showing the section layouts in use."
+  },
+
+  "reuse": "Take the type scale (esp. the named roles + tight display tracking + uppercase mono eyebrows), the Dark/Surface neutral split, the 80–120px section rhythm, the pill button + labelled input specs, and the section archetypes. Put the LEAD'S OWN brand colour in the Mint/primary slot. Do NOT copy the mint hue, the healthcare content, or the specific copy."
+}

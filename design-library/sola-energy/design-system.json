@@ -1,0 +1,75 @@
+{
+  "name": "Sola Energy template",
+  "source": { "figmaFile": "Sola Energy template", "fileKey": "9gWZIzTFRFY96WcIoIXvnQ", "readFrom": "Extracted from the Desktop design frame.", "extractedAt": "2026-09-24" },
+  "character": "Clean, modern ECO / green-energy template. Near-black ink on white, one bright lime-chartreuse accent with pale-lime and charcoal full-width bands, rounded cards, and soft decorative blobs/line-art. Polished and friendly. Good reference for sustainability, home-services, solar, wellness, or any fresh modern brand.",
+
+  "typography": {
+    "primary": { "family": "Inter", "weights": [400, 500, 600] },
+    "scale": [
+      { "role": "display", "family": "Inter", "weight": 600, "size": 40, "note": "Hero / big section headings." },
+      { "role": "h2", "family": "Inter", "weight": 600, "size": 28 },
+      { "role": "h3", "family": "Inter", "weight": 600, "size": 24, "lineHeightPx": 29 },
+      { "role": "lead", "family": "Inter", "weight": 400, "size": 20, "lineHeightPx": 24 },
+      { "role": "body", "family": "Inter", "weight": 400, "size": 16, "lineHeightPx": 22 },
+      { "role": "small", "family": "Inter", "weight": 400, "size": 14 }
+    ],
+    "notes": "Single neutral sans (Inter). Headings mix weight/colour — part of the heading is bold ink, part is a lighter grey, for a two-tone title effect ('Transforming Homes, Empowering Futures')."
+  },
+
+  "color": {
+    "ink": "#383838",
+    "black": "#000000",
+    "surface": "#ffffff",
+    "primary": "#ceff41",
+    "primaryDeep": "#668411",
+    "primaryTint": "#f5fbe7",
+    "neutral": ["#d9d9d9"],
+    "notes": "Charcoal ink #383838 (not pure black) on white. ONE bright lime accent #ceff41 for CTAs, the highlighted service card, and small icons; a pale-lime #f5fbe7 for section bands and an olive #668411 for deeper accents. A dark charcoal band anchors the final CTA. REUSE the neutral+one-bright-accent structure; swap the lime for the lead's brand colour."
+  },
+
+  "spacing": {
+    "base": 4,
+    "scale": [4, 8, 16, 20, 24, 32, 48, 64, 80],
+    "sectionPaddingY": [64, 80],
+    "contentGaps": [16, 24, 32],
+    "cardPadding": [20, 24],
+    "notes": "Roomy sections (~64–80px), rounded cards with 20–24px padding, ~1200px content column."
+  },
+
+  "components": {
+    "button": { "shape": "Rounded (pill-ish) filled button.", "fills": ["primary = lime", "outline (secondary)"], "notes": "Lime primary CTA; a thin-outline pill for secondary ('Discover your savings potential')." },
+    "card": { "shape": "White, subtle border, rounded corners; the featured card is filled lime.", "contents": "Image slot → title → short description." },
+    "link": "Text link + trailing up-right arrow icon ('Learn More →')."
+  },
+
+  "sectionLayouts": {
+    "note": "Real top-to-bottom recipe. Reuse the archetypes; swap in the lead's brand + content.",
+    "order": [
+      { "role": "header", "layout": "Logo left · nav links in a pill, right." },
+      { "role": "hero", "layout": "Full-width rounded image block; overlaid left-aligned heading + subhead + lime CTA; a decorative sunburst/line-art accent in a corner." },
+      { "role": "intro-mission", "layout": "Two columns split by a thin divider: left a two-tone big heading + short line; right a longer paragraph + a text-arrow link." },
+      { "role": "services", "layout": "On a pale-lime band: centered heading, 3 rounded cards (middle one filled lime as the highlight): image → title → description, plus a text-arrow link below." },
+      { "role": "benefits", "layout": "On a lime band: heading + a 2×2 grid of benefit items (icon chip → heading → text) + an outline pill button. Soft circle blobs decorate one side." },
+      { "role": "testimonials", "layout": "Heading, then two quote cards side by side (one filled lime, one grey): quote → avatar → name/location." },
+      { "role": "cta", "layout": "Dark charcoal band: heading + subhead + lime CTA, with leaf-shaped image circles on the opposite side." },
+      { "role": "footer", "layout": "Logo + social icons, then a multi-column link grid (About / Services / Contact) and copyright." }
+    ],
+    "reusableArchetypes": [
+      "full-width rounded hero image with overlaid copy + one CTA",
+      "two-column intro with a two-tone heading",
+      "3 service cards with one filled-accent highlight",
+      "2×2 benefits grid with icon chips",
+      "two side-by-side testimonial cards (one accent-filled)",
+      "dark-band closing CTA",
+      "multi-column footer with social row"
+    ],
+    "craftNotes": [
+      "One bright accent does all the work; everything else is neutral, so it reads clean not busy.",
+      "Full-width pale/bright bands separate sections instead of borders.",
+      "Soft circle blobs and light line-art add life without clutter; cards are generously rounded."
+    ]
+  },
+
+  "referenceImages": { "reference.png": "The full desktop template showing the eco/green system in use." },
+  "reuse": "Great for sustainability / home-services / wellness / fresh modern brands. Take the neutral + one-bright-accent palette structure, two-tone headings, rounded cards with a single filled-accent highlight, coloured section bands, and the archetypes. Put the lead's brand colour in the lime slot."
+}

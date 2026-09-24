@@ -2,6 +2,7 @@ import { mkdirSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { leadDir } from "../db.ts";
 import { extractHtml, runClaude } from "../claude/runner.ts";
+import { pickDesignSystem } from "./designLibrary.ts";
 import type { BenchmarkSet, Capture, Diagnosis, Fact, GateCheck } from "../../shared/types.ts";
 
 export const SYSTEM = `You are a senior web designer and front-end engineer. You rebuild small-business homepages so they compete visually with the best sites in their category, and you write clean, semantic, responsive HTML and CSS by hand.
@@ -76,7 +77,11 @@ export async function generateMockup(
     .filter((a) => a.path !== sa?.path)
     .map((a) => ({ src: rel(a.path), kind: a.kind, size: a.width && a.height ? `${a.width}x${a.height}` : undefined }));
 
+  // Match the lead to the closest professional design system from the library and steer the design by it.
+  const ds = pickDesignSystem(benchmarks ? { label: benchmarks.label, register: benchmarks.register, key: benchmarks.vertical } : null);
+
   const images = [join(dir, "desktop-fold.jpg"), join(dir, "mobile.jpg")].filter(existsSync);
+  if (ds?.referenceImage && existsSync(ds.referenceImage)) images.push(ds.referenceImage);
 
   const scratch = Boolean(input.scratch);
   let prompt = (scratch
@@ -110,6 +115,18 @@ ${buildFactsBlock(facts)}
 ${scratch ? "A screenshot of their Google Maps listing is attached for reference." : "Screenshots of the current site (desktop above the fold, and mobile) are attached for reference."}
 
 Return one complete, self-contained HTML document (inline <style>, and inline <script> only if it's needed for the nav) in a single \`\`\`html block. Put nothing else in the reply.`;
+
+  if (ds) {
+    prompt += `
+
+DESIGN SYSTEM TO FOLLOW — "${ds.name}"
+${ds.character}
+The LAST attached image is a DESIGN REFERENCE from our professional template library. Match its visual quality, spacing and section craft — this is the bar. Adopt this system's type scale, spacing rhythm (especially its generous section padding), component styling (buttons, cards, inputs) and the section-layout ARCHETYPES in the spec below. Put THIS LEAD'S locked brand colour wherever the system uses its accent; use the lead's real logo and photos. Never copy the reference's colours, wording or images — only its structure, proportions and craft. You may use this system's fonts.
+
+${JSON.stringify(ds.json, null, 1)}
+
+After applying all of this, produce the full HTML document following every rule above, in a single \`\`\`html block with nothing else.`;
+  }
 
   if (retry) {
     const prev = readFileSync(join(outDir, "index.html"), "utf8");

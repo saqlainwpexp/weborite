@@ -13,3 +13,12 @@ data/*
 app-dist
 release
 electron/build-info.json
+
+# Figma API token (local only, never commit)
+figma-token.txt
+# Design library: version the extracted specs, keep the big reference images and scratch out.
+design-library/**/*.png
+design-library/**/*.jpg
+design-library/**/*.jpeg
+design-library/**/_raw.json
+design-library/_progress.log

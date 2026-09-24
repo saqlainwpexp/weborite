@@ -1,0 +1,51 @@
+{
+  "name": "Innvolv website",
+  "source": { "fileKey": "HTOQzUEr24zPGUhYVb1NMa", "readFrom": "Extracted from the Desktop design frame.", "extractedAt": "2026-09-24" },
+  "character": "Clean B2B SaaS / project-management product site. Light, blue primary, Inter, white cards with soft shadows, a phone-mockup hero, a circular process diagram, a 4-tier pricing table and a testimonial row. Friendly-professional. Best for software products, business tools, and service companies that want a modern, organized feel.",
+  "typography": {
+    "primary": { "family": "Inter", "weights": [400, 500, 600, 700] },
+    "scale": [
+      { "role": "display", "size": 44, "weight": 700, "note": "Hero." },
+      { "role": "h2", "size": 30, "weight": 600 },
+      { "role": "h3", "size": 20, "weight": 600 },
+      { "role": "eyebrow", "size": 12, "weight": 600, "note": "Small blue uppercase label above section headings ('Why choose us')." },
+      { "role": "body", "size": 16, "weight": 400 },
+      { "role": "small", "size": 14, "weight": 400 }
+    ]
+  },
+  "color": {
+    "ink": "#1b2233", "surface": "#ffffff", "surfaceAlt": "#f3f6fb",
+    "primary": "#2f6bed", "primaryAlt": "#3b82f6",
+    "footer": "#2a2f3a",
+    "accentIllustration": ["#e0a43b", "#5b8f6f", "#c77", "#7c8ba1"],
+    "notes": "Navy-ink on white / pale-blue surfaces, one blue primary for CTAs, links and the small uppercase eyebrows. Illustrations use a muted multi-colour palette (ochre, sage, clay). Dark-grey footer. REUSE the light + one-blue-accent structure; swap blue for the lead's brand colour."
+  },
+  "spacing": { "base": 4, "scale": [4, 8, 16, 24, 32, 48, 64, 80], "sectionPaddingY": [64, 80], "contentGaps": [16, 24, 32], "cardPadding": [20, 28], "notes": "Comfortable ~64–80px sections, white cards with soft shadow, ~1150px column." },
+  "components": {
+    "button": { "shape": "Rounded rect, solid blue primary; outline secondary.", "notes": "Blue CTA repeated at each section end." },
+    "card": { "shape": "White, soft shadow, rounded; blue icon.", "types": ["benefit card", "pricing card", "testimonial card", "use-case card"] },
+    "pricing": { "layout": "A 4-tier row (Free / mid / mid / high) with a monthly-annual toggle; each: name, big price, feature list, blue CTA." }
+  },
+  "sectionLayouts": {
+    "order": [
+      { "role": "header", "layout": "Logo left, nav center, login + blue CTA right." },
+      { "role": "hero", "layout": "Centered heading + subhead + an inline search/entry field, then two phone mockups showing the product below." },
+      { "role": "why-band", "layout": "A pale panel: short 'why this exists' heading + subhead + CTA." },
+      { "role": "problem-solution", "layout": "Two columns: left heading + a checklist of points with blue ticks + CTA; right an illustration/diagram." },
+      { "role": "process-diagram", "layout": "Left a circular node diagram (icons around a ring); right heading + a checklist of benefits + CTA." },
+      { "role": "benefits", "layout": "Small blue eyebrow + heading, then 3 benefit cards (icon → title → description)." },
+      { "role": "faq", "layout": "Heading + a tabbed accordion of questions." },
+      { "role": "pricing", "layout": "Heading + a 4-tier pricing row with a monthly/annual toggle." },
+      { "role": "testimonials", "layout": "Heading + a row of 4 short star-rated quote cards (quote → name)." },
+      { "role": "use-cases", "layout": "Heading + 3 audience cards (General / Build / Real-Estate): icon → title → description." },
+      { "role": "cta-photo", "layout": "A photo band (construction silhouette) with an overlaid heading + two buttons." },
+      { "role": "app-band", "layout": "A full-width blue band: 'get started' heading + app-store buttons." },
+      { "role": "contact", "layout": "Centered heading + contact details + a contact form." },
+      { "role": "footer", "layout": "Dark-grey footer: brand + newsletter field + link columns." }
+    ],
+    "reusableArchetypes": ["centered hero with inline field + phone mockups", "blue-eyebrow section labels", "two-column problem/solution with tick checklist + illustration", "circular process diagram + checklist", "3 benefit cards", "tabbed FAQ accordion", "4-tier pricing with monthly/annual toggle", "4 short star-rated testimonials", "3 audience/use-case cards", "photo CTA band", "full-width app-store band", "contact section + dark footer"],
+    "craftNotes": ["One blue accent + small uppercase eyebrows organize the page.", "White soft-shadow cards; illustrations add warmth with a muted multi-colour palette.", "The circular process diagram is a distinctive 'how it works' device worth reusing."]
+  },
+  "referenceImages": { "reference.png": "Full light desktop page." },
+  "reuse": "Great for SaaS / business-tool / multi-audience service leads. Take the light + one-blue-accent palette, blue eyebrows, tick-checklist problem/solution, circular process diagram, pricing-with-toggle, and multi-audience cards. Swap blue for the lead's brand colour."
+}
