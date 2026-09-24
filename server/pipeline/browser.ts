@@ -1,7 +1,17 @@
 import { chromium, type Browser } from "playwright";
 import { execFile } from "node:child_process";
+import { existsSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
+
+/** In the packaged app, asarUnpack'd files' real path is under app.asar.unpacked (plain Node can't read asar). */
+function unpacked(p: string): string {
+  if (/app\.asar[\\/]/.test(p) && !p.includes("app.asar.unpacked")) {
+    const u = p.replace(/app\.asar([\\/])/, "app.asar.unpacked$1");
+    if (existsSync(u)) return u;
+  }
+  return p;
+}
 
 let browser: Browser | null = null;
 let healing: Promise<void> | null = null;
@@ -21,7 +31,7 @@ function installChromium(): Promise<void> {
     let cli: string;
     try {
       const require = createRequire(import.meta.url);
-      cli = join(dirname(require.resolve("playwright/package.json")), "cli.js");
+      cli = unpacked(join(dirname(require.resolve("playwright/package.json")), "cli.js"));
     } catch (e) {
       return reject(new Error(`Can't locate the Playwright CLI to install the browser: ${(e as Error).message}`));
     }

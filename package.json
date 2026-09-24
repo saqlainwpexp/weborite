@@ -86,11 +86,8 @@
       "!**/*.map",
       "!**/*.md",
       "!**/*.markdown",
-      "!**/*.d.ts",
       "!**/*.ts.map",
-      "!**/{test,tests,__tests__,__mocks__,example,examples,docs,doc,.github,coverage}/**",
-      "!**/node_modules/**/*.{ts,flow,coffee}",
-      "!**/node_modules/**/{LICENSE,LICENSE.txt,LICENSE-MIT,license,CHANGELOG,CHANGELOG.md,README,README.md,.eslintrc,.prettierrc,.npmignore,.editorconfig,tsconfig.json}",
+      "!**/node_modules/**/{LICENSE,LICENSE.txt,LICENSE-MIT,license,CHANGELOG,CHANGELOG.md,README,README.md,.eslintrc,.prettierrc,.npmignore,.editorconfig}",
       "!**/node_modules/.bin/**"
     ],
     "win": {
