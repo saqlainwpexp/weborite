@@ -358,7 +358,18 @@ function createChannel(svc) {
   view.setVisible(false);
   view.setBounds({ x: 0, y: 0, width: 0, height: 0 });
   channels.set(svc.id, entry);
-  void wc.loadURL(svc.url);
+  // Load eagerly only when the channel wants background notifications; otherwise load it the first
+  // time it's opened. This keeps muted channels from running as live tabs and eating CPU/RAM.
+  entry.loaded = Boolean(svc.notify && !svc.muted);
+  if (entry.loaded) void wc.loadURL(svc.url);
+}
+
+/** Load a channel's page the first time it's needed (see the lazy-load note in createChannel). */
+function ensureLoaded(entry) {
+  if (entry && !entry.loaded) {
+    entry.loaded = true;
+    void entry.view.webContents.loadURL(entry.svc.url);
+  }
 }
 
 function destroyChannel(id) {
@@ -406,8 +417,10 @@ ipcMain.handle("comms:state", () => channelState());
 ipcMain.on("comms:show", (_e, { id, bounds }) => {
   activeId = id;
   lastBounds = clampBounds(bounds);
+  const c = channels.get(id);
+  ensureLoaded(c); // a muted channel that was never loaded loads now, on first open
   place();
-  channels.get(id)?.view.webContents.focus();
+  c?.view.webContents.focus();
 });
 ipcMain.on("comms:bounds", (_e, bounds) => {
   lastBounds = clampBounds(bounds);
