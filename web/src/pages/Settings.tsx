@@ -8,6 +8,7 @@ import type { Settings as S } from "../../../shared/types";
 import type { LayoutCtx } from "../layout/Layout";
 import { api } from "../lib/api";
 import { Dropdown } from "../components/Dropdown";
+import { workspaceEnabled } from "../../../shared/features";
 import { CLOUD_ROUTINE_PROMPT } from "../../../shared/cloudPrompt";
 import { BRAND_PRESETS, DEFAULT_BRAND, applyBrand, brandPalette, isHex } from "../lib/brand";
 
@@ -19,7 +20,7 @@ const TABS = [
   { key: "leads", label: "Lead sources" },
   { key: "integrations", label: "Integrations" },
   { key: "maintenance", label: "Maintenance" },
-] as const;
+].filter((t) => t.key !== "maintenance" || workspaceEnabled("care"));
 
 /* ---------- building blocks (match the reference layout) ---------- */
 

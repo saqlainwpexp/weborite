@@ -41,6 +41,7 @@ import AdminRevenue from "./pages/admin/AdminRevenue";
 import { applyStoredBrand } from "./lib/brand";
 import { Activation, type LicenseStatus } from "./pages/Activation";
 import { api } from "./lib/api";
+import { workspaceEnabled } from "../../shared/features";
 
 applyStoredBrand();
 
@@ -65,36 +66,37 @@ const DASHBOARD = (
           <Route path="settings" element={<Navigate to="/settings/profile" replace />} />
           <Route path="settings/:tab" element={<Settings />} />
           <Route path="profile" element={<Navigate to="/settings/profile" replace />} />
-          <Route path="finder" element={<FinderDashboard />} />
-          <Route path="finder/leads" element={<FinderLeads />} />
-          <Route path="finder/leads/:id" element={<FinderLeadDetail />} />
-          <Route path="finder/searches" element={<FinderSearches />} />
-          <Route path="builds" element={<BuildsDashboard />} />
-          <Route path="builds/all" element={<BuildsList />} />
-          <Route path="builds/new" element={<BuildForm />} />
-          <Route path="builds/:id" element={<BuildDetail />} />
-          <Route path="builds/:id/edit" element={<BuildForm />} />
-          <Route path="wp" element={<WpDashboard />} />
-          <Route path="wp/all" element={<WpList />} />
-          <Route path="wp/new" element={<WpNew />} />
-          <Route path="wp/:id" element={<WpDetail />} />
-          <Route path="seo" element={<SeoDashboard />} />
-          <Route path="seo/all" element={<SeoList />} />
-          <Route path="seo/new" element={<SeoNew />} />
-          <Route path="seo/checklist" element={<SeoChecklistTemplate />} />
-          <Route path="seo/:id" element={<SeoDetail />} />
-          <Route path="care" element={<CareDashboard />} />
-          <Route path="care/all" element={<CareList />} />
-          <Route path="care/new" element={<CareNew />} />
-          <Route path="care/:id" element={<CareDetail />} />
-          <Route path="comms" element={<CommsHome />} />
-          <Route path="comms/new" element={<CommsAdd />} />
-          <Route path="comms/:id" element={<CommsView />} />
-          <Route path="campaigns" element={<Campaigns />} />
-          <Route path="campaigns/:id" element={<CampaignDetail />} />
-          <Route path="admin" element={<AdminOverview />} />
-          <Route path="admin/clients" element={<AdminClients />} />
-          <Route path="admin/revenue" element={<AdminRevenue />} />
+          {workspaceEnabled("finder") && <Route path="finder" element={<FinderDashboard />} />}
+          {workspaceEnabled("finder") && <Route path="finder/leads" element={<FinderLeads />} />}
+          {workspaceEnabled("finder") && <Route path="finder/leads/:id" element={<FinderLeadDetail />} />}
+          {workspaceEnabled("finder") && <Route path="finder/searches" element={<FinderSearches />} />}
+          {workspaceEnabled("builds") && <Route path="builds" element={<BuildsDashboard />} />}
+          {workspaceEnabled("builds") && <Route path="builds/all" element={<BuildsList />} />}
+          {workspaceEnabled("builds") && <Route path="builds/new" element={<BuildForm />} />}
+          {workspaceEnabled("builds") && <Route path="builds/:id" element={<BuildDetail />} />}
+          {workspaceEnabled("builds") && <Route path="builds/:id/edit" element={<BuildForm />} />}
+          {workspaceEnabled("wordpress") && <Route path="wp" element={<WpDashboard />} />}
+          {workspaceEnabled("wordpress") && <Route path="wp/all" element={<WpList />} />}
+          {workspaceEnabled("wordpress") && <Route path="wp/new" element={<WpNew />} />}
+          {workspaceEnabled("wordpress") && <Route path="wp/:id" element={<WpDetail />} />}
+          {workspaceEnabled("seo") && <Route path="seo" element={<SeoDashboard />} />}
+          {workspaceEnabled("seo") && <Route path="seo/all" element={<SeoList />} />}
+          {workspaceEnabled("seo") && <Route path="seo/new" element={<SeoNew />} />}
+          {workspaceEnabled("seo") && <Route path="seo/checklist" element={<SeoChecklistTemplate />} />}
+          {workspaceEnabled("seo") && <Route path="seo/:id" element={<SeoDetail />} />}
+          {workspaceEnabled("care") && <Route path="care" element={<CareDashboard />} />}
+          {workspaceEnabled("care") && <Route path="care/all" element={<CareList />} />}
+          {workspaceEnabled("care") && <Route path="care/new" element={<CareNew />} />}
+          {workspaceEnabled("care") && <Route path="care/:id" element={<CareDetail />} />}
+          {workspaceEnabled("comms") && <Route path="comms" element={<CommsHome />} />}
+          {workspaceEnabled("comms") && <Route path="comms/new" element={<CommsAdd />} />}
+          {workspaceEnabled("comms") && <Route path="comms/:id" element={<CommsView />} />}
+          {workspaceEnabled("automations") && <Route path="campaigns" element={<Campaigns />} />}
+          {workspaceEnabled("automations") && <Route path="campaigns/:id" element={<CampaignDetail />} />}
+          {workspaceEnabled("admin") && <Route path="admin" element={<AdminOverview />} />}
+          {workspaceEnabled("admin") && <Route path="admin/clients" element={<AdminClients />} />}
+          {workspaceEnabled("admin") && <Route path="admin/revenue" element={<AdminRevenue />} />}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>
   </BrowserRouter>
