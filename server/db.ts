@@ -128,10 +128,10 @@ export function usageToday() {
 }
 
 // ---- settings ----
-type StoredSettings = Settings & { apiKey: string; metaPageToken: string; metaAppSecret: string; psiKey: string; gtmetrixKey: string };
+type StoredSettings = Settings & { apiKey: string; metaPageToken: string; metaAppSecret: string; psiKey: string; gtmetrixKey: string; cloudTriggerToken: string; githubToken: string };
 
 /** Settings that are stored encrypted (see vault.ts). */
-const SECRET_KEYS = new Set(["apiKey", "metaPageToken", "metaAppSecret", "psiKey", "gtmetrixKey"]);
+const SECRET_KEYS = new Set(["apiKey", "metaPageToken", "metaAppSecret", "psiKey", "gtmetrixKey", "cloudTriggerToken", "githubToken"]);
 
 const DEFAULTS: StoredSettings = {
   mode: "session",
@@ -146,6 +146,13 @@ const DEFAULTS: StoredSettings = {
   metaAppSecretSet: false,
   metaPageTokenSet: false,
   claudePath: "claude",
+  cloudTriggerUrl: "",
+  cloudTriggerToken: "",
+  cloudTriggerTokenSet: false,
+  githubToken: "",
+  githubTokenSet: false,
+  cloudRepo: "",
+  cloudBranch: "claude/cloud-jobs",
   studioName: "Studio",
   brandColor: "#a36566",
   firstName: "",
@@ -178,6 +185,8 @@ export function getSettings(): StoredSettings {
   s.metaAppSecretSet = Boolean(s.metaAppSecret);
   s.psiKeySet = Boolean(s.psiKey);
   s.gtmetrixKeySet = Boolean(s.gtmetrixKey);
+  s.cloudTriggerTokenSet = Boolean(s.cloudTriggerToken);
+  s.githubTokenSet = Boolean(s.githubToken);
   // Older installs stored a single full name.
   if (!s.firstName && !s.lastName && s.userName) [s.firstName, s.lastName] = [String(s.userName).split(" ")[0], String(s.userName).split(" ").slice(1).join(" ")];
   s.userName = [s.firstName, s.lastName].filter(Boolean).join(" ") || "Studio Owner";
@@ -187,7 +196,7 @@ export function getSettings(): StoredSettings {
 }
 
 export function publicSettings(): Settings {
-  const { apiKey: _k, metaPageToken: _t, metaAppSecret: _s, psiKey: _p, gtmetrixKey: _g, ...rest } = getSettings();
+  const { apiKey: _k, metaPageToken: _t, metaAppSecret: _s, psiKey: _p, gtmetrixKey: _g, cloudTriggerToken: _c, githubToken: _h, ...rest } = getSettings();
   return rest;
 }
 

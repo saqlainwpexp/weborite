@@ -140,6 +140,7 @@ app.get("/api/settings", (_req, res) => res.json(publicSettings()));
 app.put("/api/settings", (req, res) => {
   const allowed = [
     "mode", "apiKey", "generateModel", "fastModel", "metaPageToken", "metaAppSecret", "metaVerifyToken", "elementorSecret", "claudePath",
+    "cloudTriggerUrl", "cloudTriggerToken", "githubToken", "cloudRepo", "cloudBranch",
     "studioName", "brandColor", "firstName", "lastName", "userEmail", "userPhone",
     "psiKey", "gtmetrixKey", "qaEmail",
   ];

@@ -225,7 +225,7 @@ export default function Layout() {
     document.title = settings.data ? `${studio} · ${WORKSPACES.find((w) => w.key === workspace)!.label}` : "Mockup Studio";
   }, [studio, settings.data, workspace]);
 
-  async function setMode(m: "session" | "api") {
+  async function setMode(m: "session" | "api" | "cloud") {
     await api("/api/settings", { method: "PUT", json: { mode: m } });
     close();
     reloadAll();
@@ -340,7 +340,7 @@ export default function Layout() {
         <span className="spacer" />
 
         <div className="pop-anchor hide-sm" ref={modeRef}>
-          <button className="lang" onClick={() => setPopover(popover === "mode" ? null : "mode")}>{mode === "api" ? "API" : "Session"}<ChevronDown /></button>
+          <button className="lang" onClick={() => setPopover(popover === "mode" ? null : "mode")}>{mode === "api" ? "API" : mode === "cloud" ? "Cloud" : "Session"}<ChevronDown /></button>
           {popover === "mode" && (
             <div className="popover right" style={{ width: 300 }}>
               <button className="notif" style={{ border: 0, background: mode === "session" ? "#f6f5f5" : "none", textAlign: "left", width: "100%", gridTemplateColumns: "minmax(0,1fr)" }} onClick={() => setMode("session")}>
@@ -348,6 +348,9 @@ export default function Layout() {
               </button>
               <button className="notif" style={{ border: 0, background: mode === "api" ? "#f6f5f5" : "none", textAlign: "left", width: "100%", gridTemplateColumns: "minmax(0,1fr)" }} onClick={() => setMode("api")}>
                 <div><b>API mode</b><span>Billed per token with your API key</span></div>
+              </button>
+              <button className="notif" style={{ border: 0, background: mode === "cloud" ? "#f6f5f5" : "none", textAlign: "left", width: "100%", gridTemplateColumns: "minmax(0,1fr)" }} onClick={() => setMode("cloud")}>
+                <div><b>Cloud mode</b><span>Runs on your claude.ai cloud sessions (set up in Settings)</span></div>
               </button>
             </div>
           )}
