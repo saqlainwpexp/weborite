@@ -9,10 +9,12 @@ import { ClaudeUnavailableError, type RunRequest, type RunResult } from "./runne
  *
  * GitHub is the mailbox. We commit jobs/<id>/job.json (+ images) to a branch, fire a Routine through
  * its API trigger, and poll the same branch until the cloud session commits jobs/<id>/result.txt
- * (or error.txt). The Routine's saved prompt is CLOUD_ROUTINE_PROMPT (shared/cloudPrompt.ts).
+ * (or error.txt). The routine is optional: without one, a cloud session running the cloud-worker skill
+ * works through the queue instead. The Routine's saved prompt is CLOUD_ROUTINE_PROMPT (shared/cloudPrompt.ts).
  */
 
 export interface CloudOpts {
+  /** Optional. Without a routine, a cloud session running the cloud-worker skill picks jobs up. */
   triggerUrl: string; // https://api.anthropic.com/v1/claude_code/routines/trig_.../fire
   triggerToken: string;
   githubToken: string;
@@ -25,6 +27,7 @@ export { CLOUD_ROUTINE_PROMPT };
 
 const POLL_MS = 15_000;
 const TIMEOUT_MS = 40 * 60_000;
+const WORKER_TIMEOUT_MS = 3 * 60 * 60_000;
 
 function gh(opts: CloudOpts, path: string, init: RequestInit = {}) {
   return fetch(`https://api.github.com/repos/${opts.repo}${path}`, {
@@ -75,7 +78,6 @@ async function readFile(opts: CloudOpts, path: string): Promise<string | null> {
 }
 
 export async function runCloud(req: RunRequest, opts: CloudOpts): Promise<RunResult> {
-  if (!opts.triggerUrl || !opts.triggerToken) throw new ClaudeUnavailableError("Cloud mode needs the Routine's API trigger URL and token (Settings → Claude).");
   if (!opts.githubToken || !/^[\w.-]+\/[\w.-]+$/.test(opts.repo)) throw new ClaudeUnavailableError("Cloud mode needs a GitHub token and a repo like owner/name (Settings → Claude).");
   if (!opts.branch.startsWith("claude/")) throw new ClaudeUnavailableError('Cloud branch must start with "claude/" so the cloud session is allowed to push to it.');
 
@@ -88,30 +90,33 @@ export async function runCloud(req: RunRequest, opts: CloudOpts): Promise<RunRes
   const job = { system: req.system, prompt: req.prompt, images: images.map((i) => i.name), web: Boolean(req.web), model: opts.model, task: req.task };
   await putFile(opts, `${dir}/job.json`, Buffer.from(JSON.stringify(job, null, 2)), `cloud job ${id}`);
 
-  const fire = await fetch(opts.triggerUrl, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${opts.triggerToken}`,
-      "anthropic-beta": "experimental-cc-routine-2026-04-01",
-      "anthropic-version": "2023-06-01",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ text: `repo: ${opts.repo}\nbranch: ${opts.branch}\njob folder: ${dir}` }),
-  });
-  if (!fire.ok) {
-    const msg = (await fire.text()).slice(0, 300);
-    if (fire.status === 401 || fire.status === 403) throw new ClaudeUnavailableError(`Routine trigger rejected the token (HTTP ${fire.status}): ${msg}`);
-    if (fire.status === 429 || /limit|cap/i.test(msg)) throw new ClaudeUnavailableError(`Cloud usage or daily routine limit reached: ${msg}`);
-    throw new Error(`Routine trigger failed: HTTP ${fire.status} ${msg}`);
+  // With a routine configured, start a cloud session for this job. Without one (or when the routine
+  // is out of runs), the job waits on the branch for a worker session (.claude/skills/cloud-worker).
+  let routineStarted = false;
+  if (opts.triggerUrl && opts.triggerToken) {
+    const fire = await fetch(opts.triggerUrl, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${opts.triggerToken}`,
+        "anthropic-beta": "experimental-cc-routine-2026-04-01",
+        "anthropic-version": "2023-06-01",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text: `repo: ${opts.repo}\nbranch: ${opts.branch}\njob folder: ${dir}` }),
+    });
+    if (fire.ok) routineStarted = true;
+    else if (fire.status === 401 || fire.status === 403) throw new ClaudeUnavailableError(`Routine trigger rejected the token (HTTP ${fire.status}): ${(await fire.text()).slice(0, 300)}`);
+    else console.warn(`[cloud] routine trigger failed (HTTP ${fire.status}); job ${id} waits for a worker session`);
   }
+  const timeoutMs = routineStarted ? TIMEOUT_MS : WORKER_TIMEOUT_MS;
 
   const started = Date.now();
-  while (Date.now() - started < TIMEOUT_MS) {
+  while (Date.now() - started < timeoutMs) {
     await new Promise((res) => setTimeout(res, POLL_MS));
     const result = await readFile(opts, `${dir}/result.txt`);
     if (result) return { text: result, costUsd: 0 };
     const error = await readFile(opts, `${dir}/error.txt`);
     if (error) throw new Error(`Cloud session couldn't finish: ${error.slice(0, 400)}`);
   }
-  throw new Error(`Cloud job ${id} timed out after ${TIMEOUT_MS / 60_000} minutes`);
+  throw new Error(`Cloud job ${id} timed out after ${timeoutMs / 60_000} minutes${routineStarted ? "" : " (no worker session picked it up: open a claude.ai/code session on the repo and say \"run the cloud worker\")"}`);
 }
