@@ -29,13 +29,13 @@ Log in once when `claude` opens, then close it. For API mode, paste an Anthropic
 
 ### Cloud mode (claude.ai cloud sessions)
 
-A third option in **Settings → Claude**. Scraping and checks still run on your PC; each Claude step is sent to a Claude Code cloud session instead:
+A third option in **Settings → Claude**. Scraping and checks still run on your PC; each Claude step is queued on GitHub and done by a Claude Code cloud session:
 
-1. At claude.ai/code/routines create a routine on this repo. Paste the instructions shown in Settings as its prompt, then add an **API** trigger and copy its URL and token.
-2. Create a GitHub fine-grained token for the repo with **Contents: read & write**.
-3. Paste the URL, token, `owner/repo` and GitHub token into Settings and pick **Cloud**.
+1. Create a GitHub fine-grained token for the repo with **Contents: read & write**. Paste it and `owner/repo` into Settings and pick **Cloud**.
+2. Open a session at claude.ai/code on this repo and say **"run the cloud worker"** (`.claude/skills/cloud-worker`). It works through queued jobs on your cloud session credits; keep it open while leads run.
+3. Optional: a routine with an API trigger can start one session per job instead (uses routine runs). Paste its URL and token in Settings.
 
-Jobs are committed to `claude/cloud-jobs` (`jobs/<id>/job.json` + images), the routine writes `result.txt` back, and the studio polls for it. Each step takes a few minutes and counts toward your plan's usage and daily routine-run cap. For your own use only.
+Jobs are `jobs/<id>/job.json` (+ images) on `claude/cloud-jobs`; the worker writes `result.txt` back and the studio polls for it. For your own use only.
 
 ## Run
 

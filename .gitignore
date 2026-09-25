@@ -24,3 +24,6 @@ design-library/**/*.webp
 design-library/**/_thumbs/**
 design-library/**/_raw.json
 design-library/_progress.log
+
+# Cloud worker checkout of the jobs branch
+.cloud-jobs/
