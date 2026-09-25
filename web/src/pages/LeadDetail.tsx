@@ -5,6 +5,7 @@ import {
   Image as ImageIcon, Info, Layers, Monitor, RefreshCw, Smartphone, StickyNote, Trash2, Users, XCircle,
 } from "lucide-react";
 import { STEPS, type LeadDetail as Detail, type StepKey } from "../../../shared/types";
+import { workspaceEnabled } from "../../../shared/features";
 import type { LayoutCtx } from "../layout/Layout";
 import { api, duration, fileUrl, host, shortDate, timeAgo, usePoll } from "../lib/api";
 import { EventIcon, StatusPill, StepIcon } from "../components/ui";
@@ -108,7 +109,7 @@ export default function LeadDetail() {
           </div>
           <a className="btn btn-white" href={`/api/leads/${lead.id}/export`} aria-disabled={!lead.hasMockup} style={!lead.hasMockup ? { pointerEvents: "none", opacity: .5 } : undefined}><FileOutput />Export</a>
           <a className="btn btn-white" href={lead.url} target="_blank" rel="noreferrer"><ExternalLink />Open site</a>
-          {lead.hasMockup && <Link className="btn btn-ink" to={`/builds/new?lead=${lead.id}`}><Blocks />Start build</Link>}
+          {lead.hasMockup && workspaceEnabled("builds") && <Link className="btn btn-ink" to={`/builds/new?lead=${lead.id}`}><Blocks />Start build</Link>}
         </div>
       </div>
 

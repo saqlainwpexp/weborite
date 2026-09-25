@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import type { BenchmarkSet, Build, BuildStats, CommsService, EventItem, FinderSearch, FinderStats, Lead, Prospect, SeoSite, Settings, Usage, WpConversion } from "../../../shared/types";
 import { api, host, timeAgo, usePoll } from "../lib/api";
+import { workspaceEnabled } from "../../../shared/features";
 import { AddLeadModal, EventIcon, Logo, StatusPill } from "../components/ui";
 import { NewSearchModal } from "../components/finder";
 import { Calendar, dayKey, parseDayKey } from "../components/Calendar";
@@ -41,7 +42,7 @@ export interface LayoutCtx {
   openAdd: () => void;
 }
 
-const WORKSPACES: { key: Workspace; label: string; hint: string; home: string; icon: typeof Sparkles }[] = [
+const ALL_WORKSPACES: { key: Workspace; label: string; hint: string; home: string; icon: typeof Sparkles }[] = [
   { key: "admin", label: "Super admin", hint: "Earnings, leads, progress and reports across everything", home: "/admin", icon: Crown },
   { key: "mockups", label: "Mockups", hint: "Rebuild lead homepages with Claude", home: "/", icon: Sparkles },
   { key: "automations", label: "Automations", hint: "Prompt → scrape → auto-mockups → outreach", home: "/campaigns", icon: Workflow },
@@ -52,6 +53,8 @@ const WORKSPACES: { key: Workspace; label: string; hint: string; home: string; i
   { key: "care", label: "Maintenance", hint: "Monthly updates tested on staging, security, health", home: "/care", icon: Wrench },
   { key: "comms", label: "Communication", hint: "WhatsApp, email, Messenger, Discord… in one place", home: "/comms", icon: MessagesSquare },
 ];
+
+const WORKSPACES = ALL_WORKSPACES.filter((w) => workspaceEnabled(w.key));
 
 const CARE_DOT: Record<string, string> = {
   running: "var(--amber)", approve: "var(--orange)", stopped: "var(--red)", vulnerable: "var(--red)", updates: "var(--amber)", offline: "var(--faint)", healthy: "var(--green)",
@@ -102,7 +105,9 @@ export default function Layout() {
     return w === "finder" || w === "builds" || w === "wordpress" || w === "seo" || w === "care" || w === "comms" || w === "admin" ? w : "mockups";
   });
   const path = location.pathname;
-  const workspace: Workspace = path.startsWith("/campaigns") ? "automations" : path.startsWith("/finder") ? "finder" : path.startsWith("/builds") ? "builds" : path.startsWith("/wp") ? "wordpress" : path.startsWith("/seo") ? "seo" : path.startsWith("/care") ? "care" : path.startsWith("/comms") ? "comms" : path.startsWith("/admin") ? "admin" : path.startsWith("/settings") ? lastWorkspace : "mockups";
+  const routeWorkspace: Workspace = path.startsWith("/campaigns") ? "automations" : path.startsWith("/finder") ? "finder" : path.startsWith("/builds") ? "builds" : path.startsWith("/wp") ? "wordpress" : path.startsWith("/seo") ? "seo" : path.startsWith("/care") ? "care" : path.startsWith("/comms") ? "comms" : path.startsWith("/admin") ? "admin" : path.startsWith("/settings") ? lastWorkspace : "mockups";
+  // A hidden workspace's URL renders the Mockups shell while the router redirects to "/".
+  const workspace: Workspace = workspaceEnabled(routeWorkspace) ? routeWorkspace : "mockups";
   useEffect(() => {
     if (!path.startsWith("/settings")) {
       setLastWorkspace(workspace);
@@ -129,14 +134,14 @@ export default function Layout() {
   const conversions = usePoll<WpConversion[]>(isWp || isSeo ? "/api/wp" : null, 3000);
   const seoSites = usePoll<SeoSite[]>(isSeo ? "/api/seo" : null, 3000);
   const careSites = usePoll<CareView[]>(isCare ? "/api/care" : null, 4000);
-  const commsServices = usePoll<CommsService[]>(isComms || desktop ? "/api/comms" : null, isComms ? 5000 : 30000);
+  const commsServices = usePoll<CommsService[]>(isComms || (desktop && workspaceEnabled("comms")) ? "/api/comms" : null, isComms ? 5000 : 30000);
   const [commsState, setCommsState] = useState<Record<string, ChannelState>>({});
   useEffect(() => {
     if (!desktop) return;
     void desktop.comms.state().then(setCommsState);
     const offState = desktop.comms.onState(setCommsState);
     // Clicking a message notification opens that channel.
-    const offOpen = desktop.comms.onOpen((id) => nav(`/comms/${id}`));
+    const offOpen = desktop.comms.onOpen((id) => workspaceEnabled("comms") && nav(`/comms/${id}`));
     return () => {
       offState();
       offOpen();
