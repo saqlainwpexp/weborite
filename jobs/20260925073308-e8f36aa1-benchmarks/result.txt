@@ -1,0 +1,10 @@
+```json
+{"sites": [
+ {"name": "Digital Silk", "url": "https://www.digitalsilk.com/", "why": "Leads with a short growth-focused promise and a single 'get a proposal' action, then immediately backs it with big-client logos, award badges and case-study results rather than a service list."},
+ {"name": "Big Drop", "url": "https://www.bigdropinc.com/", "why": "Portfolio-first homepage: large full-bleed project visuals do the selling, with a location-specific headline (NYC web design) and review-platform ratings as trust signals."},
+ {"name": "Clay", "url": "https://clay.global/", "why": "Confident minimal hero with oversized type and a recognisable client logo wall, then large case-study cards; restraint signals senior design skill."},
+ {"name": "Ramotion", "url": "https://www.ramotion.com/", "why": "Each case study is framed around a measurable outcome (e.g. a percentage improvement) with the client name, so proof is quantified rather than claimed."},
+ {"name": "Flow Ninja", "url": "https://www.flowninja.com/", "why": "Positions around one clear specialism (Webflow partner) with named enterprise clients and a 'how we work' model section, showing expertise through focus rather than a long list of services."},
+ {"name": "Bop Design", "url": "https://www.bopdesign.com/", "why": "Mid-sized agency that speaks directly to a defined audience (B2B companies) and pairs a clear niche headline with years in business and review ratings, a realistic model for a local agency."}
+]}
+```
