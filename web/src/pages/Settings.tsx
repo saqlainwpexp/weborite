@@ -217,7 +217,8 @@ export default function Settings() {
 
   const base = tunnel.replace(/\/$/, "");
   const brand = (f: string) => (f ? `/files/brand/${f}` : "");
-  const cloudReady = Boolean(settings.cloudTriggerUrl && settings.cloudTriggerTokenSet && settings.githubTokenSet && settings.cloudRepo);
+  const cloudReady = Boolean(settings.githubTokenSet && settings.cloudRepo);
+  const cloudRoutine = Boolean(settings.cloudTriggerUrl && settings.cloudTriggerTokenSet);
   const modeOk = settings.mode === "session" ? Boolean(status?.cli) : settings.mode === "cloud" ? cloudReady : settings.apiKeySet;
 
   return (
@@ -228,7 +229,7 @@ export default function Settings() {
         <div className="actions">
           <span className={`status ${modeOk ? "ready" : "needs_review"}`}>
             <span className="dot" />
-            {settings.mode === "session" ? (status?.cli ? `Session · Claude Code ${status.cli.split(" ")[0]}` : "Session · Claude Code not found") : settings.mode === "cloud" ? (cloudReady ? "Cloud mode · routine connected" : "Cloud mode · setup incomplete") : settings.apiKeySet ? "API mode · key saved" : "API mode · no key"}
+            {settings.mode === "session" ? (status?.cli ? `Session · Claude Code ${status.cli.split(" ")[0]}` : "Session · Claude Code not found") : settings.mode === "cloud" ? (cloudReady ? (cloudRoutine ? "Cloud mode · routine connected" : "Cloud mode · worker session") : "Cloud mode · setup incomplete") : settings.apiKeySet ? "API mode · key saved" : "API mode · no key"}
           </span>
         </div>
       </div>
@@ -325,15 +326,15 @@ export default function Settings() {
             {settings.mode === "cloud" && (
               <Section icon={<Cloud />} title="Cloud routine">
                 <ol className="steps-list">
-                  <li>At <code>claude.ai/code/routines</code> create a routine on this repo, paste the prompt below as its instructions, and add an <b>API</b> trigger.</li>
-                  <li>Copy the trigger URL and generate its token, then paste both here.</li>
-                  <li>Create a GitHub fine-grained token for the repo with <b>Contents: read &amp; write</b>. Jobs and results travel through the branch below.</li>
+                  <li>Create a GitHub fine-grained token for the repo with <b>Contents: read &amp; write</b> and paste it with the repo below. Jobs and results travel through the jobs branch.</li>
+                  <li>Open a session at <code>claude.ai/code</code> on the repo and say <b>run the cloud worker</b>. It works through queued jobs using your cloud session credits; keep it open while leads run.</li>
+                  <li>Optional: instead of a worker session, a routine with an <b>API</b> trigger starts one session per job (uses routine runs). Paste its URL and token here and the prompt below as its instructions.</li>
                 </ol>
                 <div className="set-grid">
-                  <Field label="Routine trigger URL" icon={<Link2 />} htmlFor="c-turl" hint="…/v1/claude_code/routines/trig_…/fire">
+                  <Field label="Routine trigger URL (optional)" icon={<Link2 />} htmlFor="c-turl" hint="Leave empty to use a worker session">
                     <input id="c-turl" className="input mono" value={v("cloudTriggerUrl")} onChange={set("cloudTriggerUrl")} autoComplete="off" />
                   </Field>
-                  <Field label="Routine token" icon={<KeyRound />} htmlFor="c-ttok" hint="Stored encrypted on this PC">
+                  <Field label="Routine token (optional)" icon={<KeyRound />} htmlFor="c-ttok" hint="Stored encrypted on this PC">
                     <input id="c-ttok" className="input mono" type="password" placeholder={settings.cloudTriggerTokenSet ? "•••••••• saved" : "sk-ant-oat01-…"} value={draft.cloudTriggerToken ?? ""} onChange={set("cloudTriggerToken")} autoComplete="off" />
                   </Field>
                   <Field label="GitHub repo" icon={<Hash />} htmlFor="c-repo" hint="owner/name, the same repo the routine uses">
@@ -346,11 +347,11 @@ export default function Settings() {
                     <input id="c-br" className="input mono" value={v("cloudBranch")} onChange={set("cloudBranch")} />
                   </Field>
                 </div>
-                <Field label="Routine instructions (paste into the routine)" icon={<FileText />} htmlFor="c-prompt">
+                <Field label="Routine instructions (only for the optional routine)" icon={<FileText />} htmlFor="c-prompt">
                   <textarea id="c-prompt" className="input mono" rows={9} readOnly value={CLOUD_ROUTINE_PROMPT} />
                 </Field>
                 <div className="set-note">
-                  <span>{cloudReady ? <CheckCircle2 className="ok" /> : <XCircle className="bad" />}{cloudReady ? "Ready: each Claude step runs as a cloud session (a few minutes each)" : "Fill in all fields and save"}</span>
+                  <span>{cloudReady ? <CheckCircle2 className="ok" /> : <XCircle className="bad" />}{cloudReady ? (cloudRoutine ? "Ready: each Claude step starts a routine session" : "Ready: jobs wait for a worker session at claude.ai/code") : "Add the GitHub repo and token, then save"}</span>
                 </div>
               </Section>
             )}
