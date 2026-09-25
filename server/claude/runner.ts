@@ -1,6 +1,7 @@
 import { getSettings, recordRun } from "../db.ts";
 import { runSession } from "./sessionRunner.ts";
 import { runApi } from "./apiRunner.ts";
+import { runCloud } from "./cloudRunner.ts";
 
 export interface RunRequest {
   leadId: string;
@@ -26,10 +27,13 @@ export class ClaudeUnavailableError extends Error {}
 
 export async function runClaude(req: RunRequest): Promise<RunResult> {
   const s = getSettings();
+  const model = req.heavy ? s.generateModel : s.fastModel;
   const result =
     s.mode === "api"
-      ? await runApi(req, { apiKey: s.apiKey, model: req.heavy ? s.generateModel : s.fastModel })
-      : await runSession(req, { claudePath: s.claudePath, model: req.heavy ? s.generateModel : s.fastModel });
+      ? await runApi(req, { apiKey: s.apiKey, model })
+      : s.mode === "cloud"
+        ? await runCloud(req, { triggerUrl: s.cloudTriggerUrl, triggerToken: s.cloudTriggerToken, githubToken: s.githubToken, repo: s.cloudRepo, branch: s.cloudBranch, model })
+        : await runSession(req, { claudePath: s.claudePath, model });
   recordRun(req.leadId, s.mode, req.task, s.mode === "api" ? result.costUsd : 0);
   return result;
 }

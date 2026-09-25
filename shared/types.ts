@@ -118,7 +118,7 @@ export interface EventItem {
   detail: string;
 }
 
-export type ClaudeMode = "session" | "api";
+export type ClaudeMode = "session" | "api" | "cloud";
 
 export interface Settings {
   mode: ClaudeMode;
@@ -130,6 +130,12 @@ export interface Settings {
   metaPageTokenSet: boolean;
   metaAppSecretSet: boolean;
   claudePath: string;
+  /** Cloud mode: a Claude Code Routine (API trigger) does the work, GitHub carries jobs and results */
+  cloudTriggerUrl: string;
+  cloudTriggerTokenSet: boolean;
+  githubTokenSet: boolean;
+  cloudRepo: string; // owner/name
+  cloudBranch: string; // must start with claude/
   /** White-label profile */
   studioName: string;
   brandColor: string; // hex, drives the whole UI palette
