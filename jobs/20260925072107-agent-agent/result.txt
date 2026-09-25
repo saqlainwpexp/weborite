@@ -1,0 +1,3 @@
+```json
+{"final": "Hi! I'm connected and working through Cloud mode. I can start a Lead Finder search, add or re-run a mockup lead, run a speed or SEO test, or open any page. What would you like to do?"}
+```
