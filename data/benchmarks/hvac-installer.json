@@ -1,0 +1,39 @@
+{
+  "vertical": "hvac-installer",
+  "label": "Airco Installer",
+  "register": "The buyer needs an air conditioning unit installed or repaired and is judging whether this local firm looks certified, professional and quick to respond, next to other local HVAC and climate-control installers and service companies rather than large manufacturers.",
+  "color": "#c98a2b",
+  "sites": [
+    {
+      "name": "Parker & Sons",
+      "url": "https://www.parkerandsons.com",
+      "why": "Hero pairs a technician photo with three proof points (no extra charge for off-hours service, fast response, #1 rated 14 years running), then a strip of badges (BBB A+, Trust Certified, licensed/bonded/insured) sits beside a persistent phone number and Schedule Online button."
+    },
+    {
+      "name": "Bradham Comfort Services",
+      "url": "https://www.bradhambrothers.com/",
+      "why": "Puts a concrete offer ($500 off new systems) and an instant online quote tool next to the Book Now button and phone number, and backs them with NATE-certified technicians, Trane Comfort Specialist and BBB A+ badges."
+    },
+    {
+      "name": "Medley HVAC & Plumbing",
+      "url": "https://callmedley.com/",
+      "why": "Claims 'Most Trusted' in the hero and proves it immediately with a 5.0 Google / 4.9 Yelp review stack. Instant Online Quote and Schedule Now buttons sit next to it, and the copy stresses employees rather than subcontractors."
+    },
+    {
+      "name": "Estes Services",
+      "url": "https://www.estesair.com/",
+      "why": "Leads with 75 years of family ownership, then adds a Carrier Factory Authorized Dealer badge, 6,000+ reviews across three platforms, and financing and membership pricing shown up front."
+    },
+    {
+      "name": "Penguin Air, Plumbing & Electrical",
+      "url": "https://www.penguinair.com/",
+      "why": "A short hero of location plus same-day availability is followed by CTAs for scheduling, financing and membership, with flat-rate pricing, free in-home estimates and 24/7 service shown as trust cues."
+    },
+    {
+      "name": "Dalco Heating & Air Conditioning",
+      "url": "https://www.dalcohvac.com/",
+      "why": "A plain 'Full Service Heating & Air Conditioning Repair & Installation' headline sits above separate Schedule Service, Schedule Sales and Start Your Quote buttons and a phone number, with a Google rating, NATE certification, BBB A+ and 'since 1981' as trust markers."
+    }
+  ],
+  "createdAt": "2026-09-25T00:11:53.660Z"
+}

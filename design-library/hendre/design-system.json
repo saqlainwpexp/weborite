@@ -1,0 +1,192 @@
+{
+ "name": "Hendre — friendly navy & red home repair",
+ "tier": "measured",
+ "source": {
+  "template": "Hendre – Handyman / Home Repair HTML5 template (index.html)",
+  "method": "Computed styles measured in Chromium at 1440px (scripts/extract-template.mjs → measured.json); reference-1..5.jpg are the full page in order. Grey 'PHOTO' tiles are photo slots — keep their size and position, fill them with the lead's real photos.",
+  "extractedAt": "2026-09-24"
+ },
+ "character": "Approachable, trustworthy home-repair brand. Deep navy #062462 + signal red #da242b on white, Inter headings with ONE word per heading picked out in red, Poppins body, house-shaped red icon badges, a big white feature panel overlapping the hero, a red vertical bracket framing the hero headline, and buttons with a notched '+' tab. Feels local, friendly and dependable.",
+ "reuse": "Use for handyman / home repair / home services / plumbing / electrical / HVAC / roofing / painting / cleaning / pest control / appliance repair leads that want a friendly, trustworthy two-colour look. Put the lead's brand colour in the navy 'primary' slot and keep a strong contrasting accent (red by default, or a warm tint of the brand) for highlights.",
+ "cssStarter": ":root{--primary:#062462;--accent:#da242b;--ink:#062461;--body:#616161;--surface:#ffffff;--surface-alt:#f6f6f6;--footer:#052361;--container:1280px;--gutter:32px;--section-y:88px}\nbody{font-family:'Poppins',sans-serif;font-size:15px;line-height:1.87;color:var(--body)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0 70px}\nh1,h2,h3,h4{font-family:'Inter',sans-serif;color:var(--ink)}\nh2 em,h1 em{font-style:normal;color:var(--accent)}\n.eyebrow{font-family:'Inter',sans-serif;font-size:16px;font-weight:500;line-height:1.2;text-transform:uppercase;color:var(--accent);margin-bottom:14px}\n.hero-title{font-size:58px;font-weight:800;line-height:1.12;text-transform:uppercase;color:var(--primary)}\nh2{font-size:40px;font-weight:700;line-height:1.25;margin:0}\nh3{font-size:22px;font-weight:600;line-height:1.2}\n.btn{position:relative;display:inline-flex;align-items:center;height:60px;padding:0 42px;border-radius:5px 30px 30px 5px;font-size:15px;font-weight:500;background:var(--primary);color:#fff}\n.btn::after{content:'+';position:absolute;right:-12px;top:50%;transform:translateY(-50%);width:24px;height:24px;border-radius:50%;background:#fff;color:var(--primary);border:2px solid var(--primary);display:grid;place-items:center;font-size:14px;line-height:1}\n.btn-accent{background:var(--accent);border-radius:5px;height:52px;padding:0 35px}\n.btn-accent::after{display:none}\n.panel{background:#fff;border-radius:10px;box-shadow:0 20px 60px rgba(6,36,98,.12);padding:80px}\n.house-badge{width:84px;height:96px;background:var(--accent);clip-path:polygon(50% 0,100% 42%,88% 42%,88% 100%,12% 100%,12% 42%,0 42%);display:grid;place-items:end center;padding-bottom:14px;color:#fff}\n@media(max-width:768px){:root{--section-y:64px}.hero-title{font-size:36px}h2{font-size:30px}.panel{padding:32px 20px}}",
+ "typography": {
+  "display": {
+   "family": "Inter",
+   "weights": [
+    500,
+    600,
+    700,
+    800
+   ],
+   "note": "Headings. Hero 58/800 UPPERCASE navy. Section h2 40/700 with ONE key word (often the brand or the service) in red."
+  },
+  "body": {
+   "family": "Poppins",
+   "weights": [
+    300,
+    400,
+    500
+   ],
+   "note": "Body 15px/1.87 grey #616161; buttons and nav 15/500 Poppins."
+  },
+  "scale": [
+   {
+    "role": "hero headline",
+    "size": 58,
+    "weight": 800,
+    "lineHeight": 1.12,
+    "transform": "uppercase",
+    "color": "#062462",
+    "note": "last word(s) in red"
+   },
+   {
+    "role": "hero eyebrow",
+    "size": 16,
+    "weight": 600,
+    "color": "#da242b",
+    "note": "sits on the top arm of a red ⌐-shaped bracket that runs down the left of the headline"
+   },
+   {
+    "role": "h2 section heading",
+    "size": 40,
+    "weight": 700,
+    "lineHeight": 1.25,
+    "note": "two-colour: navy with a red highlight word"
+   },
+   {
+    "role": "eyebrow",
+    "size": 16,
+    "weight": 500,
+    "transform": "uppercase",
+    "color": "#da242b"
+   },
+   {
+    "role": "h3 card title",
+    "size": 22,
+    "weight": 600,
+    "lineHeight": 1.2
+   },
+   {
+    "role": "phone callout",
+    "size": 20,
+    "weight": 600,
+    "note": "'For Enquiry:' 15px/300 label above, 60px red circle phone icon beside"
+   },
+   {
+    "role": "stat",
+    "size": 34,
+    "weight": 700,
+    "note": "white over a photo, with a 15px label"
+   },
+   {
+    "role": "body",
+    "size": 15,
+    "weight": 400,
+    "lineHeight": 1.87,
+    "family": "Poppins",
+    "color": "#616161"
+   },
+   {
+    "role": "testimonial quote",
+    "size": 18,
+    "weight": 300,
+    "lineHeight": 1.78,
+    "family": "Inter"
+   }
+  ]
+ },
+ "color": {
+  "roles": {
+   "primary (deep navy)": "#062462",
+   "accent (signal red)": "#da242b",
+   "ink": "#062461",
+   "body": "#616161",
+   "surface": "#ffffff",
+   "surface-alt": "#f6f6f6 / #fafafa",
+   "footer": "#052361"
+  },
+  "notes": "Navy carries structure (header, buttons, caption bars, footer); red carries emphasis (eyebrows, one heading word, house badges, card side-rules, primary CTA in the header). Map the lead's brand colour to navy; keep a contrasting accent."
+ },
+ "spacing": {
+  "container": "1280px max content column with 32px side padding (20px under 768px) — the SAME column for top bar, header, every section and footer. (Template measured 1320px; standardised to 1280 so every mockup shares one grid.)",
+  "sectionPaddingY": "88px top / 70px bottom (about 135/100; services header band 88 then cards overlap it)",
+  "headingStack": "red uppercase eyebrow → 14px → 40px two-colour h2 → 20px → paragraph → 50px → content",
+  "gridGap": "24px (3 × ~410px cards)",
+  "panelPadding": "80px inside the white overlapping feature panel (radius 10, soft navy shadow)",
+  "header": "50px navy top bar (address · email left; coloured square social cells + 'Call Us: <phone>' right) + 99px header: logo on navy on the left, then a WHITE nav box (radius 0) spanning the rest with nav 15/500 navy, a round grey search button and a red 'Get a Free Quote' button",
+  "hero": "790px photo with a pale house-outline illustration; headline block left with the red bracket; a large 753×728 photo cut-out on the right"
+ },
+ "components": {
+  "button": "Navy, 60px tall, radius 5px on the left and pill on the right, with a small white circled '+' tab poking out of its right edge. The header CTA is a plain red 52px button radius 5.",
+  "featurePanel": "White 10px-radius panel that overlaps the bottom of the hero by ~120px: left eyebrow + two-colour h2, right a red phone circle + 'For Enquiry' number; below, 3 photo cards (410×347) with a red HOUSE-SHAPED icon badge at the top-left and a navy caption bar at the bottom (with a small triangle notch pointing up into the photo). A diagonal-hatch strip peeks out under the panel.",
+  "aboutSplit": "607×576 photo left with a white stat ('795+ Project Completed') over it; right: eyebrow, h2, paragraph, an icon feature (80px pale tile + 20px title + text), a 2×2 checklist with red circle checks, and the navy '+' button.",
+  "serviceCards": "A photo header band (navy overlay, white h2 left, round navy prev/next arrows right) that the cards overlap: 3 white cards, photo on top, red house badge straddling the photo edge, 22px title, 2 lines, navy '+' button, and a 14px red vertical rule down the right side of each card.",
+  "whyChoose": "Pale band, centred two-colour h2, a round outlined PLAY button (video), then 3 tab buttons (01. / 02. / 03.) and a tab panel with photo + text.",
+  "process": "Navy photo band, 4 steps with 36px red numbered circles connected by a dashed line, 22px white titles.",
+  "testimonials": "Dark photo band, carousel of quote cards with 18px light quote text, round avatar, 18px name.",
+  "blog": "White, 3 cards with photo, a navy pill 'By Admin' meta chip, 22px title.",
+  "footer": "#052361, a top row (phone callout + newsletter 'Subscribe Now' with a #f6f6f6 52px input), then 4 columns, 22px/600 column titles, #cdd3df text."
+ },
+ "blueprint": [
+  {
+   "section": "top bar + split header",
+   "spec": "50px navy bar + 99px header with logo on navy and a white nav box"
+  },
+  {
+   "section": "hero",
+   "spec": "790px; left: red bracket + eyebrow, 58px UPPERCASE navy headline with the last words red, navy '+' button; right: large photo cut-out"
+  },
+  {
+   "section": "overlapping feature panel",
+   "spec": "white radius-10 panel over the hero bottom: heading + phone callout, 3 photo cards with house badges and navy caption bars"
+  },
+  {
+   "section": "about",
+   "spec": "padding 135/100, photo + stat left, text + icon feature + checklist + button right"
+  },
+  {
+   "section": "services",
+   "spec": "navy photo header band with arrows, 3 overlapping white cards with red side rules"
+  },
+  {
+   "section": "why choose us",
+   "spec": "pale band, centred heading, play button, 3 tabs + tab panel"
+  },
+  {
+   "section": "team",
+   "spec": "photo band, centred white heading (only with real team photos)"
+  },
+  {
+   "section": "testimonials",
+   "spec": "dark photo band carousel"
+  },
+  {
+   "section": "process",
+   "spec": "navy band, 4 numbered steps on a dashed line"
+  },
+  {
+   "section": "blog / tips",
+   "spec": "3 cards (only if the lead has real articles; otherwise skip)"
+  },
+  {
+   "section": "footer",
+   "spec": "#052361 with phone + newsletter row and 4 columns"
+  }
+ ],
+ "signatureMoves": [
+  "One red word inside every navy heading",
+  "Red house-shaped icon badges",
+  "White feature panel overlapping the bottom of the hero",
+  "Navy buttons with a pill right end and a white circled '+' tab",
+  "Red bracket framing the hero headline",
+  "Navy caption bars with a small up-pointing notch under photos",
+  "Red vertical rule down the side of service cards"
+ ],
+ "referenceImages": [
+  "reference-1.jpg",
+  "reference-2.jpg",
+  "reference-3.jpg",
+  "reference-4.jpg",
+  "reference-5.jpg"
+ ]
+}

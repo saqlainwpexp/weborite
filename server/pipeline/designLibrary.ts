@@ -18,6 +18,10 @@ export interface DesignSystem {
   character: string;
   reuse: string;
   referenceImage: string | null; // absolute path
+  /** The page, top to bottom, as ordered slices (reference-1.jpg, reference-2.jpg…) when the system was measured from a real template. */
+  referenceImages: string[];
+  /** "measured" = numbers computed from a real template's rendered CSS (scripts/extract-template.mjs); otherwise hand-synthesized. */
+  measured: boolean;
   json: unknown; // the full spec, injected into the prompt
 }
 
@@ -51,11 +55,12 @@ export function listDesignSystems(): DesignSystem[] {
     const specPath = join(dir, "design-system.json");
     if (!existsSync(specPath)) continue;
     try {
-      const json = JSON.parse(readFileSync(specPath, "utf8")) as { name?: string; character?: string; reuse?: string };
+      const json = JSON.parse(readFileSync(specPath, "utf8")) as { name?: string; character?: string; reuse?: string; tier?: string };
+      const slices = readdirSync(dir).filter((f) => /^reference-\d+\.(png|jpe?g|webp)$/i.test(f)).sort((a, b) => parseInt(a.slice(10)) - parseInt(b.slice(10))).map((f) => realPath(join(dir, f)));
       const ref = ["reference.png", "reference.webp", "reference.jpg", "ref.png"].map((f) => join(dir, f)).find(existsSync)
         ?? readdirSync(dir).filter((f) => /\.(png|jpe?g|webp)$/i.test(f) && !/^spec-/i.test(f)).sort((a, b) => parseInt(a) - parseInt(b)).map((f) => join(dir, f))[0]
         ?? null;
-      out.push({ slug, dir, name: json.name ?? slug, character: json.character ?? "", reuse: json.reuse ?? "", referenceImage: ref ? realPath(ref) : null, json });
+      out.push({ slug, dir, name: json.name ?? slug, character: json.character ?? "", reuse: json.reuse ?? "", referenceImage: slices[0] ?? (ref ? realPath(ref) : null), referenceImages: slices, measured: json.tier === "measured", json });
     } catch {
       /* skip a malformed spec */
     }
@@ -72,26 +77,43 @@ const VERSATILE = new Set(["clean", "modern", "professional", "corporate", "serv
 
 function score(s: DesignSystem, need: Set<string>): number {
   let n = 0;
-  for (const w of words(`${s.name} ${s.character} ${s.reuse}`)) if (need.has(w)) n++;
+  // Distinct words only: a spec that repeats "HVAC" five times isn't a five-times better fit.
+  for (const w of new Set(words(`${s.name} ${s.character} ${s.reuse}`))) if (need.has(w)) n++;
   return n;
 }
 
+/** Stable small number from a string, so the same lead always gets the same pick. */
+function hash(s: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619);
+  return h >>> 0;
+}
+
 /**
- * Pick the design system whose niche keywords best overlap the lead's vertical. When nothing matches,
- * fall back to the most versatile clean system rather than an arbitrary (possibly wrong) one.
+ * Pick the design system whose niche keywords best overlap the lead's vertical. Systems measured from
+ * real templates win over hand-synthesized ones, and when several fit equally well the lead's id
+ * rotates between them — so five HVAC leads don't all come out as the same template. When nothing
+ * matches, fall back to the most versatile clean system rather than an arbitrary (possibly wrong) one.
  * Deterministic and cheap; returns null only when the library is empty.
  */
-export function pickDesignSystem(vertical: { label?: string; register?: string; key?: string } | null): DesignSystem | null {
+export function pickDesignSystem(vertical: { label?: string; register?: string; key?: string } | null, seed = ""): DesignSystem | null {
   const systems = listDesignSystems();
   if (!systems.length) return null;
   const need = new Set([...words(vertical?.label ?? ""), ...words(vertical?.register ?? ""), ...words(vertical?.key ?? "")]);
 
-  let best = systems[0];
-  let bestScore = -1;
+  const rotate = (pool: DesignSystem[]) => pool.sort((a, b) => a.slug.localeCompare(b.slug))[hash(seed) % pool.length];
   if (need.size) {
-    for (const s of systems) { const sc = score(s, need); if (sc > bestScore) { bestScore = sc; best = s; } }
+    const scored = systems.map((s) => ({ s, sc: score(s, need) })).filter((x) => x.sc >= 1);
+    if (scored.length) {
+      // Measured systems carry exact spacing and full-page references: prefer them whenever one fits at all.
+      const measured = scored.filter((x) => x.s.measured);
+      const pool = measured.length ? measured : scored;
+      const top = Math.max(...pool.map((x) => x.sc));
+      // Keyword counts depend on how wordy each spec is, so anything scoring at least half the best is a
+      // real fit; rotate among those.
+      return rotate(pool.filter((x) => x.sc * 2 >= top).map((x) => x.s));
+    }
   }
-  if (bestScore >= 1) return best; // a real niche match
 
   // No niche overlap: choose the most broadly-applicable clean system.
   let fallback = systems[0];

@@ -14,7 +14,9 @@ export function runSession(req: RunRequest, opts: { claudePath: string; model: s
     : "";
   const prompt = `${req.prompt}${imageNote}\n\nReply with the final answer only, in the exact format requested.`;
 
-  const tools = ["Read", "Glob", "Grep"];
+  // Page generation only needs to open the images it is given; without Glob/Grep it can't go looking
+  // through other leads' folders for a previous mockup to copy.
+  const tools = req.task === "generate" ? ["Read"] : ["Read", "Glob", "Grep"];
   if (req.web) tools.push("WebSearch", "WebFetch");
 
   const args = [

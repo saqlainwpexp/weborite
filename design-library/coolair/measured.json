@@ -1,0 +1,1123 @@
+{
+ "title": "CoolAir — Air Conditioner & HVAC Repair Website Template",
+ "pageHeight": 8598,
+ "body": {
+  "family": "Manrope",
+  "size": 16,
+  "lineHeight": 1.81,
+  "color": "#7b8893",
+  "bg": "#ffffff"
+ },
+ "paragraph": {
+  "text": "Eu cupidatat sit dolore enim consequat veniam adipisicing et quis ut i",
+  "family": "Manrope",
+  "size": 16,
+  "weight": 400,
+  "lineHeight": 1.81,
+  "letterSpacing": 0,
+  "color": "#7b8893",
+  "marginBottom": 20
+ },
+ "nav": {
+  "text": "Home",
+  "family": "Manrope",
+  "size": 15,
+  "weight": 600,
+  "lineHeight": 1.93,
+  "letterSpacing": 0,
+  "color": "#ffffff",
+  "marginBottom": 0
+ },
+ "header": {
+  "height": 120,
+  "w": 1440,
+  "h": 120,
+  "padding": "0 0 0 0",
+  "radius": 0,
+  "bg": null
+ },
+ "inputs": [],
+ "containers": [
+  "1200 (padding-x 12) ×18"
+ ],
+ "buttons": [
+  {
+   "w": 148,
+   "h": 39,
+   "padding": "5 25 5 25",
+   "radius": 8,
+   "bg": "#234982",
+   "text": "Book a Repair",
+   "size": 15,
+   "weight": 700,
+   "family": "Manrope",
+   "letterSpacing": 0,
+   "color": "#ffffff",
+   "count": 4,
+   "examples": [
+    "Book a Repair",
+    "Book a Repair",
+    "About Company"
+   ]
+  },
+  {
+   "w": 154,
+   "h": 39,
+   "padding": "5 25 5 25",
+   "radius": 8,
+   "bg": "#678fd5",
+   "text": "Schedule Now",
+   "size": 15,
+   "weight": 700,
+   "family": "Manrope",
+   "letterSpacing": 0,
+   "color": "#ffffff",
+   "count": 2,
+   "examples": [
+    "Schedule Now",
+    "Schedule Appointment"
+   ]
+  },
+  {
+   "w": 127,
+   "h": 39,
+   "padding": "5 25 5 25",
+   "radius": 8,
+   "bg": "#ffffff @10%",
+   "text": "Read more",
+   "size": 15,
+   "weight": 700,
+   "family": "Manrope",
+   "letterSpacing": 0,
+   "color": "#ffffff",
+   "count": 2,
+   "examples": [
+    "Read more",
+    "Read more"
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "tag": "section",
+   "cls": "section-dark text-light no-top no-bottom position-relative overflow-hidden z-100",
+   "y": 0,
+   "height": 900,
+   "paddingY": "0 / 0",
+   "bg": "photo/pattern",
+   "bgImage": true,
+   "eyebrow": {
+    "text": "Pure Comfort",
+    "family": "Manrope",
+    "size": 14,
+    "weight": 700,
+    "lineHeight": 2.07,
+    "letterSpacing": 0,
+    "color": "#ffffff",
+    "marginBottom": 8
+   },
+   "headings": [
+    {
+     "tag": "h2",
+     "text": "Your Partner for Total Climate Control",
+     "family": "Manrope",
+     "size": 64,
+     "weight": 600,
+     "lineHeight": 1.1,
+     "letterSpacing": -3,
+     "color": "#ffffff",
+     "marginBottom": 16
+    },
+    {
+     "tag": "h3",
+     "text": "Solution for Comfort and Reliability",
+     "family": "Manrope",
+     "size": 24,
+     "weight": 600,
+     "lineHeight": 1.4,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 16
+    },
+    {
+     "tag": "h4",
+     "text": "Expert Technicians",
+     "family": "Manrope",
+     "size": 20,
+     "weight": 700,
+     "lineHeight": 1.3,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 10
+    },
+    {
+     "tag": "h4",
+     "text": "Flexible Scheduling",
+     "family": "Manrope",
+     "size": 20,
+     "weight": 700,
+     "lineHeight": 1.3,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 10
+    }
+   ],
+   "paragraph": {
+    "text": "Trust us to deliver reliable solutions, exceptional service.",
+    "family": "Manrope",
+    "size": 16,
+    "weight": 400,
+    "lineHeight": 1.81,
+    "letterSpacing": 0,
+    "color": "#f5f5f7",
+    "marginBottom": 20
+   },
+   "repeated": [
+    {
+     "count": 3,
+     "perRow": 3,
+     "itemWidth": 400,
+     "gapX": 0,
+     "card": {
+      "w": 80,
+      "h": 80,
+      "padding": "16 16 16 16",
+      "radius": 100,
+      "bg": "#678fd5"
+     },
+     "firstText": "Expert Technicians Trust us to deliver reliable solutions, exceptional service."
+    },
+    {
+     "count": 3,
+     "perRow": 3,
+     "itemWidth": 400,
+     "gapX": 0,
+     "card": {
+      "w": 80,
+      "h": 80,
+      "padding": "16 16 16 16",
+      "radius": 100,
+      "bg": "#678fd5"
+     },
+     "firstText": "Expert Technicians Trust us to deliver reliable solutions, exceptional service."
+    }
+   ],
+   "images": [
+    {
+     "w": 80,
+     "h": 80,
+     "radius": 0
+    },
+    {
+     "w": 80,
+     "h": 80,
+     "radius": 0
+    },
+    {
+     "w": 80,
+     "h": 80,
+     "radius": 0
+    },
+    {
+     "w": 80,
+     "h": 80,
+     "radius": 0
+    }
+   ],
+   "imageCount": 6
+  },
+  {
+   "tag": "section",
+   "cls": "pt50",
+   "y": 900,
+   "height": 813,
+   "paddingY": "50 / 100",
+   "bg": "transparent",
+   "eyebrow": {
+    "text": "Welcome",
+    "family": "Manrope",
+    "size": 14,
+    "weight": 700,
+    "lineHeight": 2.07,
+    "letterSpacing": 0,
+    "color": "#0a2540",
+    "marginBottom": 16
+   },
+   "headings": [
+    {
+     "tag": "h2",
+     "text": "Air Conditioning and Heating Specialists",
+     "family": "Manrope",
+     "size": 42,
+     "weight": 600,
+     "lineHeight": 1.1,
+     "letterSpacing": -1.25,
+     "color": "#0a2540",
+     "marginBottom": 20
+    }
+   ],
+   "paragraph": {
+    "text": "Eu cupidatat sit dolore enim consequat veniam adipisicing et quis ut i",
+    "family": "Manrope",
+    "size": 16,
+    "weight": 400,
+    "lineHeight": 1.81,
+    "letterSpacing": 0,
+    "color": "#7b8893",
+    "marginBottom": 20
+   },
+   "repeated": [
+    {
+     "count": 6,
+     "perRow": 6,
+     "itemWidth": 204,
+     "gapX": 0,
+     "card": {
+      "w": 204,
+      "h": 156,
+      "padding": "0 24 0 24",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": ""
+    },
+    {
+     "count": 2,
+     "perRow": 1,
+     "itemWidth": 476,
+     "card": {
+      "w": 476,
+      "h": 97,
+      "padding": "0 0 5 0",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": "Air Conditioning and Heating Specialists"
+    }
+   ],
+   "images": [
+    {
+     "w": 576,
+     "h": 447,
+     "radius": 0
+    },
+    {
+     "w": 156,
+     "h": 156,
+     "radius": 0
+    },
+    {
+     "w": 156,
+     "h": 156,
+     "radius": 0
+    },
+    {
+     "w": 156,
+     "h": 156,
+     "radius": 0
+    }
+   ],
+   "imageCount": 7
+  },
+  {
+   "tag": "section",
+   "cls": "no-top",
+   "y": 1689,
+   "height": 840,
+   "paddingY": "0 / 100",
+   "bg": "transparent",
+   "eyebrow": {
+    "text": "Complete Solutions",
+    "family": "Manrope",
+    "size": 14,
+    "weight": 700,
+    "lineHeight": 2.07,
+    "letterSpacing": 0,
+    "color": "#0a2540",
+    "marginBottom": 16
+   },
+   "headings": [
+    {
+     "tag": "h2",
+     "text": "Our Services",
+     "family": "Manrope",
+     "size": 42,
+     "weight": 600,
+     "lineHeight": 1.1,
+     "letterSpacing": -1.25,
+     "color": "#0a2540",
+     "marginBottom": 20
+    },
+    {
+     "tag": "h4",
+     "text": "Installation",
+     "family": "Manrope",
+     "size": 20,
+     "weight": 700,
+     "lineHeight": 1.3,
+     "letterSpacing": 0,
+     "color": "#0a2540",
+     "marginBottom": 10
+    },
+    {
+     "tag": "h4",
+     "text": "Repair",
+     "family": "Manrope",
+     "size": 20,
+     "weight": 700,
+     "lineHeight": 1.3,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 10
+    },
+    {
+     "tag": "h4",
+     "text": "Maintenance",
+     "family": "Manrope",
+     "size": 20,
+     "weight": 700,
+     "lineHeight": 1.3,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 10
+    }
+   ],
+   "paragraph": {
+    "text": "Qui culpa qui consequat officia cillum quis irure aliquip ut dolore si",
+    "family": "Manrope",
+    "size": 18,
+    "weight": 400,
+    "lineHeight": 1.78,
+    "letterSpacing": -0.2,
+    "color": "#7b8893",
+    "marginBottom": 20
+   },
+   "repeated": [],
+   "images": [
+    {
+     "w": 70,
+     "h": 70,
+     "radius": 10
+    },
+    {
+     "w": 376,
+     "h": 250,
+     "radius": 0
+    },
+    {
+     "w": 70,
+     "h": 70,
+     "radius": 10
+    },
+    {
+     "w": 376,
+     "h": 250,
+     "radius": 0
+    }
+   ],
+   "imageCount": 6
+  },
+  {
+   "tag": "section",
+   "cls": "bg-color-3",
+   "y": 2529,
+   "height": 788,
+   "paddingY": "100 / 100",
+   "bg": "#f4f7fb",
+   "eyebrow": {
+    "text": "Top 6 Reasons",
+    "family": "Manrope",
+    "size": 14,
+    "weight": 700,
+    "lineHeight": 2.07,
+    "letterSpacing": 0,
+    "color": "#ffffff",
+    "marginBottom": 16
+   },
+   "headings": [
+    {
+     "tag": "h2",
+     "text": "Why Choose Us",
+     "family": "Manrope",
+     "size": 42,
+     "weight": 600,
+     "lineHeight": 1.1,
+     "letterSpacing": -1.25,
+     "color": "#0a2540",
+     "marginBottom": 20
+    },
+    {
+     "tag": "h4",
+     "text": "Expert Technicians",
+     "family": "Manrope",
+     "size": 20,
+     "weight": 700,
+     "lineHeight": 1.3,
+     "letterSpacing": 0,
+     "color": "#0a2540",
+     "marginBottom": 10
+    },
+    {
+     "tag": "h4",
+     "text": "Flexible Scheduling",
+     "family": "Manrope",
+     "size": 20,
+     "weight": 700,
+     "lineHeight": 1.3,
+     "letterSpacing": 0,
+     "color": "#0a2540",
+     "marginBottom": 10
+    },
+    {
+     "tag": "h4",
+     "text": "Transparent Pricing",
+     "family": "Manrope",
+     "size": 20,
+     "weight": 700,
+     "lineHeight": 1.3,
+     "letterSpacing": 0,
+     "color": "#0a2540",
+     "marginBottom": 10
+    }
+   ],
+   "paragraph": {
+    "text": "Qui culpa qui consequat officia cillum quis irure aliquip ut dolore si",
+    "family": "Manrope",
+    "size": 18,
+    "weight": 400,
+    "lineHeight": 1.78,
+    "letterSpacing": -0.2,
+    "color": "#7b8893",
+    "marginBottom": 20
+   },
+   "repeated": [
+    {
+     "count": 6,
+     "perRow": 3,
+     "itemWidth": 400,
+     "gapX": 0,
+     "card": {
+      "w": 64,
+      "h": 64,
+      "padding": "8 8 8 8",
+      "radius": 10,
+      "bg": "#234982"
+     },
+     "firstText": "Expert Technicians Trust us to deliver reliable solutions and exceptional service, and pea"
+    }
+   ],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "section",
+   "cls": "no-top mt-100",
+   "y": 3217,
+   "height": 615,
+   "paddingY": "0 / 100",
+   "bg": "transparent",
+   "eyebrow": {
+    "text": "HVAC Specialist",
+    "family": "Manrope",
+    "size": 14,
+    "weight": 700,
+    "lineHeight": 2.07,
+    "letterSpacing": 0,
+    "color": "#ffffff",
+    "marginBottom": 16
+   },
+   "headings": [
+    {
+     "tag": "h2",
+     "text": "We are CoolAir, specialize in providing top-notch heating, ventilation",
+     "family": "Manrope",
+     "size": 42,
+     "weight": 600,
+     "lineHeight": 1.1,
+     "letterSpacing": -1.25,
+     "color": "#ffffff",
+     "marginBottom": 20
+    },
+    {
+     "tag": "h5",
+     "text": "Jeffery Mussman",
+     "family": "Manrope",
+     "size": 18,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    }
+   ],
+   "repeated": [],
+   "images": [
+    {
+     "w": 320,
+     "h": 320,
+     "radius": 10
+    },
+    {
+     "w": 1176,
+     "h": 707,
+     "radius": 0
+    }
+   ],
+   "imageCount": 2
+  },
+  {
+   "tag": "section",
+   "cls": "no-top",
+   "y": 3832,
+   "height": 469,
+   "paddingY": "0 / 100",
+   "bg": "transparent",
+   "eyebrow": {
+    "text": "Services Process",
+    "family": "Manrope",
+    "size": 14,
+    "weight": 700,
+    "lineHeight": 2.07,
+    "letterSpacing": 0,
+    "color": "#0a2540",
+    "marginBottom": 16
+   },
+   "headings": [
+    {
+     "tag": "h2",
+     "text": "How It Works",
+     "family": "Manrope",
+     "size": 42,
+     "weight": 600,
+     "lineHeight": 1.1,
+     "letterSpacing": -1.25,
+     "color": "#0a2540",
+     "marginBottom": 20
+    },
+    {
+     "tag": "h4",
+     "text": "Consultation",
+     "family": "Manrope",
+     "size": 20,
+     "weight": 700,
+     "lineHeight": 1.3,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 10
+    },
+    {
+     "tag": "h4",
+     "text": "Agreement",
+     "family": "Manrope",
+     "size": 20,
+     "weight": 700,
+     "lineHeight": 1.3,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 10
+    },
+    {
+     "tag": "h4",
+     "text": "Execution",
+     "family": "Manrope",
+     "size": 20,
+     "weight": 700,
+     "lineHeight": 1.3,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 10
+    }
+   ],
+   "paragraph": {
+    "text": "Qui culpa qui consequat officia cillum quis irure aliquip ut dolore si",
+    "family": "Manrope",
+    "size": 18,
+    "weight": 400,
+    "lineHeight": 1.78,
+    "letterSpacing": -0.2,
+    "color": "#7b8893",
+    "marginBottom": 20
+   },
+   "repeated": [
+    {
+     "count": 4,
+     "perRow": 4,
+     "itemWidth": 300,
+     "gapX": 0,
+     "card": {
+      "w": 276,
+      "h": 135,
+      "padding": "30 30 30 30",
+      "radius": 12,
+      "bg": "#678fd5"
+     },
+     "firstText": "Step 1 Consultation"
+    }
+   ],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "section",
+   "cls": "no-top",
+   "y": 4301,
+   "height": 574,
+   "paddingY": "0 / 100",
+   "bg": "transparent",
+   "eyebrow": {
+    "text": "Our Specialize",
+    "family": "Manrope",
+    "size": 14,
+    "weight": 700,
+    "lineHeight": 2.07,
+    "letterSpacing": 0,
+    "color": "#0a2540",
+    "marginBottom": 16
+   },
+   "headings": [
+    {
+     "tag": "h2",
+     "text": "From Chilling Challenges to Heating Solutions",
+     "family": "Manrope",
+     "size": 42,
+     "weight": 600,
+     "lineHeight": 1.1,
+     "letterSpacing": -1.25,
+     "color": "#0a2540",
+     "marginBottom": 20
+    },
+    {
+     "tag": "h3",
+     "text": "850+",
+     "family": "Manrope",
+     "size": 24,
+     "weight": 600,
+     "lineHeight": 1,
+     "letterSpacing": -0.5,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "Projects Completed",
+     "family": "Manrope",
+     "size": 16,
+     "weight": 500,
+     "lineHeight": 1.63,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 10
+    },
+    {
+     "tag": "h3",
+     "text": "99%",
+     "family": "Manrope",
+     "size": 24,
+     "weight": 600,
+     "lineHeight": 1,
+     "letterSpacing": -0.5,
+     "color": "#0a2540",
+     "marginBottom": 0
+    }
+   ],
+   "paragraph": {
+    "text": "Welcome to CoolAir, your trusted partner for all your HVAC needs. With",
+    "family": "Manrope",
+    "size": 16,
+    "weight": 400,
+    "lineHeight": 1.81,
+    "letterSpacing": 0,
+    "color": "#7b8893",
+    "marginBottom": 20
+   },
+   "repeated": [
+    {
+     "count": 2,
+     "perRow": 1,
+     "itemWidth": 612,
+     "card": {
+      "w": 127,
+      "h": 33,
+      "padding": "2 15 2 15",
+      "radius": 30,
+      "bg": "#f4f7fb"
+     },
+     "firstText": "Our Specialize From Chilling Challenges to Heating Solutions Welcome to CoolAir, your trus"
+    },
+    {
+     "count": 2,
+     "perRow": 1,
+     "itemWidth": 564,
+     "card": {
+      "w": 564,
+      "h": 97,
+      "padding": "0 0 5 0",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": "From Chilling Challenges to Heating Solutions"
+    }
+   ],
+   "images": [
+    {
+     "w": 270,
+     "h": 270,
+     "radius": 10
+    },
+    {
+     "w": 270,
+     "h": 270,
+     "radius": 10
+    }
+   ],
+   "imageCount": 2
+  },
+  {
+   "tag": "section",
+   "cls": "no-top text-center",
+   "y": 4875,
+   "height": 843,
+   "paddingY": "0 / 100",
+   "bg": "transparent",
+   "eyebrow": {
+    "text": "Testimonials",
+    "family": "Manrope",
+    "size": 14,
+    "weight": 700,
+    "lineHeight": 2.07,
+    "letterSpacing": 0,
+    "color": "#0a2540",
+    "marginBottom": 16
+   },
+   "headings": [
+    {
+     "tag": "h2",
+     "text": "Our Happy Customers",
+     "family": "Manrope",
+     "size": 42,
+     "weight": 600,
+     "lineHeight": 1.1,
+     "letterSpacing": -1.25,
+     "color": "#0a2540",
+     "marginBottom": 20
+    }
+   ],
+   "paragraph": {
+    "text": "Qui culpa qui consequat officia cillum quis irure aliquip ut dolore si",
+    "family": "Manrope",
+    "size": 18,
+    "weight": 400,
+    "lineHeight": 1.78,
+    "letterSpacing": -0.2,
+    "color": "#7b8893",
+    "marginBottom": 20
+   },
+   "repeated": [],
+   "images": [
+    {
+     "w": 80,
+     "h": 80,
+     "radius": 100
+    },
+    {
+     "w": 80,
+     "h": 80,
+     "radius": 100
+    },
+    {
+     "w": 80,
+     "h": 80,
+     "radius": 100
+    },
+    {
+     "w": 80,
+     "h": 80,
+     "radius": 100
+    }
+   ],
+   "imageCount": 16
+  },
+  {
+   "tag": "section",
+   "cls": "bg-color-3",
+   "y": 5718,
+   "height": 711,
+   "paddingY": "100 / 100",
+   "bg": "#f4f7fb",
+   "eyebrow": {
+    "text": "Do you have",
+    "family": "Manrope",
+    "size": 14,
+    "weight": 700,
+    "lineHeight": 2.07,
+    "letterSpacing": 0,
+    "color": "#f8f9fa",
+    "marginBottom": 16
+   },
+   "headings": [
+    {
+     "tag": "h2",
+     "text": "Any questions?",
+     "family": "Manrope",
+     "size": 42,
+     "weight": 600,
+     "lineHeight": 1.1,
+     "letterSpacing": -1.25,
+     "color": "#0a2540",
+     "marginBottom": 20
+    }
+   ],
+   "repeated": [],
+   "images": [
+    {
+     "w": 516,
+     "h": 343,
+     "radius": 20
+    }
+   ],
+   "imageCount": 1
+  },
+  {
+   "tag": "section",
+   "cls": "",
+   "y": 6430,
+   "height": 990,
+   "paddingY": "100 / 100",
+   "bg": "transparent",
+   "eyebrow": {
+    "text": "Latest Post",
+    "family": "Manrope",
+    "size": 14,
+    "weight": 700,
+    "lineHeight": 2.07,
+    "letterSpacing": 0,
+    "color": "#0a2540",
+    "marginBottom": 16
+   },
+   "headings": [
+    {
+     "tag": "h2",
+     "text": "Stay update with us",
+     "family": "Manrope",
+     "size": 42,
+     "weight": 600,
+     "lineHeight": 1.1,
+     "letterSpacing": -1.25,
+     "color": "#0a2540",
+     "marginBottom": 20
+    },
+    {
+     "tag": "h4",
+     "text": "Tips for Optimizing Your Air Conditioning System",
+     "family": "Manrope",
+     "size": 20,
+     "weight": 700,
+     "lineHeight": 1.3,
+     "letterSpacing": 0,
+     "color": "#0a2540",
+     "marginBottom": 10
+    },
+    {
+     "tag": "h4",
+     "text": "Harnessing Technology for Energy-Efficient AC",
+     "family": "Manrope",
+     "size": 20,
+     "weight": 700,
+     "lineHeight": 1.3,
+     "letterSpacing": 0,
+     "color": "#0a2540",
+     "marginBottom": 10
+    },
+    {
+     "tag": "h4",
+     "text": "The Impact of Air Conditioning on Indoor Air Quality",
+     "family": "Manrope",
+     "size": 20,
+     "weight": 700,
+     "lineHeight": 1.3,
+     "letterSpacing": 0,
+     "color": "#0a2540",
+     "marginBottom": 10
+    }
+   ],
+   "paragraph": {
+    "text": "Qui culpa qui consequat officia cillum quis irure aliquip ut dolore si",
+    "family": "Manrope",
+    "size": 18,
+    "weight": 400,
+    "lineHeight": 1.78,
+    "letterSpacing": -0.2,
+    "color": "#7b8893",
+    "marginBottom": 20
+   },
+   "repeated": [
+    {
+     "count": 2,
+     "perRow": 1,
+     "itemWidth": 1200,
+     "card": {
+      "w": 107,
+      "h": 33,
+      "padding": "2 15 2 15",
+      "radius": 30,
+      "bg": "#f4f7fb"
+     },
+     "firstText": "Latest Post Stay update with us Qui culpa qui consequat officia cillum quis irure aliquip "
+    },
+    {
+     "count": 3,
+     "perRow": 3,
+     "itemWidth": 400,
+     "gapX": 0,
+     "card": {
+      "w": 376,
+      "h": 531,
+      "padding": "0 0 0 0",
+      "radius": 20,
+      "bg": "#f4f7fb"
+     },
+     "firstText": "TIPS & TRICKS Tips for Optimizing Your Air Conditioning System Dolore officia sint incidid"
+    }
+   ],
+   "images": [
+    {
+     "w": 376,
+     "h": 212,
+     "radius": 0
+    },
+    {
+     "w": 376,
+     "h": 212,
+     "radius": 0
+    },
+    {
+     "w": 376,
+     "h": 212,
+     "radius": 0
+    }
+   ],
+   "imageCount": 3
+  },
+  {
+   "tag": "section",
+   "cls": "no-top relative",
+   "y": 7419,
+   "height": 340,
+   "paddingY": "0 / 100",
+   "bg": "transparent",
+   "eyebrow": {
+    "text": "24 Hours & Emergencies",
+    "family": "Manrope",
+    "size": 14,
+    "weight": 700,
+    "lineHeight": 2.07,
+    "letterSpacing": 0,
+    "color": "#ffffff",
+    "marginBottom": 8
+   },
+   "headings": [
+    {
+     "tag": "h2",
+     "text": "+929 333 9296",
+     "family": "Manrope",
+     "size": 42,
+     "weight": 600,
+     "lineHeight": 1.1,
+     "letterSpacing": -1.25,
+     "color": "#ffffff",
+     "marginBottom": 0
+    }
+   ],
+   "repeated": [],
+   "images": [
+    {
+     "w": 588,
+     "h": 570,
+     "radius": 0
+    }
+   ],
+   "imageCount": 1
+  },
+  {
+   "tag": "section",
+   "cls": "no-top",
+   "y": 7735,
+   "height": 241,
+   "paddingY": "0 / 100",
+   "bg": "transparent",
+   "headings": [
+    {
+     "tag": "h4",
+     "text": "Brands we working with",
+     "family": "Manrope",
+     "size": 20,
+     "weight": 700,
+     "lineHeight": 1.3,
+     "letterSpacing": 0,
+     "color": "#0a2540",
+     "marginBottom": 10
+    }
+   ],
+   "repeated": [],
+   "images": [
+    {
+     "w": 203,
+     "h": 62,
+     "radius": 0
+    },
+    {
+     "w": 203,
+     "h": 62,
+     "radius": 0
+    },
+    {
+     "w": 203,
+     "h": 62,
+     "radius": 0
+    },
+    {
+     "w": 203,
+     "h": 62,
+     "radius": 0
+    }
+   ],
+   "imageCount": 16
+  },
+  {
+   "tag": "section",
+   "cls": "bg-color text-light pt40 pb40",
+   "y": 7976,
+   "height": 120,
+   "paddingY": "40 / 40",
+   "bg": "#234982",
+   "headings": [
+    {
+     "tag": "h3",
+     "text": "Quality heating & air conditioning solutions",
+     "family": "Manrope",
+     "size": 26,
+     "weight": 600,
+     "lineHeight": 1.4,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 4
+    }
+   ],
+   "repeated": [],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "div",
+   "cls": "subfooter",
+   "y": 8528,
+   "height": 70,
+   "paddingY": "20 / 20",
+   "bg": "transparent",
+   "headings": [],
+   "repeated": [],
+   "images": [],
+   "imageCount": 0
+  }
+ ]
+}

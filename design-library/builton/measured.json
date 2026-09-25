@@ -1,0 +1,1078 @@
+{
+ "title": "Builton | Construction HTML Template | Home Page 01",
+ "pageHeight": 10714,
+ "body": {
+  "family": "DM Sans",
+  "size": 16,
+  "lineHeight": 1.88,
+  "color": "#727272",
+  "bg": "#ffffff"
+ },
+ "paragraph": {
+  "text": "Partnering with Builton has been great. I hired my remote team and hav",
+  "family": "DM Sans",
+  "size": 18,
+  "weight": 500,
+  "lineHeight": 1.67,
+  "letterSpacing": 0,
+  "color": "#727272",
+  "marginBottom": 20
+ },
+ "nav": {
+  "text": "+01 7500 50088",
+  "family": "DM Sans",
+  "size": 16,
+  "weight": 500,
+  "lineHeight": 1.25,
+  "letterSpacing": 0,
+  "color": "#000000",
+  "marginBottom": 0
+ },
+ "header": {
+  "height": 150,
+  "w": 1440,
+  "h": 150,
+  "padding": "0 0 0 0",
+  "radius": 0,
+  "bg": null
+ },
+ "inputs": [
+  {
+   "w": 321,
+   "h": 59,
+   "padding": "20 28 20 28",
+   "radius": 0,
+   "bg": "#000000",
+   "border": "1px solid #858585",
+   "size": 16
+  },
+  {
+   "w": 321,
+   "h": 59,
+   "padding": "20 28 20 28",
+   "radius": 0,
+   "bg": "#000000",
+   "border": "1px solid #858585",
+   "size": 16
+  }
+ ],
+ "containers": [
+  "1310 (padding-x 15) ×17",
+  "845 (padding-x 0) ×5",
+  "1800 (padding-x 15) ×2"
+ ],
+ "buttons": [
+  {
+   "w": 193,
+   "h": 58,
+   "padding": "19 51 19 51",
+   "radius": 0,
+   "bg": "#ffee02",
+   "text": "Get A Quote",
+   "size": 14,
+   "weight": 600,
+   "family": "DM Sans",
+   "transform": "capitalize",
+   "letterSpacing": 0.7,
+   "color": "#000000",
+   "count": 6,
+   "examples": [
+    "Get A Quote",
+    "DISCOVER MORE",
+    "READ MORE"
+   ]
+  },
+  {
+   "w": 354,
+   "h": 53,
+   "padding": "17 30 12 30",
+   "radius": 0,
+   "bg": "#ffffff",
+   "border": "2px solid #ffee02",
+   "text": "Choose Plan",
+   "size": 16,
+   "weight": 700,
+   "family": "DM Sans",
+   "letterSpacing": 0,
+   "color": "#000000",
+   "count": 3,
+   "examples": [
+    "Choose Plan",
+    "Choose Plan",
+    "Choose Plan"
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "tag": "div",
+   "cls": "header-lower style-light",
+   "y": 50,
+   "height": 100,
+   "paddingY": "0 / 0",
+   "bg": "transparent",
+   "headings": [],
+   "repeated": [],
+   "images": [
+    {
+     "w": 180,
+     "h": 36,
+     "radius": 0
+    }
+   ],
+   "imageCount": 1
+  },
+  {
+   "tag": "div",
+   "cls": "banner-carousel owl-carousel owl-theme owl-loaded owl-drag",
+   "y": 0,
+   "height": 983,
+   "paddingY": "314 / 158",
+   "bg": "photo/pattern",
+   "bgImage": true,
+   "eyebrow": {
+    "text": "WE ARE BEST AT",
+    "family": "Unbounded",
+    "size": 16,
+    "weight": 500,
+    "lineHeight": 1.4,
+    "letterSpacing": 0,
+    "transform": "uppercase",
+    "color": "#000000",
+    "marginBottom": 27
+   },
+   "headings": [
+    {
+     "tag": "h1",
+     "text": "Developing Trust Quality Work",
+     "family": "Unbounded",
+     "size": 64,
+     "weight": 700,
+     "lineHeight": 1.25,
+     "letterSpacing": 0,
+     "transform": "capitalize",
+     "color": "#ffffff",
+     "marginBottom": 30
+    }
+   ],
+   "repeated": [],
+   "images": [
+    {
+     "w": 340,
+     "h": 543,
+     "radius": 0
+    },
+    {
+     "w": 595,
+     "h": 388,
+     "radius": 0
+    },
+    {
+     "w": 340,
+     "h": 543,
+     "radius": 0
+    },
+    {
+     "w": 595,
+     "h": 388,
+     "radius": 0
+    }
+   ],
+   "imageCount": 10
+  },
+  {
+   "tag": "div",
+   "cls": "bg bg-shape1",
+   "y": 983,
+   "height": 811,
+   "paddingY": "0 / 0",
+   "bg": "photo/pattern",
+   "bgImage": true,
+   "headings": [],
+   "repeated": [],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "div",
+   "cls": "anim-icons bounce-y",
+   "y": 983,
+   "height": 811,
+   "paddingY": "0 / 0",
+   "bg": "transparent",
+   "headings": [],
+   "repeated": [],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "div",
+   "cls": "auto-container",
+   "y": 1103,
+   "height": 666,
+   "paddingY": "0 / 55",
+   "bg": "transparent",
+   "headings": [
+    {
+     "tag": "h4",
+     "text": "Buildings Construction",
+     "family": "Unbounded",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.4,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 12
+    },
+    {
+     "tag": "h4",
+     "text": "Specialist consultations",
+     "family": "Unbounded",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.4,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 12
+    },
+    {
+     "tag": "h4",
+     "text": "Architecture Design",
+     "family": "Unbounded",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.4,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 12
+    }
+   ],
+   "repeated": [
+    {
+     "count": 3,
+     "perRow": 3,
+     "itemWidth": 435,
+     "gapX": 0,
+     "card": {
+      "w": 435,
+      "h": 636,
+      "padding": "0 12 0 12",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": "Buildings Construction Lorem ipsum dolor sit amet, consectne auctor aliquet. Aenean sollic"
+    }
+   ],
+   "images": [
+    {
+     "w": 383,
+     "h": 383,
+     "radius": 50
+    },
+    {
+     "w": 383,
+     "h": 383,
+     "radius": 50
+    },
+    {
+     "w": 383,
+     "h": 383,
+     "radius": 50
+    }
+   ],
+   "imageCount": 3
+  },
+  {
+   "tag": "div",
+   "cls": "auto-container",
+   "y": 1944,
+   "height": 819,
+   "paddingY": "40 / 0",
+   "bg": "transparent",
+   "eyebrow": {
+    "text": "WELCOME TO OUR COMPANY",
+    "family": "DM Sans",
+    "size": 14,
+    "weight": 700,
+    "lineHeight": 1.71,
+    "letterSpacing": 0,
+    "transform": "uppercase",
+    "color": "#727272",
+    "marginBottom": 10
+   },
+   "headings": [
+    {
+     "tag": "h2",
+     "text": "We Provide Trusted Construction",
+     "family": "Unbounded",
+     "size": 48,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#000000",
+     "marginBottom": 0
+    }
+   ],
+   "repeated": [],
+   "images": [
+    {
+     "w": 200,
+     "h": 198,
+     "radius": 0
+    },
+    {
+     "w": 470,
+     "h": 677,
+     "radius": 0
+    },
+    {
+     "w": 212,
+     "h": 212,
+     "radius": 0
+    },
+    {
+     "w": 268,
+     "h": 285,
+     "radius": 0
+    }
+   ],
+   "imageCount": 4
+  },
+  {
+   "tag": "div",
+   "cls": "auto-container",
+   "y": 2905,
+   "height": 1059,
+   "paddingY": "120 / 23",
+   "bg": "#ffffff",
+   "bgImage": true,
+   "eyebrow": {
+    "text": "SELECT A PLAN THAT SUITS",
+    "family": "DM Sans",
+    "size": 14,
+    "weight": 700,
+    "lineHeight": 1.71,
+    "letterSpacing": 0,
+    "transform": "uppercase",
+    "color": "#727272",
+    "marginBottom": 10
+   },
+   "headings": [
+    {
+     "tag": "h2",
+     "text": "We Offer Best Pricing",
+     "family": "Unbounded",
+     "size": 48,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#000000",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "BASIC PLAN",
+     "family": "Unbounded",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.4,
+     "letterSpacing": 0,
+     "transform": "uppercase",
+     "color": "#000000",
+     "marginBottom": 2
+    },
+    {
+     "tag": "h4",
+     "text": "MEDIUM PLAN",
+     "family": "Unbounded",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.4,
+     "letterSpacing": 0,
+     "transform": "uppercase",
+     "color": "#000000",
+     "marginBottom": 2
+    },
+    {
+     "tag": "h4",
+     "text": "ULTIMATE PLAN",
+     "family": "Unbounded",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.4,
+     "letterSpacing": 0,
+     "transform": "uppercase",
+     "color": "#000000",
+     "marginBottom": 2
+    }
+   ],
+   "repeated": [
+    {
+     "count": 3,
+     "perRow": 3,
+     "itemWidth": 435,
+     "gapX": 0,
+     "card": {
+      "w": 435,
+      "h": 855,
+      "padding": "0 12 0 12",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": "BASIC PLAN MONTHLY Standard construction $99 Contractor network $69 House Renovation $49 I"
+    }
+   ],
+   "images": [
+    {
+     "w": 411,
+     "h": 411,
+     "radius": 0
+    },
+    {
+     "w": 411,
+     "h": 411,
+     "radius": 0
+    },
+    {
+     "w": 411,
+     "h": 411,
+     "radius": 0
+    }
+   ],
+   "imageCount": 3
+  },
+  {
+   "tag": "div",
+   "cls": "large-container",
+   "y": 4204,
+   "height": 143,
+   "paddingY": "0 / 0",
+   "bg": "transparent",
+   "eyebrow": {
+    "text": "HOW IT WORKS",
+    "family": "DM Sans",
+    "size": 14,
+    "weight": 700,
+    "lineHeight": 1.71,
+    "letterSpacing": 0,
+    "transform": "uppercase",
+    "color": "#727272",
+    "marginBottom": 10
+   },
+   "headings": [
+    {
+     "tag": "h2",
+     "text": "4 Easy Steps to Achieve Your Business Goal",
+     "family": "Unbounded",
+     "size": 48,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#000000",
+     "marginBottom": 0
+    }
+   ],
+   "repeated": [],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "div",
+   "cls": "outer-box",
+   "y": 4401,
+   "height": 781,
+   "paddingY": "0 / 60",
+   "bg": "photo/pattern",
+   "bgImage": true,
+   "headings": [
+    {
+     "tag": "h4",
+     "text": "Initial Construction Designs",
+     "family": "Unbounded",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.4,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "Start the in-depth design",
+     "family": "Unbounded",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.4,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "Assembly Home",
+     "family": "Unbounded",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.4,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "Assembly Home View",
+     "family": "Unbounded",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.4,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    }
+   ],
+   "repeated": [],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "div",
+   "cls": "auto-container",
+   "y": 5242,
+   "height": 815,
+   "paddingY": "52 / 24",
+   "bg": "photo/pattern",
+   "bgImage": true,
+   "eyebrow": {
+    "text": "OUR EXPERT MEMBER",
+    "family": "DM Sans",
+    "size": 14,
+    "weight": 700,
+    "lineHeight": 1.71,
+    "letterSpacing": 0,
+    "transform": "uppercase",
+    "color": "#727272",
+    "marginBottom": 10
+   },
+   "headings": [
+    {
+     "tag": "h2",
+     "text": "Meet Our Experts",
+     "family": "Unbounded",
+     "size": 48,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#000000",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "TRICIA GIBNEY",
+     "family": "Unbounded",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.4,
+     "letterSpacing": 0,
+     "transform": "uppercase",
+     "color": "#000000",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "THOMAS WALKER",
+     "family": "Unbounded",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.4,
+     "letterSpacing": 0,
+     "transform": "uppercase",
+     "color": "#000000",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "ROMAN MORKO",
+     "family": "Unbounded",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.4,
+     "letterSpacing": 0,
+     "transform": "uppercase",
+     "color": "#000000",
+     "marginBottom": 0
+    }
+   ],
+   "repeated": [
+    {
+     "count": 3,
+     "perRow": 3,
+     "itemWidth": 435,
+     "gapX": 0,
+     "card": {
+      "w": 411,
+      "h": 580,
+      "padding": "52 0 24 0",
+      "radius": 0,
+      "bg": null,
+      "border": "1px solid #c1c1c1"
+     },
+     "firstText": "TRICIA GIBNEY PRESIDENT, MANAGER (+380) 50 318 47 07"
+    }
+   ],
+   "images": [
+    {
+     "w": 409,
+     "h": 272,
+     "radius": 0
+    },
+    {
+     "w": 409,
+     "h": 272,
+     "radius": 0
+    },
+    {
+     "w": 409,
+     "h": 272,
+     "radius": 0
+    }
+   ],
+   "imageCount": 3
+  },
+  {
+   "tag": "div",
+   "cls": "marquee",
+   "y": 6152,
+   "height": 67,
+   "paddingY": "17 / 17",
+   "bg": "transparent",
+   "headings": [],
+   "repeated": [],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "div",
+   "cls": "large-container",
+   "y": 6354,
+   "height": 663,
+   "paddingY": "80 / 80",
+   "bg": "#ffffff",
+   "headings": [
+    {
+     "tag": "h6",
+     "text": "30 Years of Growing Together with Our Clients",
+     "family": "Unbounded",
+     "size": 14,
+     "weight": 500,
+     "lineHeight": 1.4,
+     "letterSpacing": 0,
+     "color": "#000000",
+     "marginBottom": 16
+    },
+    {
+     "tag": "h2",
+     "text": "Scale, grow, and optimize as quickly as you need to.",
+     "family": "Unbounded",
+     "size": 40,
+     "weight": 500,
+     "lineHeight": 1.3,
+     "letterSpacing": 0,
+     "color": "#000000",
+     "marginBottom": 16
+    },
+    {
+     "tag": "h4",
+     "text": "Savannah Nguyen",
+     "family": "Unbounded",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.4,
+     "letterSpacing": 0,
+     "color": "#000000",
+     "marginBottom": 5
+    },
+    {
+     "tag": "h4",
+     "text": "Ronald Richards",
+     "family": "Unbounded",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.4,
+     "letterSpacing": 0,
+     "color": "#000000",
+     "marginBottom": 5
+    }
+   ],
+   "paragraph": {
+    "text": "Partnering with Builton has been great. I hired my remote team and hav",
+    "family": "DM Sans",
+    "size": 18,
+    "weight": 500,
+    "lineHeight": 1.67,
+    "letterSpacing": 0,
+    "color": "#727272",
+    "marginBottom": 20
+   },
+   "repeated": [],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "div",
+   "cls": "auto-container",
+   "y": 7147,
+   "height": 289,
+   "paddingY": "100 / 82",
+   "bg": "transparent",
+   "headings": [],
+   "repeated": [
+    {
+     "count": 3,
+     "perRow": 3,
+     "itemWidth": 427,
+     "gapX": 0,
+     "card": {
+      "w": 427,
+      "h": 289,
+      "padding": "0 0 0 0",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": "0 1 2 3 , 0 1 2 3 4 6 7 8 9 0 1 2 3 4 5 7 8 9 0 1 2 3 4 5 6 8 9 0 1 2 0 7 5 2 9 7 4 1 9 6 "
+    }
+   ],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "div",
+   "cls": "auto-container",
+   "y": 7436,
+   "height": 676,
+   "paddingY": "54 / 60",
+   "bg": "photo/pattern",
+   "bgImage": true,
+   "eyebrow": {
+    "text": "LET’S CONTACT",
+    "family": "DM Sans",
+    "size": 14,
+    "weight": 700,
+    "lineHeight": 1.71,
+    "letterSpacing": 0,
+    "transform": "uppercase",
+    "color": "#ffffff",
+    "marginBottom": 10
+   },
+   "headings": [
+    {
+     "tag": "h2",
+     "text": "Contact Us",
+     "family": "Unbounded",
+     "size": 40,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    }
+   ],
+   "repeated": [],
+   "images": [
+    {
+     "w": 129,
+     "h": 162,
+     "radius": 0
+    }
+   ],
+   "imageCount": 1
+  },
+  {
+   "tag": "div",
+   "cls": "bg bg-pattern1",
+   "y": 8231,
+   "height": 889,
+   "paddingY": "0 / 0",
+   "bg": "photo/pattern",
+   "bgImage": true,
+   "headings": [],
+   "repeated": [],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "div",
+   "cls": "anim-icons bounce-y",
+   "y": 8231,
+   "height": 889,
+   "paddingY": "0 / 0",
+   "bg": "transparent",
+   "headings": [],
+   "repeated": [],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "div",
+   "cls": "auto-container",
+   "y": 8351,
+   "height": 649,
+   "paddingY": "0 / 0",
+   "bg": "transparent",
+   "eyebrow": {
+    "text": "OUR LOCATIONS",
+    "family": "DM Sans",
+    "size": 14,
+    "weight": 700,
+    "lineHeight": 1.71,
+    "letterSpacing": 0,
+    "transform": "uppercase",
+    "color": "#ffffff",
+    "marginBottom": 10
+   },
+   "headings": [
+    {
+     "tag": "h2",
+     "text": "Find your Nearest locations to get consultation",
+     "family": "Unbounded",
+     "size": 48,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    }
+   ],
+   "paragraph": {
+    "text": "2972 Westheimer Rd. Santa Ana, Illinois 85486",
+    "family": "DM Sans",
+    "size": 16,
+    "weight": 400,
+    "lineHeight": 1.88,
+    "letterSpacing": 0,
+    "color": "#ffffff",
+    "marginBottom": 0
+   },
+   "repeated": [
+    {
+     "count": 3,
+     "perRow": 3,
+     "itemWidth": 435,
+     "gapX": 0,
+     "card": {
+      "w": 411,
+      "h": 170,
+      "padding": "0 0 0 0",
+      "radius": 0,
+      "bg": "#171715"
+     },
+     "firstText": "2972 Westheimer Rd. Santa Ana, Illinois 85486 Office: New Work"
+    },
+    {
+     "count": 2,
+     "perRow": 2,
+     "itemWidth": 652,
+     "gapX": 0,
+     "card": {
+      "w": 224,
+      "h": 58,
+      "padding": "19 51 19 51",
+      "radius": 0,
+      "bg": "#ffee02"
+     },
+     "firstText": "OUR LOCATIONS Find your Nearest locations to get consultation Contrary to popular belief L"
+    }
+   ],
+   "images": [
+    {
+     "w": 616,
+     "h": 397,
+     "radius": 0
+    }
+   ],
+   "imageCount": 1
+  },
+  {
+   "tag": "div",
+   "cls": "auto-container",
+   "y": 9240,
+   "height": 758,
+   "paddingY": "0 / 0",
+   "bg": "photo/pattern",
+   "bgImage": true,
+   "eyebrow": {
+    "text": "NEWS & UPDATES",
+    "family": "DM Sans",
+    "size": 14,
+    "weight": 700,
+    "lineHeight": 1.71,
+    "letterSpacing": 0,
+    "transform": "uppercase",
+    "color": "#727272",
+    "marginBottom": 10
+   },
+   "headings": [
+    {
+     "tag": "h2",
+     "text": "Recent Articles",
+     "family": "Unbounded",
+     "size": 48,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#000000",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "How to stay motivated until a project is finished",
+     "family": "Unbounded",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.4,
+     "letterSpacing": 0,
+     "color": "#000000",
+     "marginBottom": 25
+    },
+    {
+     "tag": "h4",
+     "text": "Tensive quality vectors life through strategies",
+     "family": "Unbounded",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.4,
+     "letterSpacing": 0,
+     "color": "#000000",
+     "marginBottom": 25
+    },
+    {
+     "tag": "h4",
+     "text": "Building resilient supply chains for industries",
+     "family": "Unbounded",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.4,
+     "letterSpacing": 0,
+     "color": "#000000",
+     "marginBottom": 25
+    }
+   ],
+   "repeated": [
+    {
+     "count": 3,
+     "perRow": 3,
+     "itemWidth": 435,
+     "gapX": 0,
+     "card": {
+      "w": 411,
+      "h": 416,
+      "padding": "0 0 0 0",
+      "radius": 0,
+      "bg": "#ffffff"
+     },
+     "firstText": "15 FEB, 2025 14 How to stay motivated until a project is finished"
+    }
+   ],
+   "images": [
+    {
+     "w": 411,
+     "h": 274,
+     "radius": 0
+    },
+    {
+     "w": 411,
+     "h": 274,
+     "radius": 0
+    },
+    {
+     "w": 411,
+     "h": 274,
+     "radius": 0
+    }
+   ],
+   "imageCount": 3
+  },
+  {
+   "tag": "div",
+   "cls": "bg bg-image",
+   "y": 10119,
+   "height": 595,
+   "paddingY": "0 / 0",
+   "bg": "photo/pattern",
+   "bgImage": true,
+   "headings": [],
+   "repeated": [],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "div",
+   "cls": "widgets-section",
+   "y": 10119,
+   "height": 492,
+   "paddingY": "120 / 55",
+   "bg": "transparent",
+   "headings": [
+    {
+     "tag": "h5",
+     "text": "CONTACT INFO",
+     "family": "Unbounded",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.85,
+     "letterSpacing": 0.8,
+     "transform": "uppercase",
+     "color": "#ffffff",
+     "marginBottom": 40
+    },
+    {
+     "tag": "h4",
+     "text": "NEWSLETTER",
+     "family": "Unbounded",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.85,
+     "letterSpacing": 0.8,
+     "transform": "uppercase",
+     "color": "#ffffff",
+     "marginBottom": 40
+    }
+   ],
+   "repeated": [
+    {
+     "count": 3,
+     "perRow": 3,
+     "itemWidth": 435,
+     "gapX": 0,
+     "card": {
+      "w": 435,
+      "h": 267,
+      "padding": "0 12 0 12",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": "Authoritatively simplify open-source resources via backend visualize business e-markets be"
+    }
+   ],
+   "images": [
+    {
+     "w": 150,
+     "h": 32,
+     "radius": 0
+    }
+   ],
+   "imageCount": 1
+  },
+  {
+   "tag": "div",
+   "cls": "footer-bottom",
+   "y": 10611,
+   "height": 103,
+   "paddingY": "35 / 35",
+   "bg": "transparent",
+   "headings": [],
+   "repeated": [],
+   "images": [],
+   "imageCount": 0
+  }
+ ]
+}

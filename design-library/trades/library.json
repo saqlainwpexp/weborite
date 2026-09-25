@@ -1,0 +1,607 @@
+{
+ "niche": "Trades & home services",
+ "match": "hvac|air.?con|airco|cooling|koel|heating|verwarm|heat.?pump|warmtepomp|klimaat|ventilat|furnace|plumb|loodgieter|riool|drain|electric|elektr|roof|dak|construct|build|bouw|contractor|aannem|renovat|verbouw|handyman|klus|home.?repair|home.?service|repair|garage.?door|paint|schilder|carpent|timmer|install",
+ "about": "Mix-and-match sections for trades & home-service homepages. Every mockup = one base STYLE (tokens: fonts, colours, spacing, buttons) + an ordered set of SECTIONS picked from different source templates. Section crops live in sections/<id>.jpg (built by scripts/crop-sections.py from the measured templates).",
+ "styles": [
+  {
+   "id": "coolair",
+   "system": "coolair",
+   "fits": "hvac airco cooling heating plumbing appliance home service premium calm"
+  },
+  {
+   "id": "airvice",
+   "system": "airvice",
+   "fits": "hvac airco repair emergency plumbing electrical bold energetic"
+  },
+  {
+   "id": "hendre",
+   "system": "hendre",
+   "fits": "handyman home repair home service plumbing electrical hvac roofing painting friendly"
+  },
+  {
+   "id": "builton",
+   "system": "builton",
+   "fits": "construction contractor builder renovation roofing concrete industrial bold"
+  },
+  {
+   "id": "constre",
+   "system": "constre",
+   "fits": "construction contractor builder renovation roofing handyman industrial dark"
+  }
+ ],
+ "orders": [
+  [
+   "hero",
+   "about",
+   "services",
+   "why",
+   "process",
+   "testimonials",
+   "contact",
+   "brands",
+   "footer"
+  ],
+  [
+   "hero",
+   "services",
+   "about",
+   "stats",
+   "projects",
+   "testimonials",
+   "faq",
+   "cta",
+   "footer"
+  ],
+  [
+   "hero",
+   "stats",
+   "services",
+   "process",
+   "about",
+   "contact",
+   "testimonials",
+   "brands",
+   "footer"
+  ],
+  [
+   "hero",
+   "about",
+   "stats",
+   "services",
+   "projects",
+   "why",
+   "testimonials",
+   "cta",
+   "footer"
+  ],
+  [
+   "hero",
+   "services",
+   "why",
+   "about",
+   "process",
+   "faq",
+   "contact",
+   "footer"
+  ],
+  [
+   "hero",
+   "about",
+   "services",
+   "projects",
+   "process",
+   "testimonials",
+   "cta",
+   "brands",
+   "footer"
+  ]
+ ],
+ "sections": [
+  {
+   "id": "hero-coolair",
+   "role": "hero",
+   "from": "coolair",
+   "crop": {
+    "src": "coolair",
+    "y": 0,
+    "h": 900
+   },
+   "spec": "Transparent header over a 900px full-bleed photo with a dark brand-colour overlay; centred pill eyebrow, 64px 2-line headline with tight negative tracking, 24px subline, one button. Along the hero's bottom edge, INSIDE it: a 3-column feature row (80px circle icon + white title + 2 lines)."
+  },
+  {
+   "id": "hero-airvice",
+   "role": "hero",
+   "from": "airvice",
+   "crop": {
+    "src": "airvice",
+    "y": 0,
+    "h": 1146
+   },
+   "spec": "60px top bar + 100px white header whose right end is a solid brand-colour block (bleeding to the viewport edge) with round phone icon, big phone number and a white pill button. 900px photo hero, text LEFT-aligned: small chip, 80px UPPERCASE 2-line headline, 30px subline, pill button. Two big colour tiles (accent | dark) sit across the hero's bottom edge, half overlapping, each with line icon, 36px title and circled arrow — one per main service line."
+  },
+  {
+   "id": "hero-builton",
+   "role": "hero",
+   "from": "builton",
+   "crop": {
+    "src": "builton",
+    "y": 0,
+    "h": 983
+   },
+   "spec": "Split top bar (accent slanted block left, dark right), white header BOX inset in the container floating over the hero. Photo hero with a centred dark panel whose top-left corner is cut at 45°; inside: brush-stroke accent eyebrow, 64px wide-display headline, subline, square accent button. Diagonal accent stripe shapes in the bottom corners."
+  },
+  {
+   "id": "hero-constre",
+   "role": "hero",
+   "from": "constre",
+   "crop": {
+    "src": "constre",
+    "y": 0,
+    "h": 954
+   },
+   "spec": "Dark top bar with square social cells + dark 100px header, square accent menu button. 800px hero: dark overlay left half with LEFT-aligned text (accent-square eyebrow, 60px UPPERCASE 3-line headline, short 4px accent rule, square button with ↗ arrow), photo on the right half; the business name set vertically as a faint outlined watermark behind the text."
+  },
+  {
+   "id": "hero-hendre",
+   "role": "hero",
+   "from": "hendre",
+   "crop": {
+    "src": "hendre",
+    "y": 0,
+    "h": 1408
+   },
+   "spec": "Dark top bar + header where the logo sits on the dark colour and the nav is a white box spanning the rest, accent quote button. 790px hero: accent bracket (⌐ shape) framing a 58px UPPERCASE headline with the last words in the accent colour, button with a pill right end and a circled '+' tab; a large photo on the right. A white radius-10 panel overlaps the hero bottom by ~120px holding heading + phone callout and 3 photo cards with house-shaped accent icon badges and dark caption bars."
+  },
+  {
+   "id": "about-coolair",
+   "role": "about",
+   "from": "coolair",
+   "crop": {
+    "src": "coolair",
+    "y": 900,
+    "h": 813
+   },
+   "spec": "Two columns: 576×447 photo (radius 20) left; text column from col 7: pill eyebrow, 42px heading, paragraph, button. Optional full-width row of certification badges (156px) underneath — real ones only."
+  },
+  {
+   "id": "about-airvice",
+   "role": "about",
+   "from": "airvice",
+   "crop": {
+    "src": "airvice",
+    "y": 1146,
+    "h": 748
+   },
+   "spec": "Masonry left: tall 285×600 photo + stacked 285×180 photo and a dark stat tile (72px number + label). Right: eyebrow, 60px heading, paragraph, a pale quote box (26px/600 quote with a big quote glyph), then a pill button + round founder avatar with name/role."
+  },
+  {
+   "id": "about-builton",
+   "role": "about",
+   "from": "builton",
+   "crop": {
+    "src": "builton",
+    "y": 1944,
+    "h": 819
+   },
+   "spec": "Overlapping photo collage left (large 470×677 + small 248×265 + a black circular badge with the logo mark and a dashed ring). Right: uppercase eyebrow, 48px heading, paragraph, bold statement with a 2px left rule, two icon+label features at 24px, square button. A diagonal accent stripe runs behind."
+  },
+  {
+   "id": "about-constre",
+   "role": "about",
+   "from": "constre",
+   "crop": {
+    "src": "constre",
+    "y": 1580,
+    "h": 680
+   },
+   "spec": "Technical-drawing texture background. 590×480 photo left, bleeding past the section's top edge; right: line-before eyebrow, 48px heading, paragraph, square button; a 269px square photo pinned at the bottom-right."
+  },
+  {
+   "id": "about-hendre",
+   "role": "about",
+   "from": "hendre",
+   "crop": {
+    "src": "hendre",
+    "y": 1408,
+    "h": 811
+   },
+   "spec": "607×576 photo left with a white stat over it; right: eyebrow, two-colour heading (one word in accent), paragraph, one icon feature (80px pale tile + title + text), a 2×2 checklist with accent circle checks, and the button."
+  },
+  {
+   "id": "services-coolair",
+   "role": "services",
+   "from": "coolair",
+   "crop": {
+    "src": "coolair",
+    "y": 1689,
+    "h": 840
+   },
+   "spec": "Centred heading stack (pill eyebrow, 42px heading, 18px intro). 3 cards (376px, radius 20): photo top 250px with a 70px icon tile overlapping its top-left, 40px body padding, title, text, small button. The three cards use three different fills of one hue: pale, light accent, deep primary."
+  },
+  {
+   "id": "services-airvice",
+   "role": "services",
+   "from": "airvice",
+   "crop": {
+    "src": "airvice",
+    "y": 2233,
+    "h": 966
+   },
+   "spec": "Heading LEFT + pill button RIGHT on one row. Left half: 2×2 white tiles (padding 45, 1px border, 80px pale icon square, small category label, 24px title); the first tile is solid accent with a small arrow notch at its bottom. Right half: a tall photo with a white text card overlapping its bottom-left."
+  },
+  {
+   "id": "services-builton",
+   "role": "services",
+   "from": "builton",
+   "crop": {
+    "src": "builton",
+    "y": 983,
+    "h": 811
+   },
+   "spec": "Dark band with faint topographic line texture and a ruler-tick border at the top. Three services, each a large circular photo (~410px) framed by a thin accent ring offset ~14px, then a 20px wide-display title and centred text."
+  },
+  {
+   "id": "services-constre",
+   "role": "services",
+   "from": "constre",
+   "crop": {
+    "src": "constre",
+    "y": 2260,
+    "h": 996
+   },
+   "spec": "Pale band. LEFT-aligned heading with a 35px line-before eyebrow and intro. 3 white square-cornered cards: 80px pale icon square, 22px title, one-line text, a 240×140 photo at the bottom, 4px accent bottom rule; square prev/next arrow buttons below."
+  },
+  {
+   "id": "services-hendre",
+   "role": "services",
+   "from": "hendre",
+   "crop": {
+    "src": "hendre",
+    "y": 2219,
+    "h": 1000
+   },
+   "spec": "A dark photo header band (white heading left, round prev/next arrows right) that 3 white cards overlap: photo on top, house-shaped accent badge straddling the photo edge, 22px title, 2 lines, button, and a 14px accent vertical rule down each card's right side."
+  },
+  {
+   "id": "why-coolair",
+   "role": "why",
+   "from": "coolair",
+   "crop": {
+    "src": "coolair",
+    "y": 2529,
+    "h": 788
+   },
+   "spec": "Pale band, centred heading stack, 3×2 grid of reasons: 64px rounded-square icon (alternating deep/light), title, 3 lines."
+  },
+  {
+   "id": "why-constre",
+   "role": "why",
+   "from": "constre",
+   "crop": {
+    "src": "constre",
+    "y": 3256,
+    "h": 950
+   },
+   "spec": "Full-height photo on the left half; right: line-before eyebrow, 48px heading, paragraph, then accent 120px square stat blocks with big numbers (real numbers only) and a checklist."
+  },
+  {
+   "id": "why-hendre",
+   "role": "why",
+   "from": "hendre",
+   "crop": {
+    "src": "hendre",
+    "y": 3123,
+    "h": 957
+   },
+   "spec": "Pale band, centred two-colour heading, a round outlined PLAY button (only if the lead has a video), 3 tab buttons (01. / 02. / 03.) and a tab panel with photo left + text & checklist right."
+  },
+  {
+   "id": "why-airvice",
+   "role": "why",
+   "from": "airvice",
+   "crop": {
+    "src": "airvice",
+    "y": 6221,
+    "h": 831
+   },
+   "spec": "Large photo on one side bleeding off the page edge; on the other: eyebrow, 60px heading, and 3 stacked reason rows each with a 70px icon, 27px title and text."
+  },
+  {
+   "id": "process-coolair",
+   "role": "process",
+   "from": "coolair",
+   "crop": {
+    "src": "coolair",
+    "y": 3832,
+    "h": 469
+   },
+   "spec": "Centred heading stack; 4 equal accent-coloured step cards in a row (radius 12, padding 30) each with a small 'Step 1' chip and a title; arrows between cards."
+  },
+  {
+   "id": "process-builton",
+   "role": "process",
+   "from": "builton",
+   "crop": {
+    "src": "builton",
+    "y": 4204,
+    "h": 978
+   },
+   "spec": "Heading row: big heading left, paragraph right. Then a full-bleed dark photo band split into 4 columns by 1px vertical lines; each column's bottom has a 100px OUTLINED numeral '01'–'04' and a white title."
+  },
+  {
+   "id": "process-hendre",
+   "role": "process",
+   "from": "hendre",
+   "crop": {
+    "src": "hendre",
+    "y": 5404,
+    "h": 614
+   },
+   "spec": "Dark photo band, centred white heading, 4 steps with 36px accent numbered circles connected by a dashed line, white titles and short text."
+  },
+  {
+   "id": "stats-airvice",
+   "role": "stats",
+   "from": "airvice",
+   "crop": {
+    "src": "airvice",
+    "y": 1895,
+    "h": 338
+   },
+   "spec": "4 columns: outline icon with a quarter-circle accent arc behind it, then a 65px number beside a two-line label (small over bold). Real numbers only."
+  },
+  {
+   "id": "stats-coolair",
+   "role": "stats",
+   "from": "coolair",
+   "crop": {
+    "src": "coolair",
+    "y": 4301,
+    "h": 574
+   },
+   "spec": "Text left (eyebrow, heading, long paragraph); right: 2×2 masonry of square photos (radius 10) and two stat tiles — one pale with dark number, one deep brand colour with white number."
+  },
+  {
+   "id": "projects-airvice",
+   "role": "projects",
+   "from": "airvice",
+   "crop": {
+    "src": "airvice",
+    "y": 4764,
+    "h": 940
+   },
+   "spec": "Heading left + outline pill filter chips right; 3 tall 370×410 project photos with titles."
+  },
+  {
+   "id": "projects-constre",
+   "role": "projects",
+   "from": "constre",
+   "crop": {
+    "src": "constre",
+    "y": 4453,
+    "h": 995
+   },
+   "spec": "Dark band, white heading left; project photos in a row, each with a white caption box (30px title) overlapping its bottom edge."
+  },
+  {
+   "id": "team-builton",
+   "role": "team",
+   "from": "builton",
+   "crop": {
+    "src": "builton",
+    "y": 5242,
+    "h": 815
+   },
+   "spec": "Centred heading with a small accent mark; 3 bordered cards with the photo inside, name uppercase, role, social row. Only with real team photos."
+  },
+  {
+   "id": "team-airvice",
+   "role": "team",
+   "from": "airvice",
+   "crop": {
+    "src": "airvice",
+    "y": 3913,
+    "h": 850
+   },
+   "spec": "Dark band, centred heading, 4 square photos each with a dark caption bar (role small, name 27px). Only with real team photos."
+  },
+  {
+   "id": "testimonials-coolair",
+   "role": "testimonials",
+   "from": "coolair",
+   "crop": {
+    "src": "coolair",
+    "y": 4875,
+    "h": 843
+   },
+   "spec": "Centred heading stack; carousel of pale radius-20 cards: 80px round avatar with white ring, accent quote glyph, name, label, centred quote, 5 gold stars, dots below."
+  },
+  {
+   "id": "testimonials-airvice",
+   "role": "testimonials",
+   "from": "airvice",
+   "crop": {
+    "src": "airvice",
+    "y": 8203,
+    "h": 686
+   },
+   "spec": "Split: photo half + dark half with eyebrow, 60px white heading, big quote, name 27px, stars, arrows."
+  },
+  {
+   "id": "testimonials-builton",
+   "role": "testimonials",
+   "from": "builton",
+   "crop": {
+    "src": "builton",
+    "y": 6354,
+    "h": 663
+   },
+   "spec": "White: small overline, 40px heading, one large quote (18px) with name/role and rating; photo on the right; slider dots."
+  },
+  {
+   "id": "testimonials-hendre",
+   "role": "testimonials",
+   "from": "hendre",
+   "crop": {
+    "src": "hendre",
+    "y": 4658,
+    "h": 746
+   },
+   "spec": "Dark photo band; carousel of quote cards with 18px light quote text, round avatar, name."
+  },
+  {
+   "id": "faq-coolair",
+   "role": "faq",
+   "from": "coolair",
+   "crop": {
+    "src": "coolair",
+    "y": 5718,
+    "h": 711
+   },
+   "spec": "Pale band, centred heading; rounded photo left (with a small icon tile) + accordion right: 16/600 questions, 1px dividers, chevrons, 20px row padding. Real questions/answers from FACTS only."
+  },
+  {
+   "id": "contact-airvice",
+   "role": "contact",
+   "from": "airvice",
+   "crop": {
+    "src": "airvice",
+    "y": 3198,
+    "h": 715
+   },
+   "spec": "Photo left with a giant pale watermark numeral (aria-hidden) and a years-of-experience line (real number only); solid accent form box right (padding 50): 36px title, 60px white inputs (name, phone, service select, message), full-width dark submit."
+  },
+  {
+   "id": "contact-builton",
+   "role": "contact",
+   "from": "builton",
+   "crop": {
+    "src": "builton",
+    "y": 7436,
+    "h": 676
+   },
+   "spec": "Dark photo band; heading + contact details on one side, a square-cornered form with dark inputs on the other."
+  },
+  {
+   "id": "contact-hendre-footer",
+   "role": "contact",
+   "from": "hendre",
+   "crop": {
+    "src": "hendre",
+    "y": 6848,
+    "h": 557
+   },
+   "spec": "A contact band: big phone callout (red circle phone icon + 'For enquiry' + number) on one side, a short request form or quote CTA on the other, over the brand's dark colour."
+  },
+  {
+   "id": "cta-coolair",
+   "role": "cta",
+   "from": "coolair",
+   "crop": {
+    "src": "coolair",
+    "y": 7419,
+    "h": 316
+   },
+   "spec": "Rounded (20px) deep-brand box inside the container: photo fills the left half; right: pill eyebrow ('24/7' only if true) + the phone number at 42px white with a phone icon."
+  },
+  {
+   "id": "cta-constre",
+   "role": "cta",
+   "from": "constre",
+   "crop": {
+    "src": "constre",
+    "y": 8615,
+    "h": 150
+   },
+   "spec": "Full-width accent strip, 24px padding: 34px white statement left, phone/quote button right."
+  },
+  {
+   "id": "cta-airvice-tiles",
+   "role": "cta",
+   "from": "airvice",
+   "crop": {
+    "src": "airvice",
+    "y": 980,
+    "h": 166
+   },
+   "spec": "Two side-by-side colour tiles (accent | dark) with line icon, 36px title and circled arrow — linking to the two main services or 'call' and 'quote'."
+  },
+  {
+   "id": "brands-coolair",
+   "role": "brands",
+   "from": "coolair",
+   "crop": {
+    "src": "coolair",
+    "y": 7735,
+    "h": 241
+   },
+   "spec": "Small centred title, then the partner logo ticker (see PARTNERS rules)."
+  },
+  {
+   "id": "brands-builton-marquee",
+   "role": "brands",
+   "from": "builton",
+   "crop": {
+    "src": "builton",
+    "y": 6152,
+    "h": 67
+   },
+   "spec": "A full-bleed dark strip scrolling UPPERCASE service words separated by accent star glyphs; pair it with the partner-logo ticker if the lead has brand logos."
+  },
+  {
+   "id": "footer-coolair",
+   "role": "footer",
+   "from": "coolair",
+   "crop": {
+    "src": "coolair",
+    "y": 7976,
+    "h": 622
+   },
+   "spec": "Brand-colour strip (40px padding) with check icon + 26px statement + button, then a dark footer: logo + about, two link columns, a big 42px phone column; divider and copyright row."
+  },
+  {
+   "id": "footer-airvice",
+   "role": "footer",
+   "from": "airvice",
+   "crop": {
+    "src": "airvice",
+    "y": 10154,
+    "h": 563
+   },
+   "spec": "Dark footer, 115px top padding, 4 columns (about, links, services, emergency phone 24px with accent label)."
+  },
+  {
+   "id": "footer-builton",
+   "role": "footer",
+   "from": "builton",
+   "crop": {
+    "src": "builton",
+    "y": 10119,
+    "h": 595
+   },
+   "spec": "Black footer over a photo texture, 3 columns (contact info, links, newsletter/quote), uppercase wide-display column titles."
+  },
+  {
+   "id": "footer-constre",
+   "role": "footer",
+   "from": "constre",
+   "crop": {
+    "src": "constre",
+    "y": 8680,
+    "h": 553
+   },
+   "spec": "Charcoal footer with a texture, 4 columns with 24px/700 titles, a slightly darker bottom bar."
+  },
+  {
+   "id": "footer-hendre",
+   "role": "footer",
+   "from": "hendre",
+   "crop": {
+    "src": "hendre",
+    "y": 6848,
+    "h": 637
+   },
+   "spec": "Deep brand-colour footer: a top row with a phone callout and a subscribe/quote box, then 4 columns and a bottom bar."
+  }
+ ]
+}

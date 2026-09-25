@@ -1,0 +1,1190 @@
+{
+ "title": "Hendre - Repair Service HTML5 Template",
+ "pageHeight": 7485,
+ "body": {
+  "family": "Poppins",
+  "size": 15,
+  "lineHeight": 1.87,
+  "color": "#616161",
+  "bg": "#ffffff"
+ },
+ "paragraph": {
+  "text": "Competently repurpose go forward benefits without goal-oriented ROI th",
+  "family": "Poppins",
+  "size": 15,
+  "weight": 400,
+  "lineHeight": 1.87,
+  "letterSpacing": 0,
+  "color": "#616161",
+  "marginBottom": 16
+ },
+ "nav": {
+  "text": "Home",
+  "family": "Poppins",
+  "size": 15,
+  "weight": 500,
+  "lineHeight": 1.87,
+  "letterSpacing": 0,
+  "color": "#062462",
+  "marginBottom": 35
+ },
+ "header": {
+  "height": 99,
+  "w": 1440,
+  "h": 99,
+  "padding": "0 0 0 0",
+  "radius": 0,
+  "bg": "#062462"
+ },
+ "inputs": [
+  {
+   "w": 302,
+   "h": 52,
+   "padding": "0 25 0 25",
+   "radius": 5,
+   "bg": "#f6f6f6",
+   "size": 15
+  },
+  {
+   "w": 302,
+   "h": 52,
+   "padding": "0 25 0 25",
+   "radius": 5,
+   "bg": "#f6f6f6",
+   "size": 15
+  }
+ ],
+ "containers": [
+  "1320 (padding-x 12) ×19"
+ ],
+ "buttons": [
+  {
+   "w": 139,
+   "h": 42,
+   "padding": "7 0 7 30",
+   "radius": 2,
+   "bg": "#062462",
+   "text": "Read More",
+   "size": 15,
+   "weight": 500,
+   "family": "Poppins",
+   "letterSpacing": 0,
+   "color": "#ffffff",
+   "count": 10,
+   "examples": [
+    "Read More",
+    "Read More",
+    "Read More"
+   ]
+  },
+  {
+   "w": 201,
+   "h": 60,
+   "padding": "15 9 15 42",
+   "radius": 5,
+   "bg": "#062462",
+   "text": "Get An Estimate",
+   "size": 15,
+   "weight": 500,
+   "family": "Poppins",
+   "letterSpacing": 0,
+   "color": "#ffffff",
+   "count": 9,
+   "examples": [
+    "Get An Estimate",
+    "Get An Estimate",
+    "Get An Estimate"
+   ]
+  },
+  {
+   "w": 136,
+   "h": 42,
+   "padding": "7 22 7 48",
+   "radius": 30,
+   "bg": "#062462",
+   "text": "By Admin",
+   "size": 14,
+   "weight": 400,
+   "family": "Poppins",
+   "letterSpacing": 0,
+   "color": "#ffffff",
+   "count": 3,
+   "examples": [
+    "By Admin",
+    "By Admin",
+    "By Admin"
+   ]
+  },
+  {
+   "w": 196,
+   "h": 52,
+   "padding": "12 35 12 35",
+   "radius": 5,
+   "bg": "#da242b",
+   "text": "Get a Free Quote",
+   "size": 15,
+   "weight": 500,
+   "family": "Poppins",
+   "letterSpacing": 0,
+   "color": "#ffffff",
+   "count": 1,
+   "examples": [
+    "Get a Free Quote"
+   ]
+  },
+  {
+   "w": 197,
+   "h": 52,
+   "padding": "11 38 11 38",
+   "radius": 5,
+   "bg": "#d9232b",
+   "border": "1px solid #d9232b",
+   "text": "Submit Request",
+   "size": 15,
+   "weight": 500,
+   "family": "Poppins",
+   "letterSpacing": 0,
+   "color": "#ffffff",
+   "count": 1,
+   "examples": [
+    "Submit Request"
+   ]
+  },
+  {
+   "w": 127,
+   "h": 56,
+   "padding": "14 30 14 30",
+   "radius": "0 5 5 0",
+   "bg": "#d9232b",
+   "text": "Subcribe",
+   "size": 15,
+   "weight": 500,
+   "family": "Poppins",
+   "letterSpacing": 0,
+   "color": "#ffffff",
+   "count": 1,
+   "examples": [
+    "Subcribe"
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "tag": "div",
+   "cls": "hendre_nav_manu",
+   "y": 50,
+   "height": 99,
+   "paddingY": "0 / 0",
+   "bg": "#062462",
+   "headings": [],
+   "repeated": [],
+   "images": [
+    {
+     "w": 191,
+     "h": 56,
+     "radius": 0
+    }
+   ],
+   "imageCount": 1
+  },
+  {
+   "tag": "div",
+   "cls": "hero-list owl-carousel owl-loaded owl-drag",
+   "y": 149,
+   "height": 790,
+   "paddingY": "0 / 0",
+   "bg": "photo/pattern",
+   "bgImage": true,
+   "headings": [
+    {
+     "tag": "h4",
+     "text": "100% Satisfaction Gaurenty",
+     "family": "Inter",
+     "size": 16,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#da242b",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h1",
+     "text": "HEIGHST QUALITY",
+     "family": "Inter",
+     "size": 58,
+     "weight": 800,
+     "lineHeight": 1.12,
+     "letterSpacing": 0,
+     "transform": "uppercase",
+     "color": "#062462",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h1",
+     "text": "HOME SERVICES",
+     "family": "Inter",
+     "size": 58,
+     "weight": 800,
+     "lineHeight": 1.12,
+     "letterSpacing": 0,
+     "transform": "uppercase",
+     "color": "#062462",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h1",
+     "text": "WITH HENDRE",
+     "family": "Inter",
+     "size": 58,
+     "weight": 800,
+     "lineHeight": 1.12,
+     "letterSpacing": 0,
+     "transform": "uppercase",
+     "color": "#062462",
+     "marginBottom": 0
+    }
+   ],
+   "repeated": [
+    {
+     "count": 2,
+     "perRow": 1,
+     "itemWidth": 660,
+     "card": {
+      "w": 660,
+      "h": 370,
+      "padding": "0 12 0 12",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": "100% Satisfaction Gaurenty HEIGHST QUALITY HOME SERVICES WITH HENDRE Get An Estimate"
+    },
+    {
+     "count": 2,
+     "perRow": 1,
+     "itemWidth": 660,
+     "card": {
+      "w": 660,
+      "h": 370,
+      "padding": "0 12 0 12",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": "100% Satisfaction Gaurenty HEIGHST QUALITY HOME SERVICES WITH HENDRE Get An Estimate"
+    }
+   ],
+   "images": [
+    {
+     "w": 499,
+     "h": 499,
+     "radius": 0
+    },
+    {
+     "w": 636,
+     "h": 615,
+     "radius": 0
+    },
+    {
+     "w": 499,
+     "h": 499,
+     "radius": 0
+    },
+    {
+     "w": 591,
+     "h": 759,
+     "radius": 0
+    }
+   ],
+   "imageCount": 14
+  },
+  {
+   "tag": "div",
+   "cls": "feature-section",
+   "y": 819,
+   "height": 589,
+   "paddingY": "65 / 50",
+   "bg": "#ffffff",
+   "headings": [
+    {
+     "tag": "h4",
+     "text": "FEATURES",
+     "family": "Inter",
+     "size": 16,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "transform": "uppercase",
+     "color": "#da242b",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h1",
+     "text": "Fixing What We Improves",
+     "family": "Inter",
+     "size": 40,
+     "weight": 700,
+     "lineHeight": 1.25,
+     "letterSpacing": 0,
+     "color": "#062461",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h2",
+     "text": "+980 987 (0986) 030",
+     "family": "Inter",
+     "size": 20,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#062461",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h2",
+     "text": "Home Repairing",
+     "family": "Inter",
+     "size": 20,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    }
+   ],
+   "repeated": [],
+   "images": [
+    {
+     "w": 337,
+     "h": 285,
+     "radius": 0
+    },
+    {
+     "w": 99,
+     "h": 97,
+     "radius": 0
+    },
+    {
+     "w": 337,
+     "h": 284,
+     "radius": 0
+    },
+    {
+     "w": 99,
+     "h": 97,
+     "radius": 0
+    }
+   ],
+   "imageCount": 7
+  },
+  {
+   "tag": "div",
+   "cls": "about-section",
+   "y": 1408,
+   "height": 811,
+   "paddingY": "135 / 100",
+   "bg": "photo/pattern",
+   "bgImage": true,
+   "headings": [
+    {
+     "tag": "h2",
+     "text": "795",
+     "family": "Inter",
+     "size": 34,
+     "weight": 700,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h2",
+     "text": "+",
+     "family": "Inter",
+     "size": 34,
+     "weight": 700,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "ABOUT US",
+     "family": "Inter",
+     "size": 16,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "transform": "uppercase",
+     "color": "#da242b",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h1",
+     "text": "Repairing Your House for",
+     "family": "Inter",
+     "size": 40,
+     "weight": 700,
+     "lineHeight": 1.25,
+     "letterSpacing": 0,
+     "color": "#062461",
+     "marginBottom": 0
+    }
+   ],
+   "paragraph": {
+    "text": "Competently repurpose go forward benefits without goal-oriented ROI th",
+    "family": "Poppins",
+    "size": 15,
+    "weight": 400,
+    "lineHeight": 1.87,
+    "letterSpacing": 0,
+    "color": "#616161",
+    "marginBottom": 16
+   },
+   "repeated": [
+    {
+     "count": 2,
+     "perRow": 1,
+     "itemWidth": 660,
+     "card": {
+      "w": 660,
+      "h": 576,
+      "padding": "0 12 0 12",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": "795 + Project Completed"
+    }
+   ],
+   "images": [
+    {
+     "w": 607,
+     "h": 576,
+     "radius": 0
+    },
+    {
+     "w": 80,
+     "h": 80,
+     "radius": 0
+    }
+   ],
+   "imageCount": 2
+  },
+  {
+   "tag": "div",
+   "cls": "service-top-section",
+   "y": 2219,
+   "height": 545,
+   "paddingY": "88 / 0",
+   "bg": "photo/pattern",
+   "bgImage": true,
+   "headings": [
+    {
+     "tag": "h4",
+     "text": "OUR SERVICES",
+     "family": "Inter",
+     "size": 16,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "transform": "uppercase",
+     "color": "#da242b",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h1",
+     "text": "Solutions for Renovating",
+     "family": "Inter",
+     "size": 40,
+     "weight": 700,
+     "lineHeight": 1.25,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h1",
+     "text": "Home Repairing",
+     "family": "Inter",
+     "size": 40,
+     "weight": 700,
+     "lineHeight": 1.25,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    }
+   ],
+   "repeated": [],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "div",
+   "cls": "service-section",
+   "y": 2514,
+   "height": 944,
+   "paddingY": "0 / 390",
+   "bg": "transparent",
+   "headings": [
+    {
+     "tag": "h3",
+     "text": "Home Floor Reparing",
+     "family": "Inter",
+     "size": 22,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#062461",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h3",
+     "text": "Door Window Reparing",
+     "family": "Inter",
+     "size": 22,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#062461",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h3",
+     "text": "Commercial Reparing",
+     "family": "Inter",
+     "size": 22,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#062461",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h3",
+     "text": "Commercial Reparing",
+     "family": "Inter",
+     "size": 22,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#062461",
+     "marginBottom": 0
+    }
+   ],
+   "paragraph": {
+    "text": "Repurpose go forward benefits without goal conveniently targeted to bu",
+    "family": "Poppins",
+    "size": 15,
+    "weight": 400,
+    "lineHeight": 1.87,
+    "letterSpacing": 0,
+    "color": "#616161",
+    "marginBottom": 16
+   },
+   "repeated": [],
+   "images": [
+    {
+     "w": 412,
+     "h": 281,
+     "radius": 5
+    },
+    {
+     "w": 99,
+     "h": 97,
+     "radius": 0
+    },
+    {
+     "w": 412,
+     "h": 281,
+     "radius": 5
+    },
+    {
+     "w": 99,
+     "h": 97,
+     "radius": 0
+    }
+   ],
+   "imageCount": 20
+  },
+  {
+   "tag": "div",
+   "cls": "why-choose-section",
+   "y": 3123,
+   "height": 957,
+   "paddingY": "0 / 70",
+   "bg": "transparent",
+   "headings": [
+    {
+     "tag": "h4",
+     "text": "WHY CHOOSE US",
+     "family": "Inter",
+     "size": 16,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "transform": "uppercase",
+     "color": "#da242b",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h1",
+     "text": "Some Reason for Choose Hendre",
+     "family": "Inter",
+     "size": 40,
+     "weight": 700,
+     "lineHeight": 1.25,
+     "letterSpacing": 0,
+     "color": "#062461",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h1",
+     "text": "Repairing Your Home",
+     "family": "Inter",
+     "size": 40,
+     "weight": 700,
+     "lineHeight": 1.25,
+     "letterSpacing": 0,
+     "color": "#062461",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "WHY CHOOSE US ?",
+     "family": "Inter",
+     "size": 16,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "transform": "uppercase",
+     "color": "#da242b",
+     "marginBottom": 0
+    }
+   ],
+   "paragraph": {
+    "text": "Competently repurpose go forward benefits without goal-oriented ROI th",
+    "family": "Poppins",
+    "size": 15,
+    "weight": 400,
+    "lineHeight": 1.87,
+    "letterSpacing": 0,
+    "color": "#616161",
+    "marginBottom": 16
+   },
+   "repeated": [],
+   "images": [
+    {
+     "w": 571,
+     "h": 421,
+     "radius": 5
+    }
+   ],
+   "imageCount": 1
+  },
+  {
+   "tag": "div",
+   "cls": "team-section",
+   "y": 4080,
+   "height": 637,
+   "paddingY": "100 / 128",
+   "bg": "photo/pattern",
+   "bgImage": true,
+   "headings": [
+    {
+     "tag": "h4",
+     "text": "OUR TEAM",
+     "family": "Inter",
+     "size": 16,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "transform": "uppercase",
+     "color": "#da242b",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h1",
+     "text": "Meet Our Experts",
+     "family": "Inter",
+     "size": 40,
+     "weight": 700,
+     "lineHeight": 1.25,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h1",
+     "text": "Team Member",
+     "family": "Inter",
+     "size": 40,
+     "weight": 700,
+     "lineHeight": 1.25,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h3",
+     "text": "John D. Alexon",
+     "family": "Inter",
+     "size": 20,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    }
+   ],
+   "paragraph": {
+    "text": "Competently repurpose go forward benefits without goal-oriented ROI th",
+    "family": "Poppins",
+    "size": 15,
+    "weight": 400,
+    "lineHeight": 1.87,
+    "letterSpacing": 0,
+    "color": "#ffffff",
+    "marginBottom": 16
+   },
+   "repeated": [],
+   "images": [
+    {
+     "w": 272,
+     "h": 276,
+     "radius": 0
+    },
+    {
+     "w": 272,
+     "h": 276,
+     "radius": 0
+    },
+    {
+     "w": 272,
+     "h": 276,
+     "radius": 0
+    },
+    {
+     "w": 272,
+     "h": 276,
+     "radius": 0
+    }
+   ],
+   "imageCount": 10
+  },
+  {
+   "tag": "div",
+   "cls": "testimonial-section",
+   "y": 4658,
+   "height": 746,
+   "paddingY": "0 / 100",
+   "bg": "photo/pattern",
+   "bgImage": true,
+   "headings": [
+    {
+     "tag": "h4",
+     "text": "David M. Alexon",
+     "family": "Inter",
+     "size": 18,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "David M. Alexon",
+     "family": "Inter",
+     "size": 18,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "David M. Alexon",
+     "family": "Inter",
+     "size": 18,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "David M. Alexon",
+     "family": "Inter",
+     "size": 18,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    }
+   ],
+   "paragraph": {
+    "text": "“Proactively unleash a vertical to communities rather than intuitive n",
+    "family": "Inter",
+    "size": 18,
+    "weight": 300,
+    "lineHeight": 1.78,
+    "letterSpacing": 0,
+    "color": "#ffffff",
+    "marginBottom": 16
+   },
+   "repeated": [],
+   "images": [
+    {
+     "w": 76,
+     "h": 76,
+     "radius": 0
+    },
+    {
+     "w": 76,
+     "h": 76,
+     "radius": 0
+    },
+    {
+     "w": 76,
+     "h": 76,
+     "radius": 0
+    },
+    {
+     "w": 76,
+     "h": 76,
+     "radius": 0
+    }
+   ],
+   "imageCount": 7
+  },
+  {
+   "tag": "div",
+   "cls": "process-section",
+   "y": 5404,
+   "height": 614,
+   "paddingY": "88 / 65",
+   "bg": "photo/pattern",
+   "bgImage": true,
+   "headings": [
+    {
+     "tag": "h4",
+     "text": "WORK PROCESS",
+     "family": "Inter",
+     "size": 16,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "transform": "uppercase",
+     "color": "#da242b",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h1",
+     "text": "We Follow the Processr",
+     "family": "Inter",
+     "size": 40,
+     "weight": 700,
+     "lineHeight": 1.25,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "Booking Online",
+     "family": "Inter",
+     "size": 22,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "Confirmation",
+     "family": "Inter",
+     "size": 22,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    }
+   ],
+   "paragraph": {
+    "text": "Competently repurpose forward conveniently target fixed",
+    "family": "Poppins",
+    "size": 15,
+    "weight": 300,
+    "lineHeight": 1.87,
+    "letterSpacing": 0,
+    "color": "#ffffff",
+    "marginBottom": 16
+   },
+   "repeated": [
+    {
+     "count": 4,
+     "perRow": 4,
+     "itemWidth": 330,
+     "gapX": 0,
+     "card": {
+      "w": 36,
+      "h": 36,
+      "padding": "0 0 0 0",
+      "radius": 30,
+      "bg": "#da242b"
+     },
+     "firstText": "01 Booking Online Competently repurpose forward conveniently target fixed"
+    }
+   ],
+   "images": [
+    {
+     "w": 144,
+     "h": 143,
+     "radius": 0
+    },
+    {
+     "w": 144,
+     "h": 143,
+     "radius": 0
+    },
+    {
+     "w": 144,
+     "h": 143,
+     "radius": 0
+    },
+    {
+     "w": 144,
+     "h": 143,
+     "radius": 0
+    }
+   ],
+   "imageCount": 4
+  },
+  {
+   "tag": "div",
+   "cls": "blog-section",
+   "y": 6017,
+   "height": 831,
+   "paddingY": "88 / 70",
+   "bg": "#ffffff",
+   "headings": [
+    {
+     "tag": "h4",
+     "text": "OUR BLOG",
+     "family": "Inter",
+     "size": 16,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "transform": "uppercase",
+     "color": "#da242b",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h1",
+     "text": "Our Recent Blog Post",
+     "family": "Inter",
+     "size": 40,
+     "weight": 700,
+     "lineHeight": 1.25,
+     "letterSpacing": 0,
+     "color": "#062461",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h2",
+     "text": "Top 5 Secrete Home Repairing Tips Discussions",
+     "family": "Inter",
+     "size": 35,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#062461",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h2",
+     "text": "10 Most Popular Comod Clean Styles for your Home",
+     "family": "Inter",
+     "size": 35,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#062461",
+     "marginBottom": 0
+    }
+   ],
+   "repeated": [
+    {
+     "count": 3,
+     "perRow": 3,
+     "itemWidth": 440,
+     "gapX": 0,
+     "card": {
+      "w": 136,
+      "h": 42,
+      "padding": "7 22 7 48",
+      "radius": 30,
+      "bg": "#062462"
+     },
+     "firstText": "By Admin Top 5 Secrete Home Repairing Tips Discussions Read More"
+    }
+   ],
+   "images": [
+    {
+     "w": 416,
+     "h": 304,
+     "radius": 5
+    },
+    {
+     "w": 416,
+     "h": 304,
+     "radius": 5
+    },
+    {
+     "w": 416,
+     "h": 304,
+     "radius": 5
+    }
+   ],
+   "imageCount": 3
+  },
+  {
+   "tag": "div",
+   "cls": "footer-section",
+   "y": 6848,
+   "height": 557,
+   "paddingY": "0 / 93",
+   "bg": "#052361",
+   "bgImage": true,
+   "eyebrow": {
+    "text": "For Enquery :",
+    "family": "Poppins",
+    "size": 15,
+    "weight": 300,
+    "lineHeight": 1.87,
+    "letterSpacing": 0,
+    "color": "#ffffff",
+    "marginBottom": 0
+   },
+   "headings": [
+    {
+     "tag": "h2",
+     "text": "+980 987 (0986) 030",
+     "family": "Inter",
+     "size": 22,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h2",
+     "text": "Subscribe Now",
+     "family": "Inter",
+     "size": 28,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "Popular Services",
+     "family": "Inter",
+     "size": 22,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "Useful Links",
+     "family": "Inter",
+     "size": 22,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    }
+   ],
+   "paragraph": {
+    "text": "Professionally develop long-term performance based architectures metri",
+    "family": "Poppins",
+    "size": 15,
+    "weight": 400,
+    "lineHeight": 1.87,
+    "letterSpacing": 0,
+    "color": "#cdd3df",
+    "marginBottom": 16
+   },
+   "repeated": [],
+   "images": [
+    {
+     "w": 70,
+     "h": 70,
+     "radius": 0
+    },
+    {
+     "w": 191,
+     "h": 56,
+     "radius": 0
+    },
+    {
+     "w": 219,
+     "h": 244,
+     "radius": 0
+    },
+    {
+     "w": 69,
+     "h": 83,
+     "radius": 0
+    }
+   ],
+   "imageCount": 4
+  },
+  {
+   "tag": "div",
+   "cls": "footer-bottom-section",
+   "y": 7406,
+   "height": 79,
+   "paddingY": "23 / 22",
+   "bg": "#052361",
+   "headings": [],
+   "paragraph": {
+    "text": "Copyright © 2023 Hendre. All rights reserved.",
+    "family": "Poppins",
+    "size": 15,
+    "weight": 400,
+    "lineHeight": 1.87,
+    "letterSpacing": 0,
+    "color": "#ffffff",
+    "marginBottom": 5
+   },
+   "repeated": [],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "div",
+   "cls": "search-popup",
+   "y": -1440,
+   "height": 900,
+   "paddingY": "0 / 0",
+   "bg": "#000000 @90%",
+   "headings": [],
+   "repeated": [],
+   "images": [],
+   "imageCount": 0
+  }
+ ]
+}

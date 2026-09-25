@@ -1,0 +1,39 @@
+{
+  "vertical": "takeaway-restaurant",
+  "label": "Kebab Shop",
+  "register": "The buyer is hungry and deciding which local takeaway or delivery kebab shop to order from right now. They judge whether it looks tasty, fresh and easy to order from, next to other neighborhood döner and fast-casual delivery spots rather than sit-down restaurants or big chains.",
+  "color": "#3f7cc9",
+  "sites": [
+    {
+      "name": "German Doner Kebab (US)",
+      "url": "https://gdk.com/us",
+      "why": "A single 'Kebabs Done Right' promise ('made fresh to order, handmade waffle breads') sits next to a persistent ORDER NOW button, with open-kitchen and halal-certification proof lower on the page."
+    },
+    {
+      "name": "The Halal Guys",
+      "url": "https://thehalalguys.com/",
+      "why": "'We Deliver & Do Takeout!' is the first thing you see, alongside Order Now, closest-restaurant finder, app download and 'Since 1990' credibility. A hungry visitor gets to ordering in one tap."
+    },
+    {
+      "name": "Kebap with Attitude",
+      "url": "https://www.kebapyourlife.de/",
+      "why": "A bold 'Berlin's first new wave döner' positioning with homemade, local free-range sourcing claims. Wolt, Lieferando and Uber Eats delivery links let the shop stay independent while still converting."
+    },
+    {
+      "name": "BERLINS Doner Kebab",
+      "url": "https://eatberlins.com/",
+      "why": "A single-location independent that pairs a people-first hero photo with a health and freshness claim ('world's healthiest kebab', organic and local). Its 'order online, right to your doorstep' CTA is the main action."
+    },
+    {
+      "name": "Super Kebab (London)",
+      "url": "https://www.superkebab.net/",
+      "why": "A neighbourhood takeaway homepage where every banner routes to 'Order Delivery'. Address, phone number, daily opening hours and app links appear up front, which is the bare minimum for a local order-now buyer."
+    },
+    {
+      "name": "Berlin Doner & Kebab House (San Francisco)",
+      "url": "https://www.berlindonerandkebabhousesf.com/",
+      "why": "A small independent with a live 'Open Now / closes at 10pm' status, a rotating seasonal offer (weekend brunch) and Order Online buttons above the fold and in the footer."
+    }
+  ],
+  "createdAt": "2026-09-25T05:47:38.676Z"
+}

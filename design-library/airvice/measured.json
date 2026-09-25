@@ -1,0 +1,1294 @@
+{
+ "title": "Airvice - AC Repair Services HTML5 Template",
+ "pageHeight": 10717,
+ "body": {
+  "family": "Saira Semi Condensed",
+  "size": 16,
+  "lineHeight": 1.5,
+  "color": "#4f5168",
+  "bg": "#ffffff"
+ },
+ "paragraph": {
+  "text": "Duis nunc sodales conubia ad laoreet aliquet nostra. Eleifend lacinia ",
+  "family": "Saira Semi Condensed",
+  "size": 16,
+  "weight": 500,
+  "lineHeight": 1.75,
+  "letterSpacing": 0,
+  "color": "#4f5168",
+  "marginBottom": 40
+ },
+ "nav": {
+  "text": "info@sycho24.com",
+  "family": "Saira Semi Condensed",
+  "size": 16,
+  "weight": 500,
+  "lineHeight": 1.5,
+  "letterSpacing": 0,
+  "color": "#151735",
+  "marginBottom": 0
+ },
+ "header": {
+  "height": 160,
+  "w": 1440,
+  "h": 160,
+  "padding": "0 0 0 0",
+  "radius": 0,
+  "bg": null
+ },
+ "inputs": [
+  {
+   "w": 370,
+   "h": 60,
+   "padding": "0 20 0 20",
+   "radius": 3,
+   "bg": "#ffffff",
+   "size": 16
+  },
+  {
+   "w": 370,
+   "h": 60,
+   "padding": "0 20 0 20",
+   "radius": 3,
+   "bg": "#ffffff",
+   "size": 16
+  }
+ ],
+ "containers": [
+  "1200 (padding-x 15) ×12",
+  "1400 (padding-x 15) ×6"
+ ],
+ "buttons": [
+  {
+   "w": 110,
+   "h": 40,
+   "padding": "0 30 0 30",
+   "radius": 50,
+   "bg": null,
+   "border": "1px solid #dce1e4",
+   "text": "Testing",
+   "size": 16,
+   "weight": 400,
+   "family": "Saira Semi Condensed",
+   "letterSpacing": 0,
+   "color": "#151735",
+   "count": 3,
+   "examples": [
+    "Testing",
+    "Cleaning",
+    "Repair"
+   ]
+  },
+  {
+   "w": 167,
+   "h": 60,
+   "padding": "0 45 0 45",
+   "radius": 50,
+   "bg": "#f7f7f7",
+   "border": "1px solid #cccccc",
+   "text": "Get Started",
+   "size": 16,
+   "weight": 600,
+   "family": "Saira Semi Condensed",
+   "letterSpacing": 0,
+   "color": "#151735",
+   "count": 3,
+   "examples": [
+    "Get Started",
+    "Get Started",
+    "Get Started"
+   ]
+  },
+  {
+   "w": 161,
+   "h": 50,
+   "padding": "0 45 0 45",
+   "radius": 0,
+   "bg": "#ff6600",
+   "text": "Read More",
+   "size": 16,
+   "weight": 600,
+   "family": "Saira Semi Condensed",
+   "letterSpacing": 0,
+   "color": "#ffffff",
+   "count": 3,
+   "examples": [
+    "Read More",
+    "Read More",
+    "Read More"
+   ]
+  },
+  {
+   "w": 209,
+   "h": 60,
+   "padding": "0 45 0 45",
+   "radius": 50,
+   "bg": "#2371ff",
+   "text": "Appointment Now",
+   "size": 16,
+   "weight": 600,
+   "family": "Saira Semi Condensed",
+   "letterSpacing": 0,
+   "color": "#ffffff",
+   "count": 2,
+   "examples": [
+    "Appointment Now",
+    "Appointment Now"
+   ]
+  },
+  {
+   "w": 161,
+   "h": 60,
+   "padding": "0 45 0 45",
+   "radius": 50,
+   "bg": "#ff6600",
+   "text": "Read More",
+   "size": 16,
+   "weight": 600,
+   "family": "Saira Semi Condensed",
+   "letterSpacing": 0,
+   "color": "#ffffff",
+   "count": 2,
+   "examples": [
+    "Read More",
+    "More Service"
+   ]
+  },
+  {
+   "w": 156,
+   "h": 60,
+   "padding": "0 45 0 45",
+   "radius": 50,
+   "bg": "#ffffff",
+   "text": "Get Quote",
+   "size": 16,
+   "weight": 600,
+   "family": "Saira Semi Condensed",
+   "letterSpacing": 0,
+   "color": "#151735",
+   "count": 1,
+   "examples": [
+    "Get Quote"
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "tag": "div",
+   "cls": "header-top grey-bg d-none d-lg-block",
+   "y": 0,
+   "height": 60,
+   "paddingY": "0 / 0",
+   "bg": "#f3f6f9",
+   "headings": [],
+   "repeated": [],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "div",
+   "cls": "header-menu header-sticky",
+   "y": 60,
+   "height": 100,
+   "paddingY": "38 / 38",
+   "bg": "transparent",
+   "headings": [],
+   "repeated": [],
+   "images": [
+    {
+     "w": 172,
+     "h": 49,
+     "radius": 0
+    }
+   ],
+   "imageCount": 1
+  },
+  {
+   "tag": "section",
+   "cls": "slider-area fix",
+   "y": 160,
+   "height": 900,
+   "paddingY": "0 / 0",
+   "bg": "photo/pattern",
+   "bgImage": true,
+   "headings": [
+    {
+     "tag": "h4",
+     "text": "Intro video",
+     "family": "Saira Semi Condensed",
+     "size": 24,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h2",
+     "text": "PROVIDE QUALITY REPAIR SERVICE",
+     "family": "Saira Semi Condensed",
+     "size": 80,
+     "weight": 700,
+     "lineHeight": 1.12,
+     "letterSpacing": 0,
+     "transform": "uppercase",
+     "color": "#151735",
+     "marginBottom": 30
+    },
+    {
+     "tag": "h3",
+     "text": "On your fingertips you have been cooling switch",
+     "family": "Saira Semi Condensed",
+     "size": 30,
+     "weight": 500,
+     "lineHeight": 1.12,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 50
+    },
+    {
+     "tag": "h4",
+     "text": "Intro video",
+     "family": "Saira Semi Condensed",
+     "size": 24,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 0
+    }
+   ],
+   "repeated": [],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "section",
+   "cls": "cta-area wow fadeInUp",
+   "y": 980,
+   "height": 166,
+   "paddingY": "45 / 40",
+   "bg": "#ff6600",
+   "headings": [
+    {
+     "tag": "h3",
+     "text": "Residential Repair Service",
+     "family": "Saira Semi Condensed",
+     "size": 36,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h3",
+     "text": "Commercial Repair Service",
+     "family": "Saira Semi Condensed",
+     "size": 36,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    }
+   ],
+   "repeated": [],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "section",
+   "cls": "about-area pt-120",
+   "y": 1146,
+   "height": 748,
+   "paddingY": "120 / 0",
+   "bg": "transparent",
+   "headings": [
+    {
+     "tag": "h2",
+     "text": "200+ Project Done",
+     "family": "Saira Semi Condensed",
+     "size": 72,
+     "weight": 600,
+     "lineHeight": 0.9,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h6",
+     "text": "About company",
+     "family": "Saira Semi Condensed",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ff6600",
+     "marginBottom": 20
+    },
+    {
+     "tag": "h2",
+     "text": "We are most popular repair company",
+     "family": "Saira Semi Condensed",
+     "size": 60,
+     "weight": 600,
+     "lineHeight": 1.08,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "Don’t feel heat when there is best air conditioning seat",
+     "family": "Saira Semi Condensed",
+     "size": 27,
+     "weight": 600,
+     "lineHeight": 1.3,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 0
+    }
+   ],
+   "paragraph": {
+    "text": "Duis nunc sodales conubia ad laoreet aliquet nostra. Eleifend lacinia ",
+    "family": "Saira Semi Condensed",
+    "size": 16,
+    "weight": 500,
+    "lineHeight": 1.75,
+    "letterSpacing": 0,
+    "color": "#4f5168",
+    "marginBottom": 40
+   },
+   "repeated": [
+    {
+     "count": 2,
+     "perRow": 2,
+     "itemWidth": 315,
+     "gapX": 0,
+     "card": {
+      "w": 315,
+      "h": 590,
+      "padding": "0 15 0 15",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": ""
+    }
+   ],
+   "images": [
+    {
+     "w": 285,
+     "h": 560,
+     "radius": 0
+    },
+    {
+     "w": 285,
+     "h": 271,
+     "radius": 0
+    }
+   ],
+   "imageCount": 2
+  },
+  {
+   "tag": "section",
+   "cls": "fact-area pt-80 pb-70",
+   "y": 1895,
+   "height": 338,
+   "paddingY": "80 / 70",
+   "bg": "transparent",
+   "headings": [
+    {
+     "tag": "h2",
+     "text": "80",
+     "family": "Saira Semi Condensed",
+     "size": 65,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "Member",
+     "family": "Saira Semi Condensed",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h3",
+     "text": "Professional",
+     "family": "Saira Semi Condensed",
+     "size": 27,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h2",
+     "text": "70",
+     "family": "Saira Semi Condensed",
+     "size": 65,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 0
+    }
+   ],
+   "repeated": [
+    {
+     "count": 4,
+     "perRow": 4,
+     "itemWidth": 300,
+     "gapX": 0,
+     "card": {
+      "w": 300,
+      "h": 188,
+      "padding": "0 15 0 15",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": "80 Member Professional"
+    }
+   ],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "section",
+   "cls": "service-area pt-120 pb-90",
+   "y": 2233,
+   "height": 966,
+   "paddingY": "120 / 90",
+   "bg": "photo/pattern",
+   "bgImage": true,
+   "headings": [
+    {
+     "tag": "h6",
+     "text": "Featured Services",
+     "family": "Saira Semi Condensed",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ff6600",
+     "marginBottom": 20
+    },
+    {
+     "tag": "h2",
+     "text": "Popular repair service",
+     "family": "Saira Semi Condensed",
+     "size": 60,
+     "weight": 600,
+     "lineHeight": 1.08,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h6",
+     "text": "Quality Testing",
+     "family": "Saira Semi Condensed",
+     "size": 24,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h6",
+     "text": "AC Installation",
+     "family": "Saira Semi Condensed",
+     "size": 24,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    }
+   ],
+   "paragraph": {
+    "text": "Suscipit Duis arcu iaculis class nullam sociis nibh rutrum aliquam vul",
+    "family": "Saira Semi Condensed",
+    "size": 16,
+    "weight": 500,
+    "lineHeight": 1.75,
+    "letterSpacing": 0,
+    "color": "#4f5168",
+    "marginBottom": 10
+   },
+   "repeated": [
+    {
+     "count": 2,
+     "perRow": 2,
+     "itemWidth": 600,
+     "gapX": 0,
+     "card": {
+      "w": 270,
+      "h": 257,
+      "padding": "45 45 42 45",
+      "radius": 5,
+      "bg": "#ffffff",
+      "border": "1px solid #dfe4ea"
+     },
+     "firstText": "Commercial Quality Testing Commercial AC Installation Commercial Dust Cleaning Commercial "
+    },
+    {
+     "count": 4,
+     "perRow": 2,
+     "itemWidth": 300,
+     "gapX": 0,
+     "card": {
+      "w": 270,
+      "h": 257,
+      "padding": "45 45 42 45",
+      "radius": 5,
+      "bg": "#ffffff",
+      "border": "1px solid #dfe4ea"
+     },
+     "firstText": "Commercial Quality Testing"
+    }
+   ],
+   "images": [
+    {
+     "w": 570,
+     "h": 542,
+     "radius": 0
+    }
+   ],
+   "imageCount": 1
+  },
+  {
+   "tag": "section",
+   "cls": "contact-area",
+   "y": 3198,
+   "height": 715,
+   "paddingY": "100 / 20",
+   "bg": "transparent",
+   "headings": [
+    {
+     "tag": "h1",
+     "text": "25",
+     "family": "Saira Semi Condensed",
+     "size": 290,
+     "weight": 600,
+     "lineHeight": 0.3,
+     "letterSpacing": 0,
+     "color": "#f3f6f9",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h2",
+     "text": "25+Year Working Experience",
+     "family": "Saira Semi Condensed",
+     "size": 60,
+     "weight": 600,
+     "lineHeight": 1,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h3",
+     "text": "Free Estimate",
+     "family": "Saira Semi Condensed",
+     "size": 36,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 30
+    }
+   ],
+   "repeated": [],
+   "images": [
+    {
+     "w": 670,
+     "h": 715,
+     "radius": 0
+    }
+   ],
+   "imageCount": 1
+  },
+  {
+   "tag": "section",
+   "cls": "team-area pt-120 pb-90 black-soft-bg position-relative",
+   "y": 3913,
+   "height": 850,
+   "paddingY": "120 / 90",
+   "bg": "#1d284b",
+   "headings": [
+    {
+     "tag": "h6",
+     "text": "Technician Team",
+     "family": "Saira Semi Condensed",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ff6600",
+     "marginBottom": 20
+    },
+    {
+     "tag": "h2",
+     "text": "Our dedicated & expert team member",
+     "family": "Saira Semi Condensed",
+     "size": 60,
+     "weight": 600,
+     "lineHeight": 1.08,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "Demica Master",
+     "family": "Saira Semi Condensed",
+     "size": 27,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "Margie Burman",
+     "family": "Saira Semi Condensed",
+     "size": 27,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    }
+   ],
+   "repeated": [
+    {
+     "count": 2,
+     "perRow": 1,
+     "itemWidth": 1200,
+     "card": {
+      "w": 1200,
+      "h": 232,
+      "padding": "0 0 0 0",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": "Technician Team Our dedicated & expert team member"
+    }
+   ],
+   "images": [
+    {
+     "w": 270,
+     "h": 270,
+     "radius": 0
+    },
+    {
+     "w": 270,
+     "h": 270,
+     "radius": 0
+    },
+    {
+     "w": 270,
+     "h": 270,
+     "radius": 0
+    },
+    {
+     "w": 270,
+     "h": 270,
+     "radius": 0
+    }
+   ],
+   "imageCount": 4
+  },
+  {
+   "tag": "section",
+   "cls": "portfolio-area pt-120 pb-80",
+   "y": 4764,
+   "height": 1457,
+   "paddingY": "120 / 80",
+   "bg": "transparent",
+   "headings": [
+    {
+     "tag": "h6",
+     "text": "Latest Projects",
+     "family": "Saira Semi Condensed",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ff6600",
+     "marginBottom": 20
+    },
+    {
+     "tag": "h2",
+     "text": "Our Recent Projects",
+     "family": "Saira Semi Condensed",
+     "size": 60,
+     "weight": 600,
+     "lineHeight": 1.08,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "AC Dust Cleaning",
+     "family": "Saira Semi Condensed",
+     "size": 27,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "Repairman Checking",
+     "family": "Saira Semi Condensed",
+     "size": 27,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 0
+    }
+   ],
+   "repeated": [],
+   "images": [
+    {
+     "w": 370,
+     "h": 410,
+     "radius": 0
+    },
+    {
+     "w": 370,
+     "h": 410,
+     "radius": 0
+    },
+    {
+     "w": 370,
+     "h": 410,
+     "radius": 0
+    },
+    {
+     "w": 370,
+     "h": 410,
+     "radius": 0
+    }
+   ],
+   "imageCount": 6
+  },
+  {
+   "tag": "section",
+   "cls": "position-relative",
+   "y": 6221,
+   "height": 831,
+   "paddingY": "180 / 10",
+   "bg": "photo/pattern",
+   "bgImage": true,
+   "headings": [
+    {
+     "tag": "h6",
+     "text": "Why Choose Us",
+     "family": "Saira Semi Condensed",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ff6600",
+     "marginBottom": 20
+    },
+    {
+     "tag": "h2",
+     "text": "Empower lifes forever better living",
+     "family": "Saira Semi Condensed",
+     "size": 60,
+     "weight": 600,
+     "lineHeight": 1.08,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "Expert Repairman",
+     "family": "Saira Semi Condensed",
+     "size": 27,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 10
+    },
+    {
+     "tag": "h4",
+     "text": "Satisfied Services",
+     "family": "Saira Semi Condensed",
+     "size": 27,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 10
+    }
+   ],
+   "paragraph": {
+    "text": "Eleifend lacinia prasent hendrerit quisque penatibus erat eat pulvinar",
+    "family": "Saira Semi Condensed",
+    "size": 16,
+    "weight": 500,
+    "lineHeight": 1.75,
+    "letterSpacing": 0,
+    "color": "#4f5168",
+    "marginBottom": 40
+   },
+   "repeated": [],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "section",
+   "cls": "pricing-area pb-90 pt-180",
+   "y": 7052,
+   "height": 1151,
+   "paddingY": "180 / 90",
+   "bg": "transparent",
+   "headings": [
+    {
+     "tag": "h6",
+     "text": "Choose Package",
+     "family": "Saira Semi Condensed",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ff6600",
+     "marginBottom": 20
+    },
+    {
+     "tag": "h2",
+     "text": "Cheaf and global standard price packages",
+     "family": "Saira Semi Condensed",
+     "size": 60,
+     "weight": 600,
+     "lineHeight": 1.08,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "Business",
+     "family": "Saira Semi Condensed",
+     "size": 27,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h2",
+     "text": "29.00/ Monthly",
+     "family": "Saira Semi Condensed",
+     "size": 45,
+     "weight": 700,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 0
+    }
+   ],
+   "repeated": [
+    {
+     "count": 2,
+     "perRow": 1,
+     "itemWidth": 1200,
+     "card": {
+      "w": 1200,
+      "h": 247,
+      "padding": "0 0 0 0",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": "Choose Package Cheaf and global standard price packages"
+    },
+    {
+     "count": 3,
+     "perRow": 3,
+     "itemWidth": 400,
+     "gapX": 0,
+     "card": {
+      "w": 370,
+      "h": 589,
+      "padding": "0 15 0 15",
+      "radius": 0,
+      "bg": "#f3f6f9"
+     },
+     "firstText": "Basic Price Business 29.00/ Monthly Air conditioner installing Cooler dust cleaning Test c"
+    }
+   ],
+   "images": [
+    {
+     "w": 63,
+     "h": 63,
+     "radius": 0
+    },
+    {
+     "w": 63,
+     "h": 63,
+     "radius": 0
+    },
+    {
+     "w": 63,
+     "h": 63,
+     "radius": 0
+    }
+   ],
+   "imageCount": 3
+  },
+  {
+   "tag": "section",
+   "cls": "testimonial-area",
+   "y": 8203,
+   "height": 686,
+   "paddingY": "0 / 0",
+   "bg": "photo/pattern",
+   "bgImage": true,
+   "headings": [
+    {
+     "tag": "h6",
+     "text": "Testimonials",
+     "family": "Saira Semi Condensed",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ff6600",
+     "marginBottom": 20
+    },
+    {
+     "tag": "h2",
+     "text": "Happy customer says about airvice",
+     "family": "Saira Semi Condensed",
+     "size": 60,
+     "weight": 600,
+     "lineHeight": 1.08,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "Steve Smith",
+     "family": "Saira Semi Condensed",
+     "size": 27,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 5
+    },
+    {
+     "tag": "h4",
+     "text": "Marben Gillispe",
+     "family": "Saira Semi Condensed",
+     "size": 27,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 5
+    }
+   ],
+   "paragraph": {
+    "text": "Gravida augue erat nullam id tellus mattis vehicula facilisi aliquet e",
+    "family": "Saira Semi Condensed",
+    "size": 16,
+    "weight": 500,
+    "lineHeight": 1.75,
+    "letterSpacing": 0,
+    "color": "#ffffff",
+    "marginBottom": 40
+   },
+   "repeated": [
+    {
+     "count": 2,
+     "perRow": 1,
+     "itemWidth": 600,
+     "card": {
+      "w": 600,
+      "h": 686,
+      "padding": "0 15 0 15",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": ""
+    }
+   ],
+   "images": [
+    {
+     "w": 822,
+     "h": 746,
+     "radius": 0
+    },
+    {
+     "w": 100,
+     "h": 100,
+     "radius": 50
+    },
+    {
+     "w": 100,
+     "h": 100,
+     "radius": 50
+    },
+    {
+     "w": 100,
+     "h": 100,
+     "radius": 50
+    }
+   ],
+   "imageCount": 6
+  },
+  {
+   "tag": "section",
+   "cls": "blog-area pt-120 pb-90",
+   "y": 8889,
+   "height": 1022,
+   "paddingY": "120 / 90",
+   "bg": "transparent",
+   "headings": [
+    {
+     "tag": "h6",
+     "text": "Recent Article",
+     "family": "Saira Semi Condensed",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ff6600",
+     "marginBottom": 20
+    },
+    {
+     "tag": "h2",
+     "text": "Every single update story from our journal",
+     "family": "Saira Semi Condensed",
+     "size": 60,
+     "weight": 600,
+     "lineHeight": 1.08,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h3",
+     "text": "20",
+     "family": "Saira Semi Condensed",
+     "size": 34,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "Rhoncus ultrices ornare net duis sociis aliquet",
+     "family": "Saira Semi Condensed",
+     "size": 27,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#151735",
+     "marginBottom": 5
+    }
+   ],
+   "repeated": [
+    {
+     "count": 2,
+     "perRow": 1,
+     "itemWidth": 1200,
+     "card": {
+      "w": 1200,
+      "h": 247,
+      "padding": "0 0 0 0",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": "Recent Article Every single update story from our journal"
+    },
+    {
+     "count": 3,
+     "perRow": 3,
+     "itemWidth": 400,
+     "gapX": 0,
+     "card": {
+      "w": 370,
+      "h": 210,
+      "padding": "42 30 0 30",
+      "radius": 0,
+      "bg": null,
+      "border": "1px solid #dce1e4"
+     },
+     "firstText": "20 Dec Dust Cleaning 0 Comment Rhoncus ultrices ornare net duis sociis aliquet Read More"
+    }
+   ],
+   "images": [
+    {
+     "w": 370,
+     "h": 300,
+     "radius": 0
+    },
+    {
+     "w": 370,
+     "h": 300,
+     "radius": 0
+    },
+    {
+     "w": 370,
+     "h": 300,
+     "radius": 0
+    }
+   ],
+   "imageCount": 3
+  },
+  {
+   "tag": "div",
+   "cls": "brand-area grey-bg pt-100 pb-100",
+   "y": 9911,
+   "height": 243,
+   "paddingY": "100 / 100",
+   "bg": "#f3f6f9",
+   "headings": [],
+   "repeated": [],
+   "images": [
+    {
+     "w": 143,
+     "h": 42,
+     "radius": 0
+    },
+    {
+     "w": 184,
+     "h": 37,
+     "radius": 0
+    },
+    {
+     "w": 154,
+     "h": 42,
+     "radius": 0
+    },
+    {
+     "w": 149,
+     "h": 43,
+     "radius": 0
+    }
+   ],
+   "imageCount": 16
+  },
+  {
+   "tag": "section",
+   "cls": "footer-area pt-115 pb-90",
+   "y": 10154,
+   "height": 478,
+   "paddingY": "115 / 90",
+   "bg": "transparent",
+   "headings": [
+    {
+     "tag": "h4",
+     "text": "About Us",
+     "family": "Saira Semi Condensed",
+     "size": 27,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 25
+    },
+    {
+     "tag": "h5",
+     "text": "Emergency :",
+     "family": "Saira Semi Condensed",
+     "size": 20,
+     "weight": 500,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ff6600",
+     "marginBottom": 10
+    },
+    {
+     "tag": "h4",
+     "text": "02 (650) 365 2560",
+     "family": "Saira Semi Condensed",
+     "size": 24,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h4",
+     "text": "Services",
+     "family": "Saira Semi Condensed",
+     "size": 27,
+     "weight": 600,
+     "lineHeight": 1.2,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 25
+    }
+   ],
+   "paragraph": {
+    "text": "Maecens rhoncus molese conubia lores mauris class etiam potenti been n",
+    "family": "Saira Semi Condensed",
+    "size": 16,
+    "weight": 500,
+    "lineHeight": 1.75,
+    "letterSpacing": 0,
+    "color": "#bcbfc9",
+    "marginBottom": 10
+   },
+   "repeated": [
+    {
+     "count": 4,
+     "perRow": 4,
+     "itemWidth": 300,
+     "gapX": 0,
+     "card": {
+      "w": 300,
+      "h": 273,
+      "padding": "0 15 0 15",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": "About Us Maecens rhoncus molese conubia lores mauris class etiam potenti been nonum lectus"
+    }
+   ],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "div",
+   "cls": "copyright-area copyright-border",
+   "y": 10633,
+   "height": 84,
+   "paddingY": "0 / 0",
+   "bg": "transparent",
+   "headings": [],
+   "repeated": [],
+   "images": [],
+   "imageCount": 0
+  }
+ ]
+}

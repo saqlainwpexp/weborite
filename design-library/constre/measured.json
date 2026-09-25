@@ -1,0 +1,1163 @@
+{
+ "title": "Constre Construction HTML5 Template",
+ "pageHeight": 9233,
+ "body": {
+  "family": "Archivo",
+  "size": 16,
+  "lineHeight": 1.75,
+  "color": "#575f66",
+  "bg": "#ffffff"
+ },
+ "paragraph": {
+  "text": "Compellingly foster B2B information through prospective mindshare bran",
+  "family": "Archivo",
+  "size": 16,
+  "weight": 400,
+  "lineHeight": 1.75,
+  "letterSpacing": 0,
+  "color": "#575f66",
+  "marginBottom": 22
+ },
+ "nav": {
+  "text": "HOME",
+  "family": "Yantramanav",
+  "size": 16,
+  "weight": 500,
+  "lineHeight": 1.75,
+  "letterSpacing": 0,
+  "transform": "uppercase",
+  "color": "#ffffff",
+  "marginBottom": 36
+ },
+ "header": {
+  "height": 101,
+  "w": 1440,
+  "h": 101,
+  "padding": "0 0 0 0",
+  "radius": 0,
+  "bg": "#171717"
+ },
+ "inputs": [
+  {
+   "w": 463,
+   "h": 60,
+   "padding": "6 12 6 12",
+   "radius": 0,
+   "bg": "#ffffff",
+   "size": 16
+  }
+ ],
+ "containers": [
+  "1320 (padding-x 12) ×15"
+ ],
+ "buttons": [
+  {
+   "w": 220,
+   "h": 56,
+   "padding": "13 37 13 37",
+   "radius": 0,
+   "bg": "#ff5e15",
+   "text": "Get Started Now",
+   "size": 18,
+   "weight": 500,
+   "family": "Yantramanav",
+   "letterSpacing": 0,
+   "color": "#ffffff",
+   "count": 1,
+   "examples": [
+    "Get Started Now"
+   ]
+  },
+  {
+   "w": 166,
+   "h": 60,
+   "padding": "15 33 15 33",
+   "radius": 0,
+   "bg": "#ff5e15",
+   "text": "Read More",
+   "size": 17,
+   "weight": 500,
+   "family": "Yantramanav",
+   "letterSpacing": 0,
+   "color": "#ffffff",
+   "count": 1,
+   "examples": [
+    "Read More"
+   ]
+  },
+  {
+   "w": 166,
+   "h": 60,
+   "padding": "15 33 15 33",
+   "radius": 0,
+   "bg": "#171717",
+   "text": "Read More",
+   "size": 17,
+   "weight": 500,
+   "family": "Yantramanav",
+   "letterSpacing": 0,
+   "color": "#ffffff",
+   "count": 1,
+   "examples": [
+    "Read More"
+   ]
+  },
+  {
+   "w": 180,
+   "h": 60,
+   "padding": "15 38 15 38",
+   "radius": 0,
+   "bg": "#ff5e15",
+   "text": "All Projects",
+   "size": 17,
+   "weight": 500,
+   "family": "Yantramanav",
+   "letterSpacing": 0,
+   "color": "#ffffff",
+   "count": 1,
+   "examples": [
+    "All Projects"
+   ]
+  },
+  {
+   "w": 142,
+   "h": 60,
+   "padding": "6 12 6 12",
+   "radius": 0,
+   "bg": "#171717",
+   "text": "SUBSCRIBE",
+   "size": 17,
+   "weight": 500,
+   "family": "Yantramanav",
+   "transform": "uppercase",
+   "letterSpacing": 0,
+   "color": "#ffffff",
+   "count": 1,
+   "examples": [
+    "SUBSCRIBE"
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "tag": "div",
+   "cls": "Constre_nav_manu",
+   "y": 53,
+   "height": 101,
+   "paddingY": "0 / 0",
+   "bg": "#171717",
+   "headings": [],
+   "repeated": [
+    {
+     "count": 2,
+     "perRow": 2,
+     "itemWidth": 123,
+     "gapX": 98,
+     "card": {
+      "w": 217,
+      "h": 92,
+      "padding": "0 0 0 0",
+      "radius": 0,
+      "bg": "#ffffff",
+      "border": "2px solid #212121",
+      "shadow": "#000000 @30% 0px 1px 3px 0px"
+     },
+     "firstText": "SERVICES"
+    }
+   ],
+   "images": [
+    {
+     "w": 179,
+     "h": 42,
+     "radius": 0
+    }
+   ],
+   "imageCount": 1
+  },
+  {
+   "tag": "div",
+   "cls": "slider-area d-flex align-items-center",
+   "y": 154,
+   "height": 800,
+   "paddingY": "0 / 0",
+   "bg": "photo/pattern",
+   "bgImage": true,
+   "headings": [
+    {
+     "tag": "h3",
+     "text": "WELCOME TO CONSTRE",
+     "family": "Yantramanav",
+     "size": 17,
+     "weight": 500,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "transform": "uppercase",
+     "color": "#ffffff",
+     "marginBottom": 25
+    },
+    {
+     "tag": "h1",
+     "text": "BUILD YOUR DREAM PROPERTY WITH NEW EXPERIENCE",
+     "family": "Yantramanav",
+     "size": 60,
+     "weight": 700,
+     "lineHeight": 1.13,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h1",
+     "text": "CONSTRE",
+     "family": "Yantramanav",
+     "size": 140,
+     "weight": 900,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": null,
+     "marginBottom": 0
+    }
+   ],
+   "repeated": [],
+   "images": [
+    {
+     "w": 849,
+     "h": 702,
+     "radius": 0
+    }
+   ],
+   "imageCount": 1
+  },
+  {
+   "tag": "div",
+   "cls": "feature-area",
+   "y": 954,
+   "height": 626,
+   "paddingY": "105 / 90",
+   "bg": "#171717",
+   "headings": [
+    {
+     "tag": "h4",
+     "text": "WHO WE ARE?",
+     "family": "Yantramanav",
+     "size": 18,
+     "weight": 500,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#ff5e14",
+     "marginBottom": 7
+    },
+    {
+     "tag": "h1",
+     "text": "Top Construction in USA",
+     "family": "Yantramanav",
+     "size": 48,
+     "weight": 700,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 20
+    },
+    {
+     "tag": "h3",
+     "text": "01",
+     "family": "Yantramanav",
+     "size": 20,
+     "weight": 700,
+     "lineHeight": 2.5,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h3",
+     "text": "Experienced Workers",
+     "family": "Yantramanav",
+     "size": 20,
+     "weight": 700,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#171717",
+     "marginBottom": 0
+    }
+   ],
+   "paragraph": {
+    "text": "Compellingly foster B2B information through prospective mindshare bran",
+    "family": "Archivo",
+    "size": 16,
+    "weight": 400,
+    "lineHeight": 1.75,
+    "letterSpacing": 0,
+    "color": "#575f66",
+    "marginBottom": 22
+   },
+   "repeated": [
+    {
+     "count": 2,
+     "perRow": 1,
+     "itemWidth": 1320,
+     "card": {
+      "w": 1320,
+      "h": 149,
+      "padding": "0 0 0 0",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": "WHO WE ARE? Top Construction in USA"
+    },
+    {
+     "count": 3,
+     "perRow": 3,
+     "itemWidth": 440,
+     "gapX": 0,
+     "card": {
+      "w": 416,
+      "h": 252,
+      "padding": "26 40 30 40",
+      "radius": 0,
+      "bg": "#ffffff"
+     },
+     "firstText": "01 Expertise Experienced Workers Compellingly foster B2B information through prospective m"
+    }
+   ],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "div",
+   "cls": "about_area",
+   "y": 1580,
+   "height": 680,
+   "paddingY": "100 / 100",
+   "bg": "photo/pattern",
+   "bgImage": true,
+   "headings": [
+    {
+     "tag": "h4",
+     "text": "WHO WE ARE?",
+     "family": "Yantramanav",
+     "size": 18,
+     "weight": 500,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#ff5e14",
+     "marginBottom": 7
+    },
+    {
+     "tag": "h1",
+     "text": "Top Construction in USA",
+     "family": "Yantramanav",
+     "size": 48,
+     "weight": 700,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#171717",
+     "marginBottom": 20
+    }
+   ],
+   "paragraph": {
+    "text": "Monotonectally pontificate multidisciplinary methodologies through 24/",
+    "family": "Archivo",
+    "size": 16,
+    "weight": 300,
+    "lineHeight": 1.63,
+    "letterSpacing": 0,
+    "color": "#575f66",
+    "marginBottom": 16
+   },
+   "repeated": [
+    {
+     "count": 2,
+     "perRow": 1,
+     "itemWidth": 660,
+     "card": {
+      "w": 660,
+      "h": 480,
+      "padding": "0 12 0 12",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": ""
+    }
+   ],
+   "images": [
+    {
+     "w": 590,
+     "h": 480,
+     "radius": 0
+    },
+    {
+     "w": 269,
+     "h": 268,
+     "radius": 0
+    }
+   ],
+   "imageCount": 2
+  },
+  {
+   "tag": "div",
+   "cls": "service-area",
+   "y": 2260,
+   "height": 996,
+   "paddingY": "107 / 120",
+   "bg": "#f5f6f8",
+   "headings": [
+    {
+     "tag": "h4",
+     "text": "WHAT WE DO",
+     "family": "Yantramanav",
+     "size": 18,
+     "weight": 500,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#ff5e14",
+     "marginBottom": 7
+    },
+    {
+     "tag": "h1",
+     "text": "Services What we Provide",
+     "family": "Yantramanav",
+     "size": 48,
+     "weight": 700,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#171717",
+     "marginBottom": 20
+    },
+    {
+     "tag": "h3",
+     "text": "Building Design And Eastimating",
+     "family": "Yantramanav",
+     "size": 22,
+     "weight": 700,
+     "lineHeight": 1.27,
+     "letterSpacing": 0,
+     "color": "#171717",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h3",
+     "text": "House Planning & Interior Design",
+     "family": "Yantramanav",
+     "size": 22,
+     "weight": 700,
+     "lineHeight": 1.27,
+     "letterSpacing": 0,
+     "color": "#171717",
+     "marginBottom": 0
+    }
+   ],
+   "paragraph": {
+    "text": "Monotonectally iterate stand-alone bandwidth rather than team driven m",
+    "family": "Archivo",
+    "size": 16,
+    "weight": 300,
+    "lineHeight": 1.63,
+    "letterSpacing": 0,
+    "color": "#575f66",
+    "marginBottom": 16
+   },
+   "repeated": [
+    {
+     "count": 2,
+     "perRow": 1,
+     "itemWidth": 1320,
+     "card": {
+      "w": 1320,
+      "h": 226,
+      "padding": "0 0 0 0",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": "WHAT WE DO Services What we Provide Monotonectally iterate stand-alone bandwidth rather th"
+    }
+   ],
+   "images": [
+    {
+     "w": 352,
+     "h": 208,
+     "radius": 0
+    },
+    {
+     "w": 352,
+     "h": 208,
+     "radius": 0
+    },
+    {
+     "w": 352,
+     "h": 208,
+     "radius": 0
+    },
+    {
+     "w": 352,
+     "h": 208,
+     "radius": 0
+    }
+   ],
+   "imageCount": 11
+  },
+  {
+   "tag": "div",
+   "cls": "why-choose-us-area",
+   "y": 3256,
+   "height": 1197,
+   "paddingY": "50 / 70",
+   "bg": "#f5f6f8",
+   "headings": [
+    {
+     "tag": "h4",
+     "text": "WHY CHOOSE US",
+     "family": "Yantramanav",
+     "size": 18,
+     "weight": 500,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#ff5e14",
+     "marginBottom": 7
+    },
+    {
+     "tag": "h1",
+     "text": "Build Your Full Projects Management",
+     "family": "Yantramanav",
+     "size": 48,
+     "weight": 700,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#171717",
+     "marginBottom": 20
+    },
+    {
+     "tag": "h1",
+     "text": "30",
+     "family": "Yantramanav",
+     "size": 48,
+     "weight": 700,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#171717",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h5",
+     "text": "Project Completed",
+     "family": "Archivo",
+     "size": 16,
+     "weight": 300,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#575f66",
+     "marginBottom": 0
+    }
+   ],
+   "paragraph": {
+    "text": "Monotonectally pontificate multidisciplinary methodologies through 24/",
+    "family": "Archivo",
+    "size": 16,
+    "weight": 300,
+    "lineHeight": 1.63,
+    "letterSpacing": 0,
+    "color": "#575f66",
+    "marginBottom": 16
+   },
+   "repeated": [
+    {
+     "count": 2,
+     "perRow": 2,
+     "itemWidth": 660,
+     "gapX": 0,
+     "card": {
+      "w": 120,
+      "h": 120,
+      "padding": "0 0 0 0",
+      "radius": 0,
+      "bg": "#ff5e14"
+     },
+     "firstText": ""
+    },
+    {
+     "count": 4,
+     "perRow": 4,
+     "itemWidth": 330,
+     "gapX": 0,
+     "card": {
+      "w": 306,
+      "h": 177,
+      "padding": "15 15 15 15",
+      "radius": 0,
+      "bg": "image"
+     },
+     "firstText": "30 K+ Project Completed"
+    }
+   ],
+   "images": [
+    {
+     "w": 526,
+     "h": 745,
+     "radius": 0
+    }
+   ],
+   "imageCount": 1
+  },
+  {
+   "tag": "div",
+   "cls": "case-study-area",
+   "y": 4453,
+   "height": 995,
+   "paddingY": "108 / 200",
+   "bg": "#171717",
+   "headings": [
+    {
+     "tag": "h4",
+     "text": "LATEST WORK",
+     "family": "Yantramanav",
+     "size": 18,
+     "weight": 500,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#ff5e14",
+     "marginBottom": 7
+    },
+    {
+     "tag": "h1",
+     "text": "Recently Finished Projects Visit Our Works",
+     "family": "Yantramanav",
+     "size": 48,
+     "weight": 700,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 20
+    },
+    {
+     "tag": "h3",
+     "text": "Analysis of Security",
+     "family": "Yantramanav",
+     "size": 30,
+     "weight": 700,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#171717",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h3",
+     "text": "Analysis of Security",
+     "family": "Yantramanav",
+     "size": 30,
+     "weight": 700,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#171717",
+     "marginBottom": 0
+    }
+   ],
+   "repeated": [],
+   "images": [
+    {
+     "w": 472,
+     "h": 429,
+     "radius": 0
+    },
+    {
+     "w": 472,
+     "h": 429,
+     "radius": 0
+    },
+    {
+     "w": 472,
+     "h": 429,
+     "radius": 0
+    },
+    {
+     "w": 472,
+     "h": 429,
+     "radius": 0
+    }
+   ],
+   "imageCount": 10
+  },
+  {
+   "tag": "div",
+   "cls": "team-area",
+   "y": 5447,
+   "height": 951,
+   "paddingY": "107 / 90",
+   "bg": "#f5f6f8",
+   "headings": [
+    {
+     "tag": "h4",
+     "text": "WHAT WE DO",
+     "family": "Yantramanav",
+     "size": 18,
+     "weight": 500,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#ff5e14",
+     "marginBottom": 7
+    },
+    {
+     "tag": "h1",
+     "text": "Services What we Provide",
+     "family": "Yantramanav",
+     "size": 48,
+     "weight": 700,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#171717",
+     "marginBottom": 20
+    },
+    {
+     "tag": "h3",
+     "text": "John D. Alexon",
+     "family": "Yantramanav",
+     "size": 30,
+     "weight": 700,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#171717",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h3",
+     "text": "Helen Howland",
+     "family": "Yantramanav",
+     "size": 30,
+     "weight": 700,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#171717",
+     "marginBottom": 0
+    }
+   ],
+   "repeated": [
+    {
+     "count": 2,
+     "perRow": 1,
+     "itemWidth": 1320,
+     "card": {
+      "w": 1320,
+      "h": 159,
+      "padding": "0 0 0 0",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": "WHAT WE DO Services What we Provide"
+    },
+    {
+     "count": 3,
+     "perRow": 3,
+     "itemWidth": 440,
+     "gapX": 0,
+     "card": {
+      "w": 416,
+      "h": 565,
+      "padding": "30 30 30 30",
+      "radius": 0,
+      "bg": "#ffffff"
+     },
+     "firstText": "John D. Alexon Civil Engineer"
+    }
+   ],
+   "images": [
+    {
+     "w": 356,
+     "h": 378,
+     "radius": 0
+    },
+    {
+     "w": 356,
+     "h": 378,
+     "radius": 0
+    },
+    {
+     "w": 356,
+     "h": 378,
+     "radius": 0
+    },
+    {
+     "w": 479,
+     "h": 1524,
+     "radius": 0
+    }
+   ],
+   "imageCount": 5
+  },
+  {
+   "tag": "div",
+   "cls": "testimonial-area",
+   "y": 6398,
+   "height": 717,
+   "paddingY": "80 / 80",
+   "bg": "#171717",
+   "headings": [
+    {
+     "tag": "h4",
+     "text": "TESTIMONIAL",
+     "family": "Yantramanav",
+     "size": 18,
+     "weight": 500,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#ff5e14",
+     "marginBottom": 7
+    },
+    {
+     "tag": "h1",
+     "text": "Feedback from our Clients About Services",
+     "family": "Yantramanav",
+     "size": 48,
+     "weight": 700,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 20
+    },
+    {
+     "tag": "h4",
+     "text": "Max D. Harmon",
+     "family": "Yantramanav",
+     "size": 22,
+     "weight": 500,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h5",
+     "text": "Civil Engineer",
+     "family": "Yantramanav",
+     "size": 16,
+     "weight": 400,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#a5acb2",
+     "marginBottom": 0
+    }
+   ],
+   "paragraph": {
+    "text": "“Completely expedite market positioning synergy whereas pro mindshare.",
+    "family": "Archivo",
+    "size": 18,
+    "weight": 300,
+    "lineHeight": 1.67,
+    "letterSpacing": 0,
+    "style": "italic",
+    "color": "#575f66",
+    "marginBottom": 16
+   },
+   "repeated": [
+    {
+     "count": 2,
+     "perRow": 1,
+     "itemWidth": 660,
+     "card": {
+      "w": 660,
+      "h": 496,
+      "padding": "0 12 0 12",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": "TESTIMONIAL Feedback from our Clients About Services “Completely expedite market positioni"
+    }
+   ],
+   "images": [
+    {
+     "w": 71,
+     "h": 71,
+     "radius": 0
+    },
+    {
+     "w": 71,
+     "h": 71,
+     "radius": 0
+    },
+    {
+     "w": 71,
+     "h": 71,
+     "radius": 0
+    },
+    {
+     "w": 71,
+     "h": 71,
+     "radius": 0
+    }
+   ],
+   "imageCount": 9
+  },
+  {
+   "tag": "div",
+   "cls": "brand-area",
+   "y": 7115,
+   "height": 368,
+   "paddingY": "100 / 70",
+   "bg": "#f5f6f8",
+   "headings": [],
+   "repeated": [],
+   "images": [
+    {
+     "w": 152,
+     "h": 38,
+     "radius": 0
+    },
+    {
+     "w": 161,
+     "h": 34,
+     "radius": 0
+    },
+    {
+     "w": 144,
+     "h": 35,
+     "radius": 0
+    },
+    {
+     "w": 164,
+     "h": 36,
+     "radius": 0
+    }
+   ],
+   "imageCount": 12
+  },
+  {
+   "tag": "div",
+   "cls": "blog-area",
+   "y": 7483,
+   "height": 1058,
+   "paddingY": "105 / 90",
+   "bg": "transparent",
+   "headings": [
+    {
+     "tag": "h4",
+     "text": "WHAT WE DO",
+     "family": "Yantramanav",
+     "size": 18,
+     "weight": 500,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#ff5e14",
+     "marginBottom": 7
+    },
+    {
+     "tag": "h1",
+     "text": "Services What we Provide",
+     "family": "Yantramanav",
+     "size": 48,
+     "weight": 700,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#171717",
+     "marginBottom": 12
+    },
+    {
+     "tag": "h3",
+     "text": "Most Popular Building Design Equipment - 2023",
+     "family": "Yantramanav",
+     "size": 30,
+     "weight": 700,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#171717",
+     "marginBottom": 0
+    },
+    {
+     "tag": "h3",
+     "text": "How to Plan A Modern Building Design Properly?",
+     "family": "Yantramanav",
+     "size": 30,
+     "weight": 700,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#171717",
+     "marginBottom": 0
+    }
+   ],
+   "paragraph": {
+    "text": "Monotonectally iterate stand-alone bandwidth rather than driven materi",
+    "family": "Archivo",
+    "size": 16,
+    "weight": 300,
+    "lineHeight": 1.63,
+    "letterSpacing": 0,
+    "color": "#575f66",
+    "marginBottom": 0
+   },
+   "repeated": [
+    {
+     "count": 2,
+     "perRow": 1,
+     "itemWidth": 1320,
+     "card": {
+      "w": 1320,
+      "h": 218,
+      "padding": "0 0 0 0",
+      "radius": 0,
+      "bg": null
+     },
+     "firstText": "WHAT WE DO Services What we Provide Monotonectally iterate stand-alone bandwidth rather th"
+    },
+    {
+     "count": 3,
+     "perRow": 3,
+     "itemWidth": 440,
+     "gapX": 0,
+     "card": {
+      "w": 416,
+      "h": 245,
+      "padding": "30 33 35 30",
+      "radius": 0,
+      "bg": "#f5f6f8"
+     },
+     "firstText": "By Constre12 August, 2023 Most Popular Building Design Equipment - 2023 Read More"
+    }
+   ],
+   "images": [
+    {
+     "w": 451,
+     "h": 407,
+     "radius": 0
+    },
+    {
+     "w": 451,
+     "h": 407,
+     "radius": 0
+    },
+    {
+     "w": 451,
+     "h": 407,
+     "radius": 0
+    }
+   ],
+   "imageCount": 3
+  },
+  {
+   "tag": "div",
+   "cls": "newsletter-area",
+   "y": 8541,
+   "height": 139,
+   "paddingY": "24 / 23",
+   "bg": "#ff5e15",
+   "headings": [
+    {
+     "tag": "h1",
+     "text": "Our Newsletter",
+     "family": "Yantramanav",
+     "size": 34,
+     "weight": 700,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": -2
+    }
+   ],
+   "repeated": [],
+   "images": [],
+   "imageCount": 0
+  },
+  {
+   "tag": "div",
+   "cls": "footer-area",
+   "y": 8680,
+   "height": 492,
+   "paddingY": "85 / 100",
+   "bg": "photo/pattern",
+   "bgImage": true,
+   "eyebrow": {
+    "text": "Latest Blog",
+    "family": "Yantramanav",
+    "size": 24,
+    "weight": 700,
+    "lineHeight": 1.1,
+    "letterSpacing": 0,
+    "color": "#ffffff",
+    "marginBottom": 35
+   },
+   "headings": [
+    {
+     "tag": "h3",
+     "text": "Contact Info",
+     "family": "Yantramanav",
+     "size": 22,
+     "weight": 500,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 34
+    },
+    {
+     "tag": "h4",
+     "text": "Quick Links",
+     "family": "Yantramanav",
+     "size": 24,
+     "weight": 700,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 35
+    },
+    {
+     "tag": "h4",
+     "text": "Our Services",
+     "family": "Yantramanav",
+     "size": 24,
+     "weight": 700,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 35
+    },
+    {
+     "tag": "h4",
+     "text": "Latest Blog",
+     "family": "Yantramanav",
+     "size": 24,
+     "weight": 700,
+     "lineHeight": 1.1,
+     "letterSpacing": 0,
+     "color": "#ffffff",
+     "marginBottom": 35
+    }
+   ],
+   "paragraph": {
+    "text": "Competently are disseminate high-qualityfu whereas viral functionaliti",
+    "family": "Archivo",
+    "size": 16,
+    "weight": 300,
+    "lineHeight": 1.63,
+    "letterSpacing": 0,
+    "color": "#8e939f",
+    "marginBottom": 16
+   },
+   "repeated": [],
+   "images": [
+    {
+     "w": 179,
+     "h": 42,
+     "radius": 0
+    },
+    {
+     "w": 80,
+     "h": 80,
+     "radius": 0
+    },
+    {
+     "w": 80,
+     "h": 80,
+     "radius": 0
+    }
+   ],
+   "imageCount": 3
+  },
+  {
+   "tag": "div",
+   "cls": "footer-bottom-area ",
+   "y": 9173,
+   "height": 60,
+   "paddingY": "17 / 15",
+   "bg": "#212121",
+   "headings": [],
+   "repeated": [],
+   "images": [],
+   "imageCount": 0
+  }
+ ]
+}

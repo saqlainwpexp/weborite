@@ -1,0 +1,194 @@
+{
+ "name": "CoolAir — clean HVAC corporate",
+ "tier": "measured",
+ "source": {
+  "template": "CoolAir – Air Conditioning & Heating HVAC HTML template (index.html)",
+  "method": "Computed styles measured in Chromium at 1440px (scripts/extract-template.mjs → measured.json); reference-1..5.jpg are the full page in order.",
+  "extractedAt": "2026-09-24"
+ },
+ "character": "Calm, premium, corporate HVAC. One geometric sans (Manrope) with tight negative tracking on big headings, soft pill eyebrow labels above every heading, generous 100px section rhythm, rounded 10–20px photo corners, a two-blue palette (deep navy + light periwinkle) on white and a pale blue-grey alt surface. Feels like a well-run regional HVAC company, not a flyer.",
+ "reuse": "Use for HVAC / air conditioning / heating / cooling / ventilation / plumbing / appliance-repair / home-services leads that should feel trustworthy, modern and premium. Put the lead's brand colour in the navy 'primary' slot, derive the light 'accent' as a lighter tint of it, and use their real technician/van/equipment photos.",
+ "cssStarter": ":root{--primary:#234982;--accent:#678fd5;--ink:#0a2540;--body:#7b8893;--surface:#ffffff;--surface-alt:#f4f7fb;--footer:#0a2540;--radius-btn:8px;--radius-card:20px;--radius-img:10px;--container:1280px;--gutter:32px;--section-y:100px}\nbody{font-family:'Manrope',sans-serif;font-size:16px;line-height:1.81;color:var(--body);background:var(--surface)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.eyebrow{display:inline-block;font-size:14px;font-weight:700;line-height:2.07;padding:2px 15px;border-radius:30px;background:var(--surface-alt);color:var(--ink);margin-bottom:16px}\n.on-dark .eyebrow{background:rgba(255,255,255,.1);color:#fff}\nh1,.display{font-size:64px;font-weight:600;line-height:1.1;letter-spacing:-3px;color:#fff}\nh2{font-size:42px;font-weight:600;line-height:1.1;letter-spacing:-1.25px;color:var(--ink);margin:0 0 20px}\nh3{font-size:24px;font-weight:600;line-height:1.4}\nh4{font-size:20px;font-weight:700;line-height:1.3;color:var(--ink);margin:0 0 10px}\n.lead{font-size:18px;line-height:1.78;letter-spacing:-.2px;color:var(--body);max-width:600px;margin:0 auto}\n.btn{display:inline-flex;align-items:center;min-height:44px;padding:5px 25px;border-radius:var(--radius-btn);font-size:15px;font-weight:700;background:var(--primary);color:#fff}\n.btn-accent{background:var(--accent)}\n.btn-ghost{background:rgba(255,255,255,.1);color:#fff}\n.card{border-radius:var(--radius-card);overflow:hidden;background:var(--surface-alt)}\n.card-body{padding:40px}\n@media(max-width:768px){:root{--section-y:64px}h1,.display{font-size:40px;letter-spacing:-1.5px}h2{font-size:32px;letter-spacing:-.8px}}",
+ "typography": {
+  "primary": {
+   "family": "Manrope",
+   "weights": [
+    400,
+    500,
+    600,
+    700
+   ],
+   "note": "Single family for everything. Headings are weight 600 (not 800) with NEGATIVE tracking — that tight, elegant look is the signature. Body is a light grey (#7b8893) with very open 1.81 line-height."
+  },
+  "scale": [
+   {
+    "role": "display (hero)",
+    "size": 64,
+    "weight": 600,
+    "lineHeight": 1.1,
+    "letterSpacing": -3,
+    "color": "#ffffff"
+   },
+   {
+    "role": "hero sub-line",
+    "size": 24,
+    "weight": 600,
+    "lineHeight": 1.4,
+    "color": "#ffffff"
+   },
+   {
+    "role": "h2 section heading",
+    "size": 42,
+    "weight": 600,
+    "lineHeight": 1.1,
+    "letterSpacing": -1.25,
+    "marginBottom": 20
+   },
+   {
+    "role": "h4 card title",
+    "size": 20,
+    "weight": 700,
+    "lineHeight": 1.3,
+    "marginBottom": 10
+   },
+   {
+    "role": "eyebrow pill",
+    "size": 14,
+    "weight": 700,
+    "lineHeight": 2.07,
+    "note": "pill: padding 2px 15px, radius 30px, pale bg #f4f7fb (or accent bg with white text, or 10% white on dark)"
+   },
+   {
+    "role": "section intro paragraph",
+    "size": 18,
+    "weight": 400,
+    "lineHeight": 1.78,
+    "letterSpacing": -0.2,
+    "note": "centred, ~560px wide, under the h2"
+   },
+   {
+    "role": "body",
+    "size": 16,
+    "weight": 400,
+    "lineHeight": 1.81,
+    "color": "#7b8893"
+   },
+   {
+    "role": "nav link",
+    "size": 15,
+    "weight": 600
+   },
+   {
+    "role": "stat number",
+    "size": 56,
+    "weight": 600,
+    "note": "big number + small unit (%/+) set smaller, then a 16px label"
+   }
+  ]
+ },
+ "color": {
+  "roles": {
+   "primary (navy)": "#234982",
+   "accent (light periwinkle)": "#678fd5",
+   "ink (headings)": "#0a2540",
+   "body text": "#7b8893",
+   "surface": "#ffffff",
+   "surface-alt (pale blue-grey)": "#f4f7fb",
+   "footer": "#0a2540",
+   "top bar": "#234982",
+   "stars": "#f5b400"
+  },
+  "notes": "Two tones of ONE hue: a deep primary and a light tint. Map the lead's brand colour to primary and generate the light tint for accent. Sections alternate white / #f4f7fb; the only full-colour bands are the CTA strip and footer."
+ },
+ "spacing": {
+  "container": "1280px max content column with 32px side padding (20px under 768px) — the SAME column for top bar, header, every section and footer. (Template measured 1200px; standardised to 1280 so every mockup shares one grid.)",
+  "sectionPaddingY": "100px top and bottom (sections that follow each other often use 0 top / 100 bottom so the rhythm stays 100px, never doubled)",
+  "headingStack": "eyebrow pill → 16px → h2 → 20px → 18px intro paragraph → 50px → content grid",
+  "gridGap": "24px between cards (3 × 376px cards in 1200px)",
+  "cardPadding": "40px inside card text area; image on top at 376×250 (3:2)",
+  "iconBox": "64×64 square, radius 10px, primary bg, white check/icon (why-choose list); 80×80 circle accent bg in hero feature row",
+  "hero": "900px tall full-bleed photo with navy overlay (~rgba(10,37,64,.55)), content centred, top bar 40px + header 80px overlaid on the photo"
+ },
+ "components": {
+  "topBar": "40px navy bar: phone · email · hours on the left (14px white, small icons), social icons right.",
+  "header": "Transparent over hero, 80px: logo left, centred nav (15px/600 white, dropdown chevrons), ONE CTA button right in the accent colour ('Schedule Now').",
+  "button": "8px radius, 5px 25px padding (≈39–44px tall), 15px/700. Primary = navy; secondary = accent periwinkle; on cards a 'Read more' ghost (10% white on coloured cards, #e9eef5 on light cards).",
+  "serviceCard": "3-up, 376px wide, radius 20px, photo 250px tall on top with a 70×70 white/colour icon tile (radius 10) overlapping its top-left at 30px inset; body padding 40px; h4 20/700; 16px body; 'Read more' small button. The THREE cards use three different fills: pale #f4f7fb, accent, primary — a signature move.",
+  "whyChooseList": "3×2 grid, each item = 64px rounded-square icon (primary, alternate rows accent) + h4 + 3-line text, 24px gap.",
+  "processSteps": "4 equal cards in a row, accent bg, radius 12, padding 30, small 'Step 1' chip (10% white) above an h4; arrows between cards.",
+  "statsCollage": "Left: eyebrow + h2 + long paragraph. Right: a 2×2 masonry of 270px photos (radius 10) and two stat tiles — one pale (#f4f7fb) with ink number, one primary with white number.",
+  "testimonialCard": "Pale card radius 20, 80px round avatar with white ring, quote glyph in accent top-left, name 16/700, 'Customer' label, 16px centred quote, 5 gold stars.",
+  "faq": "Two columns on #f4f7fb: rounded photo left (radius 20, headset icon tile), accordion right — 16/600 questions with 1px #dfe5ee dividers and chevrons, 20px row padding.",
+  "ctaBanner": "Rounded (20px) primary-coloured box inside the container, photo filling the left half, right side: pill eyebrow '24 Hours & Emergencies' + the phone number at 42px/600 white with a phone icon.",
+  "footer": "Primary strip (40px padding) with a check icon + 26px statement + accent button, then #0a2540 footer: logo + about text, two link columns, and a big 42px phone number column; 1px divider and a copyright row."
+ },
+ "blueprint": [
+  {
+   "section": "top bar + transparent header",
+   "spec": "40px bar + 80px header over the hero photo"
+  },
+  {
+   "section": "hero",
+   "spec": "900px full-bleed photo slider with navy overlay. Centred: pill eyebrow → 64px/600 (-3px tracking) 2-line headline → 24px subline → one navy button. At the bottom of the hero, INSIDE it, a 3-column feature row: 80px accent circle icon + white h4 + two lines of text."
+  },
+  {
+   "section": "about split",
+   "spec": "padding 50/100. 12-col grid: 576×447 photo (radius 20) left, text column right starting at col 7: pill eyebrow, 42px h2, paragraph, navy button. Under it a full-width row of 6 badge/cert logos (156px) — use only real certifications/brands from FACTS, otherwise omit."
+  },
+  {
+   "section": "services",
+   "spec": "padding 0/100, centred heading stack, 3 service cards (pale / accent / primary fills) with photo tops."
+  },
+  {
+   "section": "why choose us",
+   "spec": "#f4f7fb band, padding 100/100, centred heading stack, 3×2 icon list."
+  },
+  {
+   "section": "about/CTA photo banner",
+   "spec": "Full-container rounded photo with dark overlay, pill eyebrow + 42px white statement left, a 320px portrait (radius 10) of the owner/tech on the right, with name + role; navy button."
+  },
+  {
+   "section": "how it works",
+   "spec": "centred heading stack, 4 accent step cards with arrows."
+  },
+  {
+   "section": "stats collage",
+   "spec": "text left, 2×2 photo + stat tile masonry right (only real numbers from FACTS)."
+  },
+  {
+   "section": "testimonials",
+   "spec": "centred heading stack, carousel of 3.5 visible pale cards with avatar, quote, stars, dots below."
+  },
+  {
+   "section": "faq",
+   "spec": "#f4f7fb band, centred heading, photo left + accordion right."
+  },
+  {
+   "section": "emergency phone banner",
+   "spec": "rounded primary box with photo half + huge phone number."
+  },
+  {
+   "section": "brand logos",
+   "spec": "'Brands we work with' 20px h4 centred, 5 logos in a row (only brands in FACTS)."
+  },
+  {
+   "section": "footer",
+   "spec": "primary strip + #0a2540 footer, 4 columns."
+  }
+ ],
+ "signatureMoves": [
+  "Pill eyebrow above EVERY section heading",
+  "Negative letter-spacing on the display (-3px) and h2 (-1.25px)",
+  "Three service cards in three different fills of the same hue",
+  "Hero contains the feature row at its bottom edge",
+  "Everything rounded: 8px buttons, 10px images/icons, 20px cards",
+  "Section intro paragraph 18px, light grey, centred under the h2"
+ ],
+ "referenceImages": [
+  "reference-1.jpg",
+  "reference-2.jpg",
+  "reference-3.jpg",
+  "reference-4.jpg",
+  "reference-5.jpg"
+ ]
+}

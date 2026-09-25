@@ -1,0 +1,34 @@
+{
+  "vertical": "emergency-plumber",
+  "label": "Plumber",
+  "register": "The buyer has an urgent leak or blockage and is judging whether this local plumber looks fast, reliable and trustworthy enough to call right now. They compare it against other 24/7 local plumbing and home-service firms, not large utilities.",
+  "color": "#4f9a6e",
+  "sites": [
+    {
+      "name": "Roto-Rooter",
+      "url": "https://www.rotorooter.com",
+      "why": "Phone number repeated in the header, the hero and beside the location finder, backed by 'since 1935', free onsite estimates and no extra charges for nights, weekends or holidays."
+    },
+    {
+      "name": "Benjamin Franklin Plumbing",
+      "url": "https://www.benjaminfranklinplumbing.com",
+      "why": "Puts a concrete punctuality guarantee ($5 per minute late, up to $300) in the hero, alongside a 4.82 Google rating, a Forbes ranking and a 'Call us 24/7 for plumbing emergencies' line."
+    },
+    {
+      "name": "Horizon Services",
+      "url": "https://www.horizonservices.com",
+      "why": "Hero combines a zip-code entry with 'Call Now' and 'Book Now' buttons, and answers price fears with 'no emergency fees', an on-time guarantee, an A+ BBB rating and Angi award badges."
+    },
+    {
+      "name": "Guest Plumbing & HVAC",
+      "url": "https://www.guestplumbing.com",
+      "why": "A small family-run firm that puts '24/7 Emergency Services Available' in the hero, a clickable phone number in the top bar, named Google reviews and trade-body logos to look credible at local-business scale."
+    },
+    {
+      "name": "John The Plumber",
+      "url": "https://www.johntheplumber.com",
+      "why": "An independent whose homepage carries veteran-owned badges, master plumber licence numbers in the footer and a prominent 'Schedule Service Online' button, so a local firm looks licensed and easy to book."
+    }
+  ],
+  "createdAt": "2026-09-24T23:21:27.487Z"
+}

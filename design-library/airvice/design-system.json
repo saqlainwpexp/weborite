@@ -1,0 +1,192 @@
+{
+ "name": "Airvice — bold condensed AC repair",
+ "tier": "measured",
+ "source": {
+  "template": "Airvice – AC Repair Services HTML5 template (index.html)",
+  "method": "Computed styles measured in Chromium at 1440px (scripts/extract-template.mjs → measured.json); reference-1..6.jpg are the full page in order. Grey 'PHOTO' tiles are photo slots — their size and position are the design; fill them with the lead's real photos.",
+  "extractedAt": "2026-09-24"
+ },
+ "character": "Loud, energetic, conversion-driven AC/repair site. A semi-condensed display face (Saira Semi Condensed) at very large sizes (60–80px, hero in UPPERCASE), a hot orange accent against deep navy, pill buttons, a split header with a coloured phone block, and 120px section rhythm. Looks like a busy, confident service company with a phone that rings.",
+ "reuse": "Use for AC repair / HVAC / air conditioning / appliance repair / plumbing / electrical / emergency-service leads that want a bold, high-energy, phone-first look. Put the lead's brand colour in the orange 'accent' slot (or in the navy 'primary' slot if the brand is dark) and keep the other as a deep neutral.",
+ "cssStarter": ":root{--accent:#ff6600;--primary:#2371ff;--ink:#151735;--dark:#1d284b;--body:#4f5168;--surface:#ffffff;--surface-alt:#f3f6f9;--line:#dfe4ea;--container:1280px;--gutter:32px;--section-y:120px}\nbody{font-family:'Saira Semi Condensed',sans-serif;font-size:16px;line-height:1.5;color:var(--body)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0 90px}\n.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:20px;font-weight:500;line-height:1.2;color:var(--accent);margin-bottom:20px}\n.hero-title{font-size:80px;font-weight:700;line-height:1.12;text-transform:uppercase;color:var(--ink);margin-bottom:30px}\n.hero-sub{font-size:30px;font-weight:500;line-height:1.12;margin-bottom:50px}\nh2{font-size:60px;font-weight:600;line-height:1.08;color:var(--ink);margin:0}\nh3{font-size:36px;font-weight:600;line-height:1.2}\nh4{font-size:27px;font-weight:600;line-height:1.2;color:var(--ink)}\np{font-size:16px;font-weight:500;line-height:1.75}\n.btn{display:inline-flex;align-items:center;height:60px;padding:0 45px;border-radius:50px;font-size:16px;font-weight:600;background:var(--accent);color:#fff}\n.btn-primary{background:var(--primary)}\n.btn-outline{background:transparent;border:1px solid #dce1e4;color:var(--ink);height:40px;padding:0 30px;font-weight:400}\n.card{background:#fff;border:1px solid var(--line);border-radius:5px;padding:45px}\n.input{height:60px;padding:0 20px;border-radius:3px;border:0;background:#fff;font-size:16px}\n@media(max-width:768px){:root{--section-y:72px}.hero-title{font-size:44px}h2{font-size:38px}h3{font-size:26px}}",
+ "typography": {
+  "primary": {
+   "family": "Saira Semi Condensed",
+   "weights": [
+    400,
+    500,
+    600,
+    700
+   ],
+   "note": "One condensed family for everything. Display sizes are HUGE (hero 80px uppercase, h2 60px) with tight 1.08–1.12 line-height — that is the look. Body 16px/500."
+  },
+  "scale": [
+   {
+    "role": "hero headline",
+    "size": 80,
+    "weight": 700,
+    "lineHeight": 1.12,
+    "transform": "uppercase",
+    "marginBottom": 30
+   },
+   {
+    "role": "hero subline",
+    "size": 30,
+    "weight": 500,
+    "lineHeight": 1.12,
+    "marginBottom": 50
+   },
+   {
+    "role": "h2 section heading",
+    "size": 60,
+    "weight": 600,
+    "lineHeight": 1.08
+   },
+   {
+    "role": "big stat",
+    "size": 65,
+    "weight": 600,
+    "note": "number, then a 2-line label: 20px/500 over 27px/600"
+   },
+   {
+    "role": "h3 tile title",
+    "size": 36,
+    "weight": 600,
+    "lineHeight": 1.2
+   },
+   {
+    "role": "h4 card title",
+    "size": 27,
+    "weight": 600,
+    "lineHeight": 1.2
+   },
+   {
+    "role": "eyebrow",
+    "size": 20,
+    "weight": 500,
+    "color": "accent",
+    "note": "a small brand-mark icon before it, 20px gap to the h2"
+   },
+   {
+    "role": "nav",
+    "size": 16,
+    "weight": 600,
+    "transform": "uppercase",
+    "note": "HOME + SERVICES + … with '+' for dropdowns"
+   },
+   {
+    "role": "body",
+    "size": 16,
+    "weight": 500,
+    "lineHeight": 1.75,
+    "color": "#4f5168"
+   },
+   {
+    "role": "watermark number",
+    "size": 290,
+    "weight": 600,
+    "color": "#f3f6f9",
+    "note": "giant pale '25' behind the experience block"
+   }
+  ]
+ },
+ "color": {
+  "roles": {
+   "accent (hot orange)": "#ff6600",
+   "primary (electric blue)": "#2371ff",
+   "ink": "#151735",
+   "dark band": "#1d284b",
+   "body": "#4f5168",
+   "surface-alt": "#f3f6f9",
+   "card border": "#dfe4ea"
+  },
+  "notes": "Orange + navy/blue high-contrast pairing. The lead's brand colour takes the accent slot; ink/dark stay near-black navy. Big solid colour blocks (orange tile, navy tile, orange form box, navy team band) carry the energy."
+ },
+ "spacing": {
+  "container": "1280px max content column with 32px side padding (20px under 768px) — the SAME column for top bar, header, every section and footer. (Template measured 1200px; standardised to 1280 so every mockup shares one grid.)",
+  "sectionPaddingY": "120px top / 90px bottom (cards carry 30px bottom margin, so visual rhythm ≈120)",
+  "headingStack": "eyebrow 20px → 20px → 60px h2; heading row often has the h2 LEFT and a pill button RIGHT on the same line",
+  "gridGap": "30px",
+  "cardPadding": "45px (service tiles), 5px radius, 1px #dfe4ea border",
+  "hero": "900px photo, content LEFT-aligned in the container; below it two big 685px-wide CTA tiles overlap the hero's bottom edge by ~80px"
+ },
+ "components": {
+  "topBar": "60px, #f3f6f9: a slanted accent block on the far left with a short promise ('No hidden charges' — only if true in FACTS), then hours · address · email separated by 1px vertical dividers.",
+  "header": "100px white: logo, UPPERCASE nav, and on the right a coloured block (primary blue, bleeding to the viewport edge) holding a round accent phone icon, the phone number at 24px/600 white and a white pill 'Get Quote' button.",
+  "button": "Pill (50px radius), 60px tall, 0 45px padding, 16px/600. Accent orange default, blue for the hero, outline pill for filters.",
+  "ctaTiles": "Two side-by-side tiles (orange | navy) 166px tall overlapping the hero, each with a 60px line icon, 36px/600 white title and a circled arrow.",
+  "aboutMasonry": "Left: tall 285×600 photo + stacked 285×180 photo and a navy stat tile ('200+ Project Done' 72px/600 white). Right: eyebrow, 60px h2, paragraph, a pale quote box (#f3f6f9, 30px padding, 26px/600 quote with a big quote glyph), then a pill button + round founder avatar with name/role.",
+  "factsRow": "4 columns: outline icon with a quarter-circle accent arc behind it, then a 65px number beside a two-line label.",
+  "serviceGrid": "2×2 white tiles (270×257, padding 45, border) with an 80px pale icon square, small category label and 24px title; the active tile is solid accent with a small arrow notch at the bottom. Beside it a 570px photo with a white text card overlapping its bottom-left.",
+  "estimateForm": "Accent-coloured box (padding 50) with 36px 'Free Estimate' title and 60px-tall white inputs (name, phone, service select, message), full-width dark submit button. Sits over a photo, with a giant pale '25' watermark and '25+ Year Working Experience' block beside it — use only the lead's real years from FACTS.",
+  "team": "#1d284b band, centred heading, 4 square 270px photos each with a navy caption bar (role 14px, name 27px/600).",
+  "portfolio": "Heading left + outline pill filter chips right; 3 × 370×410 project photos.",
+  "footer": "Dark navy, 115px top padding, 4 columns (about, links, services, emergency phone at 24px/600 with an accent label)."
+ },
+ "blueprint": [
+  {
+   "section": "top bar + split header",
+   "spec": "60px bar + 100px header with the coloured phone block"
+  },
+  {
+   "section": "hero",
+   "spec": "900px photo, left-aligned: small play/video chip → 80px UPPERCASE 2-line headline → 30px subline → blue pill button"
+  },
+  {
+   "section": "two CTA tiles",
+   "spec": "orange + navy tiles overlapping the hero bottom (use the lead's two main service types)"
+  },
+  {
+   "section": "about masonry",
+   "spec": "padding-top 120, masonry photos left, text + quote box right"
+  },
+  {
+   "section": "facts row",
+   "spec": "padding 80/70, 4 stats (only real numbers from FACTS; drop the row if there are none)"
+  },
+  {
+   "section": "services",
+   "spec": "pale patterned band, heading left + 'More Service' pill right, 2×2 tiles + photo with overlapping text card"
+  },
+  {
+   "section": "estimate form",
+   "spec": "photo + experience watermark left, orange form box right"
+  },
+  {
+   "section": "team",
+   "spec": "navy band, 4 photo cards (only if the lead has team photos)"
+  },
+  {
+   "section": "recent projects",
+   "spec": "filter chips + 3 tall project photos"
+  },
+  {
+   "section": "testimonials",
+   "spec": "photo half + navy half with quote, name 27px, stars"
+  },
+  {
+   "section": "brands",
+   "spec": "#f3f6f9 band, padding 100, logo row"
+  },
+  {
+   "section": "footer",
+   "spec": "navy 4-column footer"
+  }
+ ],
+ "signatureMoves": [
+  "Condensed display type at 60–80px, hero in UPPERCASE",
+  "Coloured phone block bleeding off the right of the header",
+  "Two big colour tiles overlapping the bottom of the hero",
+  "Pill buttons 60px tall",
+  "Solid accent 'active' service tile with an arrow notch",
+  "Giant pale watermark numeral behind the experience block"
+ ],
+ "referenceImages": [
+  "reference-1.jpg",
+  "reference-2.jpg",
+  "reference-3.jpg",
+  "reference-4.jpg",
+  "reference-5.jpg",
+  "reference-6.jpg"
+ ]
+}

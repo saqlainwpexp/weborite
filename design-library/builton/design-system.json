@@ -1,0 +1,196 @@
+{
+ "name": "Builton — black & high-vis construction",
+ "tier": "measured",
+ "source": {
+  "template": "Builton – Construction Building HTML template (index.html)",
+  "method": "Computed styles measured in Chromium at 1440px (scripts/extract-template.mjs → measured.json); reference-1..6.jpg are the full page in order. Grey 'PHOTO' tiles are photo slots — keep their size and shape, fill them with the lead's real photos.",
+  "extractedAt": "2026-09-24"
+ },
+ "character": "Bold, editorial construction brand. A wide geometric display face (Unbounded) paired with DM Sans, a black / white / high-vis-yellow palette, square corners everywhere, angled cuts (chamfered hero panel, diagonal yellow stripes, slanted card tops), circular photo frames with a thin yellow ring, outlined giant step numerals. Feels like a serious contractor with an architect's eye.",
+ "reuse": "Use for construction / general contractor / builder / renovation / remodeling / roofing / concrete / excavation / architecture / handyman leads that want a bold, premium, industrial look. Put the lead's brand colour in the yellow 'accent' slot (keep text on it dark if it is light); keep black and white as the base.",
+ "cssStarter": ":root{--accent:#ffee02;--ink:#000000;--body:#727272;--surface:#ffffff;--surface-alt:#f4f4f4;--dark:#000000;--dark-2:#171715;--line:#c1c1c1;--container:1280px;--gutter:32px;--section-y:120px}\nbody{font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.88;color:var(--body)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.eyebrow{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;line-height:1.71;text-transform:uppercase;color:var(--body);margin-bottom:10px}\n.eyebrow-brush{display:inline-block;font-family:'Unbounded',sans-serif;font-size:16px;font-weight:500;text-transform:uppercase;color:#000;background:var(--accent);padding:6px 60px;clip-path:polygon(3% 10%,97% 0,100% 55%,96% 100%,2% 92%,0 40%);margin-bottom:27px}\nh1{font-family:'Unbounded',sans-serif;font-size:64px;font-weight:700;line-height:1.25;color:#fff;margin-bottom:30px}\nh2{font-family:'Unbounded',sans-serif;font-size:48px;font-weight:500;line-height:1.2;color:var(--ink);margin:0}\nh4{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:500;line-height:1.4;color:var(--ink)}\n.btn{display:inline-flex;align-items:center;justify-content:center;padding:19px 51px;border-radius:0;font-size:14px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;background:var(--accent);color:#000}\n.btn-outline{background:#fff;border:2px solid var(--accent);padding:15px 30px;font-size:16px;font-weight:700;text-transform:none;letter-spacing:0}\n.card{border:1px solid var(--line);background:#fff}\n.photo-ring{border-radius:50%;outline:1px solid var(--accent);outline-offset:14px}\n@media(max-width:768px){:root{--section-y:72px}h1{font-size:38px}h2{font-size:30px}}",
+ "typography": {
+  "display": {
+   "family": "Unbounded",
+   "weights": [
+    500,
+    700
+   ],
+   "note": "Wide geometric display for ALL headings (h1 64/700, h2 48/500, card titles 20/500). Its width is the brand — don't substitute."
+  },
+  "body": {
+   "family": "DM Sans",
+   "weights": [
+    400,
+    500,
+    700
+   ],
+   "note": "Body 16px/1.88 grey #727272; eyebrows 14px/700 UPPERCASE grey."
+  },
+  "scale": [
+   {
+    "role": "hero h1",
+    "size": 64,
+    "weight": 700,
+    "lineHeight": 1.25,
+    "family": "Unbounded",
+    "color": "#ffffff",
+    "marginBottom": 30
+   },
+   {
+    "role": "h2 section heading",
+    "size": 48,
+    "weight": 500,
+    "lineHeight": 1.2,
+    "family": "Unbounded"
+   },
+   {
+    "role": "h2 small (testimonial / contact)",
+    "size": 40,
+    "weight": 500,
+    "lineHeight": 1.2,
+    "family": "Unbounded"
+   },
+   {
+    "role": "h4 card title",
+    "size": 20,
+    "weight": 500,
+    "lineHeight": 1.4,
+    "family": "Unbounded"
+   },
+   {
+    "role": "eyebrow",
+    "size": 14,
+    "weight": 700,
+    "lineHeight": 1.71,
+    "transform": "uppercase",
+    "family": "DM Sans",
+    "color": "#727272",
+    "marginBottom": 10
+   },
+   {
+    "role": "hero eyebrow on brush stroke",
+    "size": 16,
+    "weight": 500,
+    "transform": "uppercase",
+    "family": "Unbounded",
+    "note": "black text on a yellow brush-stroke shape"
+   },
+   {
+    "role": "step numeral",
+    "size": 100,
+    "weight": 500,
+    "family": "Unbounded",
+    "note": "OUTLINED (transparent fill, 1px white stroke) '01'–'04'"
+   },
+   {
+    "role": "body",
+    "size": 16,
+    "weight": 400,
+    "lineHeight": 1.88,
+    "color": "#727272"
+   },
+   {
+    "role": "testimonial quote",
+    "size": 18,
+    "weight": 500,
+    "lineHeight": 1.67
+   }
+  ]
+ },
+ "color": {
+  "roles": {
+   "accent (high-vis yellow)": "#ffee02",
+   "ink / dark bands": "#000000",
+   "dark card": "#171715",
+   "step band": "#404040",
+   "body": "#727272",
+   "surface": "#ffffff",
+   "surface-alt": "#f4f4f4",
+   "borders": "#c1c1c1"
+  },
+  "notes": "Strict black / white / one accent. The accent appears as solid blocks (buttons, top-bar slant, diagonal stripes, pricing card tops) — never as a gradient. Dark sections use a faint topographic line pattern."
+ },
+ "spacing": {
+  "container": "1280px max content column with 32px side padding (20px under 768px) — the SAME column for top bar, header, every section and footer. (Template measured 1310px; standardised to 1280 so every mockup shares one grid.)",
+  "sectionPaddingY": "120px on light sections; dark services band ~120px with 55px bottom",
+  "headingStack": "yellow lightning-bolt mark (centred sections) → 14px uppercase eyebrow → 10px → 48px h2 → 60px → content",
+  "gridGap": "24px (3 × 411px cards)",
+  "header": "50px top bar (yellow slanted block with phone/email on the left, black right with socials) + a white 100px header BOX inset in the container (not full-bleed) floating over the hero",
+  "hero": "~980px tall grey-photo hero; centred black panel (845px wide, top-left corner chamfered at 45°, a faint grid texture) holding the brush eyebrow, h1, 16px subline and a yellow button; big diagonal yellow stripes in the bottom corners"
+ },
+ "components": {
+  "button": "Square corners. Solid yellow, 19px 51px, 14px/600 uppercase +0.7px tracking, black text. Secondary: white with 2px yellow border.",
+  "circleServices": "Black band with topographic lines and a ruler-tick border at the top. 3 services, each a 410px circular photo framed by a thin yellow ring offset ~14px, then a 20px Unbounded white title and centred 16px text.",
+  "aboutSplit": "Overlapping photo collage left (470×677 + 248×265 + a black circular badge with the logo mark and a dashed ring), text right: eyebrow, 48px h2, paragraph, a bold 16px statement with a 2px black left rule, two icon+label feature lines at 24px, yellow button; a diagonal yellow stripe runs behind.",
+  "pricingCard": "3-up, white with 1px border, the top half is a yellow shape with a slanted top edge holding a cut-out machine/photo; plan name 20px uppercase; zebra rows (#f4f4f4) of service/price; outline yellow button. Only use with real prices from FACTS — otherwise reuse this card shape for services.",
+  "processBand": "Full-bleed dark photo split into 4 columns by 1px vertical lines; each column bottom has an OUTLINED 100px numeral '01'–'04' and a 20px white title. The heading row above it is left h2 + right paragraph.",
+  "teamCard": "Bordered card with the photo inside, name 20px uppercase Unbounded, role, social row.",
+  "marquee": "67px full-bleed black strip scrolling uppercase service words separated by yellow star glyphs.",
+  "locations": "Dark pattern band, heading left-aligned white, 3 dark #171715 cards with address and phone.",
+  "footer": "Black with background image, 3 columns (contact info, links, newsletter input with dark 59px field), 20px uppercase Unbounded column titles +0.8px tracking."
+ },
+ "blueprint": [
+  {
+   "section": "top bar + boxed header",
+   "spec": "yellow/black 50px top bar, white header box inset in the container over the hero"
+  },
+  {
+   "section": "hero",
+   "spec": "photo + centred black chamfered panel with brush eyebrow, 64px h1, subline, yellow button; diagonal yellow stripes"
+  },
+  {
+   "section": "circle services",
+   "spec": "black topographic band, 3 ring-framed circular photos with titles"
+  },
+  {
+   "section": "about split",
+   "spec": "photo collage + badge left, text & features right, yellow diagonal stripe"
+  },
+  {
+   "section": "pricing / services cards",
+   "spec": "#f4f4f4 band, centred heading with bolt mark, 3 slanted-top cards"
+  },
+  {
+   "section": "how it works",
+   "spec": "left h2 + right paragraph, then the full-bleed 4-column outlined-numeral process band"
+  },
+  {
+   "section": "team",
+   "spec": "centred heading, 3 bordered team cards (only with real team photos)"
+  },
+  {
+   "section": "marquee",
+   "spec": "black scrolling strip of the lead's services"
+  },
+  {
+   "section": "testimonial",
+   "spec": "white, large quote left with 40px heading, photo right"
+  },
+  {
+   "section": "contact",
+   "spec": "dark photo band with a form"
+  },
+  {
+   "section": "footer",
+   "spec": "black 3-column footer"
+  }
+ ],
+ "signatureMoves": [
+  "Unbounded wide display for every heading",
+  "Square corners on every button, card and input",
+  "Chamfered (45° cut) black hero panel with a brush-stroke yellow eyebrow",
+  "Circular photos with a thin offset yellow ring",
+  "Outlined giant step numerals on a full-bleed band divided by thin vertical rules",
+  "Diagonal yellow stripe shapes breaking the grid",
+  "Scrolling uppercase marquee strip"
+ ],
+ "referenceImages": [
+  "reference-1.jpg",
+  "reference-2.jpg",
+  "reference-3.jpg",
+  "reference-4.jpg",
+  "reference-5.jpg",
+  "reference-6.jpg"
+ ]
+}

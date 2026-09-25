@@ -6,6 +6,7 @@ import { DESKTOP, MOBILE, newContext } from "./browser.ts";
 import { dhash, similarity } from "./signature.ts";
 import { mobileChecks, navToggleCheck, runAxeContrast } from "./capture.ts";
 import { googleFonts, isGoogleFamily, primaryFamily } from "../fonts.ts";
+import { layoutChecks, type LayoutFinding } from "./layout.ts";
 
 const PLACEHOLDER = /lorem ipsum|dolor sit amet|placeholder|your company|your business name|example\.com|\bTODO\b|\bTBD\b|\[insert|\{\{|xxx-xxx|555-01\d\d/i;
 const STOCK_HOSTS = /unsplash\.com|picsum\.photos|placehold|placekitten|pexels\.com|via\.placeholder|dummyimage|loremflickr/i;
@@ -151,6 +152,13 @@ export async function inspectPage(url: string, input: InspectOptions): Promise<{
     };
   });
   const contrastDesktop = await runAxeContrast(page);
+  // Desktop layout at the two widths clients actually look at: full HD laptops and 1280 screens.
+  const layout: (LayoutFinding & { width: number })[] = [];
+  for (const width of [1440, 1280]) {
+    await page.setViewportSize({ width, height: DESKTOP.height });
+    await page.waitForTimeout(300);
+    for (const f of await layoutChecks(page)) if (!layout.some((l) => l.id === f.id)) layout.push({ ...f, width });
+  }
   await ctx.close();
 
   // ---- mobile render ----
@@ -259,6 +267,15 @@ export async function inspectPage(url: string, input: InspectOptions): Promise<{
     name: "Works at 375px, semantic structure",
     pass: mobileFails.length === 0 && structure.length === 0,
     detail: [...mobileFails.map((m) => m.detail), ...structure].join("; ") || "No sideways scroll, nav opens, semantic landmarks present",
+  });
+
+  // 9. Desktop layout: nothing overlaps, nothing is cut off, one content column, no sideways scroll.
+  checks.push({
+    name: "Desktop layout (1440 & 1280)",
+    pass: layout.length === 0,
+    detail: layout.length
+      ? layout.map((l) => `${l.width}px: ${l.detail}`).join(" | ")
+      : "No overlapping or cut-off text, one content column, no sideways scroll",
   });
 
   return { checks, signature };

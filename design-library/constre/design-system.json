@@ -1,0 +1,191 @@
+{
+ "name": "Constre — dark industrial contractor",
+ "tier": "measured",
+ "source": {
+  "template": "Constre – Construction & Handyman HTML5 template (constre/index.html)",
+  "method": "Computed styles measured in Chromium at 1440px (scripts/extract-template.mjs → measured.json); reference-1..6.jpg are the full page in order. Grey 'PHOTO' tiles are photo slots — keep their size and position, fill them with the lead's real photos.",
+  "extractedAt": "2026-09-24"
+ },
+ "character": "No-nonsense industrial contractor. Charcoal #171717 bands alternating with pale grey #f5f6f8, one safety-orange accent, a sturdy narrow grotesk for headings (Yantramanav 700) with Archivo body, square corners, orange line-before eyebrows, cards with a 4px orange bottom rule and numbered orange chips. Reads as reliable, organised, on-site.",
+ "reuse": "Use for construction / contractor / builder / renovation / handyman / roofing / concrete / paving / fencing / masonry / demolition / industrial-service leads that want a dark, rugged, organised look. Put the lead's brand colour in the orange 'accent' slot; keep charcoal + pale grey as the base.",
+ "cssStarter": ":root{--accent:#ff5e15;--ink:#171717;--dark:#171717;--dark-2:#212121;--body:#575f66;--surface:#ffffff;--surface-alt:#f5f6f8;--container:1280px;--gutter:32px;--section-y:105px}\nbody{font-family:'Archivo',sans-serif;font-size:16px;line-height:1.75;color:var(--body)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0 90px}\nh1,h2,h3,h4,.btn,nav a{font-family:'Yantramanav',sans-serif}\n.eyebrow{display:flex;align-items:center;gap:10px;font-family:'Yantramanav',sans-serif;font-size:18px;font-weight:500;line-height:1.1;text-transform:uppercase;color:var(--accent);margin-bottom:7px}\n.eyebrow::before{content:'';width:35px;height:2px;background:var(--accent)}\n.hero-title{font-size:60px;font-weight:700;line-height:1.13;text-transform:uppercase;color:#fff}\nh2{font-size:48px;font-weight:700;line-height:1.1;color:var(--ink);margin:0 0 20px}\n.on-dark h2{color:#fff}\nh3{font-size:22px;font-weight:700;line-height:1.27;color:var(--ink)}\np{font-weight:300;line-height:1.63}\n.btn{display:inline-flex;align-items:center;gap:12px;padding:15px 33px;border-radius:0;font-size:17px;font-weight:500;background:var(--accent);color:#fff}\n.btn-dark{background:var(--dark)}\n.card{background:#fff;padding:36px 40px;border-bottom:4px solid var(--accent)}\n.num-chip{display:grid;place-items:center;width:50px;height:50px;background:var(--accent);color:#fff;font-family:'Yantramanav',sans-serif;font-size:20px;font-weight:700}\n@media(max-width:768px){:root{--section-y:70px}.hero-title{font-size:38px}h2{font-size:32px}}",
+ "typography": {
+  "display": {
+   "family": "Yantramanav",
+   "weights": [
+    500,
+    700,
+    900
+   ],
+   "note": "Headings, nav (UPPERCASE 16/500), buttons, eyebrows. Hero is UPPERCASE 60/700."
+  },
+  "body": {
+   "family": "Archivo",
+   "weights": [
+    300,
+    400
+   ],
+   "note": "Light 300 body at 16px/1.63 in slate #575f66."
+  },
+  "scale": [
+   {
+    "role": "hero headline",
+    "size": 60,
+    "weight": 700,
+    "lineHeight": 1.13,
+    "transform": "uppercase",
+    "color": "#ffffff",
+    "note": "a 68×4px orange rule under it, then the button 40px below"
+   },
+   {
+    "role": "hero eyebrow",
+    "size": 17,
+    "weight": 500,
+    "transform": "uppercase",
+    "note": "8px orange square before it"
+   },
+   {
+    "role": "vertical watermark",
+    "size": 140,
+    "weight": 900,
+    "note": "business name set vertically, orange 1px OUTLINE only, low opacity, behind the hero text"
+   },
+   {
+    "role": "h2 section heading",
+    "size": 48,
+    "weight": 700,
+    "lineHeight": 1.1,
+    "marginBottom": 20
+   },
+   {
+    "role": "eyebrow",
+    "size": 18,
+    "weight": 500,
+    "transform": "uppercase",
+    "color": "accent",
+    "note": "35px × 2px orange line before it"
+   },
+   {
+    "role": "h3 card title",
+    "size": 22,
+    "weight": 700,
+    "lineHeight": 1.27
+   },
+   {
+    "role": "project/team title",
+    "size": 30,
+    "weight": 700,
+    "lineHeight": 1.1
+   },
+   {
+    "role": "body",
+    "size": 16,
+    "weight": 300,
+    "lineHeight": 1.63,
+    "family": "Archivo",
+    "color": "#575f66"
+   },
+   {
+    "role": "testimonial quote",
+    "size": 18,
+    "weight": 300,
+    "lineHeight": 1.67,
+    "family": "Archivo"
+   }
+  ]
+ },
+ "color": {
+  "roles": {
+   "accent (safety orange)": "#ff5e15",
+   "dark bands / header": "#171717",
+   "footer bottom": "#212121",
+   "body": "#575f66",
+   "surface": "#ffffff",
+   "surface-alt": "#f5f6f8",
+   "footer text": "#8e939f"
+  },
+  "notes": "Rhythm alternates DARK (#171717) and PALE (#f5f6f8) bands with white in between. Orange is used for small, sharp things: eyebrow line, number chips, card bottom rules, buttons, the newsletter strip."
+ },
+ "spacing": {
+  "container": "1280px max content column with 32px side padding (20px under 768px) — the SAME column for top bar, header, every section and footer. (Template measured 1320px; standardised to 1280 so every mockup shares one grid.)",
+  "sectionPaddingY": "105px top / 90px bottom (why-choose 50/70, case study 108/200 to let the next section overlap)",
+  "headingStack": "eyebrow (line + text) → 7px → 48px h2 → 20px → paragraph (max ~590px) → 55px → content. Headings are LEFT-aligned, never centred.",
+  "gridGap": "24px (3 × 416px cards)",
+  "cardPadding": "36px 40px; square; 4px orange bottom border",
+  "header": "52px charcoal top bar (email · address left; square social icon cells with 1px dividers right) + 101px charcoal header: logo, UPPERCASE nav, square orange hamburger/offcanvas button",
+  "hero": "800px, photo right half / dark overlay left, text left-aligned in the container"
+ },
+ "components": {
+  "button": "Square, 15px 33px (≈56–60px tall), Yantramanav 17px/500, with a ↗ arrow icon after the label. Orange default, charcoal alternate.",
+  "featureCards": "On the charcoal band: 3 white cards, each an orange 50px number chip ('01') beside a small grey label + 20px bold title, a 2-line paragraph, and an underlined 'Read More ↗' link; 4px orange bottom rule.",
+  "aboutSplit": "Blueprint-drawing texture background. 590×480 photo left overlapping onto the band edge; right: eyebrow, h2, paragraph, orange button, and a 269px square photo pinned to the bottom-right.",
+  "serviceCards": "Pale band, white cards: 80px pale-grey icon square with an orange line icon, 22px title, one-line text, a 240×140 photo at the bottom, orange bottom rule; slider arrows as 50px white squares.",
+  "whyChoose": "Full-width photo on the left half; right: eyebrow, h2, paragraph, then orange 120px square stat block(s) with a 48px number — only real numbers from FACTS.",
+  "caseStudies": "Charcoal band, white heading, project photos with a white caption box (30px title) overlapping their bottom.",
+  "testimonial": "Charcoal band, photo left, quote right in 18px light text, name 22px white, orange quote mark.",
+  "newsletter": "Full-width orange strip, 24px padding, 34px white title + white input + charcoal SUBSCRIBE button (only if the lead actually runs a newsletter; otherwise use it as a phone/quote CTA strip).",
+  "footer": "Charcoal with an image texture, 85px top padding, 4 columns (about, quick links, services, latest / contact), 24px/700 column titles, #212121 bottom bar."
+ },
+ "blueprint": [
+  {
+   "section": "top bar + dark header",
+   "spec": "52px + 101px, both #171717"
+  },
+  {
+   "section": "hero",
+   "spec": "800px; left-aligned: orange-square eyebrow → 60px UPPERCASE 3-line headline → short orange rule → orange button with ↗; vertical outlined business-name watermark; photo on the right"
+  },
+  {
+   "section": "features",
+   "spec": "#171717 band, eyebrow + white h2 left, 3 white numbered cards with orange bottom rules"
+  },
+  {
+   "section": "about",
+   "spec": "blueprint-texture band, photo left + text right + small square photo"
+  },
+  {
+   "section": "services",
+   "spec": "#f5f6f8 band, left heading + intro, 3 service cards with icon + photo"
+  },
+  {
+   "section": "why choose us",
+   "spec": "photo half + text half with orange stat squares"
+  },
+  {
+   "section": "recent projects",
+   "spec": "#171717 band, project photos with overlapping caption boxes"
+  },
+  {
+   "section": "team",
+   "spec": "#f5f6f8 band, portrait cards (only with real team photos)"
+  },
+  {
+   "section": "testimonials",
+   "spec": "#171717 band, photo + quote"
+  },
+  {
+   "section": "CTA strip",
+   "spec": "orange full-width strip"
+  },
+  {
+   "section": "footer",
+   "spec": "charcoal 4-column footer"
+  }
+ ],
+ "signatureMoves": [
+  "Left-aligned headings with a 35px orange line before an uppercase eyebrow",
+  "Dark #171717 / pale #f5f6f8 band alternation",
+  "Square corners everywhere; buttons carry a ↗ arrow",
+  "Cards with a 4px orange bottom rule and an orange number chip",
+  "Outlined vertical business-name watermark in the hero",
+  "Blueprint/technical-drawing texture behind the about section"
+ ],
+ "referenceImages": [
+  "reference-1.jpg",
+  "reference-2.jpg",
+  "reference-3.jpg",
+  "reference-4.jpg",
+  "reference-5.jpg",
+  "reference-6.jpg"
+ ]
+}
