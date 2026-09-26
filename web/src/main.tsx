@@ -114,7 +114,7 @@ function Root() {
     if (lic) dismissSplash();
   }, [lic]);
   if (!lic) return null; // splash stays up until we know
-  if (!lic.licensed) return <Activation status={lic} onActivated={check} />;
+  if (!lic.licensed || lic.onboarded === false) return <Activation status={lic} onActivated={check} />;
   return DASHBOARD;
 }
 
