@@ -4,4 +4,4 @@
  * (studio.weborite.com/license/) into LICENSE_PUBLIC_KEY. A customer build refuses to build without it.
  */
 export const LICENSE_API = "https://studio.weborite.com/license/v1";
-export const LICENSE_PUBLIC_KEY = "";
+export const LICENSE_PUBLIC_KEY = "E832F624-48FE-0386-1238-5EF4DDB2C6AD";
