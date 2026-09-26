@@ -16,6 +16,15 @@ const NOTIFY_EMAIL = 'hello@weborite.com'; // new orders are emailed here
 const PLAN_PRICES = ['monthly' => '$49 per month', 'yearly' => '$490 per year'];
 const PAYMENT_METHODS = ['bank' => 'Bank transfer', 'payoneer' => 'Payoneer', 'wise' => 'Wise'];
 
+/** What this server is missing to run the license service, in plain words (empty when all is well). */
+function missing_requirements(): array {
+    $m = [];
+    if (!function_exists('sodium_crypto_sign_keypair')) $m[] = 'the "sodium" PHP extension (signs every answer the app receives)';
+    if (!extension_loaded('pdo_sqlite')) $m[] = 'the "pdo_sqlite" PHP extension (stores licenses and orders)';
+    if (PHP_VERSION_ID < 80100) $m[] = 'PHP 8.1 or newer (this server runs ' . PHP_VERSION . ')';
+    return $m;
+}
+
 function db(): PDO {
     static $pdo = null;
     if ($pdo) return $pdo;

@@ -4,7 +4,7 @@ import { intakeLead } from "../intake.ts";
 import { createSearch, getSearch, getProspect, listProspects, saveProspect } from "../finder/store.ts";
 import { enqueueSearch } from "../finder/queue.ts";
 import { createCampaign, deleteCampaign, getCampaign, listCampaigns, saveCampaign, updateCampaign } from "./store.ts";
-import { demoCap, demoLeft, demoLimitMessage } from "../license/index.ts";
+import { demoCap, demoLeft, demoLimitMessage, isDemo } from "../license/index.ts";
 import { DEMO_RESULTS } from "../../shared/demo.ts";
 import type { Campaign, CampaignItem, Prospect } from "../../shared/types.ts";
 
@@ -52,7 +52,9 @@ function advance(c: Campaign) {
       if (room <= 0) { c.status = "failed"; c.note = demoLimitMessage("mockups"); return; }
       c.items = found.slice(0, room).map(mockupFromProspect);
       c.status = "generating";
-      c.note = `Generating ${c.items.length} mockups…`;
+      c.note = isDemo() && found.length > c.items.length
+        ? `Generating ${c.items.length} of ${found.length} mockups: the demo had ${c.items.length} left. A license makes all of them.`
+        : `Generating ${c.items.length} mockups…`;
       addEvent({ leadId: null, kind: "info", title: "Campaign started generating", detail: `${c.prompt}: ${c.items.length} mockups queued` });
     } else {
       c.note = `Finding businesses… ${found.length} so far`;

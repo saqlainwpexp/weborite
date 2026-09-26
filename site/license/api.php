@@ -32,9 +32,14 @@ function license_json(array $l): array {
     ];
 }
 function meta_json(array $l): array {
-    return ['product_name' => PRODUCT_NAME, 'customer_name' => $l['name'], 'customer_email' => $l['email']];
+    return ['product_name' => PRODUCT_NAME, 'customer_name' => $l['name'], 'customer_email' => $l['email'], 'plan' => $l['plan']];
 }
 
+if ($missing = missing_requirements()) {
+    http_response_code(503);
+    echo json_encode(['activated' => false, 'valid' => false, 'error' => 'The license server is not set up yet. Please contact support.']);
+    exit;
+}
 $action = (string)($_GET['action'] ?? '');
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !in_array($action, ['activate', 'validate', 'deactivate'], true)) {
     reply(405, ['error' => 'Use POST to /v1/licenses/activate, /validate or /deactivate.'], ['action' => $action, 'ok' => false]);

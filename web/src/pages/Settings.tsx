@@ -10,12 +10,14 @@ import { api } from "../lib/api";
 import { Dropdown } from "../components/Dropdown";
 import { workspaceEnabled } from "../../../shared/features";
 import { CLOUD_ROUTINE_PROMPT } from "../../../shared/cloudPrompt";
+import { PlanLicense } from "../components/PlanLicense";
 import { BRAND_PRESETS, DEFAULT_BRAND, applyBrand, brandPalette, isHex } from "../lib/brand";
 
 type Draft = Partial<S> & { apiKey?: string; metaPageToken?: string; metaAppSecret?: string; psiKey?: string; gtmetrixKey?: string; cloudTriggerToken?: string; githubToken?: string };
 
 const TABS = [
   { key: "profile", label: "Profile" },
+  { key: "license", label: "Plan & license" },
   { key: "claude", label: "Claude" },
   { key: "leads", label: "Lead sources" },
   { key: "integrations", label: "Integrations" },
@@ -385,6 +387,8 @@ export default function Settings() {
             </Section>
           </>
         )}
+
+        {tab === "license" && <PlanLicense />}
 
         {tab === "maintenance" && (
           <>

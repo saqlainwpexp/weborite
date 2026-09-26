@@ -11,6 +11,15 @@ header('X-Frame-Options: DENY');
 header('Cache-Control: no-store');
 
 $self = basename(__FILE__);
+if ($missing = missing_requirements()) {
+    http_response_code(503);
+    page_head('Setup needed');
+    echo '<section class="card narrow"><h1>One more step on the server</h1><p>The license service needs:</p><ul>';
+    foreach ($missing as $m) echo '<li>' . h($m) . '</li>';
+    echo '</ul><p class="muted">In Hostinger hPanel open <b>Advanced → PHP Configuration</b>. On the <b>PHP version</b> tab choose 8.1 or newer; on the <b>PHP extensions</b> tab tick the extensions above and save. Then reload this page.</p></section>';
+    page_foot();
+    exit;
+}
 $hash = setting('admin_hash');
 $error = '';
 $flash = $_SESSION['flash'] ?? null;

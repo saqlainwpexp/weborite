@@ -2,13 +2,20 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowDown, ArrowRight, ArrowUp, ArrowUpDown, Globe, Mail, MapPin, MessageCircle, Star } from "lucide-react";
 import type { FinderSearch, Prospect, SearchStatus } from "../../../shared/types";
+import { DEMO_LIMITS } from "../../../shared/demo";
+
+const DEMO_SEARCHES = DEMO_LIMITS.searches;
 import { api, host, timeAgo } from "../lib/api";
 import { Modal } from "./ui";
 import { Dropdown } from "./Dropdown";
+import { useDemo } from "./Demo";
+import { BUY_URL } from "../../../shared/legal";
 
 export function NewSearchModal({ onClose, onCreated }: { onClose: () => void; onCreated: (s: FinderSearch) => void }) {
+  const { demo } = useDemo();
   const [query, setQuery] = useState("");
-  const [max, setMax] = useState("20");
+  const [max, setMax] = useState(demo ? String(demo.results) : "20");
+  const searchesLeft = demo ? demo.left.searches : Infinity;
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -50,13 +57,21 @@ export function NewSearchModal({ onClose, onCreated }: { onClose: () => void; on
                 { value: "20", label: "20 businesses", hint: "About 2–3 minutes" },
                 { value: "40", label: "40 businesses" },
                 { value: "60", label: "60 businesses", hint: "About 8–10 minutes" },
-              ]} />
+              ].filter((o) => !demo || Number(o.value) <= demo.results)} />
           </div>
         </div>
+        {demo && (
+          <p className={`demo-note${searchesLeft === 0 ? " out" : ""}`}>
+            {searchesLeft === 0
+              ? <>You've used the demo's {DEMO_SEARCHES} searches. </>
+              : <>Demo: up to {demo.results} businesses per search, {searchesLeft} {searchesLeft === 1 ? "search" : "searches"} left. </>}
+            <a href={BUY_URL} target="_blank" rel="noreferrer">A license</a> finds up to 60 per search, as often as you like.
+          </p>
+        )}
         {error && <p className="error-text">{error}</p>}
         <div style={{ display: "flex", justifyContent: "flex-end", gap: 12 }}>
           <button type="button" className="btn btn-chip" onClick={onClose}>Cancel</button>
-          <button className="btn btn-ink btn-wide" disabled={busy}>{busy ? "Starting…" : "Start search"}</button>
+          <button className="btn btn-ink btn-wide" disabled={busy || searchesLeft === 0}>{busy ? "Starting…" : "Start search"}</button>
         </div>
       </form>
     </Modal>
