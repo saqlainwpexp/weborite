@@ -1,0 +1,39 @@
+{
+  "vertical": "building-contractor",
+  "label": "Builder",
+  "register": "The buyer is planning a new home, extension or commercial build and is judging whether this local building contractor looks established, capable and trustworthy enough for a large project, compared with other regional builders and construction firms rather than national housebuilders.",
+  "color": "#8a6d4f",
+  "sites": [
+    {
+      "name": "Gilbert-Ash",
+      "url": "https://gilbert-ash.com/",
+      "why": "Lets landmark project photography and named, award-shortlisted buildings carry the brand, showing capability through finished work rather than claims."
+    },
+    {
+      "name": "McAleer & Rushe",
+      "url": "https://mcaleer-rushe.co.uk/",
+      "why": "Family-run design & build contractor that anchors trust in its founding year and hard delivery numbers (units, bedrooms, square footage) alongside sector-by-sector project proof."
+    },
+    {
+      "name": "H&J Martin",
+      "url": "https://www.hjmartin.co.uk/",
+      "why": "Uses heritage (founded in Belfast in 1840) and famous local buildings it worked on as instant credibility, then splits services into clear divisions."
+    },
+    {
+      "name": "R.S Greer (Contracts)",
+      "url": "https://www.rsgreer.com/",
+      "why": "Regional contractor that targets local searches with town-specific construction pages, a useful pattern for a builder serving a defined area."
+    },
+    {
+      "name": "McMullan & McAtamney",
+      "url": "https://www.mcmullanmcatamney.co.uk/",
+      "why": "Small Ballymena builder of a similar size that states its service types (new builds, extensions, conversions) and its local catchment towns plainly, a realistic model for a local firm."
+    },
+    {
+      "name": "Francey Homes",
+      "url": "https://www.franceyhomes.com/",
+      "why": "Family builder that puts named owners and a range of residential project types, from extensions to listed-house refurbishments, at the centre of its pitch."
+    }
+  ],
+  "createdAt": "2026-09-25T08:00:03.829Z"
+}
