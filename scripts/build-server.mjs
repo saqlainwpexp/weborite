@@ -2,7 +2,8 @@
 //   node scripts/build-server.mjs            customer build: license always enforced
 //   node scripts/build-server.mjs --owner    owner build: license check skipped (never share this one)
 import { build } from "esbuild";
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, rmSync, writeFileSync } from "node:fs";
+import JavaScriptObfuscator from "javascript-obfuscator";
 import { join } from "node:path";
 
 const root = join(import.meta.dirname, "..");
@@ -42,13 +43,43 @@ await build({
   format: "esm",
   target: "node22",
   packages: "external",
-  sourcemap: "linked",
+  // Customer builds ship one minified file with no source map and no comments; the owner build keeps a map for debugging.
+  minify: !owner,
+  sourcemap: owner ? "linked" : false,
+  legalComments: "none",
   logLevel: "warning",
   // Baked in at build time so no environment variable can change licensing in a shipped app.
   define: { __STUDIO_BUILD__: JSON.stringify(owner ? "owner" : "customer") },
   // Some dependencies are CommonJS and expect require() to exist.
   banner: { js: 'import { createRequire as __cr } from "node:module"; const require = __cr(import.meta.url);' },
 });
+
+// Customer builds: encode every string (the Claude prompts, rules and messages) so the shipped file can't
+// simply be searched or read, and drop any source map an earlier owner build left behind.
+if (!owner) {
+  const out = join(root, "app-dist", "server.mjs");
+  const code = readFileSync(out, "utf8");
+  const obf = JavaScriptObfuscator.obfuscate(code, {
+    target: "node",
+    compact: true,
+    identifierNamesGenerator: "mangled",
+    renameGlobals: false,
+    stringArray: true,
+    stringArrayThreshold: 1,
+    stringArrayEncoding: ["base64"],
+    stringArrayRotate: true,
+    stringArrayShuffle: true,
+    stringArrayWrappersCount: 1,
+    // Heavier transforms (control-flow flattening, dead code, self-defending) slow the pipeline and can break it.
+    controlFlowFlattening: false,
+    deadCodeInjection: false,
+    selfDefending: false,
+    transformObjectKeys: false,
+    unicodeEscapeSequence: false,
+  }).getObfuscatedCode();
+  writeFileSync(out, obf);
+  rmSync(`${out}.map`, { force: true });
+}
 
 // The installed app imports this folder's data on its first launch.
 writeFileSync(join(root, "electron", "build-info.json"), JSON.stringify({ projectData: join(root, "data"), builtAt: new Date().toISOString() }, null, 1));
