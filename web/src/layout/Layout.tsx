@@ -7,7 +7,7 @@ import {
 import type { BenchmarkSet, Build, BuildStats, CommsService, EventItem, FinderSearch, FinderStats, Lead, Prospect, SeoSite, Settings, Usage, WpConversion } from "../../../shared/types";
 import { api, host, timeAgo, usePoll } from "../lib/api";
 import { workspaceEnabled } from "../../../shared/features";
-import { DemoBanner } from "../components/Demo";
+import { DemoBanner, LimitWatcher } from "../components/Demo";
 import { AddLeadModal, EventIcon, Logo, StatusPill } from "../components/ui";
 import { NewSearchModal } from "../components/finder";
 import { Calendar, dayKey, parseDayKey } from "../components/Calendar";
@@ -540,6 +540,7 @@ export default function Layout() {
 
         <main className="content">
           <DemoBanner />
+          <LimitWatcher />
           <Outlet context={ctx} />
         </main>
       </div>

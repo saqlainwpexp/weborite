@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Workflow, ArrowRight, Loader2 } from "lucide-react";
 import { api, usePoll, timeAgo } from "../../lib/api";
 import type { Campaign } from "../../../../shared/types";
+import { useDemo } from "../../components/Demo";
+import { BUY_URL } from "../../../../shared/legal";
 
 const STATUS_LABEL: Record<Campaign["status"], string> = {
   scraping: "Finding businesses", generating: "Generating mockups", ready: "Ready to send", armed: "Armed", sending: "Sending", done: "Done", failed: "Failed",
@@ -28,6 +30,7 @@ function CampaignRow({ c }: { c: Campaign }) {
 
 export default function Campaigns() {
   const { data, reload } = usePoll<Campaign[]>("/api/campaigns", 4000);
+  const { demo } = useDemo();
   const [prompt, setPrompt] = useState("");
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
@@ -76,6 +79,11 @@ export default function Campaigns() {
         </div>
         {err && <div className="camp-err">{err}</div>}
         <div className="camp-new-hint muted">It will find up to the number you name (default 20), scrape phone/email/WhatsApp, and build a mockup for each keeping their real brand and photos.</div>
+        {demo && (
+          <p className="demo-note">
+            Demo: a campaign finds up to {demo.results} businesses and makes mockups from your {demo.left.mockups} remaining. <a href={BUY_URL} target="_blank" rel="noreferrer">A license</a> removes both limits.
+          </p>
+        )}
       </div>
 
       <div className="camp-list">

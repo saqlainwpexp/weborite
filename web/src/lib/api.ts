@@ -7,6 +7,11 @@ export async function api<T>(path: string, init?: RequestInit & { json?: unknown
     body: init?.json !== undefined ? JSON.stringify(init.json) : init?.body,
   });
   const data = await res.json().catch(() => ({}));
+  if (res.status === 402) {
+    // A demo allowance is used up (or the license lapsed): the app shows the upgrade window.
+    const d = data as { error?: string; demoLimit?: string; needsLicense?: boolean };
+    window.dispatchEvent(new CustomEvent("studio:limit", { detail: { kind: d.demoLimit ?? (d.needsLicense ? "license" : ""), message: d.error ?? "" } }));
+  }
   if (!res.ok) throw new Error((data as { error?: string }).error ?? `Request failed (${res.status})`);
   return data as T;
 }

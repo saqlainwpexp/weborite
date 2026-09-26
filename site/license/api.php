@@ -32,7 +32,7 @@ function license_json(array $l): array {
     ];
 }
 function meta_json(array $l): array {
-    return ['product_name' => PRODUCT_NAME, 'customer_name' => $l['name'], 'customer_email' => $l['email']];
+    return ['product_name' => PRODUCT_NAME, 'customer_name' => $l['name'], 'customer_email' => $l['email'], 'plan' => $l['plan']];
 }
 
 if ($missing = missing_requirements()) {

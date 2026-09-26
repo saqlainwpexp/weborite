@@ -4,4 +4,7 @@
  */
 export const PRIVACY_URL = "https://studio.weborite.com/privacy";
 export const TERMS_URL = "https://studio.weborite.com/terms";
+/** Where the upgrade buttons in the app send people. */
+export const BUY_URL = "https://studio.weborite.com/buy.html";
+export const PRICING_URL = "https://studio.weborite.com/#pricing";
 export const TERMS_VERSION = "2026-09-26";

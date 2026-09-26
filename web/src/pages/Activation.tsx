@@ -58,6 +58,19 @@ export function Activation({ status, onActivated }: { status: LicenseStatus; onA
     }
   }
 
+  async function backToDemo() {
+    setBusy(true);
+    setErr(null);
+    try {
+      await api("/api/license/demo", { method: "POST" });
+      onActivated();
+    } catch (e) {
+      setErr({ text: (e as Error).message });
+    } finally {
+      setBusy(false);
+    }
+  }
+
   async function finish() {
     if (busy) return;
     setBusy(true);
@@ -122,6 +135,16 @@ export function Activation({ status, onActivated }: { status: LicenseStatus; onA
               <p className="onb-demo-note">
                 Every feature, with small limits ({DEMO_LIMITS.mockups} mockups, {DEMO_LIMITS.searches} Lead Finder searches, 1 of each site). Enter a key later to remove them.
               </p>
+            </>
+          )}
+
+          {!needsDetails && (
+            <>
+              <div className="onb-or"><span>or</span></div>
+              <button className="btn btn-white activate-btn onb-demo" disabled={busy} onClick={() => void backToDemo()}>
+                Continue with the demo
+              </button>
+              <p className="onb-demo-note">Every feature with small limits. Allowances you already used stay used.</p>
             </>
           )}
 

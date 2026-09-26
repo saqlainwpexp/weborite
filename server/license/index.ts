@@ -70,7 +70,28 @@ interface LicenseState {
   lastOkAt: string | null; // last time the provider confirmed it valid
   lastCheckAt: string | null;
   name: string; // customer/product name from the provider, for display
+  /** Shown in Settings → Plan & license. */
+  plan?: string; // monthly | yearly | trial | lifetime (from the license server)
+  expiresAt?: string | null;
+  customerName?: string;
+  customerEmail?: string;
+  keyHint?: string; // last 4 characters of the key
+  activatedAt?: string;
+  computer?: string;
 }
+
+type Meta = { customer_name?: string; customer_email?: string; product_name?: string; plan?: string } | undefined;
+/** Plan and customer details from a license answer (display only; the signed status decides access). */
+const details = (data: Record<string, unknown>) => {
+  const meta = data.meta as Meta;
+  const lk = data.license_key as { expires_at?: string | null } | undefined;
+  return {
+    ...(meta?.plan && { plan: meta.plan }),
+    ...(lk && "expires_at" in lk && { expiresAt: lk.expires_at ?? null }),
+    ...(meta?.customer_name && { customerName: meta.customer_name }),
+    ...(meta?.customer_email && { customerEmail: meta.customer_email }),
+  };
+};
 
 function read(): LicenseState | null {
   const r = db.prepare("SELECT data FROM license WHERE id = 1").get() as { data: string } | undefined;
@@ -123,7 +144,7 @@ async function providerCall(path: string, params: Record<string, string>): Promi
     ...data,
     activated: path === "activate" && core.ok === true,
     valid: path === "validate" && core.ok === true,
-    license_key: { ...lk, status: core.status },
+    license_key: { ...lk, status: core.status, ...("expires_at" in core && { expires_at: (core as { expires_at?: string | null }).expires_at ?? null }) },
     instance: core.instance_id ? { ...inst, id: core.instance_id } : null,
   };
 }
@@ -176,6 +197,9 @@ function publicState() {
     onboarded: readOnboarding()?.termsVersion === TERMS_VERSION,
     demo: isDemo() ? demoState() : null,
     lastCheckAt: s?.lastCheckAt ?? null,
+    license: s?.instanceId
+      ? { plan: s.plan ?? "", expiresAt: s.expiresAt ?? null, customerName: s.customerName ?? "", customerEmail: s.customerEmail ?? "", keyHint: s.keyHint ?? "", activatedAt: s.activatedAt ?? null, computer: s.computer ?? "" }
+      : null,
     graceUntil: s?.lastOkAt ? new Date(new Date(s.lastOkAt).getTime() + GRACE_DAYS * 86400_000).toISOString() : null,
   };
 }
@@ -198,7 +222,10 @@ async function activate(key: string): Promise<{ ok: true } | { ok: false; error:
     return { ok: false, error: String(data.error ?? "That license key was rejected. Check it and your subscription status.") };
   }
   const now = new Date().toISOString();
-  write({ key: seal(trimmed), instanceId: instance.id, status: (lk?.status as LicenseState["status"]) ?? "active", lastOkAt: now, lastCheckAt: now, name: meta?.product_name || meta?.customer_name || "" });
+  write({
+    key: seal(trimmed), instanceId: instance.id, status: (lk?.status as LicenseState["status"]) ?? "active", lastOkAt: now, lastCheckAt: now,
+    name: meta?.product_name || meta?.customer_name || "", ...details(data), keyHint: trimmed.slice(-4), activatedAt: now, computer: hostname().slice(0, 60),
+  });
   return { ok: true };
 }
 
@@ -220,7 +247,7 @@ export async function revalidate(): Promise<void> {
   const now = new Date().toISOString();
   // An invalid answer never leaves the copy unlocked, whatever status came with it.
   const status: LicenseState["status"] = valid ? ((lk?.status as LicenseState["status"]) ?? "active") : lk?.status && lk.status !== "active" ? (lk.status as LicenseState["status"]) : "inactive";
-  write({ ...s, status, lastCheckAt: now, lastOkAt: valid ? now : s.lastOkAt });
+  write({ ...s, ...details(data), status, lastCheckAt: now, lastOkAt: valid ? now : s.lastOkAt });
 }
 
 async function deactivate(): Promise<void> {
@@ -301,6 +328,21 @@ license.get("/onboarding", (_req, res) => {
 
 license.post("/deactivate", async (_req, res) => {
   await deactivate();
+  res.json(publicState());
+});
+
+/** Check the key with the license server now (Settings → Plan & license → Check now). */
+license.post("/refresh", async (_req, res) => {
+  await revalidate();
+  res.json(publicState());
+});
+
+/** Go back to the demo without a key (after moving the license to another computer, or when it lapsed). */
+license.post("/demo", (_req, res) => {
+  if (isLicensed()) return res.status(400).json({ error: "This copy has an active license, so there's no need for the demo." });
+  const o = readOnboarding();
+  if (!o || o.termsVersion !== TERMS_VERSION) return res.status(400).json({ error: "Finish setting up first." });
+  db.prepare("UPDATE onboarding SET data = ? WHERE id = 1").run(JSON.stringify({ ...o, demo: true }));
   res.json(publicState());
 });
 
