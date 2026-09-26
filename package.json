@@ -15,7 +15,7 @@
     "desktop": "vite build && node scripts/build-server.mjs --owner && electron .",
     "dist": "vite build && node scripts/build-server.mjs && electron-builder --win",
     "dist:owner": "vite build && node scripts/build-server.mjs --owner && electron-builder --win -c.directories.output=release-owner",
-    "icon": "node scripts/make-icon.mjs"
+    "icon": "tsx scripts/make-icon.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.128.0",

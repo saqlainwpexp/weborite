@@ -3,6 +3,7 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { chromium } from "playwright";
+import { W_DOT, W_PATH, W_RATIO, W_VIEWBOX } from "../shared/logo.ts";
 
 const root = join(import.meta.dirname, "..");
 const brandDir = join(root, "data", "brand");
@@ -10,9 +11,9 @@ const logo = existsSync(brandDir) ? readdirSync(brandDir).filter((f) => f.starts
 const mime = (f) => (f.endsWith(".svg") ? "image/svg+xml" : f.endsWith(".png") ? "image/png" : f.endsWith(".jpg") ? "image/jpeg" : "image/webp");
 const inner = logo
   ? `<img src="data:${mime(logo)};base64,${readFileSync(join(brandDir, logo)).toString("base64")}" style="width:100%;height:100%;object-fit:contain">`
-  : `<svg viewBox="0 0 26 26" width="340" height="340" fill="none" style="color:#fff"><path d="M13 2.5 20.4 5.6 23.5 13 20.4 20.4 13 23.5 5.6 20.4 2.5 13 5.6 5.6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M13 2.5V9M13 17v6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+  : `<svg viewBox="${W_VIEWBOX}" width="380" height="${Math.round(380 * W_RATIO)}" fill="none" style="color:#fff"><path d="${W_PATH}" stroke="currentColor" stroke-width="26" stroke-linecap="square"/><rect x="${W_DOT.x}" y="${W_DOT.y}" width="${W_DOT.width}" height="${W_DOT.height}" fill="currentColor"/></svg>`;
 const html = `<html><body style="margin:0;width:512px;height:512px;display:grid;place-items:center;background:transparent">
-<div style="width:512px;height:512px;border-radius:112px;overflow:hidden;background:${logo ? "#000" : "#2f5d50"};display:grid;place-items:center">${inner}</div></body></html>`;
+<div style="width:512px;height:512px;border-radius:112px;overflow:hidden;background:${logo ? "#000" : "#a36566"};display:grid;place-items:center">${inner}</div></body></html>`;
 
 mkdirSync(join(root, "build"), { recursive: true });
 const browser = await chromium.launch();

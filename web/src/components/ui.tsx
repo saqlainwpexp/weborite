@@ -2,12 +2,18 @@ import { useEffect, useState, type ReactNode } from "react";
 import { AlertTriangle, BellRing, CheckCircle2, Circle, Loader2, UserPlus, XCircle, Sparkles } from "lucide-react";
 import type { EventItem, LeadStatus, StepStatus } from "../../../shared/types";
 import { api } from "../lib/api";
+import { W_DOT, W_PATH, W_RATIO, W_VIEWBOX, wStroke } from "../../../shared/logo";
 
-export function Logo() {
+export function Logo({ width = 28 }: { width?: number }) {
+  return <WMark width={width} />;
+}
+
+/** The Weborite "W" mark (shared/logo.ts), in the current text colour. */
+export function WMark({ width }: { width: number }) {
   return (
-    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
-      <path d="M13 2.5 20.4 5.6 23.5 13 20.4 20.4 13 23.5 5.6 20.4 2.5 13 5.6 5.6Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-      <path d="M13 2.5V9M13 17v6.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    <svg width={width} height={Math.round(width * W_RATIO)} viewBox={W_VIEWBOX} fill="none" aria-hidden="true">
+      <path d={W_PATH} stroke="currentColor" strokeWidth={wStroke(width)} strokeLinecap="square" />
+      <rect {...W_DOT} fill="currentColor" />
     </svg>
   );
 }

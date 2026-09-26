@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { KeyRound, Loader2, AlertTriangle, ArrowRight, CheckCircle2 } from "lucide-react";
 import { api } from "../lib/api";
+import { WMark } from "../components/ui";
 import { PRIVACY_URL, TERMS_URL } from "../../../shared/legal";
 import { DEMO_LIMITS } from "../../../shared/demo";
 
@@ -18,10 +19,7 @@ export interface LicenseStatus {
 function Mark() {
   return (
     <div className="activate-mark">
-      <svg viewBox="0 0 26 26" fill="none" aria-hidden="true">
-        <path d="M13 2.5 20.4 5.6 23.5 13 20.4 20.4 13 23.5 5.6 20.4 2.5 13 5.6 5.6Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-        <path d="M13 2.5V9M13 17v6.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      </svg>
+      <WMark width={40} />
     </div>
   );
 }
