@@ -3,6 +3,7 @@ import { hostname } from "node:os";
 import { Buffer } from "node:buffer";
 import { getSettings, setSettings, sqlite as db } from "../db.ts";
 import { TERMS_VERSION } from "../../shared/legal.ts";
+import { DEMO_LIMITS, DEMO_LOCKED_API, type DemoState } from "../../shared/demo.ts";
 import { open, seal } from "../vault.ts";
 import { localOnly } from "../security.ts";
 
@@ -34,9 +35,16 @@ interface Onboarding {
   phone: string;
   country: string;
   marketing: boolean; // opted in to product news (never pre-ticked)
+  demo?: boolean; // chose "Try the demo" instead of entering a key
   termsVersion: string;
   acceptedAt: string;
 }
+db.exec(`CREATE TABLE IF NOT EXISTS demo_usage (kind TEXT PRIMARY KEY, used INTEGER NOT NULL DEFAULT 0);`);
+const demoUsed = (kind: "mockups" | "searches") =>
+  (db.prepare("SELECT used FROM demo_usage WHERE kind = ?").get(kind) as { used: number } | undefined)?.used ?? 0;
+const bumpDemo = (kind: "mockups" | "searches") =>
+  db.prepare("INSERT INTO demo_usage (kind, used) VALUES (?, 1) ON CONFLICT(kind) DO UPDATE SET used = used + 1").run(kind);
+
 function readOnboarding(): Onboarding | null {
   const r = db.prepare("SELECT data FROM onboarding WHERE id = 1").get() as { data: string } | undefined;
   return r ? (JSON.parse(r.data) as Onboarding) : null;
@@ -91,6 +99,21 @@ export function isLicensed(): boolean {
   return s.status === "active" || withinGrace(s);
 }
 
+/** Running as a demo: onboarded with "Try the demo" and no key entered since. */
+export function isDemo(): boolean {
+  if (isLicensed()) return false;
+  const o = readOnboarding();
+  return Boolean(o?.demo && o.termsVersion === TERMS_VERSION);
+}
+
+function demoState(): DemoState {
+  return {
+    mockupsLeft: Math.max(0, DEMO_LIMITS.mockups - demoUsed("mockups")),
+    searchesLeft: Math.max(0, DEMO_LIMITS.searches - demoUsed("searches")),
+    resultsPerSearch: DEMO_LIMITS.resultsPerSearch,
+  };
+}
+
 function publicState() {
   const s = read();
   return {
@@ -100,6 +123,7 @@ function publicState() {
     status: BYPASS ? "developer" : s?.status ?? "none",
     name: s?.name ?? "",
     onboarded: readOnboarding()?.termsVersion === TERMS_VERSION,
+    demo: isDemo() ? demoState() : null,
     lastCheckAt: s?.lastCheckAt ?? null,
     graceUntil: s?.lastOkAt ? new Date(new Date(s.lastOkAt).getTime() + GRACE_DAYS * 86400_000).toISOString() : null,
   };
@@ -194,13 +218,14 @@ license.post("/onboard", async (req, res) => {
     phone: str(b.phone, 40),
     country: str(b.country, 60),
     marketing: b.marketing === true,
+    demo: b.demo === true && !isLicensed(),
     termsVersion: TERMS_VERSION,
     acceptedAt: new Date().toISOString(),
   };
   if (!data.firstName || !data.lastName) return res.status(400).json({ error: "Enter your first and last name.", field: "name" });
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email)) return res.status(400).json({ error: "Enter a valid email address.", field: "email" });
   if (b.acceptTerms !== true) return res.status(400).json({ error: "Accept the Terms of Service and Privacy Policy to continue.", field: "terms" });
-  if (!isLicensed()) {
+  if (!isLicensed() && !data.demo) {
     const r = await activate(String(b.key ?? ""));
     if (!r.ok) return res.status(400).json({ error: r.error, field: "key" });
   }
@@ -231,6 +256,40 @@ license.post("/deactivate", async (_req, res) => {
 export function requireLicense(allow: RegExp) {
   return (req: Parameters<typeof localOnly>[0], res: Parameters<typeof localOnly>[1], next: Parameters<typeof localOnly>[2]) => {
     if (isLicensed() || allow.test(req.path)) return next();
+    if (isDemo()) return demoGate(req, res, next);
     res.status(402).json({ error: "This copy isn't activated.", needsLicense: true });
   };
+}
+
+const UNLOCK = "Enter a license key to unlock it.";
+
+/** Demo limits: locked workspaces, and a fixed number of mockups and Lead Finder searches. */
+function demoGate(req: Parameters<typeof localOnly>[0], res: Parameters<typeof localOnly>[1], next: Parameters<typeof localOnly>[2]) {
+  const path = req.path;
+  const post = req.method === "POST";
+  if (DEMO_LOCKED_API.some((p) => path === p || path.startsWith(p + "/"))) {
+    // Reading is harmless (dashboards show empty states); anything that does work is locked.
+    if (req.method === "GET") return next();
+    return res.status(402).json({ error: `This isn't part of the demo. ${UNLOCK}`, demoLocked: true });
+  }
+  const createsLead = post && (path === "/api/leads" || /^\/api\/finder\/prospects\/[^/]+\/mockup$/.test(path));
+  const createsSearch = post && path === "/api/finder/searches";
+  const kind = createsLead ? "mockups" : createsSearch ? "searches" : null;
+  if (!kind) return next();
+  if (demoUsed(kind) >= DEMO_LIMITS[kind]) {
+    const what = kind === "mockups" ? `all ${DEMO_LIMITS.mockups} demo mockups` : `both demo searches`;
+    return res.status(402).json({ error: `You've used ${what}. Enter a license key to keep going.`, demoLimit: kind });
+  }
+  if (createsSearch && req.body) req.body.max = Math.min(Number(req.body.max) || DEMO_LIMITS.resultsPerSearch, DEMO_LIMITS.resultsPerSearch);
+  // Count it only when it actually went through (a duplicate lead still counts: it ran the check).
+  res.on("finish", () => {
+    if (res.statusCode < 400) bumpDemo(kind);
+  });
+  next();
+}
+
+/** Webhooks create leads without anyone watching, so they need a real license. */
+export function requireFullLicense(_req: Parameters<typeof localOnly>[0], res: Parameters<typeof localOnly>[1], next: Parameters<typeof localOnly>[2]) {
+  if (isLicensed()) return next();
+  res.status(402).json({ error: "This copy isn't activated." });
 }
