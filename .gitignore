@@ -12,6 +12,7 @@ data/*
 # Desktop build output
 app-dist
 release
+release-owner
 electron/build-info.json
 
 # Figma API token (local only, never commit)

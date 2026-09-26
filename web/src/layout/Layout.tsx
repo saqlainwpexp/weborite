@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { NavLink, Outlet, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import {
   ArrowRight, Bell, CalendarDays, Check, ChevronDown, Home, Layers, MapPinned, MoreHorizontal, PanelLeftClose, PanelLeftOpen, UserCog,
-  Banknote, Blocks, Lock, ChartColumn, ClipboardCheck, Contact, Crown, FilePlus2, MessagesSquare, Gauge, ListChecks, PanelsTopLeft, Plus, Radar, Search, Server, Settings as SettingsIcon, Sparkles, UserPlus, Users, Workflow, Wrench,
+  Banknote, Blocks, ChartColumn, ClipboardCheck, Contact, Crown, FilePlus2, MessagesSquare, Gauge, ListChecks, PanelsTopLeft, Plus, Radar, Search, Server, Settings as SettingsIcon, Sparkles, UserPlus, Users, Workflow, Wrench,
 } from "lucide-react";
 import type { BenchmarkSet, Build, BuildStats, CommsService, EventItem, FinderSearch, FinderStats, Lead, Prospect, SeoSite, Settings, Usage, WpConversion } from "../../../shared/types";
 import { api, host, timeAgo, usePoll } from "../lib/api";
 import { workspaceEnabled } from "../../../shared/features";
-import { DemoBanner, DemoLocked, demoLocked, useDemo } from "../components/Demo";
+import { DemoBanner } from "../components/Demo";
 import { AddLeadModal, EventIcon, Logo, StatusPill } from "../components/ui";
 import { NewSearchModal } from "../components/finder";
 import { Calendar, dayKey, parseDayKey } from "../components/Calendar";
@@ -106,7 +106,6 @@ export default function Layout() {
     return w === "finder" || w === "builds" || w === "wordpress" || w === "seo" || w === "care" || w === "comms" || w === "admin" ? w : "mockups";
   });
   const path = location.pathname;
-  const { demo } = useDemo();
   const routeWorkspace: Workspace = path.startsWith("/campaigns") ? "automations" : path.startsWith("/finder") ? "finder" : path.startsWith("/builds") ? "builds" : path.startsWith("/wp") ? "wordpress" : path.startsWith("/seo") ? "seo" : path.startsWith("/care") ? "care" : path.startsWith("/comms") ? "comms" : path.startsWith("/admin") ? "admin" : path.startsWith("/settings") ? lastWorkspace : "mockups";
   // A hidden workspace's URL renders the Mockups shell while the router redirects to "/".
   const workspace: Workspace = workspaceEnabled(routeWorkspace) ? routeWorkspace : "mockups";
@@ -260,7 +259,6 @@ export default function Layout() {
                   <button key={w.key} type="button" role="menuitemradio" aria-checked={w.key === workspace} className={`menu-item${w.key === workspace ? " on" : ""}`} onClick={() => { close(); nav(w.home); }}>
                     <span className="ws-icon"><Icon /></span>
                     <span className="menu-text"><b>{w.label}</b></span>
-                    {demoLocked(demo, w.key) && <Lock className="menu-lock" aria-label="Full version" />}
                     {w.key === "comms" && w.key !== workspace && commsActivity ? <span className="unread">{commsUnread || ""}</span> : w.key === workspace && <Check className="menu-check" />}
                   </button>
                 );
@@ -542,7 +540,7 @@ export default function Layout() {
 
         <main className="content">
           <DemoBanner />
-          {demoLocked(demo, workspace) && !path.startsWith("/settings") ? <DemoLocked workspace={workspace} /> : <Outlet context={ctx} />}
+          <Outlet context={ctx} />
         </main>
       </div>
 

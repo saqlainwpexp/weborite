@@ -4,6 +4,8 @@ import { intakeLead } from "../intake.ts";
 import { createSearch, getSearch, getProspect, listProspects, saveProspect } from "../finder/store.ts";
 import { enqueueSearch } from "../finder/queue.ts";
 import { createCampaign, deleteCampaign, getCampaign, listCampaigns, saveCampaign, updateCampaign } from "./store.ts";
+import { demoCap, demoLeft, demoLimitMessage } from "../license/index.ts";
+import { DEMO_RESULTS } from "../../shared/demo.ts";
 import type { Campaign, CampaignItem, Prospect } from "../../shared/types.ts";
 
 /**
@@ -45,7 +47,10 @@ function advance(c: Campaign) {
     const found = listProspects({ searchId: c.searchId });
     if (search.status === "done" || search.status === "failed") {
       if (!found.length) { c.status = "failed"; c.note = "No businesses found for that prompt."; return; }
-      c.items = found.slice(0, c.max).map(mockupFromProspect);
+      // The demo only has a few mockups: take as many as it has left.
+      const room = Math.min(c.max, demoLeft("mockups"));
+      if (room <= 0) { c.status = "failed"; c.note = demoLimitMessage("mockups"); return; }
+      c.items = found.slice(0, room).map(mockupFromProspect);
       c.status = "generating";
       c.note = `Generating ${c.items.length} mockups…`;
       addEvent({ leadId: null, kind: "info", title: "Campaign started generating", detail: `${c.prompt}: ${c.items.length} mockups queued` });
@@ -100,7 +105,7 @@ campaigns.post("/", (req, res) => {
   const prompt = String(req.body?.prompt ?? "").trim();
   if (prompt.length < 4) return res.status(400).json({ error: "Describe who to reach, e.g. “20 HVAC companies in Austin”" });
   const m = prompt.match(/\b(\d{1,3})\b/);
-  const max = m ? Math.min(120, Math.max(1, Number(m[1]))) : 20;
+  const max = demoCap(m ? Math.min(120, Math.max(1, Number(m[1]))) : 20, DEMO_RESULTS);
   const query = prompt.replace(/\b\d{1,3}\b\s*/, "").replace(/^(find|get|scrape)\s+/i, "").trim() || prompt;
   const search = createSearch(query, max);
   enqueueSearch(search.id);

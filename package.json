@@ -12,8 +12,9 @@
     "typecheck": "tsc --noEmit",
     "dev:api:watch": "node --import tsx --watch-path=server --watch-path=shared server/index.ts",
     "build:server": "node scripts/build-server.mjs",
-    "desktop": "vite build && node scripts/build-server.mjs && electron .",
+    "desktop": "vite build && node scripts/build-server.mjs --owner && electron .",
     "dist": "vite build && node scripts/build-server.mjs && electron-builder --win",
+    "dist:owner": "vite build && node scripts/build-server.mjs --owner && electron-builder --win -c.directories.output=release-owner",
     "icon": "node scripts/make-icon.mjs"
   },
   "dependencies": {

@@ -122,7 +122,7 @@ export function Activation({ status, onActivated }: { status: LicenseStatus; onA
                 Try the demo first
               </button>
               <p className="onb-demo-note">
-                {DEMO_LIMITS.mockups} mockups and {DEMO_LIMITS.searches} Lead Finder searches, free. Enter a key later to unlock everything.
+                Every feature, with small limits ({DEMO_LIMITS.mockups} mockups, {DEMO_LIMITS.searches} Lead Finder searches, 1 of each site). Enter a key later to remove them.
               </p>
             </>
           )}
