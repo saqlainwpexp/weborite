@@ -14,7 +14,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'STUDIO_CARE_VERSION', 1 );
+define( 'STUDIO_CARE_VERSION', 2 );
+
+// XML-RPC stays off once the studio has hardened the site (see studio_care_harden).
+add_filter( 'xmlrpc_enabled', function ( $on ) {
+	return get_option( 'studio_xmlrpc_off' ) ? false : $on;
+}, 99 );
 
 function studio_care_can() {
 	return current_user_can( 'update_plugins' ) && current_user_can( 'manage_options' );
@@ -32,6 +37,7 @@ add_action( 'rest_api_init', function () {
 		array( '/care/staging', 'POST', 'studio_care_staging' ),
 		array( '/care/mail', 'GET', 'studio_care_mail' ),
 		array( '/care/tidy', 'POST', 'studio_care_tidy' ),
+		array( '/care/harden', 'POST', 'studio_care_harden' ),
 	);
 	foreach ( $routes as $r ) {
 		register_rest_route( 'studio/v1', $r[0], array(
@@ -189,6 +195,10 @@ function studio_care_security() {
 
 	$xmlrpc = apply_filters( 'xmlrpc_enabled', true );
 	$add( 'xmlrpc', 'XML-RPC switched off', $xmlrpc ? 'warn' : 'ok', $xmlrpc ? 'xmlrpc.php accepts logins, a common brute-force target' : '' );
+
+	$wf_active = is_plugin_active( 'wordfence/wordfence.php' );
+	$wf_login  = $wf_active && class_exists( 'wfConfig' ) && wfConfig::get( 'loginSecurityEnabled' );
+	$add( 'wordfence', 'Wordfence firewall and brute-force protection', $wf_login ? 'ok' : 'warn', $wf_active ? ( $wf_login ? '' : 'Wordfence is active but brute-force protection is off' ) : 'Not installed. Use "Install & configure Wordfence" below' );
 
 	$exposed = array_values( array_filter( array( 'readme.html', 'license.txt', 'wp-config-sample.php' ), function ( $f ) {
 		return file_exists( ABSPATH . $f );
@@ -659,6 +669,83 @@ function studio_care_tidy() {
 		}
 	}
 	$out['revisions'] = $n;
+	return $out;
+}
+
+/* ---------- security hardening: Wordfence + XML-RPC ---------- */
+
+/**
+ * Install (from wordpress.org) and activate Wordfence, then apply brute-force and login settings.
+ * Application Passwords stay ON: the studio itself signs in with one.
+ * Two-factor login can't be switched on for someone else: each admin enables it under Wordfence → Login Security.
+ */
+function studio_care_harden() {
+	studio_care_admin_includes();
+	@set_time_limit( 300 );
+	$file  = 'wordfence/wordfence.php';
+	$out   = array( 'installed' => false, 'activated' => false, 'version' => '', 'settings' => array(), 'xmlrpc_off' => false, 'notes' => array() );
+	$plugs = get_plugins();
+
+	if ( ! isset( $plugs[ $file ] ) ) {
+		require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+		$api = plugins_api( 'plugin_information', array( 'slug' => 'wordfence', 'fields' => array( 'sections' => false ) ) );
+		if ( is_wp_error( $api ) ) {
+			return new WP_Error( 'studio_wf_lookup', 'Could not reach wordpress.org to download Wordfence: ' . $api->get_error_message(), array( 'status' => 502 ) );
+		}
+		$upgrader = new Plugin_Upgrader( new WP_Ajax_Upgrader_Skin() );
+		$result   = $upgrader->install( $api->download_link );
+		if ( is_wp_error( $result ) || ! $result ) {
+			$msg = is_wp_error( $result ) ? $result->get_error_message() : implode( ' ', (array) $upgrader->skin->get_error_messages() );
+			return new WP_Error( 'studio_wf_install', 'Wordfence could not be installed: ' . ( $msg ? $msg : 'the server refused to write the plugin files' ), array( 'status' => 500 ) );
+		}
+		$out['installed'] = true;
+		wp_clean_plugins_cache();
+		$plugs = get_plugins();
+	}
+	$out['version'] = isset( $plugs[ $file ] ) ? $plugs[ $file ]['Version'] : '';
+
+	if ( ! is_plugin_active( $file ) ) {
+		$act = activate_plugin( $file );
+		if ( is_wp_error( $act ) ) {
+			return new WP_Error( 'studio_wf_activate', 'Wordfence is installed but could not be activated: ' . $act->get_error_message(), array( 'status' => 500 ) );
+		}
+		$out['activated'] = true;
+	}
+
+	if ( ! class_exists( 'wfConfig' ) && file_exists( WP_PLUGIN_DIR . '/wordfence/lib/wfConfig.php' ) ) {
+		require_once WP_PLUGIN_DIR . '/wordfence/lib/wfConfig.php';
+	}
+	if ( class_exists( 'wfConfig' ) ) {
+		$wanted = array(
+			'loginSecurityEnabled'                => array( 1, 'Brute-force protection on' ),
+			'loginSec_maxFailures'                => array( 5, 'Lock out after 5 failed logins' ),
+			'loginSec_maxForgotPasswd'            => array( 5, 'Lock out after 5 password-reset attempts' ),
+			'loginSec_countFailMins'              => array( 240, 'Count failures over 4 hours' ),
+			'loginSec_lockoutMins'                => array( 240, 'Lockout lasts 4 hours' ),
+			'loginSec_lockInvalidUsers'           => array( 1, 'Instantly lock out made-up usernames' ),
+			'loginSec_maskLoginErrors'            => array( 1, 'Login errors don\'t reveal valid usernames' ),
+			'loginSec_blockAdminReg'              => array( 1, 'Block registering "admin" as a username' ),
+			'loginSec_disableAuthorScan'          => array( 1, 'Stop bots discovering usernames via ?author=N' ),
+			'loginSec_strongPasswds_enabled'      => array( 1, 'Enforce strong passwords' ),
+			'loginSec_strongPasswds'              => array( 'pubs', 'Strong passwords for admins and publishing roles' ),
+			'loginSec_breachPasswds_enabled'      => array( 1, 'Block passwords found in data breaches' ),
+			'loginSec_disableApplicationPasswords' => array( 0, 'Application Passwords kept on (the studio uses one)' ),
+			'other_hideWPVersion'                 => array( 1, 'Hide the WordPress version' ),
+			'scheduledScansEnabled'               => array( 1, 'Scheduled malware scans' ),
+		);
+		foreach ( $wanted as $key => $w ) {
+			wfConfig::set( $key, $w[0] );
+			$now               = wfConfig::get( $key );
+			$out['settings'][] = array( 'key' => $key, 'label' => $w[1], 'ok' => (string) $now === (string) $w[0] );
+		}
+	} else {
+		$out['notes'][] = 'Wordfence is active, but its settings could not be loaded in this request. Run hardening again to apply them.';
+	}
+
+	update_option( 'studio_xmlrpc_off', 1, false );
+	$out['xmlrpc_off'] = true;
+	$out['notes'][]    = 'The Wordfence firewall starts in learning mode and switches to full protection on its own after about a week.';
+	$out['notes'][]    = 'Two-factor login: each administrator turns it on under Wordfence → Login Security (it needs their phone).';
 	return $out;
 }
 

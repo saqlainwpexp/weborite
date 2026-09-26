@@ -6,7 +6,7 @@ import type { CareIntegrity, CareSite, CareStagingInfo } from "../../shared/type
 import { createSite, getSite, listSites, saveSite, setSiteSecret, siteSecrets } from "../seo/store.ts";
 import { getConversion, getSecrets } from "../wp/store.ts";
 import { sitePlugin } from "../seo/routes.ts";
-import { careIntegrity, careRollback, careStaging, careTidy } from "./client.ts";
+import { careHarden, careIntegrity, careRollback, careStaging, careTidy } from "./client.ts";
 import { pingSite } from "./health.ts";
 import { careAuth, continueRun, newRun, scanSite, type Progress } from "./pipeline.ts";
 import { reportPdf } from "./report.ts";
@@ -122,6 +122,7 @@ care.get("/:id/data", (req, res) => {
     intel: readCare(s.id, "intel"),
     health: readCare(s.id, "health"),
     integrity: readCare(s.id, "integrity"),
+    hardening: readCare(s.id, "hardening"),
     staging: readCare(s.id, "staging"),
     env: readCare(s.id, "env-check"),
     uptime,
@@ -285,6 +286,26 @@ care.post("/:id/tidy", (req, res) => {
       const r = await careTidy(careAuth(s));
       await scanSite(s.id, p);
       return `Removed ${r.transients} expired transients, ${r.comments} spam/trash comments, ${r.auto_drafts} auto-drafts, ${r.revisions} old revisions`;
+    },
+  });
+  res.json({ ok: true });
+});
+
+/** Install and configure Wordfence (brute-force protection, login rules) and switch XML-RPC off. */
+care.post("/:id/harden", (req, res) => {
+  const s = getCareSite(req.params.id);
+  if (!s) return res.sendStatus(404);
+  if (req.body?.confirm !== true) return res.status(400).json({ error: "Confirm the security changes" });
+  if (busy(s.id)) return res.status(409).json({ error: "Something is already running for this site" });
+  if ((s.connected?.care ?? 0) < 2) return res.status(409).json({ error: "The Studio Connector on this site is too old for this. Download it again from this page and upload it under Plugins → Add New → Upload." });
+  enqueue({
+    siteId: s.id, kind: "harden", run: async (p) => {
+      p("Installing and configuring Wordfence…");
+      const r = await careHarden(careAuth(s));
+      writeCare(s.id, "hardening", { ...r, at: new Date().toISOString() });
+      await scanSite(s.id, p);
+      const applied = r.settings.filter((x) => x.ok).length;
+      return `Wordfence ${r.version}${r.installed ? " installed" : ""}${r.activated ? " and activated" : ""}; ${applied}/${r.settings.length} settings applied; XML-RPC switched off`;
     },
   });
   res.json({ ok: true });

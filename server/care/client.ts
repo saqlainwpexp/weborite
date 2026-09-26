@@ -1,4 +1,4 @@
-import type { CareIntegrity, CareStagingInfo, CareStatus } from "../../shared/types.ts";
+import type { CareIntegrity, CareStagingInfo, CareStatus, CareHardening } from "../../shared/types.ts";
 import { WpError, type WpAuth } from "../wp/client.ts";
 
 /**
@@ -55,3 +55,5 @@ export const careStaging = (auth: WpAuth, action: "start" | "continue" | "status
 export const careMail = (auth: WpAuth, since: number, stagingToken: string) =>
   call<{ mail: { at: number; to: string; subject: string; body: string }[]; blocked: { at: number; method: string; host: string }[] }>(auth, "/studio/v1/care/mail", { query: { since }, stagingToken });
 export const careTidy = (auth: WpAuth) => call<{ transients: number; comments: number; auto_drafts: number; revisions: number }>(auth, "/studio/v1/care/tidy", { method: "POST", body: {}, timeoutMs: 300000 });
+export const careHarden = (auth: WpAuth) =>
+  call<Omit<CareHardening, "at">>(auth, "/studio/v1/care/harden", { method: "POST", body: {}, timeoutMs: 330000 });
