@@ -101,7 +101,13 @@ if ($post && $do !== '') {
             $key, trim((string)$_POST['name']), trim((string)$_POST['email']), $plan, trim((string)($_POST['note'] ?? '')),
             max(1, min(50, (int)($_POST['limit'] ?? 1))), $expires, now(), now(),
         ]);
+        $oid = (int)($_POST['order_id'] ?? 0);
+        if ($oid) $touch('UPDATE orders SET status = ?, license_id = ? WHERE id = ?', ['licensed', (int)db()->lastInsertId(), $oid]);
         go($self, ['new', $key]);
+    }
+    if ($do === 'invoiced' || $do === 'cancel') {
+        $touch('UPDATE orders SET status = ? WHERE id = ? AND status != ?', [$do === 'invoiced' ? 'invoiced' : 'cancelled', (int)($_POST['order_id'] ?? 0), 'licensed']);
+        go($self, ['ok', $do === 'invoiced' ? 'Marked as invoiced.' : 'Order cancelled.']);
     }
     if (!$l) go($self, ['err', "That license doesn't exist."]);
     if ($do === 'extend') {
@@ -121,6 +127,13 @@ if ($post && $do !== '') {
 }
 
 // ---------- Dashboard ----------
+$from = null;
+if (isset($_GET['order'])) {
+    $st = db()->prepare('SELECT * FROM orders WHERE id = ?');
+    $st->execute([(int)$_GET['order']]);
+    $from = $st->fetch() ?: null;
+}
+$orders = db()->query("SELECT * FROM orders ORDER BY CASE status WHEN 'new' THEN 0 WHEN 'invoiced' THEN 1 ELSE 2 END, id DESC LIMIT 50")->fetchAll();
 $q = trim((string)($_GET['q'] ?? ''));
 $sql = 'SELECT l.*, (SELECT COUNT(*) FROM instances i WHERE i.license_id = l.id) AS used,
         (SELECT group_concat(i.name, ", ") FROM instances i WHERE i.license_id = l.id) AS machines,
@@ -160,16 +173,49 @@ page_head('Licenses');
   <p class="<?= $flash[0] === 'err' ? 'err' : 'ok' ?>"><?= h($flash[1]) ?></p>
 <?php endif; ?>
 
+<?php if ($orders): ?>
 <section class="card">
-  <h2>New license</h2>
+  <h2>Orders from the website</h2>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Order</th><th>Customer</th><th>Plan</th><th>Pays by</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+    <?php foreach ($orders as $o): ?>
+      <tr>
+        <td>#<?= (int)$o['id'] ?><br><span class="muted"><?= h(gmdate('j M, H:i', strtotime($o['created_at']))) ?></span></td>
+        <td><b><?= h($o['name']) ?></b><br><span class="muted"><?= h($o['email']) ?><?= $o['company'] !== '' ? ' · ' . h($o['company']) : '' ?><?= $o['country'] !== '' ? ' · ' . h($o['country']) : '' ?></span><?php if ($o['note'] !== '') echo '<br><span class="muted">' . h($o['note']) . '</span>'; ?></td>
+        <td><?= h(ucfirst($o['plan'])) ?></td>
+        <td><?= h(PAYMENT_METHODS[$o['payment']] ?? $o['payment']) ?></td>
+        <td><span class="pill <?= $o['status'] === 'licensed' ? 'active' : ($o['status'] === 'cancelled' ? 'disabled' : 'expired') ?>"><?= h($o['status']) ?></span></td>
+        <td>
+          <?php if ($o['status'] === 'new' || $o['status'] === 'invoiced'): ?>
+          <form method="post" class="acts">
+            <input type="hidden" name="csrf" value="<?= h($_SESSION['csrf']) ?>"><input type="hidden" name="order_id" value="<?= (int)$o['id'] ?>">
+            <?php if ($o['status'] === 'new'): ?><button class="btn sm ghost" name="do" value="invoiced">Mark invoiced</button><?php endif; ?>
+            <a class="btn sm" href="?order=<?= (int)$o['id'] ?>#new">Create license</a>
+            <button class="btn sm danger" name="do" value="cancel">Cancel</button>
+          </form>
+          <?php endif; ?>
+        </td>
+      </tr>
+    <?php endforeach; ?>
+    </tbody>
+  </table>
+  </div>
+</section>
+<?php endif; ?>
+
+<section class="card" id="new">
+  <h2>New license<?= $from ? ' for order #' . (int)$from['id'] : '' ?></h2>
   <form method="post" class="grid">
     <input type="hidden" name="csrf" value="<?= h($_SESSION['csrf']) ?>"><input type="hidden" name="do" value="create">
-    <label>Customer name<input name="name" id="c-name" required></label>
-    <label>Email<input type="email" name="email" id="c-email" required></label>
-    <label>Plan<select name="plan" id="c-plan"><?php foreach ($plans as $k => [$label]) echo '<option value="' . h($k) . '">' . h($label) . '</option>'; ?></select></label>
+    <?php if ($from): ?><input type="hidden" name="order_id" value="<?= (int)$from['id'] ?>"><?php endif; ?>
+    <label>Customer name<input name="name" id="c-name" required value="<?= h($from['name'] ?? '') ?>"></label>
+    <label>Email<input type="email" name="email" id="c-email" required value="<?= h($from['email'] ?? '') ?>"></label>
+    <label>Plan<select name="plan" id="c-plan"><?php foreach ($plans as $k => [$label]) echo '<option value="' . h($k) . '"' . (($from['plan'] ?? '') === $k ? ' selected' : '') . '>' . h($label) . '</option>'; ?></select></label>
     <label title="Leave empty to use the length of the plan">Custom end date<input type="date" name="expires" id="c-exp"></label>
     <label>Computers<input type="number" name="limit" id="c-limit" value="1" min="1" max="50"></label>
-    <label>Note<input name="note" id="c-note" placeholder="Payment reference"></label>
+    <label>Note<input name="note" id="c-note" placeholder="Payment reference" value="<?= $from ? h('Order #' . $from['id'] . ' · ' . (PAYMENT_METHODS[$from['payment']] ?? '')) : '' ?>"></label>
     <button class="btn">Create license</button>
   </form>
 </section>
@@ -242,6 +288,7 @@ function page_head(string $title): void { ?>
   .btn.ghost { background: #fff; color: var(--text); border-color: var(--line); } .btn.ghost:hover { border-color: var(--muted); }
   .btn.danger { background: #fff; color: var(--bad); border-color: #efd0d0; }
   .btn.sm { padding: 5px 10px; font-size: 13px; }
+  a.btn { text-decoration: none; display: inline-block; }
   .scroll { overflow-x: auto; margin-top: 14px; }
   table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 860px; }
   th, td { text-align: left; vertical-align: top; padding: 11px 10px 11px 0; border-top: 1px solid var(--line); }

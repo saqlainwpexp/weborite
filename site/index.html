@@ -28,8 +28,8 @@
       <a href="#faq">FAQ</a>
     </nav>
     <div class="head-actions">
-      <a href="mailto:hello@weborite.com?subject=Weborite%20Studio%20license">Buy a license</a>
-      <a class="btn btn-light btn-sm" href="download/Weborite-Studio-Setup.exe">Download demo</a>
+      <a href="buy.html">Buy a license</a>
+      <a class="btn btn-light btn-sm" href="demo.html">Download demo</a>
     </div>
   </div>
 </header>
@@ -43,7 +43,7 @@
           <h1>Leads, mockups &amp; WordPress sites for web agencies</h1>
           <p class="hero-sub">Weborite Studio finds local businesses with weak websites, redesigns their homepage with Claude using their own content, and turns the design they approve into an editable WordPress site.</p>
           <div class="hero-cta">
-            <a class="btn btn-brand" href="download/Weborite-Studio-Setup.exe">
+            <a class="btn btn-brand" href="demo.html">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg>
               Download the free demo
             </a>
@@ -469,7 +469,7 @@
               <tr><td>Communication channels</td><td>2</td></tr>
             </tbody>
           </table>
-          <a class="btn btn-ghost" href="download/Weborite-Studio-Setup.exe">Download for Windows</a>
+          <a class="btn btn-ghost" href="demo.html">Get the free demo</a>
         </div>
         <div class="plan main">
           <div class="plan-top"><h3>Studio</h3><span class="tag">Everything unlimited</span></div>
@@ -486,10 +486,10 @@
             <li>Email support from the team that builds it</li>
             <li>One computer at a time, move it any time</li>
           </ul>
-          <a class="btn btn-brand" href="mailto:hello@weborite.com?subject=Weborite%20Studio%20license">Buy a license</a>
+          <a class="btn btn-brand" href="buy.html">Buy a license</a>
         </div>
       </div>
-      <p class="fine">Prices in US dollars. Email us to buy: we send an invoice you can pay by bank transfer, Payoneer or Wise, and your license key arrives by email once the payment is in. Enter it in the demo and every limit is removed, with your work kept. See the <a href="refund.html">refund policy</a>.</p>
+      <p class="fine">Prices in US dollars. <a href="buy.html">Order online</a> and we send an invoice you can pay by bank transfer, Payoneer or Wise. Your license key arrives by email once the payment is in. Enter it in the demo and every limit is removed, with your work kept. See the <a href="refund.html">refund policy</a>.</p>
     </div>
   </section>
 
@@ -519,7 +519,7 @@
           <h2>Your next client already has a bad website</h2>
           <p>Download the demo, run one Lead Finder search, and send your first mockup today.</p>
         </div>
-        <a class="btn btn-light" href="download/Weborite-Studio-Setup.exe">Download the free demo</a>
+        <a class="btn btn-light" href="demo.html">Download the free demo</a>
       </div>
     </div>
   </section>
@@ -530,9 +530,9 @@
     <div class="foot-top">
       <div>
         <h2>Take your agency to the next level with Weborite Studio</h2>
-        <a class="btn btn-brand" href="download/Weborite-Studio-Setup.exe">Download the free demo</a>
+        <a class="btn btn-brand" href="demo.html">Download the free demo</a>
       </div>
-      <div class="foot-col"><h4>Product</h4><ul><li><a href="index.html#features">Features</a></li><li><a href="index.html#how">How it works</a></li><li><a href="index.html#pricing">Pricing</a></li><li><a href="index.html#faq">FAQ</a></li></ul></div>
+      <div class="foot-col"><h4>Product</h4><ul><li><a href="index.html#features">Features</a></li><li><a href="index.html#how">How it works</a></li><li><a href="index.html#pricing">Pricing</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="demo.html">Free demo</a></li><li><a href="buy.html">Buy a license</a></li></ul></div>
       <div class="foot-col"><h4>Company</h4><ul><li><a href="https://weborite.com">Weborite agency</a></li><li><a href="mailto:hello@weborite.com">hello@weborite.com</a></li></ul></div>
       <div class="foot-col"><h4>Legal</h4><ul><li><a href="terms.html">Terms of Service</a></li><li><a href="privacy.html">Privacy Policy</a></li><li><a href="refund.html">Refund Policy</a></li></ul></div>
     </div>
@@ -540,92 +540,6 @@
   </div>
 </footer>
 
-<script>
-// Feature tabs: hover, click or arrow keys switch the pane on the right.
-(() => {
-  const tabs = [...document.querySelectorAll('.tab')];
-  const hover = matchMedia('(hover: hover)').matches;
-  const show = (t, focus) => {
-    tabs.forEach((x) => {
-      const on = x === t;
-      x.setAttribute('aria-selected', on);
-      x.tabIndex = on ? 0 : -1;
-      document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
-    });
-    if (focus) t.focus();
-  };
-  tabs.forEach((t, i) => {
-    t.addEventListener('click', () => show(t));
-    if (hover) t.addEventListener('mouseenter', () => show(t));
-    t.addEventListener('keydown', (e) => {
-      const d = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
-      if (d) { e.preventDefault(); show(tabs[(i + d + tabs.length) % tabs.length], true); }
-    });
-  });
-})();
-</script>
-<script>
-// Carousels: pill tabs, arrows, swipe, arrow keys; autoplay while on screen, paused on hover or focus.
-(() => {
-  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const DUR = 5000;
-  const arrow = (d) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
-  document.querySelectorAll('.carousel').forEach((c) => {
-    const slides = [...c.querySelectorAll('.car-slide')];
-    const track = c.querySelector('.car-track');
-    const pill = c.querySelector('.car-pill');
-    const title = c.querySelector('.car-title');
-    let i = 0, timer = 0, visible = false, held = false;
-    c.style.setProperty('--car-dur', DUR + 'ms');
-
-    const mk = (cls, html, label) => { const b = document.createElement('button'); b.type = 'button'; b.className = cls; b.innerHTML = html; if (label) b.setAttribute('aria-label', label); return b; };
-    const prev = mk('car-arrow', arrow('m15 18-6-6 6-6'), 'Previous');
-    const next = mk('car-arrow', arrow('m9 18 6-6-6-6'), 'Next');
-    pill.append(prev);
-    const tabs = slides.map((s, k) => {
-      const t = mk('car-tab', s.dataset.label);
-      t.setAttribute('role', 'tab'); t.setAttribute('aria-label', s.dataset.label);
-      t.addEventListener('click', () => go(k));
-      t.addEventListener('keydown', (e) => { const d = { ArrowRight: 1, ArrowLeft: -1 }[e.key]; if (d) { e.preventDefault(); go(i + d); tabs[i].focus(); } });
-      pill.append(t);
-      return t;
-    });
-    pill.append(next);
-    prev.addEventListener('click', () => go(i - 1));
-    next.addEventListener('click', () => go(i + 1));
-
-    function schedule() {
-      clearTimeout(timer);
-      c.classList.remove('run');
-      void c.offsetWidth; // restart the progress animation
-      if (still || !visible || held) return;
-      c.classList.add('run');
-      timer = setTimeout(() => go(i + 1), DUR);
-    }
-    function go(n) {
-      i = (n + slides.length) % slides.length;
-      track.style.transform = `translateX(${-100 * i}%)`;
-      slides.forEach((s, k) => { s.setAttribute('aria-hidden', String(k !== i)); if (k === i || k === (i + 1) % slides.length) s.querySelector('img').loading = 'eager'; });
-      tabs.forEach((t, k) => { t.setAttribute('aria-selected', String(k === i)); t.tabIndex = k === i ? 0 : -1; });
-      if (title) title.textContent = slides[i].dataset.title;
-      schedule();
-    }
-    const hold = (on) => { held = on; c.classList.toggle('paused', on); if (!on) schedule(); else clearTimeout(timer); };
-    c.addEventListener('mouseenter', () => hold(true));
-    c.addEventListener('mouseleave', () => hold(false));
-    c.addEventListener('focusin', () => hold(true));
-    c.addEventListener('focusout', (e) => { if (!c.contains(e.relatedTarget)) hold(false); });
-
-    let x0 = null;
-    const view = c.querySelector('.car-view');
-    view.addEventListener('pointerdown', (e) => { x0 = e.clientX; });
-    view.addEventListener('pointerup', (e) => { if (x0 !== null && Math.abs(e.clientX - x0) > 40) go(i + (e.clientX < x0 ? 1 : -1)); x0 = null; });
-
-    new IntersectionObserver(([e]) => { visible = e.isIntersecting; schedule(); }, { threshold: 0.35 }).observe(c);
-    new ResizeObserver(() => c.classList.toggle('tight', c.offsetWidth < 640)).observe(c);
-    go(0);
-  });
-})();
-</script>
+<script src="site.js" defer></script>
 </body>
 </html>

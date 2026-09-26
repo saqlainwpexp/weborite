@@ -11,6 +11,10 @@ declare(strict_types=1);
 
 const PRODUCT_NAME = 'Weborite Studio';
 const MAX_FAILURES_PER_HOUR = 20;
+const MAX_ORDERS_PER_HOUR = 5;          // per IP, against spam
+const NOTIFY_EMAIL = 'hello@weborite.com'; // new orders are emailed here
+const PLAN_PRICES = ['monthly' => '$49 per month', 'yearly' => '$490 per year'];
+const PAYMENT_METHODS = ['bank' => 'Bank transfer', 'payoneer' => 'Payoneer', 'wise' => 'Wise'];
 
 function db(): PDO {
     static $pdo = null;
@@ -44,6 +48,20 @@ function db(): PDO {
             last_seen_at TEXT NOT NULL
         );
         CREATE TABLE IF NOT EXISTS settings (k TEXT PRIMARY KEY, v TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS orders (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL,
+            company TEXT NOT NULL DEFAULT '',
+            country TEXT NOT NULL DEFAULT '',
+            plan TEXT NOT NULL,
+            payment TEXT NOT NULL,
+            note TEXT NOT NULL DEFAULT '',
+            status TEXT NOT NULL DEFAULT 'new',
+            license_id INTEGER,
+            ip TEXT NOT NULL DEFAULT '',
+            created_at TEXT NOT NULL
+        );
         CREATE TABLE IF NOT EXISTS failures (ip TEXT NOT NULL, at INTEGER NOT NULL);
         CREATE INDEX IF NOT EXISTS failures_ip ON failures (ip, at);
     SQL);

@@ -5,6 +5,10 @@ hidden `.htaccess` files, to the subdomain's web root. No build step. Needs PHP 
 `sodium` extensions (standard on Hostinger).
 
 - `index.html`: homepage, features, pricing, FAQ
+- `buy.html`: purchase page. Orders go to `license/order.php`, are listed on the license admin page and emailed to
+  `NOTIFY_EMAIL` (set in `license/lib.php`, default hello@weborite.com). The customer gets a confirmation email.
+- `demo.html`: free demo page with the download and install steps
+- `site.js`: feature tabs, carousels and the order form
 - `privacy.html`, `terms.html`, `refund.html`: legal pages. The app links to `/privacy` and `/terms`
   (see `shared/legal.ts`); `.htaccess` serves them without the `.html` extension.
 - `download/Weborite-Studio-Setup.exe`: upload the installer from `npm run dist` here, renamed.
@@ -16,7 +20,10 @@ hidden `.htaccess` files, to the subdomain's web root. No build step. Needs PHP 
 2. Copy the **App public key** from the bottom of that page into `LICENSE_PUBLIC_KEY` in
    `shared/licenseKey.ts`, commit it, and build the installer (`npm run dist`). A customer build refuses to
    build without it.
-3. To sell: take the payment, then create a license on the admin page and send the email it drafts.
+3. To sell: new orders appear at the top of the admin page (and in your inbox). Send the invoice, click
+   **Mark invoiced**, and once paid click **Create license**: the form is filled in from the order, and the
+   email to send the key is drafted for you. Emails use PHP's mail(), which Hostinger supports; create the
+   hello@weborite.com mailbox so replies reach you.
 
 The app talks to `license/v1/licenses/{activate,validate,deactivate}` and only trusts answers signed with the
 server's private key, which never leaves `license/data/`. The database is `license/data/licenses.sqlite`
