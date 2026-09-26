@@ -1,6 +1,26 @@
-# studio.weborite.com: serve /privacy, /terms and /refund without the .html extension
+# studio.weborite.com: clean addresses with no .html (Apache / LiteSpeed)
 Options -MultiViews
+DirectoryIndex index.html
 RewriteEngine On
+
+# Old address
 RewriteRule ^privacy-policy/?$ /privacy [R=301,L]
-RewriteCond %{REQUEST_FILENAME}.html -f
-RewriteRule ^([a-z-]+)/?$ $1.html [L]
+
+# /index.html or /index -> /
+RewriteCond %{THE_REQUEST} \s/+index(\.html)?[\s?#] [NC]
+RewriteRule ^ / [R=301,L]
+
+# /buy.html -> /buy (only for addresses typed or linked, not for the internal rewrite below)
+RewriteCond %{THE_REQUEST} \s/+([^?\s]+?)\.html[\s?] [NC]
+RewriteCond %{REQUEST_URI} !^/license/
+RewriteRule ^ /%1 [R=301,L]
+
+# /buy/ -> /buy (folders like /license/ keep their slash)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+# /buy -> buy.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+RewriteRule ^([a-z0-9-]+)$ $1.html [L]
