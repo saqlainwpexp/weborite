@@ -97,7 +97,7 @@ export default function CommsView() {
                   <button className="nav-item menu-row" onClick={() => { close(); act("zoom-out"); }}><Minus />Zoom out</button>
                   <button className="nav-item menu-row" onClick={() => { close(); act("zoom-reset"); }}><RotateCw />Reset zoom</button>
                   <button className="nav-item menu-row" onClick={() => { close(); desktop?.openExternal(st?.url || svc.url); }}><ExternalLink />Open in browser</button>
-                  <button className="nav-item menu-row" onClick={() => { close(); act("devtools"); }}><Code2 />Developer tools</button>
+                  {import.meta.env.DEV && <button className="nav-item menu-row" onClick={() => { close(); act("devtools"); }}><Code2 />Developer tools</button>}
                   <div className="side-divider" />
                   <button className="nav-item menu-row" onClick={() => { close(); if (confirm(`Sign out of ${svc.name}? This clears its saved login and data in the app.`)) act("signout"); }}><LogOut />Sign out</button>
                   <button className="nav-item menu-row danger" onClick={async () => { close(); if (confirm(`Remove ${svc.name}? Its login in the app is forgotten.`)) { act("signout"); await api(`/api/comms/${svc.id}`, { method: "DELETE" }); await desktop?.comms.sync(); reloadAll(); nav("/comms"); } }}><Trash2 />Remove channel</button>

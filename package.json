@@ -39,6 +39,7 @@
     "electron": "^44.4.4",
     "electron-builder": "^26.15.3",
     "esbuild": "^0.28.2",
+    "javascript-obfuscator": "^4.2.2",
     "lucide-react": "^1.47.0",
     "php-parser": "^3.7.0",
     "react": "^19.3.0",
@@ -73,6 +74,13 @@
       "en-US"
     ],
     "afterPack": "scripts/after-pack.mjs",
+    "electronFuses": {
+      "runAsNode": true,
+      "enableNodeOptionsEnvironmentVariable": false,
+      "enableNodeCliInspectArguments": false,
+      "enableEmbeddedAsarIntegrityValidation": true,
+      "onlyLoadAppFromAsar": true
+    },
     "files": [
       "electron/**",
       "app-dist/**",

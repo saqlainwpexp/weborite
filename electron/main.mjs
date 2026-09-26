@@ -183,7 +183,7 @@ function createWindow() {
     icon: ICON,
     backgroundColor: "#e6e5e5",
     autoHideMenuBar: true,
-    webPreferences: { preload: join(HERE, "preload.cjs"), contextIsolation: true, nodeIntegration: false, sandbox: true, spellcheck: true, zoomFactor: zoom },
+    webPreferences: { preload: join(HERE, "preload.cjs"), contextIsolation: true, nodeIntegration: false, sandbox: true, spellcheck: true, zoomFactor: zoom, devTools: DEV },
   });
   win.once("ready-to-show", () => win.show());
   // Ctrl + / Ctrl - / Ctrl 0, like a browser.
@@ -196,6 +196,8 @@ function createWindow() {
     e.preventDefault();
   });
   win.webContents.on("did-finish-load", () => win.webContents.setZoomFactor(zoom));
+  // Installed copies never show developer tools, however they're asked for.
+  if (!DEV) win.webContents.on("devtools-opened", () => win.webContents.closeDevTools());
   splashUrl = splashUrlFor();
   void win.loadURL(splashUrl);
 
@@ -323,7 +325,7 @@ function createChannel(svc) {
   ses.setPermissionCheckHandler((_wc, perm) => allowed(perm));
 
   const view = new WebContentsView({
-    webPreferences: { session: ses, preload: join(HERE, "preload-channel.cjs"), contextIsolation: true, sandbox: true, spellcheck: true, zoomFactor: zoom },
+    webPreferences: { session: ses, preload: join(HERE, "preload-channel.cjs"), contextIsolation: true, sandbox: true, spellcheck: true, zoomFactor: zoom, devTools: DEV },
   });
   view.setBackgroundColor("#ffffff");
   entry.view = view;
@@ -338,7 +340,7 @@ function createChannel(svc) {
       /* not a web address */
     }
     if (/^https:/i.test(url) && (isAuthUrl(url) || sameSite)) {
-      return { action: "allow", overrideBrowserWindowOptions: { width: 520, height: 720, autoHideMenuBar: true, icon: ICON, webPreferences: { session: ses } } };
+      return { action: "allow", overrideBrowserWindowOptions: { width: 520, height: 720, autoHideMenuBar: true, icon: ICON, webPreferences: { session: ses, devTools: DEV } } };
     }
     if (/^https?:/i.test(url)) void shell.openExternal(url);
     return { action: "deny" };
@@ -441,7 +443,7 @@ ipcMain.handle("comms:action", async (_e, { id, action }) => {
   else if (action === "back" && wc.navigationHistory.canGoBack()) wc.navigationHistory.goBack();
   else if (action === "forward" && wc.navigationHistory.canGoForward()) wc.navigationHistory.goForward();
   else if (action === "home") await wc.loadURL(c.svc.url);
-  else if (action === "devtools") wc.openDevTools({ mode: "detach" });
+  else if (action === "devtools" && DEV) wc.openDevTools({ mode: "detach" });
   else if (action === "zoom-in") wc.setZoomLevel(wc.getZoomLevel() + 0.5);
   else if (action === "zoom-out") wc.setZoomLevel(wc.getZoomLevel() - 0.5);
   else if (action === "zoom-reset") wc.setZoomFactor(zoom);
