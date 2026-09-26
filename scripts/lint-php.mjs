@@ -6,7 +6,7 @@ import PhpParser from "php-parser";
 const parser = new PhpParser({ parser: { php8: true, suppressErrors: false }, ast: { withPositions: true } });
 const dir = join(import.meta.dirname, "..", "server", "wp", "php");
 let failed = 0;
-for (const f of ["care.php", "staging-mu.php"]) {
+for (const f of ["care.php", "woo.php", "staging-mu.php"]) {
   try {
     parser.parseCode(readFileSync(join(dir, f), "utf8"), f);
     console.log(`ok    ${f}`);

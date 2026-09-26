@@ -6,6 +6,7 @@ import { getBuild } from "../builds/store.ts";
 import { ClaudeUnavailableError } from "../claude/runner.ts";
 import { NeedsUserError, checkConnection, convertPage, nextPendingPage, pluginPath, rebuildPlugin, resumeConversions } from "./pipeline.ts";
 import { convDir, createConversion, deleteConversionRow, getConversion, listConversions, saveConversion, setSecret } from "./store.ts";
+import { CSV_TEMPLATE, defaultStore, resetStaleStoreRuns, runStore, saveCatalog, storeBusy, updateStore } from "./woo.ts";
 
 /* ---------- queue: one page at a time ---------- */
 
@@ -50,6 +51,7 @@ async function pump() {
 }
 
 export function resumeWp() {
+  resetStaleStoreRuns(listConversions());
   resumeConversions((id, slug) => enqueue({ id, slug }));
 }
 
@@ -115,6 +117,58 @@ wp.post("/:id/test", async (req, res) => {
   } catch (e) {
     res.status(400).json({ error: (e as Error).message, connected: getConversion(c.id)!.connected });
   }
+});
+
+/* ---------- WooCommerce store ---------- */
+
+wp.get("/store/template.csv", (_req, res) => {
+  res.setHeader("Content-Type", "text/csv; charset=utf-8");
+  res.setHeader("Content-Disposition", 'attachment; filename="products-template.csv"');
+  res.send(CSV_TEMPLATE);
+});
+
+wp.put("/:id/store", async (req, res) => {
+  const c = getConversion(req.params.id);
+  if (!c) return res.sendStatus(404);
+  if (storeBusy(c.id)) return res.status(409).json({ error: "The store setup is running. Wait for it to finish." });
+  const first = !c.store;
+  updateStore(c, req.body ?? {});
+  // The first time a site becomes a store, bump the connector so the download includes woo.php.
+  if (first) {
+    c.pluginVersion++;
+    saveConversion(c);
+    await rebuildPlugin(c);
+  }
+  res.json(getConversion(c.id));
+});
+
+wp.delete("/:id/store", (req, res) => {
+  const c = getConversion(req.params.id);
+  if (!c) return res.sendStatus(404);
+  if (storeBusy(c.id)) return res.status(409).json({ error: "The store setup is running." });
+  if (c.store) c.store.enabled = false;
+  saveConversion(c);
+  res.json(c);
+});
+
+wp.post("/:id/store/catalog", (req, res) => {
+  const c = getConversion(req.params.id);
+  if (!c) return res.sendStatus(404);
+  if (storeBusy(c.id)) return res.status(409).json({ error: "The store setup is running." });
+  const csv = String(req.body?.csv ?? "");
+  if (!csv.trim()) return res.status(400).json({ error: "The file is empty." });
+  if (csv.length > 1_900_000) return res.status(413).json({ error: "The CSV is over 2 MB. Remove the Description column or split the file." });
+  if (!c.store) c.store = defaultStore();
+  res.json(saveCatalog(c, String(req.body?.file ?? "products.csv"), csv));
+});
+
+wp.post("/:id/store/run", (req, res) => {
+  const c = getConversion(req.params.id);
+  if (!c?.store?.enabled) return res.status(400).json({ error: "Turn the store on first." });
+  if (!c.appPasswordSet) return res.status(400).json({ error: "Add the WordPress username and Application Password first." });
+  if (storeBusy(c.id)) return res.status(409).json({ error: "Already running." });
+  void runStore(c.id);
+  res.json({ ok: true });
 });
 
 wp.get("/:id/plugin", (req, res) => {
