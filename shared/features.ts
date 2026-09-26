@@ -5,6 +5,6 @@
  *
  * All keys: admin, mockups, automations, finder, builds, wordpress, seo, care, comms
  */
-export const ENABLED_WORKSPACES: readonly string[] = ["admin", "mockups", "finder"];
+export const ENABLED_WORKSPACES: readonly string[] = ["admin", "mockups", "automations", "finder", "builds", "wordpress", "seo", "care", "comms"];
 
 export const workspaceEnabled = (key: string) => ENABLED_WORKSPACES.includes(key);
