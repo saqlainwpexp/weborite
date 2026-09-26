@@ -1,0 +1,34 @@
+{
+  "vertical": "travel-medical-assistance",
+  "label": "Medical Assistance",
+  "register": "The buyer is a traveller or family deciding whether this membership looks credible and capable enough to trust with getting them home safely after illness or injury abroad, judged against travel medical assistance and air ambulance membership providers rather than ordinary travel insurance comparison sites.",
+  "color": "#5a8f93",
+  "sites": [
+    {
+      "name": "Medjet",
+      "url": "https://medjetassist.com/",
+      "why": "Explains the membership in one line (transport to your home hospital of choice, not just the nearest facility), states a clear 'starting at' price, and splits plans by traveller type (annual, short-term, seniors)."
+    },
+    {
+      "name": "Global Rescue",
+      "url": "https://www.globalrescue.com/",
+      "why": "Leads with operational credibility: large rescue-operation counts, member numbers and recognisable organisations that trust them, plus 'no deductibles, no claim forms' simplicity right next to the join button."
+    },
+    {
+      "name": "MASA",
+      "url": "https://masaaccess.com/",
+      "why": "Uses heritage (founded 1974) and member scale as trust anchors, and answers objections up front with plain promises: no health questions, no age limits, no waiting periods."
+    },
+    {
+      "name": "SkyMed",
+      "url": "https://skymed.com/",
+      "why": "A smaller independent provider that shows exactly where coverage applies and which services are included, with memberships sold by duration from days to years, a realistic model for a niche membership."
+    },
+    {
+      "name": "AirMedCare Network",
+      "url": "https://www.airmedcarenetwork.com/",
+      "why": "Puts the price per year and 'covers your whole household' in the hero, backed by bases and years of service, and is candid about limitations, which builds trust for a membership product."
+    }
+  ],
+  "createdAt": "2026-09-25T07:49:13.066Z"
+}
