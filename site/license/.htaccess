@@ -1,0 +1,7 @@
+# Weborite Studio license service
+Options -Indexes -MultiViews
+RewriteEngine On
+RewriteRule ^v1/licenses/(activate|validate|deactivate)/?$ api.php?action=$1 [L,QSA]
+RewriteRule ^$ admin.php [L]
+# Only the API and admin page are reachable
+RewriteRule ^(lib\.php|data/) - [F,L]

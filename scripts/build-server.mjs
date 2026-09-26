@@ -2,11 +2,15 @@
 //   node scripts/build-server.mjs            customer build: license always enforced
 //   node scripts/build-server.mjs --owner    owner build: license check skipped (never share this one)
 import { build } from "esbuild";
-import { writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const root = join(import.meta.dirname, "..");
 const owner = process.argv.includes("--owner");
+if (!owner && !/LICENSE_PUBLIC_KEY = "[A-Za-z0-9+/=]{40,}"/.test(readFileSync(join(root, "shared", "licenseKey.ts"), "utf8"))) {
+  console.error("shared/licenseKey.ts has no LICENSE_PUBLIC_KEY. Copy it from the license admin page first (see site/README.md).");
+  process.exit(1);
+}
 await build({
   entryPoints: [join(root, "server", "index.ts")],
   outfile: join(root, "app-dist", "server.mjs"),
