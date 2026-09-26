@@ -1084,3 +1084,29 @@ small.warn, span.warn, .warn { color: var(--amber); }
 .activate-err svg { width: 15px; height: 15px; flex: none; }
 .activate-btn { width: 100%; justify-content: center; margin-top: 18px; }
 .activate-foot { color: var(--faint); font-size: 12px; line-height: 1.5; margin-top: 18px; }
+
+/* Leads table: selection, sortable headers, bulk bar, pagination */
+.table .col-check { width: 36px; padding-right: 0; cursor: default; }
+.table .col-check input { width: 18px; height: 18px; accent-color: var(--ink); margin: 0; cursor: pointer; vertical-align: middle; }
+.table tr.row.picked td { background: var(--accent-softer); }
+.th-sort { display: inline-flex; align-items: center; gap: 4px; background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; min-height: 24px; }
+.th-sort svg { width: 13px; height: 13px; opacity: .45; }
+.th-sort:hover, .th-sort.on { color: var(--text); }
+.th-sort.on svg { opacity: 1; }
+.bulk-bar { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 16px; padding: 10px 16px; margin: 0 0 12px; border-radius: 14px; background: var(--card); box-shadow: 0 0 0 1px var(--hairline); }
+.bulk-bar .link-btn { font-size: 14px; }
+.bulk-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-left: auto; }
+.btn.danger { color: var(--red); }
+.pager { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 20px; padding: 18px 4px 2px; border-top: 1px solid var(--hairline); margin-top: 6px; font-size: 14px; }
+.pager-pages { display: flex; align-items: center; gap: 6px; margin: 0 auto; }
+.pager-num { min-width: 36px; justify-content: center; }
+.pager-num.on { background: var(--ink); color: #fff; }
+.pager-size { display: flex; align-items: center; gap: 8px; }
+.pager-size select { width: auto; min-height: 36px; padding: 4px 28px 4px 10px; }
+@media (max-width: 640px) { .pager-pages { margin: 0; order: 3; width: 100%; justify-content: center; } }
+/* Filter segments scroll inside themselves on narrow screens instead of widening the page. */
+.filter-bar .seg { max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+.filter-bar .seg button { flex: none; }
+.table td.col-biz { min-width: 190px; }
+@media (max-width: 640px) { .table td.col-biz { min-width: 190px; } }
+.table .vchip .clip { max-width: 130px; }

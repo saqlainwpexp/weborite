@@ -99,6 +99,22 @@ finder.delete("/prospects/:id", (req, res) => {
   res.json({ ok: true });
 });
 
+/** Delete several leads at once (the Leads table's bulk action). */
+finder.post("/prospects/delete", (req, res) => {
+  const ids: string[] = Array.isArray(req.body?.ids) ? req.body.ids.map(String) : [];
+  const searches = new Set<string>();
+  let deleted = 0;
+  for (const id of ids) {
+    const p = getProspect(id);
+    if (!p) continue;
+    deleteProspect(p.id);
+    searches.add(p.searchId);
+    deleted++;
+  }
+  for (const s of searches) refreshSearchCounts(s);
+  res.json({ deleted });
+});
+
 /** Hand a found business to the Mockups workspace. */
 finder.post("/prospects/:id/mockup", (req, res) => {
   const p = getProspect(req.params.id);
@@ -127,7 +143,8 @@ const csvCell = (v: unknown) => {
 finder.get("/export.csv", (req, res) => {
   const searchId = typeof req.query.search === "string" ? req.query.search : undefined;
   const tag = typeof req.query.tag === "string" ? req.query.tag : "";
-  const rows = listProspects({ searchId }).filter((p: Prospect) => !tag || p.tags.includes(tag));
+  const ids = typeof req.query.ids === "string" && req.query.ids ? new Set(req.query.ids.split(",")) : null;
+  const rows = listProspects({ searchId }).filter((p: Prospect) => (!tag || p.tags.includes(tag)) && (!ids || ids.has(p.id)));
   const head = ["Business", "Fit score", "Fit", "Why", "Category", "Phone", "WhatsApp", "Emails", "Website", "Rating", "Reviews", "Address", "Google Maps", "Search"];
   const searches = new Map(listSearches().map((s) => [s.id, s.query]));
   const lines = rows.map((p) =>

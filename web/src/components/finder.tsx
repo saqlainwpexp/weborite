@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight, Globe, Mail, MapPin, MessageCircle, Star } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUp, ArrowUpDown, Globe, Mail, MapPin, MessageCircle, Star } from "lucide-react";
 import type { FinderSearch, Prospect, SearchStatus } from "../../../shared/types";
 import { api, host, timeAgo } from "../lib/api";
 import { Modal } from "./ui";
@@ -122,7 +122,37 @@ export function FitPill({ p }: { p: Prospect }) {
   );
 }
 
-export function ProspectsTable({ prospects, searches, compact = false }: { prospects: Prospect[]; searches: FinderSearch[]; compact?: boolean }) {
+export type ProspectSortKey = "name" | "fit" | "reviews" | "rating" | "found";
+export type SortDir = "asc" | "desc";
+
+export interface ProspectSelection {
+  selected: Set<string>;
+  /** Toggle one row; shift-click passes `range` so everything between the last click and this row flips too. */
+  toggle: (id: string, range: boolean) => void;
+  togglePage: (ids: string[]) => void;
+}
+
+function SortTh({ label, k, sort, onSort, className }: { label: string; k: ProspectSortKey; sort?: { key: ProspectSortKey; dir: SortDir }; onSort?: (k: ProspectSortKey) => void; className?: string }) {
+  if (!onSort || !sort) return <th className={className}>{label}</th>;
+  const on = sort.key === k;
+  return (
+    <th className={className} aria-sort={on ? (sort.dir === "asc" ? "ascending" : "descending") : "none"}>
+      <button type="button" className={`th-sort${on ? " on" : ""}`} onClick={() => onSort(k)}>
+        {label}
+        {on ? (sort.dir === "asc" ? <ArrowUp aria-hidden="true" /> : <ArrowDown aria-hidden="true" />) : <ArrowUpDown aria-hidden="true" />}
+      </button>
+    </th>
+  );
+}
+
+export function ProspectsTable({ prospects, searches, compact = false, selection, sort, onSort }: {
+  prospects: Prospect[];
+  searches: FinderSearch[];
+  compact?: boolean;
+  selection?: ProspectSelection;
+  sort?: { key: ProspectSortKey; dir: SortDir };
+  onSort?: (k: ProspectSortKey) => void;
+}) {
   const nav = useNavigate();
   if (!prospects.length) {
     return (
@@ -132,15 +162,28 @@ export function ProspectsTable({ prospects, searches, compact = false }: { prosp
       </div>
     );
   }
+  const pageIds = prospects.map((p) => p.id);
+  const onPage = selection ? pageIds.filter((id) => selection.selected.has(id)).length : 0;
   return (
     <div className="table-wrap">
       <table className="table">
         <thead>
           <tr>
-            <th>Business</th>
-            <th>Fit</th>
+            {selection && (
+              <th className="col-check">
+                <input
+                  type="checkbox"
+                  aria-label={onPage === pageIds.length ? "Deselect all leads on this page" : "Select all leads on this page"}
+                  checked={onPage > 0 && onPage === pageIds.length}
+                  ref={(el) => { if (el) el.indeterminate = onPage > 0 && onPage < pageIds.length; }}
+                  onChange={() => selection.togglePage(pageIds)}
+                />
+              </th>
+            )}
+            <SortTh label="Business" k="name" sort={sort} onSort={onSort} />
+            <SortTh label="Fit" k="fit" sort={sort} onSort={onSort} />
             <th className="hide-sm">Phone</th>
-            <th>Reviews</th>
+            <SortTh label="Reviews" k="reviews" sort={sort} onSort={onSort} />
             {!compact && <th className="hide-sm">Website</th>}
             <th>Tags</th>
             {!compact && <th className="hide-sm">Search</th>}
@@ -150,9 +193,15 @@ export function ProspectsTable({ prospects, searches, compact = false }: { prosp
         <tbody>
           {prospects.map((p) => {
             const s = searches.find((x) => x.id === p.searchId);
+            const picked = selection?.selected.has(p.id) ?? false;
             return (
-              <tr key={p.id} className="row" onClick={() => nav(`/finder/leads/${p.id}`)}>
-                <td>
+              <tr key={p.id} className={`row${picked ? " picked" : ""}`} onClick={() => nav(`/finder/leads/${p.id}`)}>
+                {selection && (
+                  <td className="col-check" onClick={(e) => { e.stopPropagation(); selection.toggle(p.id, e.shiftKey); }}>
+                    <input type="checkbox" aria-label={`Select ${p.name}`} checked={picked} readOnly tabIndex={0} onKeyDown={(e) => { if (e.key === " ") { e.preventDefault(); selection.toggle(p.id, e.shiftKey); } }} />
+                  </td>
+                )}
+                <td className="col-biz">
                   <div className="lead-cell">
                     <span className="biz-mark" aria-hidden="true">{p.name.replace(/[^A-Za-z0-9]/g, "").slice(0, 1).toUpperCase() || "•"}</span>
                     <div style={{ minWidth: 0 }}>
