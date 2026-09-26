@@ -1,0 +1,6 @@
+# studio.weborite.com: serve /privacy, /terms and /refund without the .html extension
+Options -MultiViews
+RewriteEngine On
+RewriteRule ^privacy-policy/?$ /privacy [R=301,L]
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^([a-z-]+)/?$ $1.html [L]
