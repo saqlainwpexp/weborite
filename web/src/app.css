@@ -1142,3 +1142,22 @@ small.warn, span.warn, .warn { color: var(--amber); }
   .zone-row { grid-template-columns: 1fr 1fr; }
   .zone-row .icon-btn { justify-self: start; }
 }
+
+/* First-run onboarding (step 2 of the activation screen) */
+.onb-card { max-width: 480px; text-align: left; }
+.onb-card .activate-mark, .onb-card h1, .onb-card .activate-sub, .onb-card .onb-step, .onb-card .activate-foot { text-align: center; }
+.onb-step { font-size: 12px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; text-align: center; }
+.onb-ok { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 13px; color: var(--green, #3a7d44); margin: -8px 0 18px; }
+.onb-ok svg { width: 15px; height: 15px; }
+.onb-form { display: grid; gap: 14px; }
+.onb-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.onb-field { display: grid; gap: 6px; font-size: 12.5px; font-weight: 600; }
+.onb-field em, .onb-check em { font-style: normal; font-weight: 400; color: var(--muted); }
+.onb-field .input { width: 100%; font-weight: 400; }
+.onb-field .input[aria-invalid="true"] { box-shadow: 0 0 0 1.5px var(--red); }
+.onb-check { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; line-height: 1.5; cursor: pointer; }
+.onb-check input { width: 18px; height: 18px; margin: 1px 0 0; flex: none; accent-color: var(--ink); }
+.onb-check a { color: var(--text); text-decoration: underline; }
+.onb-check.bad span { color: var(--red); }
+.onb-card .activate-err { justify-content: flex-start; }
+@media (max-width: 480px) { .onb-row { grid-template-columns: 1fr; } .activate-card { padding: 26px 20px; } }
