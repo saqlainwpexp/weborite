@@ -96,7 +96,9 @@ async function startServer() {
   base = `http://127.0.0.1:${port}`;
   for (let i = 0; i < 120; i++) {
     try {
-      if ((await fetch(`${base}/api/settings`)).ok) return;
+      // 402 = up but not activated yet; the dashboard shows the activation screen.
+      const r = await fetch(`${base}/api/settings`);
+      if (r.ok || r.status === 402) return;
     } catch {
       /* not up yet */
     }
