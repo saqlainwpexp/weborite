@@ -274,6 +274,8 @@ license.post("/deactivate", async (_req, res) => {
 /** Middleware: block the API for unlicensed installs (except the license + basic read routes). */
 export function requireLicense(allow: RegExp) {
   return (req: Parameters<typeof localOnly>[0], res: Parameters<typeof localOnly>[1], next: Parameters<typeof localOnly>[2]) => {
+    // The dashboard itself always loads: it shows the activation screen. Only data is gated.
+    if (!/^\/(api|files)\//.test(req.path)) return next();
     if (isLicensed() || allow.test(req.path)) return next();
     if (isDemo()) return demoGate(req, res, next);
     res.status(402).json({ error: "This copy isn't activated.", needsLicense: true });
