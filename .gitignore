@@ -31,3 +31,4 @@ design-library/_progress.log
 
 # Cloud worker checkout of the jobs branch
 .cloud-jobs/
+out/
