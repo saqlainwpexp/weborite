@@ -4,7 +4,7 @@ import {
   Activity, AlertTriangle, ArchiveRestore, CheckCircle2, Circle, Database, Download, ExternalLink, FileText, Globe, KeyRound, Loader2, Lock, Mail,
   Play, Plug, RefreshCw, RotateCcw, ScanSearch, Server, ShieldAlert, ShieldCheck, Trash2, Wrench, XCircle,
 } from "lucide-react";
-import type { CareHealth, CareIntegrity, CareIntel, CarePageCheck, CareRun, CareStagingInfo, CareStatus, CareStep, CareTestReport, CareUpdateItem } from "../../../../shared/types";
+import type { CareHardening, CareHealth, CareIntegrity, CareIntel, CarePageCheck, CareRun, CareStagingInfo, CareStatus, CareStep, CareTestReport, CareUpdateItem } from "../../../../shared/types";
 import type { LayoutCtx } from "../../layout/Layout";
 import { api, host, timeAgo, usePoll } from "../../lib/api";
 import { careState, type CareView } from "./CareList";
@@ -15,6 +15,7 @@ type Data = {
   intel: CareIntel | null;
   health: CareHealth | null;
   integrity: CareIntegrity | null;
+  hardening: CareHardening | null;
   staging: CareStagingInfo | null;
   env: { matches: boolean; diffs: string[] } | null;
   uptime: [number, number, number][];
@@ -423,6 +424,34 @@ export default function CareDetail() {
                     ))}
                   </div>
                 ) : <p className="muted" style={{ marginTop: 12 }}>Scan the site first.</p>}
+              </div>
+              <div className="card card-lg">
+                <div className="run-bar">
+                  <div><b><ShieldCheck size={17} /> Wordfence &amp; login protection</b><span className="muted">{d?.hardening ? `Configured ${timeAgo(d.hardening.at)}` : "Installs Wordfence from wordpress.org, turns on brute-force protection and login rules, and switches XML-RPC off."}</span></div>
+                  <button className="btn btn-ink btn-sm" disabled={s.busy || !connected} onClick={() => { if (confirm("Install and configure Wordfence on the live site? This installs the free Wordfence plugin from wordpress.org, locks out repeated failed logins, blocks breached and weak admin passwords, and switches XML-RPC off. Application Passwords stay on, since the studio uses one.")) void act(() => post("/harden", { confirm: true }), "Securing the site…"); }}><ShieldCheck />{d?.hardening ? "Apply again" : "Install & configure Wordfence"}</button>
+                </div>
+                {d?.hardening && (
+                  <div className="check-group">
+                    <div className="check-item">
+                      <span className="check-ico"><CheckCircle2 className="ok" /></span>
+                      <div><b>Wordfence {d.hardening.version}</b><small className="muted">{d.hardening.installed ? "Installed and activated by the studio" : "Already installed"}</small></div>
+                      <span />
+                    </div>
+                    {d.hardening.settings.map((x) => (
+                      <div key={x.key} className="check-item">
+                        <span className="check-ico">{x.ok ? <CheckCircle2 className="ok" /> : <AlertTriangle className="warn" />}</span>
+                        <div><b>{x.label}</b>{!x.ok && <small className="muted">Wordfence didn't accept this setting. Check it under Wordfence → All Options.</small>}</div>
+                        <span />
+                      </div>
+                    ))}
+                    <div className="check-item">
+                      <span className="check-ico">{d.hardening.xmlrpc_off ? <CheckCircle2 className="ok" /> : <AlertTriangle className="warn" />}</span>
+                      <div><b>XML-RPC switched off</b></div>
+                      <span />
+                    </div>
+                    {d.hardening.notes.map((n) => <p key={n} className="muted" style={{ fontSize: 13, margin: "10px 0 0" }}>{n}</p>)}
+                  </div>
+                )}
               </div>
               <div className="card card-lg">
                 <div className="run-bar">

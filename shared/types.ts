@@ -845,3 +845,14 @@ export interface AdminOverview {
   activity: EventItem[];
   topClients: AdminClient[];
 }
+
+/** Result of installing and configuring Wordfence on a maintenance site. */
+export interface CareHardening {
+  at: string;
+  installed: boolean; // freshly installed this run
+  activated: boolean;
+  version: string;
+  settings: { key: string; label: string; ok: boolean }[];
+  xmlrpc_off: boolean;
+  notes: string[];
+}
