@@ -8,7 +8,7 @@
 <link rel="icon" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Urbanist:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="site.css">
 </head>
 <body>
@@ -22,7 +22,7 @@
       Weborite Studio
     </a>
     <nav class="nav" aria-label="Main">
-      <a href="#find">Features</a>
+      <a href="#features">Features</a>
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
@@ -83,6 +83,98 @@
     </div>
   </section>
 
+  <section class="section tabs-section" id="features">
+    <div class="wrap">
+      <div class="split-head">
+        <div><span class="eyebrow">Everything in one app</span><h2>From the first search to the signed client</h2></div>
+        <p>Six tools that used to be six subscriptions. Hover or tap each one to see it at work.</p>
+      </div>
+      <div class="tabs">
+        <div class="tab-list" role="tablist" aria-orientation="vertical" aria-label="Features">
+          <button class="tab" role="tab" id="tab-1" aria-controls="pane-1" aria-selected="true" tabindex="0">
+            <span class="tab-num">01</span><span class="tab-title">Lead Finder</span><span class="tab-arrow" aria-hidden="true">→</span>
+            <span class="tab-text">Search Google Maps for any trade in any city and get every business with its phone, website, <b>rating and reviews</b>, ready to sort.</span>
+          </button>
+          <button class="tab" role="tab" id="tab-2" aria-controls="pane-2" aria-selected="false" tabindex="-1">
+            <span class="tab-num">02</span><span class="tab-title">Fit score</span><span class="tab-arrow" aria-hidden="true">→</span>
+            <span class="tab-text">Each website is visited and graded, so you see <b>who needs a new site most</b>: slow pages, no mobile layout, no HTTPS, an old footer.</span>
+          </button>
+          <button class="tab" role="tab" id="tab-3" aria-controls="pane-3" aria-selected="false" tabindex="-1">
+            <span class="tab-num">03</span><span class="tab-title">Homepage mockups</span><span class="tab-arrow" aria-hidden="true">→</span>
+            <span class="tab-text">Claude redesigns the homepage from <b>the business's own text, photos and reviews</b>, using a design system made for their trade.</span>
+          </button>
+          <button class="tab" role="tab" id="tab-4" aria-controls="pane-4" aria-selected="false" tabindex="-1">
+            <span class="tab-num">04</span><span class="tab-title">Quality check</span><span class="tab-arrow" aria-hidden="true">→</span>
+            <span class="tab-text">Every design is checked before you see it. <b>Poor contrast, broken layouts and made-up claims</b> are caught and fixed automatically.</span>
+          </button>
+          <button class="tab" role="tab" id="tab-5" aria-controls="pane-5" aria-selected="false" tabindex="-1">
+            <span class="tab-num">05</span><span class="tab-title">Automations</span><span class="tab-arrow" aria-hidden="true">→</span>
+            <span class="tab-text">Type what you want, like "20 HVAC companies in Austin". The campaign <b>finds the businesses and makes a mockup for each</b> while you do other work.</span>
+          </button>
+          <button class="tab" role="tab" id="tab-6" aria-controls="pane-6" aria-selected="false" tabindex="-1">
+            <span class="tab-num">06</span><span class="tab-title">Maintenance &amp; security</span><span class="tab-arrow" aria-hidden="true">→</span>
+            <span class="tab-text">Keep every client site updated and <b>protected with Wordfence</b>, set up in one click, and turn one website into a monthly plan.</span>
+          </button>
+        </div>
+
+        <div class="tab-panes">
+          <div class="pane p-mint" role="tabpanel" id="pane-1" aria-labelledby="tab-1">
+            <div class="map" aria-hidden="true"><i style="left:28%;top:34%"></i><i class="hot" style="left:58%;top:52%"></i><i style="left:44%;top:70%"></i><i class="hot" style="left:70%;top:28%"></i></div>
+            <div class="note n1"><span class="av">H</span><div><b>Harbour Street Plumbing</b><small>★ 4.7 · 184 reviews · Leeds</small></div><em class="hot">86 Hot</em></div>
+            <div class="note n2"><span class="av">A</span><div><b>Aire Valley Drains</b><small>★ 4.4 · 57 reviews · no website</small></div><em class="hot">81 Hot</em></div>
+            <div class="note n3"><span class="av">K</span><div><b>Kirkstall Heating &amp; Gas</b><small>★ 4.9 · 312 reviews · Leeds</small></div><em>34 Cold</em></div>
+          </div>
+          <div class="pane p-sand" role="tabpanel" id="pane-2" aria-labelledby="tab-2" hidden>
+            <div class="ui-card score-card">
+              <div class="score-top"><div class="ring" style="--v:86"><b>86</b></div><div><h4>Harbour Street Plumbing</h4><p class="sub">harbourstplumbing.co.uk · <span class="grade">Hot lead</span></p></div></div>
+              <ul class="reasons">
+                <li><span>Mobile speed score 31 of 100</span><b>+18</b></li>
+                <li><span>Text too small on phones</span><b>+14</b></li>
+                <li><span>No HTTPS</span><b>+12</b></li>
+                <li><span>Footer says © 2014</span><b>+9</b></li>
+                <li><span>No contact form</span><b>+8</b></li>
+                <li><span>184 Google reviews: an established business</span><b>+25</b></li>
+              </ul>
+            </div>
+          </div>
+          <div class="pane p-rose" role="tabpanel" id="pane-3" aria-labelledby="tab-3" hidden>
+            <div class="window pane-window">
+              <div class="window-bar"><i></i><i></i><i></i><span>Mockup · Harbour Street Plumbing</span></div>
+              <img src="img/mockup-plumber.webp" width="1600" height="1111" loading="lazy" alt="Example homepage mockup for a Leeds plumber">
+            </div>
+          </div>
+          <div class="pane p-yellow" role="tabpanel" id="pane-4" aria-labelledby="tab-4" hidden>
+            <div class="stack">
+              <div class="note"><span class="av ok">✓</span><div><b>Contrast fixed</b><small>Hero text 3.1:1 → 7.4:1</small></div><em class="ok">Fixed</em></div>
+              <div class="note"><span class="av warn">!</span><div><b>Claim removed</b><small>"25 years' experience" isn't on their site</small></div><em class="warn">Removed</em></div>
+              <div class="note"><span class="av ok">✓</span><div><b>Layout aligned</b><small>Service cards on one baseline</small></div><em class="ok">Fixed</em></div>
+              <div class="note"><span class="av ok">✓</span><div><b>Mobile checked</b><small>No overflow at 390 px</small></div><em class="ok">Passed</em></div>
+            </div>
+          </div>
+          <div class="pane p-blue" role="tabpanel" id="pane-5" aria-labelledby="tab-5" hidden>
+            <div class="ui-card campaign">
+              <p class="prompt"><span>Campaign</span>20 HVAC companies in Austin</p>
+              <ul class="items">
+                <li><b>Lone Star Air &amp; Heat</b><em class="ok">Mockup ready</em></li>
+                <li><b>Barton Creek Cooling</b><em class="ok">Mockup ready</em></li>
+                <li><b>Hill Country HVAC</b><em class="run">Designing</em></li>
+                <li><b>Capital City Comfort</b><em class="run">Designing</em></li>
+                <li><b>Eastside AC Repair</b><em>Queued</em></li>
+              </ul>
+            </div>
+          </div>
+          <div class="pane p-dark" role="tabpanel" id="pane-6" aria-labelledby="tab-6" hidden>
+            <div class="ui-card switches">
+              <div class="sw"><span class="toggle"></span><div><b>Brute-force protection</b><p>Wordfence installed, login attempts limited and repeat offenders locked out.</p></div></div>
+              <div class="sw"><span class="toggle"></span><div><b>Turn off XML-RPC</b><p>Closes a common way attackers guess passwords.</p></div></div>
+              <div class="sw"><span class="toggle"></span><div><b>Update and vulnerability checks</b><p>WordPress, plugins and themes checked against known security issues.</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="section blush" id="find">
     <div class="wrap">
       <div class="split-head">
@@ -119,7 +211,7 @@
         <div class="feature">
           <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></span>
           <h3>Campaigns on autopilot</h3>
-          <p>Set up a campaign once. It searches a niche, picks the best-fit businesses and has their mockups waiting for you.</p>
+          <p>Type "20 HVAC companies in Austin". A campaign finds them and makes a mockup for each, waiting for you to review.</p>
         </div>
         <div class="feature">
           <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.9A8 8 0 1 1 21 12Z"/></svg></span>
@@ -410,7 +502,7 @@
         <h2>Take your agency to the next level with Weborite Studio</h2>
         <a class="btn btn-brand" href="download/Weborite-Studio-Setup.exe">Download the free demo</a>
       </div>
-      <div class="foot-col"><h4>Product</h4><ul><li><a href="index.html#find">Features</a></li><li><a href="index.html#how">How it works</a></li><li><a href="index.html#pricing">Pricing</a></li><li><a href="index.html#faq">FAQ</a></li></ul></div>
+      <div class="foot-col"><h4>Product</h4><ul><li><a href="index.html#features">Features</a></li><li><a href="index.html#how">How it works</a></li><li><a href="index.html#pricing">Pricing</a></li><li><a href="index.html#faq">FAQ</a></li></ul></div>
       <div class="foot-col"><h4>Company</h4><ul><li><a href="https://weborite.com">Weborite agency</a></li><li><a href="mailto:hello@weborite.com">hello@weborite.com</a></li></ul></div>
       <div class="foot-col"><h4>Legal</h4><ul><li><a href="terms.html">Terms of Service</a></li><li><a href="privacy.html">Privacy Policy</a></li><li><a href="refund.html">Refund Policy</a></li></ul></div>
     </div>
@@ -418,5 +510,29 @@
   </div>
 </footer>
 
+<script>
+// Feature tabs: hover, click or arrow keys switch the pane on the right.
+(() => {
+  const tabs = [...document.querySelectorAll('.tab')];
+  const hover = matchMedia('(hover: hover)').matches;
+  const show = (t, focus) => {
+    tabs.forEach((x) => {
+      const on = x === t;
+      x.setAttribute('aria-selected', on);
+      x.tabIndex = on ? 0 : -1;
+      document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) t.focus();
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => show(t));
+    if (hover) t.addEventListener('mouseenter', () => show(t));
+    t.addEventListener('keydown', (e) => {
+      const d = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+      if (d) { e.preventDefault(); show(tabs[(i + d + tabs.length) % tabs.length], true); }
+    });
+  });
+})();
+</script>
 </body>
 </html>
