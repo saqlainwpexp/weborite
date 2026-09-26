@@ -42,6 +42,7 @@ import { applyStoredBrand } from "./lib/brand";
 import { Activation, type LicenseStatus } from "./pages/Activation";
 import { api } from "./lib/api";
 import { workspaceEnabled } from "../../shared/features";
+import { DemoContext } from "./components/Demo";
 
 applyStoredBrand();
 
@@ -110,12 +111,19 @@ function Root() {
       .then(setLic)
       .catch(() => setLic({ bypass: false, activated: false, licensed: false, status: "none", name: "", unreachable: true }));
   useEffect(() => void check(), []);
+  // In the demo, keep the "mockups left" counter current as leads are added.
+  const inDemo = Boolean(lic?.demo);
+  useEffect(() => {
+    if (!inDemo) return;
+    const t = setInterval(() => void check(), 10000);
+    return () => clearInterval(t);
+  }, [inDemo]);
   useEffect(() => {
     if (lic) dismissSplash();
   }, [lic]);
   if (!lic) return null; // splash stays up until we know
-  if (!lic.licensed || lic.onboarded === false) return <Activation status={lic} onActivated={check} />;
-  return DASHBOARD;
+  if ((!lic.licensed && !lic.demo) || lic.onboarded === false) return <Activation status={lic} onActivated={check} />;
+  return <DemoContext.Provider value={{ demo: lic.demo ?? null, refresh: () => void check() }}>{DASHBOARD}</DemoContext.Provider>;
 }
 
 createRoot(document.getElementById("root")!).render(

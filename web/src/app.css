@@ -1161,3 +1161,19 @@ small.warn, span.warn, .warn { color: var(--amber); }
 .onb-check.bad span { color: var(--red); }
 .onb-card .activate-err { justify-content: flex-start; }
 @media (max-width: 480px) { .onb-row { grid-template-columns: 1fr; } .activate-card { padding: 26px 20px; } }
+
+/* Demo mode */
+.onb-or { display: flex; align-items: center; gap: 10px; margin: 18px 0 0; color: var(--faint); font-size: 12px; }
+.onb-or::before, .onb-or::after { content: ""; flex: 1; height: 1px; background: var(--hairline); }
+.onb-demo { margin-top: 12px; }
+.onb-demo-note { color: var(--muted); font-size: 12.5px; line-height: 1.5; margin: 8px 0 0; }
+.onb-back { display: block; margin: 0 auto 10px; font-size: 13px; }
+.demo-bar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; padding: 10px 14px; margin: 0 0 18px; border-radius: 14px; background: var(--accent-softer); box-shadow: 0 0 0 1px var(--hairline); font-size: 14px; }
+.demo-bar > svg { width: 17px; height: 17px; flex: none; }
+.demo-bar > span { flex: 1 1 260px; min-width: 0; }
+.demo-bar.out { box-shadow: 0 0 0 1.5px var(--red); }
+.demo-limits { display: inline; margin-left: 10px; }
+.demo-limits summary { display: inline; cursor: pointer; text-decoration: underline; color: var(--muted); font-size: 13px; }
+.demo-limits[open] ul { display: grid; }
+.demo-limits ul { list-style: none; margin: 8px 0 0; padding: 10px 12px; border-radius: 10px; background: var(--card); gap: 4px; font-size: 13px; box-shadow: 0 0 0 1px var(--hairline); }
+.demo-limits li.used { color: var(--muted); text-decoration: line-through; }

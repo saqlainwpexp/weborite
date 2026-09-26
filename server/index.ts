@@ -24,7 +24,7 @@ import { comms } from "./comms.ts";
 import { admin } from "./admin.ts";
 import { agent } from "./agent/routes.ts";
 import { campaigns, startCampaignTimers } from "./campaigns/index.ts";
-import { license, requireLicense, startLicenseTimers } from "./license/index.ts";
+import { license, requireFullLicense, requireLicense, startLicenseTimers } from "./license/index.ts";
 import { assertPublicUrl, localOnly, sandboxFiles } from "./security.ts";
 import { STEPS, type BenchmarkSet, type Capture, type Diagnosis, type GateResult, type LeadDetail, type StepKey, type Usage } from "../shared/types.ts";
 
@@ -246,7 +246,7 @@ const hookApp = express();
 hookApp.disable("x-powered-by");
 hookApp.use(rawJson);
 hookApp.use(express.urlencoded({ extended: true }));
-hookApp.use("/hooks", hooks);
+hookApp.use("/hooks", requireFullLicense, hooks);
 hookApp.get("/", (_req, res) => res.send("ok"));
 // Localhost only: the tunnel connects from this PC, so nothing on the local network can reach it directly.
 hookApp

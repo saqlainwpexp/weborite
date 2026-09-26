@@ -2,6 +2,7 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 import { Router, type Request } from "express";
 import { addEvent, createLead, findDuplicate, getSettings, normalizeUrl } from "./db.ts";
 import { enqueue } from "./queue.ts";
+import { DemoLimitError, demoLeft, demoLimitMessage, useDemoAllowance } from "./license/index.ts";
 import { assertPublicUrl, secretMatches } from "./security.ts";
 import type { Lead, LeadSource } from "../shared/types.ts";
 
@@ -38,7 +39,9 @@ export function leadFromFields(fields: Record<string, string>, source: LeadSourc
 export function intakeLead(input: NonNullable<ReturnType<typeof leadFromFields>> & { mode?: Lead["mode"]; prospectId?: string }): { lead: Lead; duplicate: boolean } {
   const dup = findDuplicate(input.url, input.email);
   if (dup) return { lead: dup, duplicate: true };
+  if (demoLeft("mockups") <= 0) throw new DemoLimitError(demoLimitMessage("mockups"));
   const lead = createLead(input);
+  useDemoAllowance("mockups");
   addEvent({ leadId: lead.id, kind: "lead", title: "New lead added", detail: lead.mode === "scratch" ? `${lead.business}: no website, designing from its Google Maps listing` : `${lead.name || lead.email || "Someone"} submitted ${new URL(lead.url).hostname} via ${input.source}` });
   enqueue(lead.id);
   return { lead, duplicate: false };
@@ -83,8 +86,14 @@ hooks.post("/elementor", async (req, res) => {
     return res.json({ ok: true, skipped: "no url" });
   }
   if (!(await publicOrSkip(input.url, "Elementor"))) return res.json({ ok: true, skipped: "not a public website" });
-  const { lead, duplicate } = intakeLead(input);
-  res.json({ ok: true, id: lead.id, duplicate });
+  try {
+    const { lead, duplicate } = intakeLead(input);
+    res.json({ ok: true, id: lead.id, duplicate });
+  } catch (e) {
+    if (!(e instanceof DemoLimitError)) throw e;
+    addEvent({ leadId: null, kind: "info", title: "Elementor submission not added", detail: e.message });
+    res.status(402).json({ ok: false, error: e.message });
+  }
 });
 
 // Meta webhook verification handshake.

@@ -3,6 +3,7 @@ import { hostname } from "node:os";
 import { Buffer } from "node:buffer";
 import { getSettings, setSettings, sqlite as db } from "../db.ts";
 import { TERMS_VERSION } from "../../shared/legal.ts";
+import { DEMO_CREATE_ROUTES, DEMO_LABELS, DEMO_LIMITS, DEMO_PRODUCTS, DEMO_RESULTS, type DemoKind, type DemoState } from "../../shared/demo.ts";
 import { open, seal } from "../vault.ts";
 import { localOnly } from "../security.ts";
 
@@ -17,10 +18,18 @@ import { localOnly } from "../security.ts";
  * Keygen). Nothing here needs your store ID or API secret — the customer's key is enough.
  */
 
-const API = process.env.STUDIO_LICENSE_API ?? "https://api.lemonsqueezy.com/v1";
-const GRACE_DAYS = Number(process.env.STUDIO_LICENSE_GRACE_DAYS ?? 7);
-// Bypass while developing (Electron sets this in dev; the plain `npm run dev` API has no STUDIO_DESKTOP).
-const BYPASS = process.env.STUDIO_LICENSE_BYPASS === "1" || process.env.STUDIO_DESKTOP !== "1";
+/**
+ * "customer" / "owner" when bundled for the desktop app (scripts/build-server.mjs); "source" when run from the
+ * TypeScript (npm run dev). A shipped customer build ignores every licensing environment variable.
+ */
+declare const __STUDIO_BUILD__: string | undefined;
+const BUILD = typeof __STUDIO_BUILD__ === "string" ? __STUDIO_BUILD__ : "source";
+const SHIPPED = BUILD === "customer";
+const API = (!SHIPPED && process.env.STUDIO_LICENSE_API) || "https://api.lemonsqueezy.com/v1";
+const GRACE_DAYS = SHIPPED ? 7 : Number(process.env.STUDIO_LICENSE_GRACE_DAYS ?? 7);
+// Skipped for the owner build and plain `npm run dev`; a customer build never skips it. From source,
+// STUDIO_DESKTOP=1 (without STUDIO_LICENSE_BYPASS) runs the real check, e.g. to test the onboarding.
+const BYPASS = BUILD === "owner" || (BUILD === "source" && (process.env.STUDIO_LICENSE_BYPASS === "1" || process.env.STUDIO_DESKTOP !== "1"));
 
 db.exec(`CREATE TABLE IF NOT EXISTS license (id INTEGER PRIMARY KEY CHECK (id = 1), data TEXT NOT NULL);`);
 db.exec(`CREATE TABLE IF NOT EXISTS onboarding (id INTEGER PRIMARY KEY CHECK (id = 1), data TEXT NOT NULL);`);
@@ -34,9 +43,16 @@ interface Onboarding {
   phone: string;
   country: string;
   marketing: boolean; // opted in to product news (never pre-ticked)
+  demo?: boolean; // chose "Try the demo" instead of entering a key
   termsVersion: string;
   acceptedAt: string;
 }
+db.exec(`CREATE TABLE IF NOT EXISTS demo_usage (kind TEXT PRIMARY KEY, used INTEGER NOT NULL DEFAULT 0);`);
+const demoUsed = (kind: DemoKind) =>
+  (db.prepare("SELECT used FROM demo_usage WHERE kind = ?").get(kind) as { used: number } | undefined)?.used ?? 0;
+const bumpDemo = (kind: DemoKind) =>
+  db.prepare("INSERT INTO demo_usage (kind, used) VALUES (?, 1) ON CONFLICT(kind) DO UPDATE SET used = used + 1").run(kind);
+
 function readOnboarding(): Onboarding | null {
   const r = db.prepare("SELECT data FROM onboarding WHERE id = 1").get() as { data: string } | undefined;
   return r ? (JSON.parse(r.data) as Onboarding) : null;
@@ -91,6 +107,32 @@ export function isLicensed(): boolean {
   return s.status === "active" || withinGrace(s);
 }
 
+/** Running as a demo: onboarded with "Try the demo" and no key entered since. */
+export function isDemo(): boolean {
+  if (isLicensed()) return false;
+  const o = readOnboarding();
+  return Boolean(o?.demo && o.termsVersion === TERMS_VERSION);
+}
+
+function demoState(): DemoState {
+  const left = Object.fromEntries((Object.keys(DEMO_LIMITS) as DemoKind[]).map((k) => [k, Math.max(0, DEMO_LIMITS[k] - demoUsed(k))])) as Record<DemoKind, number>;
+  return { left, results: DEMO_RESULTS, products: DEMO_PRODUCTS };
+}
+
+/** How many more of something this copy may create: Infinity when licensed. */
+export function demoLeft(kind: DemoKind): number {
+  return isDemo() ? Math.max(0, DEMO_LIMITS[kind] - demoUsed(kind)) : Infinity;
+}
+/** Record one use of a demo allowance (no-op when licensed). */
+export function useDemoAllowance(kind: DemoKind) {
+  if (isDemo()) bumpDemo(kind);
+}
+export class DemoLimitError extends Error {}
+export const demoLimitMessage = (kind: DemoKind) =>
+  `The demo includes ${DEMO_LIMITS[kind]} ${DEMO_LABELS[kind][DEMO_LIMITS[kind] === 1 ? 0 : 1]}, and ${DEMO_LIMITS[kind] === 1 ? "it's" : "they're"} used. Enter a license key to keep going.`;
+/** Cap for results per search and products per store in the demo. */
+export const demoCap = (n: number, cap: number) => (isDemo() ? Math.min(n, cap) : n);
+
 function publicState() {
   const s = read();
   return {
@@ -100,6 +142,7 @@ function publicState() {
     status: BYPASS ? "developer" : s?.status ?? "none",
     name: s?.name ?? "",
     onboarded: readOnboarding()?.termsVersion === TERMS_VERSION,
+    demo: isDemo() ? demoState() : null,
     lastCheckAt: s?.lastCheckAt ?? null,
     graceUntil: s?.lastOkAt ? new Date(new Date(s.lastOkAt).getTime() + GRACE_DAYS * 86400_000).toISOString() : null,
   };
@@ -194,13 +237,14 @@ license.post("/onboard", async (req, res) => {
     phone: str(b.phone, 40),
     country: str(b.country, 60),
     marketing: b.marketing === true,
+    demo: b.demo === true && !isLicensed(),
     termsVersion: TERMS_VERSION,
     acceptedAt: new Date().toISOString(),
   };
   if (!data.firstName || !data.lastName) return res.status(400).json({ error: "Enter your first and last name.", field: "name" });
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email)) return res.status(400).json({ error: "Enter a valid email address.", field: "email" });
   if (b.acceptTerms !== true) return res.status(400).json({ error: "Accept the Terms of Service and Privacy Policy to continue.", field: "terms" });
-  if (!isLicensed()) {
+  if (!isLicensed() && !data.demo) {
     const r = await activate(String(b.key ?? ""));
     if (!r.ok) return res.status(400).json({ error: r.error, field: "key" });
   }
@@ -231,6 +275,30 @@ license.post("/deactivate", async (_req, res) => {
 export function requireLicense(allow: RegExp) {
   return (req: Parameters<typeof localOnly>[0], res: Parameters<typeof localOnly>[1], next: Parameters<typeof localOnly>[2]) => {
     if (isLicensed() || allow.test(req.path)) return next();
+    if (isDemo()) return demoGate(req, res, next);
     res.status(402).json({ error: "This copy isn't activated.", needsLicense: true });
   };
+}
+
+/** Demo allowances: creating something in a workspace, and the number of mockups (checked up front here,
+ *  counted where leads are created so webhooks and automations count too). */
+function demoGate(req: Parameters<typeof localOnly>[0], res: Parameters<typeof localOnly>[1], next: Parameters<typeof localOnly>[2]) {
+  if (req.method !== "POST") return next();
+  const path = req.path.replace(/\/$/, "");
+  const createsLead = path === "/api/leads" || /^\/api\/finder\/prospects\/[^/]+\/mockup$/.test(path);
+  if (createsLead) return demoLeft("mockups") > 0 ? next() : res.status(402).json({ error: demoLimitMessage("mockups"), demoLimit: "mockups" });
+  const kind = DEMO_CREATE_ROUTES[path];
+  if (!kind) return next();
+  if (demoLeft(kind) <= 0) return res.status(402).json({ error: demoLimitMessage(kind), demoLimit: kind });
+  if (req.body && (kind === "searches")) req.body.max = Math.min(Number(req.body.max) || DEMO_RESULTS, DEMO_RESULTS);
+  res.on("finish", () => {
+    if (res.statusCode < 400) bumpDemo(kind);
+  });
+  next();
+}
+
+/** Webhooks work for licensed copies and demos (their leads count against the demo's mockups). */
+export function requireFullLicense(_req: Parameters<typeof localOnly>[0], res: Parameters<typeof localOnly>[1], next: Parameters<typeof localOnly>[2]) {
+  if (isLicensed() || isDemo()) return next();
+  res.status(402).json({ error: "This copy isn't activated." });
 }

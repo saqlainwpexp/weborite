@@ -2,8 +2,10 @@ import { useState } from "react";
 import { KeyRound, Loader2, AlertTriangle, ArrowRight, CheckCircle2 } from "lucide-react";
 import { api } from "../lib/api";
 import { PRIVACY_URL, TERMS_URL } from "../../../shared/legal";
+import { DEMO_LIMITS } from "../../../shared/demo";
 
 export interface LicenseStatus {
+  demo?: import("../../../shared/demo").DemoState | null;
   bypass: boolean;
   activated: boolean;
   licensed: boolean;
@@ -35,6 +37,7 @@ export function Activation({ status, onActivated }: { status: LicenseStatus; onA
   const needsDetails = !status.onboarded;
   const [step, setStep] = useState<"key" | "details">(needsKey ? "key" : "details");
   const [key, setKey] = useState("");
+  const [demo, setDemo] = useState(false);
   const [form, setForm] = useState({ firstName: "", lastName: "", email: "", company: "", phone: "", country: "", marketing: false, acceptTerms: false });
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<{ text: string; field?: string } | null>(null);
@@ -62,7 +65,7 @@ export function Activation({ status, onActivated }: { status: LicenseStatus; onA
     setBusy(true);
     setErr(null);
     try {
-      await api("/api/license/onboard", { method: "POST", json: form });
+      await api("/api/license/onboard", { method: "POST", json: { ...form, demo } });
       onActivated();
     } catch (e) {
       const m = (e as Error).message;
@@ -112,6 +115,18 @@ export function Activation({ status, onActivated }: { status: LicenseStatus; onA
             {busy ? <Loader2 className="spin" /> : needsDetails ? <ArrowRight /> : <KeyRound />} {needsDetails ? "Continue" : "Activate"}
           </button>
 
+          {needsDetails && !expired && (
+            <>
+              <div className="onb-or"><span>or</span></div>
+              <button className="btn btn-white activate-btn onb-demo" onClick={() => { setDemo(true); setErr(null); setStep("details"); }} disabled={busy}>
+                Try the demo first
+              </button>
+              <p className="onb-demo-note">
+                Every feature, with small limits ({DEMO_LIMITS.mockups} mockups, {DEMO_LIMITS.searches} Lead Finder searches, 1 of each site). Enter a key later to remove them.
+              </p>
+            </>
+          )}
+
           <div className="activate-foot">
             Your key came in the email after purchase. It activates one computer; you can move it to another PC from Settings later.
           </div>
@@ -125,9 +140,12 @@ export function Activation({ status, onActivated }: { status: LicenseStatus; onA
       <div className="activate-card onb-card">
         <Mark />
         {steps > 1 && <p className="onb-step">Step 2 of 2</p>}
-        <h1>{status.onboarded === false && !needsKey && status.activated ? "Welcome to Weborite Studio" : "Set up your account"}</h1>
+        {demo && <button type="button" className="link-btn onb-back" onClick={() => { setDemo(false); setStep("key"); }}>← I have a license key</button>}
+        <h1>{demo ? "Set up your demo" : status.onboarded === false && !needsKey && status.activated ? "Welcome to Weborite Studio" : "Set up your account"}</h1>
         <p className="activate-sub">
-          {needsKey || !status.activated
+          {demo
+            ? "Tell us who's trying Weborite Studio. Your name and agency name also appear on the mockups you make."
+            : needsKey || !status.activated
             ? "Tell us who's using this copy. Your name and agency name also appear on the mockups and reports you send."
             : "We've updated our Terms of Service and Privacy Policy. Check your details and accept them to continue."}
         </p>
@@ -174,7 +192,7 @@ export function Activation({ status, onActivated }: { status: LicenseStatus; onA
           {err && <div className="activate-err" role="alert"><AlertTriangle /> {err.text}</div>}
 
           <button type="submit" className="btn btn-ink activate-btn" disabled={busy || !detailsReady}>
-            {busy ? <Loader2 className="spin" /> : <CheckCircle2 />} Finish setup
+            {busy ? <Loader2 className="spin" /> : <CheckCircle2 />} {demo ? "Start the demo" : "Finish setup"}
           </button>
         </form>
         <div className="activate-foot">Your details are stored on this computer and used to fill in your profile.</div>

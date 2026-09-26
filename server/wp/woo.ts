@@ -5,6 +5,8 @@ import { open, seal } from "../vault.ts";
 import type { WpConversion, WpStore } from "../../shared/types.ts";
 import { WpError, ping, wooProducts, wooSetup, wooStatus, type WpAuth } from "./client.ts";
 import { convDir, getConversion, getSecrets, saveConversion } from "./store.ts";
+import { demoCap } from "../license/index.ts";
+import { DEMO_PRODUCTS } from "../../shared/demo.ts";
 
 /**
  * WooCommerce stores (phase 1): store settings, the product catalogue from a CSV, and the job that installs
@@ -175,7 +177,8 @@ export function readCatalog(text: string): { products: CsvProduct[]; errors: str
     });
   });
   const main = products.filter((p) => p.type !== "variation");
-  if (main.length > MAX_PRODUCTS) errors.unshift(`${main.length} products: the limit is ${MAX_PRODUCTS} per store for now.`);
+  const max = demoCap(MAX_PRODUCTS, DEMO_PRODUCTS);
+  if (main.length > max) errors.unshift(`${main.length} products: the limit is ${max} per store${max === DEMO_PRODUCTS && max < MAX_PRODUCTS ? " in the demo" : " for now"}.`);
   // Variables first, then their variations, so every parent exists before its children are saved.
   const order = { variable: 0, simple: 1, variation: 2 } as const;
   products.sort((a, b) => order[a.type] - order[b.type]);
