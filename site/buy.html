@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Buy a license · Weborite Studio</title>
+<meta name="description" content="Buy a Weborite Studio license: monthly or yearly, paid by invoice via bank transfer, Payoneer or Wise.">
+<link rel="icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<header class="site-head dark">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Weborite Studio home">
+      <span class="brand-mark"><svg viewBox="34 158 722 470" width="22" height="14" fill="none" aria-hidden="true"><path d="M66.5 606.5V270.5L149 188l82.5 82.5v60M149 188v225M66.5 495.5l304-304M370.5 191.5h121v118h-121zM66.5 606.5h125l415-415M73.5 606.5l297-297M606.5 191.5h123v118h-123zM307.5 490.5v116h124l298-298M309.5 606.5l297-297" stroke="currentColor" stroke-width="30" stroke-linecap="square"/><rect x="656" y="542" width="85" height="72" fill="currentColor"/></svg></span>
+      Weborite Studio
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#how">How it works</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#faq">FAQ</a>
+    </nav>
+    <div class="head-actions">
+      <a href="buy.html">Buy a license</a>
+      <a class="btn btn-light btn-sm" href="demo.html">Download demo</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="crumbs"><a href="index.html">Weborite Studio</a> / Buy a license</p>
+      <h1>Unlock everything with a Studio license</h1>
+      <p class="hero-sub">Order below and we'll email you an invoice to pay by bank transfer, Payoneer or Wise. Your license key follows as soon as the payment arrives, and everything you made in the demo stays.</p>
+    </div>
+  </section>
+
+  <section class="section tight" style="padding-top:0">
+    <div class="wrap buy-grid">
+      <form class="buy-card" id="order-form" novalidate>
+        <div id="order-fields">
+          <h2>Your order</h2>
+          <p>Takes a minute. You don't pay anything yet.</p>
+
+          <div class="buy-step">
+            <h3><span>1</span>Choose your plan</h3>
+            <div class="choice-row" role="radiogroup" aria-label="Plan">
+              <label class="choice"><input type="radio" name="plan" value="monthly" checked><b>Monthly</b><span class="amt">$49 <small>/ month</small></span><span>Stop any time</span></label>
+              <label class="choice"><input type="radio" name="plan" value="yearly"><b>Yearly</b><span class="save">2 months free</span><span class="amt">$490 <small>/ year</small></span><span>Works out at $40.83 a month</span></label>
+            </div>
+          </div>
+
+          <div class="buy-step">
+            <h3><span>2</span>Your details</h3>
+            <div class="fields">
+              <label class="field">Full name<input id="o-name" name="name" autocomplete="name" required></label>
+              <label class="field">Email<input id="o-email" name="email" type="email" autocomplete="email" required></label>
+              <label class="field"><span>Agency or company <em>optional</em></span><input id="o-company" name="company" autocomplete="organization"></label>
+              <label class="field"><span>Country <em>optional</em></span><input id="o-country" name="country" autocomplete="country-name"></label>
+            </div>
+            <label class="hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
+          </div>
+
+          <div class="buy-step">
+            <h3><span>3</span>How you'd like to pay</h3>
+            <div class="choice-row three" role="radiogroup" aria-label="Payment method">
+              <label class="choice"><input type="radio" name="payment" value="bank" checked><b>Bank transfer</b><span>To our business account</span></label>
+              <label class="choice"><input type="radio" name="payment" value="payoneer"><b>Payoneer</b><span>Card or Payoneer balance</span></label>
+              <label class="choice"><input type="radio" name="payment" value="wise"><b>Wise</b><span>From your Wise account</span></label>
+            </div>
+            <label class="field full"><span>Anything we should know? <em>optional</em></span><textarea id="o-note" name="note" placeholder="For example: an invoice in your company's name, or a VAT number"></textarea></label>
+          </div>
+
+          <div class="buy-submit">
+            <label class="agree"><input type="checkbox" id="o-terms" name="terms" required><span>I accept the <a href="terms.html" target="_blank">Terms of Service</a> and the <a href="refund.html" target="_blank">Refund Policy</a>, and I've read the <a href="privacy.html" target="_blank">Privacy Policy</a>.</span></label>
+            <p class="form-err" id="order-err" role="alert" hidden></p>
+            <button class="btn btn-brand" type="submit" id="order-btn">Place order</button>
+            <p>You'll get an email confirmation now and the invoice within one working day.</p>
+          </div>
+        </div>
+
+        <div class="done" id="order-done" hidden tabindex="-1">
+          <span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
+          <h2>Order received</h2>
+          <p id="order-done-text">We've emailed you a confirmation. Your invoice follows within one working day, and your license key as soon as the payment arrives.</p>
+          <a class="btn btn-ghost" href="demo.html">Get started with the free demo meanwhile</a>
+        </div>
+      </form>
+
+      <aside class="summary">
+        <div class="sum-card">
+          <h3>Order summary</h3>
+          <div class="sum-plan"><b id="sum-name">Studio · Monthly</b><span id="sum-price">$49</span></div>
+          <p class="per" id="sum-per">per month</p>
+          <ul>
+            <li>Unlimited mockups, searches and campaigns</li>
+            <li>Unlimited builds and WordPress conversions</li>
+            <li>WooCommerce stores up to 500 products each</li>
+            <li>SEO and maintenance for every client site</li>
+            <li>Facebook, WhatsApp and Elementor form leads</li>
+            <li>All updates and email support</li>
+            <li>One computer at a time, move it any time</li>
+          </ul>
+        </div>
+        <div class="next-card">
+          <h3>What happens next</h3>
+          <ol class="next">
+            <li><span><b>Invoice by email</b>Within one working day, with payment details for the method you chose.</span></li>
+            <li><span><b>You pay</b>By bank transfer, Payoneer or Wise, in US dollars.</span></li>
+            <li><span><b>License key</b>Emailed once the payment arrives. Paste it into the app and every limit is gone.</span></li>
+          </ol>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section tight" id="faq">
+    <div class="wrap faq-grid">
+      <div class="aside">
+        <span class="eyebrow">Buying</span>
+        <h2>Questions before you buy</h2>
+        <p>Something else? Email <a class="link-arrow" href="mailto:hello@weborite.com">hello@weborite.com</a></p>
+      </div>
+      <div class="faq">
+        <details><summary>Can I try it before paying?</summary><p>Yes. The <a href="demo.html">free demo</a> includes every feature with small limits. When you buy, enter your key in the demo and your work stays.</p></details>
+        <details><summary>Why an invoice instead of a card checkout?</summary><p>We sell directly, so you can pay by bank transfer, Payoneer or Wise, including from countries card checkouts often don't support.</p></details>
+        <details><summary>How does renewing work?</summary><p>We send a renewal invoice before your license ends. If you don't renew, the app asks for an active key when the period is over, and your data stays on your computer.</p></details>
+        <details><summary>Can I get a refund?</summary><p>Yes, within 14 days of your first payment. See the <a href="refund.html">refund policy</a>.</p></details>
+        <details><summary>Can I use one license on two computers?</summary><p>One license is active on one computer at a time. Deactivate it in Settings to move it to another computer.</p></details>
+        <details><summary>Do I need to pay for Claude separately?</summary><p>Yes. The designs are made with your own Claude subscription or Anthropic API key, billed by Anthropic.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <h2>Take your agency to the next level with Weborite Studio</h2>
+        <a class="btn btn-brand" href="demo.html">Download the free demo</a>
+      </div>
+      <div class="foot-col"><h4>Product</h4><ul><li><a href="index.html#features">Features</a></li><li><a href="index.html#how">How it works</a></li><li><a href="index.html#pricing">Pricing</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="demo.html">Free demo</a></li><li><a href="buy.html">Buy a license</a></li></ul></div>
+      <div class="foot-col"><h4>Company</h4><ul><li><a href="https://weborite.com">Weborite agency</a></li><li><a href="mailto:hello@weborite.com">hello@weborite.com</a></li></ul></div>
+      <div class="foot-col"><h4>Legal</h4><ul><li><a href="terms.html">Terms of Service</a></li><li><a href="privacy.html">Privacy Policy</a></li><li><a href="refund.html">Refund Policy</a></li></ul></div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 Weborite Solutions. All rights reserved.</span><span>Made for web design agencies.</span></div>
+  </div>
+</footer>
+
+<script src="site.js" defer></script>
+</body>
+</html>

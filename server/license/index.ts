@@ -1,8 +1,10 @@
 import { Router } from "express";
 import { hostname } from "node:os";
+import { createPublicKey, randomUUID, verify } from "node:crypto";
 import { Buffer } from "node:buffer";
 import { getSettings, setSettings, sqlite as db } from "../db.ts";
 import { TERMS_VERSION } from "../../shared/legal.ts";
+import { LICENSE_API, LICENSE_PUBLIC_KEY } from "../../shared/licenseKey.ts";
 import { DEMO_CREATE_ROUTES, DEMO_LABELS, DEMO_LIMITS, DEMO_PRODUCTS, DEMO_RESULTS, type DemoKind, type DemoState } from "../../shared/demo.ts";
 import { open, seal } from "../vault.ts";
 import { localOnly } from "../security.ts";
@@ -10,12 +12,10 @@ import { localOnly } from "../security.ts";
 /**
  * License-key activation for a subscription product. The desktop app activates the customer's key
  * (binding it to this machine), then re-validates periodically so a cancelled/expired subscription
- * locks the app. We call the provider's public license API (LemonSqueezy shape by default) with only
- * the key — no secret is embedded. An offline grace window keeps paying users working through a
- * network blip. In development the gate is bypassed.
- *
- * Provider setup (yours): sell a subscription product with license keys enabled (LemonSqueezy /
- * Keygen). Nothing here needs your store ID or API secret — the customer's key is enough.
+ * locks the app. It calls our own license service (site/license/, Lemon Squeezy's API shape) with only
+ * the key, and trusts an answer only when it carries a valid Ed25519 signature over the nonce it sent.
+ * An offline grace window keeps paying users working through a network blip. In development the gate
+ * is bypassed.
  */
 
 /**
@@ -25,7 +25,12 @@ import { localOnly } from "../security.ts";
 declare const __STUDIO_BUILD__: string | undefined;
 const BUILD = typeof __STUDIO_BUILD__ === "string" ? __STUDIO_BUILD__ : "source";
 const SHIPPED = BUILD === "customer";
-const API = (!SHIPPED && process.env.STUDIO_LICENSE_API) || "https://api.lemonsqueezy.com/v1";
+const API = (!SHIPPED && process.env.STUDIO_LICENSE_API) || LICENSE_API;
+// From source, a test server can bring its own key; with none at all, answers aren't checked (source only).
+const PUBLIC_KEY = (!SHIPPED && process.env.STUDIO_LICENSE_PUBKEY) || LICENSE_PUBLIC_KEY;
+const verifier = PUBLIC_KEY
+  ? createPublicKey({ key: Buffer.concat([Buffer.from("302a300506032b6570032100", "hex"), Buffer.from(PUBLIC_KEY, "base64")]), format: "der", type: "spki" })
+  : null;
 const GRACE_DAYS = SHIPPED ? 7 : Number(process.env.STUDIO_LICENSE_GRACE_DAYS ?? 7);
 // Skipped for the owner build and plain `npm run dev`; a customer build never skips it. From source,
 // STUDIO_DESKTOP=1 (without STUDIO_LICENSE_BYPASS) runs the real check, e.g. to test the onboarding.
@@ -78,8 +83,11 @@ function clear() {
   db.prepare("DELETE FROM license WHERE id = 1").run();
 }
 
-/** Call the provider's license API. Returns parsed JSON or throws a friendly, offline-aware error. */
+/** Call the license API. Returns parsed JSON or throws a friendly, offline-aware error. The fields the app acts on
+ *  (activated / valid, status, instance id) are taken only from the signed part of the answer. */
 async function providerCall(path: string, params: Record<string, string>): Promise<Record<string, unknown>> {
+  const nonce = randomUUID();
+  params = { ...params, nonce };
   let res: Response;
   try {
     res = await fetch(`${API}/licenses/${path}`, {
@@ -93,7 +101,31 @@ async function providerCall(path: string, params: Record<string, string>): Promi
     e.offline = true;
     throw e;
   }
-  return (await res.json().catch(() => ({}))) as Record<string, unknown>;
+  const data = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+  if (!verifier && !SHIPPED) return data;
+  const signed = typeof data.signed === "string" ? Buffer.from(data.signed, "base64") : null;
+  const sig = typeof data.signature === "string" ? Buffer.from(data.signature, "base64") : null;
+  let core: { action?: string; ok?: boolean; status?: string; instance_id?: string; nonce?: string } | null = null;
+  try {
+    if (verifier && signed && sig && verify(null, signed, verifier, sig)) core = JSON.parse(signed.toString("utf8"));
+  } catch {
+    core = null;
+  }
+  if (!core || core.nonce !== nonce || core.action !== path) {
+    // Not our server (or tampered with): treat like being offline, so a real customer keeps their grace period.
+    const e = new Error("unverified") as Error & { offline?: boolean };
+    e.offline = true;
+    throw e;
+  }
+  const lk = (data.license_key ?? {}) as Record<string, unknown>;
+  const inst = (data.instance ?? null) as Record<string, unknown> | null;
+  return {
+    ...data,
+    activated: path === "activate" && core.ok === true,
+    valid: path === "validate" && core.ok === true,
+    license_key: { ...lk, status: core.status },
+    instance: core.instance_id ? { ...inst, id: core.instance_id } : null,
+  };
 }
 
 const withinGrace = (s: LicenseState) => s.lastOkAt != null && Date.now() - new Date(s.lastOkAt).getTime() < GRACE_DAYS * 86400_000;
@@ -186,7 +218,8 @@ export async function revalidate(): Promise<void> {
   const valid = data.valid === true;
   const lk = data.license_key as { status?: string } | undefined;
   const now = new Date().toISOString();
-  const status = (lk?.status as LicenseState["status"]) ?? (valid ? "active" : "inactive");
+  // An invalid answer never leaves the copy unlocked, whatever status came with it.
+  const status: LicenseState["status"] = valid ? ((lk?.status as LicenseState["status"]) ?? "active") : lk?.status && lk.status !== "active" ? (lk.status as LicenseState["status"]) : "inactive";
   write({ ...s, status, lastCheckAt: now, lastOkAt: valid ? now : s.lastOkAt });
 }
 

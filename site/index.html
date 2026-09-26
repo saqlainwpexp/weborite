@@ -4,183 +4,460 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Weborite Studio</title>
-<meta name="description" content="Find local businesses with weak websites, show them a redesigned homepage built from their own content, then turn it into an editable WordPress site. A desktop app for Windows.">
+<meta name="description" content="Weborite Studio finds local businesses with weak websites, redesigns their homepage with Claude using their own content, and turns the approved design into an editable WordPress site.">
 <link rel="icon" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400..600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700&family=Inter:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="site.css">
 </head>
 <body>
 
-<header class="site-head">
+<div class="announce">New: WordPress conversions now set up WooCommerce stores, with payments and up to 500 products. <a href="#wordpress">See how</a></div>
+
+<header class="site-head dark">
   <div class="wrap">
     <a class="brand" href="index.html" aria-label="Weborite Studio home">
-      <span class="brand-mark"><svg viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M13 2.5 20.4 5.6 23.5 13 20.4 20.4 13 23.5 5.6 20.4 2.5 13 5.6 5.6Z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M13 2.5V9M13 17v6.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></span>
+      <span class="brand-mark"><svg viewBox="34 158 722 470" width="22" height="14" fill="none" aria-hidden="true"><path d="M66.5 606.5V270.5L149 188l82.5 82.5v60M149 188v225M66.5 495.5l304-304M370.5 191.5h121v118h-121zM66.5 606.5h125l415-415M73.5 606.5l297-297M606.5 191.5h123v118h-123zM307.5 490.5v116h124l298-298M309.5 606.5l297-297" stroke="currentColor" stroke-width="30" stroke-linecap="square"/><rect x="656" y="542" width="85" height="72" fill="currentColor"/></svg></span>
       Weborite Studio
     </a>
     <nav class="nav" aria-label="Main">
-      <a href="#how">How it works</a>
       <a href="#features">Features</a>
+      <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
     </nav>
-    <a class="btn btn-rose btn-sm" href="#pricing">Try the demo</a>
+    <div class="head-actions">
+      <a href="buy.html">Buy a license</a>
+      <a class="btn btn-light btn-sm" href="demo.html">Download demo</a>
+    </div>
   </div>
 </header>
 
 <main>
   <section class="hero">
     <div class="wrap">
-      <div>
-        <p class="eyebrow">Desktop app for web design agencies</p>
-        <h1>Show local businesses their <em>new website</em> before the first call.</h1>
-        <p class="hero-sub">Weborite Studio finds businesses with weak websites on Google Maps, redesigns their homepage with Claude using their real content, and turns the design they approve into an editable WordPress site.</p>
-        <div class="hero-cta">
-          <a class="btn btn-rose" href="#pricing">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg>
-            Download the free demo
-          </a>
-          <a class="btn btn-line" href="#how">See how it works</a>
+      <div class="hero-grid">
+        <div>
+          <span class="pill"><b>For web design agencies</b><span class="pill-extra"> · Windows desktop app</span></span>
+          <h1>Leads, mockups &amp; WordPress sites for web agencies</h1>
+          <p class="hero-sub">Weborite Studio finds local businesses with weak websites, redesigns their homepage with Claude using their own content, and turns the design they approve into an editable WordPress site.</p>
+          <div class="hero-cta">
+            <a class="btn btn-brand" href="demo.html">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg>
+              Download the free demo
+            </a>
+            <a class="btn btn-ghost-dark" href="#pricing">See pricing</a>
+          </div>
+          <p class="hero-note">Every feature included in the demo, with small limits. No card needed.</p>
         </div>
-        <p class="hero-note">Windows 10 and 11. The demo includes every feature, with small limits.</p>
-      </div>
-
-      <div class="demo-board" aria-label="Example: a lead from Lead Finder becomes a homepage mockup">
-        <div class="panel lead-panel">
-          <div class="panel-head"><b>Lead Finder · plumbers in Leeds</b><span class="mono">48 found</span></div>
-          <div class="lead-rows">
-            <div class="lead-row"><div class="biz"><b>Kirkstall Heating &amp; Gas</b><span>★ 4.9 · 312 reviews · kirkstallgas.co.uk</span></div><span class="speed ok">speed 88</span><span class="fit">fit 34</span></div>
-            <div class="lead-row picked"><div class="biz"><b>Harbour Street Plumbing</b><span>★ 4.7 · 184 reviews · harbourstplumbing.co.uk</span></div><span class="speed">speed 31</span><span class="fit hi">fit 86</span></div>
-            <div class="lead-row"><div class="biz"><b>Aire Valley Drains</b><span>★ 4.4 · 57 reviews · no website</span></div><span class="speed">—</span><span class="fit">fit 71</span></div>
+        <div class="hero-shot">
+          <div class="window">
+            <div class="window-bar"><i></i><i></i><i></i><span>Weborite Studio · Lead Finder</span></div>
+            <img src="img/app-leads.webp" width="1600" height="1000" alt="The Lead Finder table in Weborite Studio: plumbers in Leeds sorted by fit score, with phone, reviews, website and email or WhatsApp tags">
           </div>
         </div>
-        <div class="arrow-down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 4v16M6 14l6 6 6-6"/></svg>one click to a mockup</div>
-        <div class="panel mock-panel">
-          <div class="browser"><i></i><i></i><i></i><span>Mockup · Harbour Street Plumbing</span></div>
-          <div class="site-mini">
-            <div class="copy">
-              <span class="kicker">Leeds · Same-day callouts</span>
-              <h4>Leaks, boilers and blocked drains fixed today.</h4>
-              <p>Gas Safe registered engineers covering Leeds and Bradford since 2009.</p>
-              <div class="ctas"><span>Call 0113 496 0000</span><span>Book a visit</span></div>
+      </div>
+      <div class="works">
+        <p>Works with</p>
+        <ul>
+          <li>WordPress</li><li>Elementor</li><li>WooCommerce</li><li>Claude</li><li>Google Maps</li><li>WhatsApp</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tight">
+    <div class="wrap intro">
+      <p class="intro-text">Weborite Studio is the all-in-one app for agencies that sell websites to local businesses. <span>Find the right prospects, show them a finished homepage before the first call, build the site on WordPress and keep it running, all from one place.</span></p>
+      <ul class="checks">
+        <li>Google Maps lead finder</li>
+        <li>AI homepage mockups</li>
+        <li>Full site builds</li>
+        <li>Elementor conversion</li>
+        <li>WooCommerce stores</li>
+        <li>SEO and launch checks</li>
+        <li>Maintenance and security</li>
+        <li>Facebook and WhatsApp leads</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section tabs-section" id="features">
+    <div class="wrap">
+      <div class="split-head">
+        <div><span class="eyebrow">Everything in one app</span><h2>From the first search to the signed client</h2></div>
+        <p>Six tools that used to be six subscriptions. Hover or tap each one to see it at work.</p>
+      </div>
+      <div class="tabs">
+        <div class="tab-list" role="tablist" aria-orientation="vertical" aria-label="Features">
+          <button class="tab" role="tab" id="tab-1" aria-controls="pane-1" aria-selected="true" tabindex="0">
+            <span class="tab-num">01</span><span class="tab-title">Lead Finder</span><span class="tab-arrow" aria-hidden="true">→</span>
+            <span class="tab-text">Search Google Maps for any trade in any city and get every business with its phone, website, <b>rating and reviews</b>, ready to sort.</span>
+          </button>
+          <button class="tab" role="tab" id="tab-2" aria-controls="pane-2" aria-selected="false" tabindex="-1">
+            <span class="tab-num">02</span><span class="tab-title">Fit score</span><span class="tab-arrow" aria-hidden="true">→</span>
+            <span class="tab-text">Each website is visited and graded, so you see <b>who needs a new site most</b>: slow pages, no mobile layout, no HTTPS, an old footer.</span>
+          </button>
+          <button class="tab" role="tab" id="tab-3" aria-controls="pane-3" aria-selected="false" tabindex="-1">
+            <span class="tab-num">03</span><span class="tab-title">Homepage mockups</span><span class="tab-arrow" aria-hidden="true">→</span>
+            <span class="tab-text">Claude redesigns the homepage from <b>the business's own text, photos and reviews</b>, using a design system made for their trade.</span>
+          </button>
+          <button class="tab" role="tab" id="tab-4" aria-controls="pane-4" aria-selected="false" tabindex="-1">
+            <span class="tab-num">04</span><span class="tab-title">Quality check</span><span class="tab-arrow" aria-hidden="true">→</span>
+            <span class="tab-text">Every design is checked before you see it. <b>Poor contrast, broken layouts and made-up claims</b> are caught and fixed automatically.</span>
+          </button>
+          <button class="tab" role="tab" id="tab-5" aria-controls="pane-5" aria-selected="false" tabindex="-1">
+            <span class="tab-num">05</span><span class="tab-title">Automations</span><span class="tab-arrow" aria-hidden="true">→</span>
+            <span class="tab-text">Type what you want, like "20 HVAC companies in Austin". The campaign <b>finds the businesses and makes a mockup for each</b> while you do other work.</span>
+          </button>
+          <button class="tab" role="tab" id="tab-6" aria-controls="pane-6" aria-selected="false" tabindex="-1">
+            <span class="tab-num">06</span><span class="tab-title">Maintenance &amp; security</span><span class="tab-arrow" aria-hidden="true">→</span>
+            <span class="tab-text">Keep every client site updated and <b>protected with Wordfence</b>, set up in one click, and turn one website into a monthly plan.</span>
+          </button>
+        </div>
+
+        <div class="tab-panes">
+          <div class="pane p-mint" role="tabpanel" id="pane-1" aria-labelledby="tab-1">
+            <div class="map" aria-hidden="true"><i style="left:28%;top:34%"></i><i class="hot" style="left:58%;top:52%"></i><i style="left:44%;top:70%"></i><i class="hot" style="left:70%;top:28%"></i></div>
+            <div class="note n1"><span class="av">H</span><div><b>Harbour Street Plumbing</b><small>★ 4.7 · 184 reviews · Leeds</small></div><em class="hot">86 Hot</em></div>
+            <div class="note n2"><span class="av">A</span><div><b>Aire Valley Drains</b><small>★ 4.4 · 57 reviews · no website</small></div><em class="hot">81 Hot</em></div>
+            <div class="note n3"><span class="av">K</span><div><b>Kirkstall Heating &amp; Gas</b><small>★ 4.9 · 312 reviews · Leeds</small></div><em>34 Cold</em></div>
+          </div>
+          <div class="pane p-sand" role="tabpanel" id="pane-2" aria-labelledby="tab-2" hidden>
+            <div class="ui-card score-card">
+              <div class="score-top"><div class="ring" style="--v:86"><b>86</b></div><div><h4>Harbour Street Plumbing</h4><p class="sub">harbourstplumbing.co.uk · <span class="grade">Hot lead</span></p></div></div>
+              <ul class="reasons">
+                <li><span>Mobile speed score 31 of 100</span><b>+18</b></li>
+                <li><span>Text too small on phones</span><b>+14</b></li>
+                <li><span>No HTTPS</span><b>+12</b></li>
+                <li><span>Footer says © 2014</span><b>+9</b></li>
+                <li><span>No contact form</span><b>+8</b></li>
+                <li><span>184 Google reviews: an established business</span><b>+25</b></li>
+              </ul>
             </div>
-            <div class="photo" aria-hidden="true"></div>
           </div>
-          <div class="gate"><span>Contrast passes</span><span>Only facts from their site</span><span>Layout aligned</span><span>Mobile checked</span></div>
+          <div class="pane p-rose" role="tabpanel" id="pane-3" aria-labelledby="tab-3" hidden>
+            <div class="carousel compact" aria-roledescription="carousel" aria-label="Example mockups">
+          <div class="window">
+            <div class="window-bar"><i></i><i></i><i></i><span class="car-title">Mockup · GenXe, Lahore</span></div>
+            <div class="car-view"><div class="car-track">
+            <figure class="car-slide" data-label="GenXe" data-title="Mockup · GenXe, Lahore"><img src="img/mockup-genxe.webp" width="1331" height="1028" loading="lazy" alt="Homepage mockup for GenXe, a Lahore digital agency, with a dark red hero, free-quote button and project stats"></figure>
+            <figure class="car-slide" data-label="Koelmeester" data-title="Mockup · Koelmeester Airconditioning" aria-hidden="true"><img src="img/mockup-koelmeester.webp" width="1182" height="1080" loading="lazy" alt="Homepage mockup for Koelmeester Airconditioning with a bold Dutch headline over an air conditioner photo and two service tiles"></figure>
+            <figure class="car-slide" data-label="MedAssist247" data-title="Mockup · MedAssist247" aria-hidden="true"><img src="img/mockup-medassist.webp" width="1600" height="1082" loading="lazy" alt="Homepage mockup for MedAssist247 with a dark blue control-room hero, membership button and three service highlights"></figure>
+            <figure class="car-slide" data-label="Air-Innovations" data-title="Mockup · Air-Innovations" aria-hidden="true"><img src="img/mockup-airinnovations.webp" width="1223" height="1200" loading="lazy" alt="Homepage mockup for Air-Innovations with the team in front of their vans, an orange quote button and business and home tiles"></figure>
+            <figure class="car-slide" data-label="Forno Rosso" data-title="Mockup · Forno Rosso" aria-hidden="true"><img src="img/mockup-pizzeria.webp" width="1600" height="1004" loading="lazy" alt="Homepage mockup for Forno Rosso, a Manchester pizzeria, with a serif headline and wood-fired oven photo"></figure>
+            </div></div>
+          </div>
+          <div class="car-pill" role="tablist" aria-label="Choose a slide"></div>
         </div>
-        <p class="example-tag">Example business and data</p>
+          </div>
+          <div class="pane p-yellow" role="tabpanel" id="pane-4" aria-labelledby="tab-4" hidden>
+            <div class="stack">
+              <div class="note"><span class="av ok">✓</span><div><b>Contrast fixed</b><small>Hero text 3.1:1 → 7.4:1</small></div><em class="ok">Fixed</em></div>
+              <div class="note"><span class="av warn">!</span><div><b>Claim removed</b><small>"25 years' experience" isn't on their site</small></div><em class="warn">Removed</em></div>
+              <div class="note"><span class="av ok">✓</span><div><b>Layout aligned</b><small>Service cards on one baseline</small></div><em class="ok">Fixed</em></div>
+              <div class="note"><span class="av ok">✓</span><div><b>Mobile checked</b><small>No overflow at 390 px</small></div><em class="ok">Passed</em></div>
+            </div>
+          </div>
+          <div class="pane p-blue" role="tabpanel" id="pane-5" aria-labelledby="tab-5" hidden>
+            <div class="ui-card campaign">
+              <p class="prompt"><span>Campaign</span>20 HVAC companies in Austin</p>
+              <ul class="items">
+                <li><b>Lone Star Air &amp; Heat</b><em class="ok">Mockup ready</em></li>
+                <li><b>Barton Creek Cooling</b><em class="ok">Mockup ready</em></li>
+                <li><b>Hill Country HVAC</b><em class="run">Designing</em></li>
+                <li><b>Capital City Comfort</b><em class="run">Designing</em></li>
+                <li><b>Eastside AC Repair</b><em>Queued</em></li>
+              </ul>
+            </div>
+          </div>
+          <div class="pane p-dark" role="tabpanel" id="pane-6" aria-labelledby="tab-6" hidden>
+            <div class="ui-card switches">
+              <div class="sw"><span class="toggle"></span><div><b>Brute-force protection</b><p>Wordfence installed, login attempts limited and repeat offenders locked out.</p></div></div>
+              <div class="sw"><span class="toggle"></span><div><b>Turn off XML-RPC</b><p>Closes a common way attackers guess passwords.</p></div></div>
+              <div class="sw"><span class="toggle"></span><div><b>Update and vulnerability checks</b><p>WordPress, plugins and themes checked against known security issues.</p></div></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section band" id="how">
+  <section class="section blush" id="find">
     <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">How it works</p>
-        <h2>From a Google Maps search to a live WordPress site, in one app.</h2>
-        <p>Each step picks up where the last one stopped, so the lead you found in the morning can be a proposal by the afternoon.</p>
+      <div class="split-head">
+        <div><span class="eyebrow">Find clients</span><h2>Find the businesses that need you most</h2></div>
+        <p>Search Google Maps for any trade in any city. Weborite Studio visits every website it finds and scores how badly each business needs a new one, so you call the best prospects first.</p>
       </div>
-      <ol class="flow">
-        <li><b>Find</b><span>Search Google Maps by trade and city. Each business gets a fit score.</span></li>
-        <li><b>Mock up</b><span>Claude redesigns their homepage from their own text, photos and colours.</span></li>
-        <li><b>Pitch</b><span>Send the mockup to the owner on WhatsApp or by email.</span></li>
-        <li><b>Build</b><span>Turn the approved homepage into a full multi-page site.</span></li>
-        <li><b>WordPress</b><span>Convert it to editable Elementor pages on the client's WordPress.</span></li>
-        <li><b>Launch &amp; care</b><span>Check SEO and speed, go live, then keep it updated and secure.</span></li>
-      </ol>
-    </div>
-  </section>
-
-  <section class="section" id="features">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Features</p>
-        <h2>Everything an agency does for a small business client.</h2>
+      <div class="panel g1 has-car">
+        <div class="carousel" aria-roledescription="carousel" aria-label="Weborite Studio screens">
+          <div class="window">
+            <div class="window-bar"><i></i><i></i><i></i><span class="car-title">Weborite Studio · Lead Finder</span></div>
+            <div class="car-view"><div class="car-track">
+            <figure class="car-slide" data-label="Lead Finder" data-title="Weborite Studio · Lead Finder"><img src="img/app-leads.webp" width="1600" height="1000" loading="lazy" alt="Lead Finder: plumbers in Leeds sorted by fit score, with phone, reviews, website and contact tags"></figure>
+            <figure class="car-slide" data-label="Mockups" data-title="Weborite Studio · Mockups" aria-hidden="true"><img src="img/app-mockups.webp" width="1600" height="1000" loading="lazy" alt="Mockups dashboard: 8 leads, 6 mockups ready and 2 needing review, with the latest leads"></figure>
+            <figure class="car-slide" data-label="Super admin" data-title="Weborite Studio · Super admin" aria-hidden="true"><img src="img/app-admin.webp" width="1600" height="1000" loading="lazy" alt="Super admin business overview: earnings, money waiting to be paid, revenue by month and earnings by service"></figure>
+            <figure class="car-slide" data-label="Communication" data-title="Weborite Studio · Communication" aria-hidden="true"><img src="img/app-comms.webp" width="1600" height="1000" loading="lazy" alt="Communication: WhatsApp, Gmail, Messenger, Instagram, Slack and LinkedIn inboxes in one place"></figure>
+            <figure class="car-slide" data-label="Launch checklist" data-title="Weborite Studio · Launch checklist" aria-hidden="true"><img src="img/app-checklist.webp" width="1600" height="1000" loading="lazy" alt="Launch checklist: custom items plus automated checks for QA, performance, page experience, on-page SEO and technical SEO"></figure>
+            </div></div>
+          </div>
+          <div class="car-pill" role="tablist" aria-label="Choose a slide"></div>
+        </div>
       </div>
       <div class="features">
-        <article class="feature wide">
-          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8"/></svg></span>
-          <h3>Mockups built from the business's real content</h3>
-          <p>The app captures the current website, including text, photos, logo, colours, reviews and phone numbers. Claude then designs a new homepage around them. A quality check rejects designs with poor contrast, broken layouts or claims that aren't on the original site, so you never send a prospect something embarrassing.</p>
-          <ul>
-            <li>Design systems per industry, starting with HVAC, plumbing and restaurants</li>
-                      </ul>
-        </article>
-        <article class="feature">
+        <div class="feature">
           <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
-          <h3>Lead Finder</h3>
-          <p>Search Google Maps for any trade in any city. Sort by fit score, reviews or rating, select the best ones and create mockups in bulk, or export them to CSV.</p>
-        </article>
-        <article class="feature">
-          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h4l3-8 4 16 3-8h2"/></svg></span>
-          <h3>Automations</h3>
-          <p>Run a campaign on its own: search a niche, pick the best-fit businesses and have their mockups ready when you sit down.</p>
-        </article>
-        <article class="feature">
+          <h3>Any trade, any city</h3>
+          <p>Type "plumbers in Leeds" or "restaurants in Lahore" and get the businesses from Google Maps with phone, website, rating and reviews.</p>
+        </div>
+        <div class="feature">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A4 4 0 0 0 12 20a6 6 0 0 0 6-6c0-4-3-6-4-9-1.5 2-2 3.5-2 5-1-.5-2-1.5-2-3-1.5 1.5-2 3-1.5 7.5Z"/></svg></span>
+          <h3>A fit score for each lead</h3>
+          <p>Slow sites, no mobile layout, no HTTPS, a Facebook page instead of a website. Each business is graded hot, warm or cold.</p>
+        </div>
+        <div class="feature">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+          <h3>Contacts ready to use</h3>
+          <p>Email addresses from their website and a WhatsApp check on their number, so you know how to reach each owner.</p>
+        </div>
+        <div class="feature">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m8 12 3 3 5-6"/></svg></span>
+          <h3>Bulk actions</h3>
+          <p>Select the best leads and create mockups for all of them at once, or export them to CSV for your CRM.</p>
+        </div>
+        <div class="feature">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></span>
+          <h3>Campaigns on autopilot</h3>
+          <p>Type "20 HVAC companies in Austin". A campaign finds them and makes a mockup for each, waiting for you to review.</p>
+        </div>
+        <div class="feature">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.9A8 8 0 1 1 21 12Z"/></svg></span>
+          <h3>Inbound leads too</h3>
+          <p>Connect Facebook lead forms and your website's Elementor forms. New enquiries arrive as leads with a mockup on the way.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="pitch">
+    <div class="wrap">
+      <div class="split-head">
+        <div><span class="eyebrow">Pitch</span><h2>Show a finished homepage before the first call</h2></div>
+        <p>The app captures the business's current website (text, photos, logo, colours, reviews and phone numbers) and Claude designs a new homepage around it. Owners see their own business, done properly.</p>
+      </div>
+      <div class="panel g2 has-car">
+        <div class="float-card gate-card" aria-label="Quality check results">
+          <h4>Quality check <span>Passed</span></h4>
+          <ul>
+            <li>Text contrast readable</li>
+            <li>Only facts from their site</li>
+            <li>Layout aligned</li>
+            <li>Mobile checked</li>
+            <li>Their real photos used</li>
+          </ul>
+        </div>
+        <div class="carousel" aria-roledescription="carousel" aria-label="Example mockups">
+          <div class="window">
+            <div class="window-bar"><i></i><i></i><i></i><span class="car-title">Mockup · GenXe, Lahore</span></div>
+            <div class="car-view"><div class="car-track">
+            <figure class="car-slide" data-label="GenXe" data-title="Mockup · GenXe, Lahore"><img src="img/mockup-genxe.webp" width="1331" height="1028" loading="lazy" alt="Homepage mockup for GenXe, a Lahore digital agency, with a dark red hero, free-quote button and project stats"></figure>
+            <figure class="car-slide" data-label="Koelmeester" data-title="Mockup · Koelmeester Airconditioning" aria-hidden="true"><img src="img/mockup-koelmeester.webp" width="1182" height="1080" loading="lazy" alt="Homepage mockup for Koelmeester Airconditioning with a bold Dutch headline over an air conditioner photo and two service tiles"></figure>
+            <figure class="car-slide" data-label="MedAssist247" data-title="Mockup · MedAssist247" aria-hidden="true"><img src="img/mockup-medassist.webp" width="1600" height="1082" loading="lazy" alt="Homepage mockup for MedAssist247 with a dark blue control-room hero, membership button and three service highlights"></figure>
+            <figure class="car-slide" data-label="Air-Innovations" data-title="Mockup · Air-Innovations" aria-hidden="true"><img src="img/mockup-airinnovations.webp" width="1223" height="1200" loading="lazy" alt="Homepage mockup for Air-Innovations with the team in front of their vans, an orange quote button and business and home tiles"></figure>
+            <figure class="car-slide" data-label="Forno Rosso" data-title="Mockup · Forno Rosso" aria-hidden="true"><img src="img/mockup-pizzeria.webp" width="1600" height="1004" loading="lazy" alt="Homepage mockup for Forno Rosso, a Manchester pizzeria, with a serif headline and wood-fired oven photo"></figure>
+            </div></div>
+          </div>
+          <div class="car-pill" role="tablist" aria-label="Choose a slide"></div>
+        </div>
+      </div>
+      <div class="features">
+        <div class="feature">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8"/></svg></span>
+          <h3>Built from their content</h3>
+          <p>Their services, their reviews, their phone number and their photos, in a layout that makes them look like the best choice in town.</p>
+        </div>
+        <div class="feature">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 8 4.5-8 4.5-8-4.5L12 3Z"/><path d="m4 12 8 4.5 8-4.5M4 16.5 12 21l8-4.5"/></svg></span>
+          <h3>Design systems per industry</h3>
+          <p>Layouts, type and colour rules tuned for each trade, starting with HVAC, plumbing and restaurants.</p>
+        </div>
+        <div class="feature">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+          <h3>A quality check on every design</h3>
+          <p>Poor contrast, broken layouts and claims that aren't on the original site are caught and fixed before you ever see the mockup.</p>
+        </div>
+        <div class="feature">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
+          <h3>Change requests in plain words</h3>
+          <p>"Make the header darker, add the Gas Safe logo." Describe the change and the design is revised.</p>
+        </div>
+        <div class="feature">
           <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg></span>
-          <h3>Full site builds</h3>
-          <p>Extend an approved homepage into service, about and contact pages in the same design.</p>
-        </article>
-        <article class="feature">
+          <h3>From homepage to full site</h3>
+          <p>Once they say yes, extend the homepage into service, about and contact pages in the same design, checked page by page.</p>
+        </div>
+        <div class="feature">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 11V7a5 5 0 0 1 10 0v4"/><rect x="4" y="11" width="16" height="10" rx="2"/></svg></span>
+          <h3>Your Claude account</h3>
+          <p>Designs are made with your own Claude subscription or API key, so your prospects' content stays between you and Anthropic.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section sand" id="wordpress">
+    <div class="wrap">
+      <div class="split-head">
+        <div><span class="eyebrow">Deliver</span><h2>Ship it on real WordPress, store included</h2></div>
+        <p>The approved design is rebuilt as native Elementor pages on your client's own WordPress. They log in and edit every heading, image and button, like any other site. Selling online? The store is set up too.</p>
+      </div>
+      <div class="panel g3">
+        <div class="ui-grid">
+          <div class="ui-card">
+            <h4>Converting to WordPress</h4>
+            <p class="sub">harbourstplumbing.co.uk · Elementor</p>
+            <ol class="steps-ui">
+              <li><b>Connect site</b><span>Plugin installed</span></li>
+              <li><b>Header &amp; footer</b><span>2 templates</span></li>
+              <li><b>Pages</b><span>6 of 6</span></li>
+              <li><b>Images &amp; fonts</b><span>41 files</span></li>
+              <li class="run"><b>Shop: products</b><span>148 of 200</span></li>
+            </ol>
+          </div>
+          <div class="ui-card">
+            <h4>Store checkout</h4>
+            <p class="sub">WooCommerce payments</p>
+            <ul class="pay-list">
+              <li>Stripe <span class="toggle" role="img" aria-label="On"></span></li>
+              <li>PayPal <span class="toggle" role="img" aria-label="On"></span></li>
+              <li>Mollie <span class="toggle" role="img" aria-label="On"></span></li>
+              <li>Bank transfer <span class="toggle" role="img" aria-label="On"></span></li>
+              <li>Cash on delivery <span class="toggle" role="img" aria-label="On"></span></li>
+            </ul>
+            <div class="meter"><div><i></i></div><p><span>Products imported</span><span>148 / 200</span></p></div>
+          </div>
+        </div>
+      </div>
+      <div class="features">
+        <div class="feature">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3.5 9h17M3.5 15h17M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z"/></svg></span>
+          <h3>Native Elementor pages</h3>
+          <p>No iframes, no locked HTML blocks. Real Elementor sections and widgets your client can edit.</p>
+        </div>
+        <div class="feature">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.5 5.8 21.2l1.6-7L2 9.5l7.1-.6Z"/></svg></span>
+          <h3>Free or Pro</h3>
+          <p>Works with the free Elementor plugin. With Elementor Pro installed, it also uses Pro widgets like the nav menu and forms.</p>
+        </div>
+        <div class="feature">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg></span>
+          <h3>Payments switched on</h3>
+          <p>Stripe, PayPal, Mollie, bank transfer and cash on delivery, configured from the app.</p>
+        </div>
+        <div class="feature">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3v5h5"/><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M8 13h8M8 17h5"/></svg></span>
+          <h3>Products from a CSV</h3>
+          <p>Up to 500 products with categories, variations and images. Run it again and nothing is duplicated.</p>
+        </div>
+        <div class="feature">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 4h14v12H1zM15 8h4l3 3v5h-7"/><circle cx="5.5" cy="18.5" r="2"/><circle cx="18.5" cy="18.5" r="2"/></svg></span>
+          <h3>Shipping zones</h3>
+          <p>Flat rates by region and a free-shipping threshold, ready for the first order.</p>
+        </div>
+        <div class="feature">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="7" rx="1.5"/><rect x="3" y="14" width="18" height="7" rx="1.5"/><path d="M7 6.5h.01M7 17.5h.01"/></svg></span>
+          <h3>Your client's hosting</h3>
+          <p>Any host where you can log in as an administrator and install a plugin. The site is theirs, not rented from us.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section blush">
+    <div class="wrap">
+      <div class="center-head">
+        <span class="eyebrow">Keep clients</span>
+        <h2>Turn one website into years of work</h2>
+        <p>Launch it properly, keep it safe and stay in touch, from the same app where you found the client.</p>
+      </div>
+      <div class="cards">
+        <article class="card">
           <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
           <h3>Launch &amp; SEO</h3>
-          <p>Speed, accessibility and SEO checks before go-live, with fixes you can apply from the app.</p>
+          <p>Speed, accessibility and on-page SEO checks for every page before go-live, with fixes you can apply from the app.</p>
         </article>
-        <article class="feature wide">
-          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3.5 9h17M3.5 15h17M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z"/></svg></span>
-          <h3>Real WordPress, not a page builder export</h3>
-          <p>The site is rebuilt as native Elementor pages on the client's own WordPress, so they can edit every heading, image and button. Works with and without Elementor Pro.</p>
-          <ul>
-            <li>WooCommerce stores: Stripe, PayPal, Mollie, bank transfer and cash on delivery</li>
-            <li>Import up to 500 products from a CSV, with categories, variations and images</li>
-            <li>Flat-rate shipping zones and free-shipping thresholds</li>
-          </ul>
-        </article>
-        <article class="feature">
-          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+        <article class="card">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg></span>
           <h3>Maintenance</h3>
-          <p>Watch every client site for updates and known vulnerabilities. One click installs Wordfence and sets up brute-force protection.</p>
+          <p>Watch every client site for WordPress, plugin and theme updates, and for known vulnerabilities.</p>
         </article>
-        <article class="feature">
+        <article class="card">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6l-8-3Z"/></svg></span>
+          <h3>One-click hardening</h3>
+          <p>Installs and configures Wordfence with brute-force protection and turns off XML-RPC.</p>
+        </article>
+        <article class="card">
           <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.9A8 8 0 1 1 21 12Z"/></svg></span>
           <h3>Communication</h3>
-          <p>Connect Facebook lead forms and WhatsApp, so new enquiries arrive in the app as leads with a mockup on the way.</p>
+          <p>Facebook lead forms and WhatsApp connected to your pipeline, so no enquiry gets lost.</p>
         </article>
-        <article class="feature wide">
+        <article class="card">
           <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></span>
           <h3>Agency dashboard</h3>
-          <p>See your clients, projects and revenue in one overview.</p>
+          <p>Your clients, projects and revenue in one overview.</p>
+        </article>
+        <article class="card">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></span>
+          <h3>Your data stays yours</h3>
+          <p>Leads, designs and client passwords are stored on your computer, with passwords encrypted.</p>
         </article>
       </div>
     </div>
   </section>
 
-  <section class="section band">
+  <section class="section" id="how">
     <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">What you need</p>
-        <h2>Three things before you start.</h2>
-      </div>
-      <div class="reqs">
-        <div class="req"><h3>A Windows PC</h3><p>Windows 10 or 11, 64-bit. Your leads, mockups and client sites are stored on this computer.</p></div>
-        <div class="req"><h3>A Claude account</h3><p>The designs are made by Claude. Sign in with your own Claude subscription, or add an Anthropic API key. Its usage is billed by Anthropic, not by us.</p></div>
-        <div class="req"><h3>WordPress hosting</h3><p>Only for conversions and maintenance. Any host where you can log in as an administrator and install a plugin.</p></div>
+      <div class="how">
+        <h2>From a Google Maps search to a live site</h2>
+        <p>Each step picks up where the last one stopped, so the lead you found in the morning can be a proposal by the afternoon.</p>
+        <ol class="flow">
+          <li><b>Find</b><span>Search a trade and city. Every business gets a fit score.</span></li>
+          <li><b>Mock up</b><span>Claude redesigns the homepage from their own content.</span></li>
+          <li><b>Pitch</b><span>Send the mockup to the owner on WhatsApp or by email.</span></li>
+          <li><b>Build</b><span>Turn the approved homepage into a complete site.</span></li>
+          <li><b>WordPress</b><span>Convert it to editable Elementor pages, with a store if needed.</span></li>
+          <li><b>Launch &amp; care</b><span>Check SEO and speed, go live, then keep it updated and secure.</span></li>
+        </ol>
       </div>
     </div>
   </section>
 
-  <section class="section" id="pricing">
+  <section class="section tight">
     <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Pricing</p>
-        <h2>Try every feature for free. Pay when it wins you a client.</h2>
+      <div class="center-head">
+        <span class="eyebrow">Before you start</span>
+        <h2>What you need</h2>
+      </div>
+      <div class="reqs">
+        <div class="req"><span class="num">01</span><h3>A Windows PC</h3><p>Windows 10 or 11, 64-bit. Your leads, mockups and client sites are stored on this computer.</p></div>
+        <div class="req"><span class="num">02</span><h3>A Claude account</h3><p>Sign in with your own Claude subscription, or add an Anthropic API key. Its usage is billed by Anthropic.</p></div>
+        <div class="req"><span class="num">03</span><h3>WordPress hosting</h3><p>Only for conversions and maintenance. Any host where you can install a plugin as an administrator.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section blush" id="pricing">
+    <div class="wrap">
+      <div class="center-head">
+        <span class="eyebrow">Pricing</span>
+        <h2>Try every feature free. Pay when it wins you a client.</h2>
       </div>
       <div class="plans">
         <div class="plan">
-          <h3>Demo</h3>
+          <div class="plan-top"><h3>Demo</h3></div>
           <div class="price"><b>Free</b></div>
-          <p class="alt">No card, no key. Download, fill in your details and start.</p>
+          <p class="alt">Download, fill in your details and start. No card, no key.</p>
           <table class="limits" aria-label="Demo limits">
             <tbody>
               <tr><td>Homepage mockups</td><td>3</td></tr>
@@ -192,10 +469,10 @@
               <tr><td>Communication channels</td><td>2</td></tr>
             </tbody>
           </table>
-          <a class="btn btn-line" href="download/Weborite-Studio-Setup.exe">Download for Windows</a>
+          <a class="btn btn-ghost" href="demo.html">Get the free demo</a>
         </div>
         <div class="plan main">
-          <h3>Studio</h3>
+          <div class="plan-top"><h3>Studio</h3><span class="tag">Everything unlimited</span></div>
           <div class="price"><b>$49</b><span>per month</span></div>
           <p class="alt">Or $490 per year, two months free.</p>
           <ul>
@@ -203,42 +480,46 @@
             <li>Unlimited builds and WordPress conversions</li>
             <li>WooCommerce stores up to 500 products each</li>
             <li>SEO and maintenance for every client site</li>
-            <li>All updates while your subscription is active</li>
-            <li>One computer at a time, move it any time from Settings</li>
+            <li>All updates while your license is active</li>
+            <li>Facebook, WhatsApp and Elementor form leads</li>
+            <li>Agency dashboard for clients and revenue</li>
+            <li>Email support from the team that builds it</li>
+            <li>One computer at a time, move it any time</li>
           </ul>
-          <a class="btn btn-rose" href="https://weborite.lemonsqueezy.com/">Buy a license</a>
+          <a class="btn btn-brand" href="buy.html">Buy a license</a>
         </div>
       </div>
-      <p class="fine">Prices in US dollars. Tax is added at checkout where it applies. Payments are handled by Lemon Squeezy, our reseller. Your license key arrives by email right after purchase; enter it in the demo and every limit is removed, with your work kept. See the <a href="refund.html">refund policy</a>.</p>
+      <p class="fine">Prices in US dollars. <a href="buy.html">Order online</a> and we send an invoice you can pay by bank transfer, Payoneer or Wise. Your license key arrives by email once the payment is in. Enter it in the demo and every limit is removed, with your work kept. See the <a href="refund.html">refund policy</a>.</p>
     </div>
   </section>
 
-  <section class="section band" id="faq">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">FAQ</p>
-        <h2>Questions agencies ask us.</h2>
+  <section class="section" id="faq">
+    <div class="wrap faq-grid">
+      <div class="aside">
+        <span class="eyebrow">FAQ</span>
+        <h2>Questions agencies ask</h2>
+        <p>Something else? Email <a class="link-arrow" href="mailto:hello@weborite.com">hello@weborite.com</a></p>
       </div>
       <div class="faq">
         <details><summary>Is the WordPress output real WordPress?</summary><p>Yes. The site is built as native Elementor pages on the client's own WordPress install. Your client logs in to wp-admin and edits text, images and buttons like any other site. There is no locked page, iframe or hosted copy.</p></details>
         <details><summary>Do I need Elementor Pro?</summary><p>No. Conversions work with the free Elementor plugin. If Elementor Pro is installed, the app also uses Pro widgets such as the nav menu and forms.</p></details>
         <details><summary>Does it copy other websites or templates?</summary><p>No. Each mockup uses the prospect's own content and an industry design system, and the quality check blocks any claim that isn't on the business's current site.</p></details>
         <details><summary>Why do I need my own Claude account?</summary><p>Claude does the design work. Using your own account keeps your prompts and your prospects' content between you and Anthropic, and you only pay for what you use.</p></details>
-        <details><summary>Where is my data stored?</summary><p>On your computer. Leads, mockups, client sites and passwords stay in the app's folder, and passwords are encrypted. We don't run a server that receives them. The <a href="privacy.html">privacy policy</a> lists every service the app talks to.</p></details>
+        <details><summary>Where is my data stored?</summary><p>On your computer. Leads, mockups, client sites and passwords stay in the app's folder, and passwords are encrypted. The <a href="privacy.html">privacy policy</a> lists every service the app talks to.</p></details>
         <details><summary>Can I use it on my laptop and my desktop?</summary><p>One license is active on one computer at a time. To move it, open Settings and deactivate it, then enter the key on the other computer.</p></details>
         <details><summary>Is there a Mac version?</summary><p>Not yet. Weborite Studio runs on Windows 10 and 11.</p></details>
       </div>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section tight">
     <div class="wrap">
       <div class="closer">
         <div>
-          <h2>Your next client already has a bad website.</h2>
+          <h2>Your next client already has a bad website</h2>
           <p>Download the demo, run one Lead Finder search, and send your first mockup today.</p>
         </div>
-        <a class="btn" href="download/Weborite-Studio-Setup.exe">Download the free demo</a>
+        <a class="btn btn-light" href="demo.html">Download the free demo</a>
       </div>
     </div>
   </section>
@@ -246,15 +527,19 @@
 
 <footer class="site-foot">
   <div class="wrap">
-    <span>© 2026 Weborite Solutions · <a href="mailto:hello@weborite.com">hello@weborite.com</a></span>
-    <nav aria-label="Legal">
-      <a href="terms.html">Terms of Service</a>
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="refund.html">Refund Policy</a>
-      <a href="https://weborite.com">Weborite agency</a>
-    </nav>
+    <div class="foot-top">
+      <div>
+        <h2>Take your agency to the next level with Weborite Studio</h2>
+        <a class="btn btn-brand" href="demo.html">Download the free demo</a>
+      </div>
+      <div class="foot-col"><h4>Product</h4><ul><li><a href="index.html#features">Features</a></li><li><a href="index.html#how">How it works</a></li><li><a href="index.html#pricing">Pricing</a></li><li><a href="index.html#faq">FAQ</a></li><li><a href="demo.html">Free demo</a></li><li><a href="buy.html">Buy a license</a></li></ul></div>
+      <div class="foot-col"><h4>Company</h4><ul><li><a href="https://weborite.com">Weborite agency</a></li><li><a href="mailto:hello@weborite.com">hello@weborite.com</a></li></ul></div>
+      <div class="foot-col"><h4>Legal</h4><ul><li><a href="terms.html">Terms of Service</a></li><li><a href="privacy.html">Privacy Policy</a></li><li><a href="refund.html">Refund Policy</a></li></ul></div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 Weborite Solutions. All rights reserved.</span><span>Made for web design agencies.</span></div>
   </div>
 </footer>
 
+<script src="site.js" defer></script>
 </body>
 </html>

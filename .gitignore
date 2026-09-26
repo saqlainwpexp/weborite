@@ -22,6 +22,9 @@ design-library/**/*.png
 design-library/**/*.jpg
 design-library/**/*.jpeg
 design-library/**/*.webp
+# ...except the reference crops mockups are built from: they must ship with every copy of the repo.
+!design-library/**/sections/*.jpg
+!design-library/**/reference-*.jpg
 design-library/**/_thumbs/**
 design-library/**/_raw.json
 design-library/_progress.log
