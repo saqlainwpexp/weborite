@@ -404,8 +404,54 @@ export interface WpConversion {
   pages: WpPage[];
   customWidgets: WpCustomWidget[];
   pluginVersion: number;
+  /** WooCommerce store for this site; absent for brochure sites. */
+  store?: WpStore;
   createdAt: string;
   error?: string;
+}
+
+export type WpPaymentKey = "stripe" | "paypal" | "mollie" | "bacs" | "cod";
+export interface WpBankAccount { account_name: string; account_number: string; bank_name: string; sort_code: string; iban: string; bic: string }
+export interface WpShippingZone { name: string; countries: string[]; rate: string; free_over: string }
+
+export interface WpStore {
+  enabled: boolean;
+  country: string; // "NL", or "US:CA" for a state
+  address: string;
+  city: string;
+  postcode: string;
+  currency: string; // ISO code, e.g. EUR
+  email: string;
+  payments: WpPaymentKey[];
+  stripe: { test: boolean; publishable: string; secretSet: boolean };
+  mollie: { test: boolean; keySet: boolean };
+  bank: WpBankAccount[];
+  shipping: WpShippingZone[];
+  /** Imported CSV: counts only; the rows live in the conversion folder. */
+  catalog: { file: string; products: number; variations: number; uploadedAt: string } | null;
+  run: {
+    status: "running" | "done" | "failed" | "paused";
+    step: string;
+    steps: { label: string; ok: boolean; detail: string }[];
+    notes: string[];
+    imported: number;
+    total: number;
+    errors: { sku: string; name: string; error: string }[];
+    startedAt: string;
+    finishedAt?: string;
+    error?: string;
+  } | null;
+  live: WooStatus | null;
+}
+
+export interface WooStatus {
+  woo: string;
+  installed: boolean;
+  currency: string;
+  pages: Record<string, { id: number; url: string } | null>;
+  products: number;
+  gateways: { id: string; title: string }[];
+  zones: { id: number; name: string; methods: number }[];
 }
 
 /* ---------- Post Launch & On-Page SEO workspace ---------- */

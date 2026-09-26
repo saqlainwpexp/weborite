@@ -31,6 +31,8 @@ define( 'STUDIO_PREVIEW_TOKEN', '${previewToken}' );
 
 // Monthly maintenance: updates, staging clone, backups, health (care.php).
 require_once __DIR__ . '/care.php';
+// WooCommerce store setup and product import (woo.php).
+require_once __DIR__ . '/woo.php';
 
 /* ---------- REST API ---------- */
 
@@ -51,6 +53,8 @@ add_action( 'rest_api_init', function () {
 				'seo'       => true,
 				'seo_plugin' => studio_seo_plugin(),
 				'care'      => STUDIO_CARE_VERSION,
+				'woo'       => STUDIO_WOO_VERSION,
+				'woocommerce' => class_exists( 'WooCommerce' ) ? WC()->version : '',
 			);
 		},
 	) );
@@ -389,6 +393,7 @@ export async function buildPluginZip(out: string, opts: { version: number; previ
     zip.pipe(file);
     zip.append(mainPhp(opts.version, opts.previewToken, opts.widgets), { name: "studio-connector/studio-connector.php" });
     zip.append(readFileSync(join(PHP_DIR, "care.php")), { name: "studio-connector/care.php" });
+    zip.append(readFileSync(join(PHP_DIR, "woo.php")), { name: "studio-connector/woo.php" });
     zip.append(readFileSync(join(PHP_DIR, "staging-mu.php")), { name: "studio-connector/staging/guard.php" });
     for (const w of opts.widgets) zip.append(widgetPhp(w, w.php), { name: `studio-connector/widgets/${w.name}.php` });
     zip.append(`Studio Connector ${opts.version}\n\nUpload this zip under Plugins → Add New → Upload Plugin, then activate it.\nCreate an Application Password under Users → Profile and paste it into the dashboard.\n`, { name: "studio-connector/readme.txt" });

@@ -8,6 +8,7 @@ import type { LayoutCtx } from "../../layout/Layout";
 import { api, host, timeAgo, usePoll } from "../../lib/api";
 import { Dropdown } from "../../components/Dropdown";
 import { WpPagePill, WpStatusPill } from "./WpList";
+import { StorePanel } from "./WpStore";
 
 type Detail = WpConversion & { queued: string[]; pluginFile: boolean };
 
@@ -192,6 +193,7 @@ export default function WpDetail() {
               </div>
             )}
           </div>
+          <StorePanel c={c} reload={() => void reload()} />
         </div>
 
         <div className="stack side-col">

@@ -1,6 +1,8 @@
 import { readFileSync } from "node:fs";
 import { basename, extname } from "node:path";
 
+import type { WooStatus } from "../../shared/types.ts";
+
 export interface WpAuth {
   siteUrl: string;
   user: string;
@@ -18,7 +20,7 @@ export class WpError extends Error {
   }
 }
 
-async function call<T>(auth: WpAuth, path: string, init: RequestInit = {}): Promise<T> {
+async function call<T>(auth: WpAuth, path: string, init: RequestInit & { timeoutMs?: number } = {}): Promise<T> {
   const url = `${auth.siteUrl.replace(/\/$/, "")}/wp-json${path}`;
   const res = await fetch(url, {
     ...init,
@@ -26,7 +28,7 @@ async function call<T>(auth: WpAuth, path: string, init: RequestInit = {}): Prom
       Authorization: "Basic " + Buffer.from(`${auth.user}:${auth.appPassword.replace(/\s+/g, "")}`).toString("base64"),
       ...(init.headers ?? {}),
     },
-    signal: AbortSignal.timeout(90000),
+    signal: AbortSignal.timeout(init.timeoutMs ?? 90000),
   });
   const text = await res.text();
   let body: unknown = null;
@@ -45,7 +47,7 @@ async function call<T>(auth: WpAuth, path: string, init: RequestInit = {}): Prom
 }
 
 export function ping(auth: WpAuth) {
-  return call<{ plugin: string; elementor: string; pro: boolean; widgets: string[]; seo?: boolean; seo_plugin?: string; care?: number }>(auth, "/studio/v1/ping");
+  return call<{ plugin: string; elementor: string; pro: boolean; widgets: string[]; seo?: boolean; seo_plugin?: string; care?: number; woo?: number; woocommerce?: string }>(auth, "/studio/v1/ping");
 }
 
 export function seoResolve(auth: WpAuth, url: string) {
@@ -78,3 +80,13 @@ export function upsertPage(auth: WpAuth, body: { page_id?: number | null; title:
     body: JSON.stringify(body),
   });
 }
+
+/* ---------- WooCommerce (woo.php) ---------- */
+
+const wooPost = <T>(auth: WpAuth, path: string, body: unknown) =>
+  call<T>(auth, path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body), timeoutMs: 600000 });
+export const wooStatus = (auth: WpAuth) => call<WooStatus>(auth, "/studio/v1/woo/status");
+export const wooSetup = (auth: WpAuth, body: unknown) =>
+  wooPost<{ steps: { label: string; ok: boolean; detail: string }[]; notes: string[]; retry?: boolean; status?: WooStatus }>(auth, "/studio/v1/woo/setup", body);
+export const wooProducts = (auth: WpAuth, products: unknown[]) =>
+  wooPost<{ saved: { sku: string; id: number; type: string }[]; errors: { sku: string; name: string; error: string }[] }>(auth, "/studio/v1/woo/products", { products });

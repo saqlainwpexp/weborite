@@ -1110,3 +1110,35 @@ small.warn, span.warn, .warn { color: var(--amber); }
 .table td.col-biz { min-width: 190px; }
 @media (max-width: 640px) { .table td.col-biz { min-width: 190px; } }
 .table .vchip .clip { max-width: 130px; }
+
+/* WooCommerce store panel (WordPress conversion) */
+.store-panel .card-head { align-items: flex-start; flex-wrap: wrap; }
+.store-panel .card-head > div { flex: 1 1 260px; min-width: 0; }
+.card.store-panel h3.card-title { justify-content: flex-start; gap: 10px; font-size: 24px; }
+.store-panel .card-title svg { margin: 0; vertical-align: 0; }
+.store-h { font-size: 13px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; margin: 26px 0 10px; }
+.store-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; align-items: end; }
+.store-grid.sub { margin-top: 12px; padding: 14px; border-radius: 12px; background: var(--accent-softer); }
+.store-grid .wide { grid-column: 1 / -1; }
+.fld { display: grid; gap: 6px; min-width: 0; }
+.fld > span { font-size: 13px; color: var(--muted); }
+.chk { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; min-height: 44px; }
+.chk input, .pay-opt input { width: 18px; height: 18px; accent-color: var(--ink); margin: 0; }
+.pay-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+.pay-opt { display: flex; align-items: flex-start; gap: 10px; padding: 12px; border-radius: 12px; box-shadow: 0 0 0 1px var(--hairline); cursor: pointer; }
+.pay-opt.on { box-shadow: 0 0 0 1.5px var(--ink); }
+.pay-opt b { display: block; font-weight: 500; font-size: 15px; }
+.pay-opt small { display: block; font-size: 12px; line-height: 1.4; }
+.zone-list { display: grid; gap: 10px; justify-items: start; }
+.zone-row { display: grid; grid-template-columns: 1.1fr 1.3fr .7fr .8fr auto; gap: 10px; align-items: end; width: 100%; }
+.row-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.store-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 14px; margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--hairline); }
+.store-run { margin-top: 18px; padding: 16px; border-radius: 12px; background: var(--accent-softer); }
+.store-run-head { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; margin: 0; }
+.store-run-head svg { width: 18px; height: 18px; }
+.err-list { margin: 6px 0 0; padding-left: 18px; font-size: 13px; }
+@media (max-width: 720px) {
+  .store-grid { grid-template-columns: minmax(0, 1fr); }
+  .zone-row { grid-template-columns: 1fr 1fr; }
+  .zone-row .icon-btn { justify-self: start; }
+}
