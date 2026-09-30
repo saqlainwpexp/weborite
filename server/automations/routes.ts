@@ -6,7 +6,8 @@ import { enqueueSearch } from "../finder/queue.ts";
 import { sendMail, smtpProbe } from "../golive/smtp.ts";
 import { demoCap, demoLeft, demoLimitMessage, useDemoAllowance } from "../license/index.ts";
 import { DEMO_RESULTS } from "../../shared/demo.ts";
-import { describeNode, outreach, outreachReady, render, vars } from "./engine.ts";
+import { checkReplies, describeNode, outreach, outreachReady, render, replyInbox, replyState, vars } from "./engine.ts";
+import { inboxSince } from "../golive/imap.ts";
 import { createWorkflow, deleteWorkflow, enroll, getWorkflow, listEnrollments, listWorkflows, saveWorkflow, sentLast24h, summarize } from "./store.ts";
 
 export const automations = Router();
@@ -92,7 +93,7 @@ function problems(w: Workflow) {
 
 automations.get("/", (_req, res) => {
   const o = outreach();
-  res.json({ workflows: listWorkflows().map(summarize), outreach: { ready: outreachReady(o), from: o.fromEmail, cap: o.cap, sent24h: sentLast24h() } });
+  res.json({ workflows: listWorkflows().map(summarize), outreach: { ready: outreachReady(o), from: o.fromEmail, cap: o.cap, sent24h: sentLast24h(), replies: { on: Boolean(replyInbox()), ...replyState } } });
 });
 
 automations.post("/", (req, res) => {
@@ -211,6 +212,27 @@ automations.post("/:id/preview", async (req, res) => {
     return res.json({ sent: to, subject, body, business: sample.name });
   }
   res.json({ subject, body, business: sample.name, to: sample.emails[0] ?? "" });
+});
+
+/** Read the replies inbox now (also runs every few minutes on its own). */
+automations.post("/replies/check", async (_req, res) => {
+  if (!replyInbox()) return res.status(400).json({ error: "Add the IMAP server for replies in Settings → Integrations → Outreach email" });
+  const before = replyState.found;
+  await checkReplies();
+  if (replyState.error) return res.status(400).json({ error: replyState.error });
+  res.json({ found: replyState.found - before, at: replyState.at });
+});
+
+/** Check the replies inbox: log in and count the last day's mail, without changing anything. */
+automations.post("/replies/test", async (_req, res) => {
+  const box = replyInbox();
+  if (!box) return res.status(400).json({ error: "Fill in the IMAP server (and the outreach login above) first" });
+  try {
+    const mail = await inboxSince(box, new Date(Date.now() - 86400e3), 200);
+    res.json({ ok: true, detail: `${box.host}:${box.port} login accepted · ${mail.length} messages in the last day` });
+  } catch (e) {
+    res.json({ ok: false, detail: `${box.host}:${box.port} ${(e as Error).message}` });
+  }
 });
 
 /** Check the outreach mailbox: connect and log in, without sending. */

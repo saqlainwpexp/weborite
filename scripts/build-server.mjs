@@ -17,6 +17,12 @@ if (!owner) checkLicenseKey();
  */
 function checkLicenseKey() {
   const file = join(root, "shared", "licenseKey.ts");
+  // CI (the release workflow) passes the key in LICENSE_PUBLIC_KEY; a local build uses the one saved in the file.
+  const fromEnv = (process.env.LICENSE_PUBLIC_KEY ?? "").trim();
+  if (fromEnv) {
+    const current = readFileSync(file, "utf8");
+    writeFileSync(file, current.replace(/LICENSE_PUBLIC_KEY\s*=\s*["'`][^"'`]*["'`]/, `LICENSE_PUBLIC_KEY = "${fromEnv}"`), "utf8");
+  }
   const buf = readFileSync(file);
   const text = buf[0] === 0xff && buf[1] === 0xfe ? buf.subarray(2).toString("utf16le") : buf.toString("utf8").replace(/^\uFEFF/, "");
   const m = text.match(/LICENSE_PUBLIC_KEY\s*=\s*["'`]([^"'`]*)["'`]/);

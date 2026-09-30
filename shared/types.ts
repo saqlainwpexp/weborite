@@ -166,6 +166,9 @@ export interface Settings {
   outreachSmtpPasswordSet: boolean;
   outreachDailyCap: number;
   outreachFooter: string;
+  /** Where replies arrive (IMAP): read to stop a business's workflows when it writes back. Uses the SMTP login unless set. */
+  outreachImapHost: string;
+  outreachImapPort: number;
   avatarFile: string;
   /** Maintenance */
   careDay: number; // day of the month for the automatic check (1–28, 0 = off)
@@ -1048,7 +1051,7 @@ export interface WfEnrollment {
   prospectId: string;
   business: string;
   nodeId: string | null;
-  status: "active" | "waiting" | "done" | "failed" | "stopped";
+  status: "active" | "waiting" | "done" | "failed" | "stopped" | "replied";
   wakeAt: string;
   enrolledAt: string;
   updatedAt: string;
@@ -1059,5 +1062,5 @@ export interface WfEnrollment {
 }
 
 export interface WorkflowSummary extends Workflow {
-  counts: { enrolled: number; active: number; waiting: number; done: number; failed: number; emailsSent: number };
+  counts: { enrolled: number; active: number; waiting: number; done: number; failed: number; emailsSent: number; replied: number };
 }

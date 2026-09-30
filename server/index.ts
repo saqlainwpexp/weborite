@@ -148,7 +148,7 @@ app.put("/api/settings", (req, res) => {
     "cloudTriggerUrl", "cloudTriggerToken", "githubToken", "cloudRepo", "cloudBranch",
     "studioName", "brandColor", "firstName", "lastName", "userEmail", "userPhone",
     "psiKey", "gtmetrixKey", "qaEmail", "agencyAdminEmail", "qaImapHost", "qaImapUser", "qaImapPassword",
-    "outreachFromName", "outreachFromEmail", "outreachSmtpHost", "outreachSmtpUser", "outreachSmtpPassword", "outreachFooter",
+    "outreachFromName", "outreachFromEmail", "outreachSmtpHost", "outreachSmtpUser", "outreachSmtpPassword", "outreachFooter", "outreachImapHost",
   ];
   if (typeof req.body?.currency === "string" && !/^[A-Z]{3}$/.test(req.body.currency)) return res.status(400).json({ error: "Currency must be a 3-letter code like USD" });
   if (typeof req.body?.currency === "string") allowed.push("currency");
@@ -164,6 +164,7 @@ app.put("/api/settings", (req, res) => {
   const extra = patch as Record<string, unknown>;
   if (body.outreachSmtpPort !== undefined) extra.outreachSmtpPort = Math.max(1, Math.min(65535, Math.round(Number(body.outreachSmtpPort)) || 465));
   if (body.outreachSmtpSecurity !== undefined) extra.outreachSmtpSecurity = ["ssl", "tls", "none"].includes(body.outreachSmtpSecurity) ? body.outreachSmtpSecurity : "ssl";
+  if (body.outreachImapPort !== undefined) extra.outreachImapPort = Math.max(1, Math.min(65535, Math.round(Number(body.outreachImapPort)) || 993));
   if (body.outreachDailyCap !== undefined) extra.outreachDailyCap = Math.max(1, Math.min(500, Math.round(Number(body.outreachDailyCap)) || 40));
   if (body.qaImapPort !== undefined) extra.qaImapPort = Math.max(1, Math.min(65535, Math.round(Number(body.qaImapPort)) || 993));
   if (body.careDay !== undefined) extra.careDay = Math.max(0, Math.min(28, Math.round(Number(body.careDay)) || 0));

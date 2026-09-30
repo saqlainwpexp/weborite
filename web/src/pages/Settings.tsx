@@ -168,21 +168,21 @@ function BrandColorField({ value, onChange }: { value: string; onChange: (hex: s
 
 /* ---------- page ---------- */
 
-function OutreachTest() {
+function OutreachTest({ path = "/api/automations/outreach/test", label = "Test the mailbox" }: { path?: string; label?: string }) {
   const [state, setState] = useState<{ busy: boolean; ok?: boolean; text?: string }>({ busy: false });
   return (
     <div style={{ display: "flex", gap: 12, alignItems: "center", marginTop: 14, flexWrap: "wrap" }}>
       <button type="button" className="btn btn-white btn-sm" disabled={state.busy} onClick={async () => {
         setState({ busy: true });
         try {
-          const r = await api<{ ok: boolean; detail: string }>("/api/automations/outreach/test", { method: "POST" });
+          const r = await api<{ ok: boolean; detail: string }>(path, { method: "POST" });
           setState({ busy: false, ok: r.ok, text: r.detail });
         } catch (e) {
           setState({ busy: false, ok: false, text: (e as Error).message });
         }
-      }}><Mail />Test the mailbox</button>
-      <span className="muted" style={{ fontSize: 13 }}>Save first, then test: it connects and logs in without sending.</span>
-      {state.text && <span className={state.ok ? "ok" : "bad"} style={{ fontSize: 14 }}>{state.text}</span>}
+      }}><Mail />{label}</button>
+      <span className="muted" style={{ fontSize: 13 }}>Save first, then test: it connects and logs in without sending or changing anything.</span>
+      {state.text && <span style={{ fontSize: 14, color: state.ok ? "#2f7a4f" : "#b03a3a" }}>{state.text}</span>}
     </div>
   );
 }
@@ -495,6 +495,17 @@ export default function Settings() {
                 </Field>
               </div>
               <OutreachTest />
+              <h4 className="set-sub" style={{ margin: "22px 0 6px", fontSize: 15, fontWeight: 600 }}>Replies inbox</h4>
+              <p className="muted" style={{ fontSize: 14, marginBottom: 14 }}>The app reads this inbox every few minutes. When a business writes back, from the address you emailed or another address at their business, every workflow stops for them and they get the label “replied”. Out-of-office replies and bounces don't count. It only reads headers and never marks mail as read. It uses the login above.</p>
+              <div className="set-grid">
+                <Field label="IMAP server" icon={<Globe />} htmlFor="o-imap" hint="Usually imap. or mail. followed by your domain">
+                  <input id="o-imap" className="input mono" placeholder={String(v("outreachSmtpHost") || "").replace(/^smtp\./, "imap.") || "imap.your-host.com"} value={v("outreachImapHost")} onChange={set("outreachImapHost")} />
+                </Field>
+                <Field label="Port (TLS)" icon={<Hash />} htmlFor="o-imap-port">
+                  <input id="o-imap-port" className="input" type="number" min={1} max={65535} value={String(v("outreachImapPort") || 993)} onChange={(e) => setDraft({ ...draft, outreachImapPort: Number(e.target.value) })} />
+                </Field>
+              </div>
+              <OutreachTest path="/api/automations/replies/test" label="Test the replies inbox" />
             </Section>
             <Section icon={<Mail />} title="QA inbox (email delivery test)">
               <p className="muted" style={{ fontSize: 14, marginBottom: 14 }}>An outside mailbox (Gmail, Outlook) on a different server from your client sites. The delivery test sends mail through the client's site to this address and reads the headers here, so SPF and DKIM face a real check. For Gmail, turn on IMAP and use an app password.</p>

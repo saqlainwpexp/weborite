@@ -6,7 +6,7 @@ import {
 import type { WfEdge, WfEnrollment, WfNode, WfNodeKind, WorkflowSummary } from "../../../../shared/types";
 import { api, timeAgo, usePoll } from "../../lib/api";
 
-type ListData = { workflows: WorkflowSummary[]; outreach: { ready: boolean; from: string; cap: number; sent24h: number } };
+type ListData = { workflows: WorkflowSummary[]; outreach: { ready: boolean; from: string; cap: number; sent24h: number; replies: { on: boolean; at: string; error: string; found: number } } };
 type Detail = { workflow: WorkflowSummary; enrollments: WfEnrollment[]; problems: string[] };
 
 const NODE_W = 230;
@@ -36,6 +36,7 @@ const FIELDS: { value: string; label: string; type: "bool" | "number" | "text" }
   { value: "has_website", label: "Has a website", type: "bool" },
   { value: "has_whatsapp", label: "Is on WhatsApp", type: "bool" },
   { value: "mockup_ready", label: "Mockup is ready", type: "bool" },
+  { value: "replied", label: "Has replied", type: "bool" },
   { value: "fit_score", label: "Fit score", type: "number" },
   { value: "rating", label: "Google rating", type: "number" },
   { value: "reviews", label: "Number of reviews", type: "number" },
@@ -150,11 +151,17 @@ export default function Workflows() {
                   </div>
                 )}
               </div>
-              <span className="muted">{w.nodes.length} steps · {w.counts.enrolled} enrolled{w.counts.emailsSent ? ` · ${w.counts.emailsSent} emailed` : ""}</span>
+              <span className="muted">{w.nodes.length} steps · {w.counts.enrolled} enrolled{w.counts.emailsSent ? ` · ${w.counts.emailsSent} emailed` : ""}{w.counts.replied ? ` · ${w.counts.replied} replied` : ""}</span>
               <span className={`wf-pill ${w.status}`}><span className="dot" />{w.status}</span>
             </div>
           ))}
           {data && <p className="muted wf-sent">{data.outreach.sent24h} of {data.outreach.cap} emails sent in the last 24 hours</p>}
+          {data && (data.outreach.replies.on ? (
+            <p className={`wf-sent ${data.outreach.replies.error ? "bad" : "muted"}`}>
+              {data.outreach.replies.error ? `Couldn't read replies: ${data.outreach.replies.error}` : `Stops on reply · inbox checked ${data.outreach.replies.at ? timeAgo(data.outreach.replies.at) : "soon"}`}
+              {" "}<button type="button" className="wf-link" onClick={async () => { try { const r = await api<{ found: number }>("/api/automations/replies/check", { method: "POST" }); alert(r.found ? `${r.found} new ${r.found === 1 ? "reply" : "replies"}: those businesses were stopped.` : "No new replies."); } catch (e) { alert((e as Error).message); } void reload(); }}>Check now</button>
+            </p>
+          ) : <p className="muted wf-sent"><Link to="/settings/integrations">Add the replies inbox</Link> to stop following up when someone replies.</p>)}
         </aside>
 
         {id ? <Editor key={id} id={id} onChange={reload} /> : (
@@ -396,7 +403,7 @@ function Editor({ id, onChange }: { id: string; onChange: () => void }) {
       <header className="wf-head">
         <div className="wf-title">
           <input className="wf-name" value={name} aria-label="Workflow name" onChange={(e) => change(() => setName(e.target.value))} />
-          <span className="muted">{nodes.length} steps · {w.counts.enrolled} enrolled · {w.counts.emailsSent} emailed{dirty || saving === "save" ? " · saving…" : ""}</span>
+          <span className="muted">{nodes.length} steps · {w.counts.enrolled} enrolled · {w.counts.emailsSent} emailed{w.counts.replied ? ` · ${w.counts.replied} replied` : ""}{dirty || saving === "save" ? " · saving…" : ""}</span>
         </div>
         <span className={`wf-pill ${w.status}`}><span className="dot" />{w.status === "active" ? "Active" : w.status === "paused" ? "Paused" : "Draft"}</span>
         <div className="wf-palette" aria-label="Add a step">
@@ -590,7 +597,7 @@ function Panel({ node, workflowId, onChange, onClose, onDelete }: { node: WfNode
             <label className="wf-field"><span>Message</span><textarea ref={body} className="input" rows={10} value={String(c.body ?? "")} onChange={(e) => set("body", e.target.value)} placeholder={"Hi {{business}} team,\n\n…"} /></label>
             <div className="wf-vars">{VARS.map((v) => <button key={v} type="button" className="wf-var" onClick={() => insertVar(v)}>{`{{${v}}}`}</button>)}</div>
             <label className="wf-check"><input type="checkbox" checked={Boolean(c.attachMockup)} onChange={(e) => set("attachMockup", e.target.checked)} /> Attach a preview of the mockup (when it's ready)</label>
-            <p className="muted wf-hint">Sent to the first email address found for the business, from your outreach mailbox, one every 45 seconds within your daily limit. Businesses without an address skip this step.</p>
+            <p className="muted wf-hint">Sent to the first email address found for the business, from your outreach mailbox, one every 45 seconds within your daily limit. Businesses without an address skip this step. When a business replies, every workflow stops for it.</p>
             <div className="wf-actions-row">
               <button type="button" className="btn btn-white btn-sm" disabled={busy} onClick={() => void doPreview(false)}><Eye />Preview</button>
               <input className="input" style={{ flex: 1, minWidth: 120 }} type="email" value={testTo} onChange={(e) => setTestTo(e.target.value)} placeholder="Your email" aria-label="Send a test to" />
@@ -687,7 +694,7 @@ function Activity({ enrollments, nodes }: { enrollments: WfEnrollment[]; nodes: 
                 <tr className="wf-row" onClick={() => setOpen(open === e.id ? null : e.id)}>
                   <td><b>{e.business}</b></td>
                   <td><span className={`wf-pill ${e.status}`}><span className="dot" />{e.status === "waiting" ? `waiting · ${until(e.wakeAt)}` : e.status}</span></td>
-                  <td>{e.status === "done" || e.status === "stopped" ? "—" : stepName(e.nodeId)}</td>
+                  <td>{e.status === "done" || e.status === "stopped" || e.status === "replied" ? "—" : stepName(e.nodeId)}</td>
                   <td className={last && !last.ok ? "bad" : "muted"}>{last ? `${last.text} · ${timeAgo(last.at)}` : `Enrolled ${timeAgo(e.enrolledAt)}`}</td>
                 </tr>
                 {open === e.id && (

@@ -10,6 +10,7 @@ db.exec(`
   );
   CREATE INDEX IF NOT EXISTS wf_enrollments_due ON wf_enrollments(status, wake_at);
   CREATE TABLE IF NOT EXISTS wf_sends (at TEXT NOT NULL, workflow_id TEXT NOT NULL, prospect_id TEXT NOT NULL, email TEXT NOT NULL);
+  CREATE TABLE IF NOT EXISTS wf_replies (email TEXT NOT NULL, prospect_id TEXT NOT NULL, at TEXT NOT NULL, subject TEXT NOT NULL, PRIMARY KEY (email, prospect_id));
 `);
 
 const id = () => randomUUID().slice(0, 8);
@@ -78,9 +79,24 @@ export const lastSendAt = () => (db.prepare("SELECT MAX(at) AS at FROM wf_sends"
 export const emailedRecently = (email: string, exceptWorkflow: string) =>
   Boolean(db.prepare("SELECT 1 FROM wf_sends WHERE email = ? AND workflow_id != ? AND at > ?").get(email.toLowerCase(), exceptWorkflow, new Date(Date.now() - 30 * 86400000).toISOString()));
 
+/* ---------- replies: a business that wrote back is never emailed again by a workflow ---------- */
+
+/** Everyone emailed since a date: who, which business, and when first. */
+export const sendsSince = (since: string) =>
+  db.prepare("SELECT email, prospect_id AS prospectId, MIN(at) AS at FROM wf_sends WHERE at > ? GROUP BY email, prospect_id").all(since) as { email: string; prospectId: string; at: string }[];
+export const hasReplied = (prospectId: string) => Boolean(db.prepare("SELECT 1 FROM wf_replies WHERE prospect_id = ?").get(prospectId));
+export function recordReply(email: string, prospectId: string, at: string, subject: string) {
+  return db.prepare("INSERT OR IGNORE INTO wf_replies (email, prospect_id, at, subject) VALUES (?, ?, ?, ?)").run(email, prospectId, at, subject.slice(0, 200)).changes > 0;
+}
+export const replyCount = (workflowId: string) =>
+  (db.prepare("SELECT COUNT(DISTINCT r.prospect_id) AS n FROM wf_replies r JOIN wf_sends s ON s.prospect_id = r.prospect_id WHERE s.workflow_id = ?").get(workflowId) as { n: number }).n;
+/** Enrollments still running for a business, in any workflow. */
+export const runningFor = (prospectId: string): WfEnrollment[] =>
+  (db.prepare("SELECT data FROM wf_enrollments WHERE prospect_id = ? AND status IN ('active', 'waiting')").all(prospectId) as { data: string }[]).map((r) => JSON.parse(r.data));
+
 export function summarize(w: Workflow): WorkflowSummary {
   const rows = db.prepare("SELECT status, COUNT(*) AS n FROM wf_enrollments WHERE workflow_id = ? GROUP BY status").all(w.id) as { status: string; n: number }[];
   const n = (s: string) => rows.find((r) => r.status === s)?.n ?? 0;
   const sent = (db.prepare("SELECT COUNT(*) AS n FROM wf_sends WHERE workflow_id = ?").get(w.id) as { n: number }).n;
-  return { ...w, counts: { enrolled: rows.reduce((a, r) => a + r.n, 0), active: n("active"), waiting: n("waiting"), done: n("done") + n("stopped"), failed: n("failed"), emailsSent: sent } };
+  return { ...w, counts: { enrolled: rows.reduce((a, r) => a + r.n, 0), active: n("active"), waiting: n("waiting"), done: n("done") + n("stopped") + n("replied"), failed: n("failed"), emailsSent: sent, replied: replyCount(w.id) } };
 }

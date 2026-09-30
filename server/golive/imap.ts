@@ -78,8 +78,7 @@ const q = (s: string) => `"${s.replace(/(["\\])/g, "\\$1")}"`;
 
 export interface ImapConfig { host: string; port: number; user: string; password: string }
 
-/** Headers of the newest message whose subject contains `needle`, or null. Looks in INBOX, then spam folders. */
-export async function findMessageHeaders(cfg: ImapConfig, needle: string): Promise<{ headers: string; folder: string } | null> {
+async function login(cfg: ImapConfig) {
   const sock = connect({ host: cfg.host, port: cfg.port || 993, servername: cfg.host, timeout: 30000 });
   await new Promise<void>((res, rej) => {
     sock.once("secureConnect", () => res());
@@ -90,6 +89,65 @@ export async function findMessageHeaders(cfg: ImapConfig, needle: string): Promi
   try {
     await im.greeting();
     await im.cmd(`LOGIN ${q(cfg.user)} ${q(cfg.password)}`);
+  } catch (e) {
+    im.close();
+    throw e;
+  }
+  return im;
+}
+
+/** Every literal ({n}\r\n + n bytes) in a response, in order: one per fetched message. */
+function literals(body: string) {
+  const out: string[] = [];
+  const re = /\{(\d+)\}\r\n/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(body))) {
+    const start = m.index + m[0].length;
+    out.push(body.slice(start, start + Number(m[1])));
+    re.lastIndex = start + Number(m[1]);
+  }
+  return out;
+}
+
+const header = (h: string, name: string) => new RegExp(`^${name}:\\s*(.*)$`, "im").exec(h.replace(/\r?\n[ \t]+/g, " "))?.[1]?.trim() ?? "";
+const IMAP_MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+export interface InboxMessage { from: string; subject: string; date: string; autoReply: boolean }
+
+/**
+ * Who has written to this mailbox since a date (INBOX only, newest `max`). Only headers are read and nothing is
+ * marked as read. Auto-replies (out of office, bounces) are flagged so they don't count as a real reply.
+ */
+export async function inboxSince(cfg: ImapConfig, since: Date, max = 1000): Promise<InboxMessage[]> {
+  const im = await login(cfg);
+  try {
+    await im.cmd("EXAMINE INBOX"); // read-only: never changes flags
+    const d = `${since.getUTCDate()}-${IMAP_MONTHS[since.getUTCMonth()]}-${since.getUTCFullYear()}`;
+    const found = await im.cmd(`UID SEARCH SINCE ${d}`);
+    const uids = (/^\* SEARCH ?(.*)$/m.exec(found)?.[1] ?? "").trim().split(/\s+/).filter(Boolean).slice(-max);
+    const out: InboxMessage[] = [];
+    for (let i = 0; i < uids.length; i += 200) {
+      const body = await im.cmd(`UID FETCH ${uids.slice(i, i + 200).join(",")} (BODY.PEEK[HEADER.FIELDS (FROM SUBJECT DATE AUTO-SUBMITTED X-AUTOREPLY X-AUTORESPOND PRECEDENCE RETURN-PATH)])`);
+      for (const h of literals(body)) {
+        const from = (/<([^>]+)>/.exec(header(h, "From"))?.[1] ?? header(h, "From")).trim().toLowerCase();
+        if (!from.includes("@")) continue;
+        const subject = header(h, "Subject");
+        const autoReply = /auto-(replied|generated)/i.test(header(h, "Auto-Submitted")) || Boolean(header(h, "X-Autoreply") || header(h, "X-Autorespond"))
+          || /^(auto|bulk|junk)/i.test(header(h, "Precedence")) || header(h, "Return-Path") === "<>" || /^(mailer-daemon|postmaster)@/i.test(from)
+          || /^(out of (the )?office|automatic reply|auto(matic)?[- ]reply|autoreply|undeliverable|delivery status notification|mail delivery failed)/i.test(subject);
+        out.push({ from, subject, date: header(h, "Date"), autoReply });
+      }
+    }
+    return out;
+  } finally {
+    im.close();
+  }
+}
+
+/** Headers of the newest message whose subject contains `needle`, or null. Looks in INBOX, then spam folders. */
+export async function findMessageHeaders(cfg: ImapConfig, needle: string): Promise<{ headers: string; folder: string } | null> {
+  const im = await login(cfg);
+  try {
     const list = await im.cmd(`LIST "" "*"`);
     const folders = [...list.matchAll(/^\* LIST \(([^)]*)\) (?:"[^"]*"|NIL) (.+)$/gm)].map((m) => ({ flags: m[1], name: m[2].trim() }));
     const junk = folders.filter((f) => /\\Junk|\\Spam/i.test(f.flags) || /spam|junk|bulk/i.test(f.name)).map((f) => f.name);

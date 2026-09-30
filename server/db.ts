@@ -182,6 +182,8 @@ const DEFAULTS: StoredSettings = {
   outreachSmtpPasswordSet: false,
   outreachDailyCap: 40,
   outreachFooter: "If this isn't useful, reply “no thanks” and I won't email again.",
+  outreachImapHost: "",
+  outreachImapPort: 993,
   seoChecklist: [],
   avatarFile: "",
   careDay: 1,
