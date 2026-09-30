@@ -57,9 +57,10 @@ export default function Campaigns() {
     <div className="page">
       <div className="page-head">
         <div>
-          <h1><Workflow className="page-head-icon" /> Automations</h1>
-          <p className="muted">Give a prompt. It scrapes the businesses, auto-generates a mockup for each from the design library, then waits for you to send.</p>
+          <h1><Workflow className="page-head-icon" /> Quick campaigns</h1>
+          <p className="muted">Give a prompt. It scrapes the businesses and auto-generates a mockup for each from the design library. To email them and follow up automatically, use a <Link to="/automations">workflow</Link>.</p>
         </div>
+        <Link className="btn btn-white" to="/automations">Workflows <ArrowRight /></Link>
       </div>
 
       <div className="card camp-new">

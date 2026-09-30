@@ -25,6 +25,8 @@ import { comms } from "./comms.ts";
 import { admin } from "./admin.ts";
 import { agent } from "./agent/routes.ts";
 import { campaigns, startCampaignTimers } from "./campaigns/index.ts";
+import { automations } from "./automations/routes.ts";
+import { startWorkflowTimers } from "./automations/engine.ts";
 import { license, requireFullLicense, requireLicense, startLicenseTimers } from "./license/index.ts";
 import { assertPublicUrl, localOnly, sandboxFiles } from "./security.ts";
 import { STEPS, type BenchmarkSet, type Capture, type Diagnosis, type GateResult, type LeadDetail, type StepKey, type Usage } from "../shared/types.ts";
@@ -129,6 +131,7 @@ app.use("/api/comms", comms);
 app.use("/api/admin", admin);
 app.use("/api/agent", agent);
 app.use("/api/campaigns", campaigns);
+app.use("/api/automations", automations);
 
 app.get("/api/events", (_req, res) => res.json(listEvents(40)));
 
@@ -145,6 +148,7 @@ app.put("/api/settings", (req, res) => {
     "cloudTriggerUrl", "cloudTriggerToken", "githubToken", "cloudRepo", "cloudBranch",
     "studioName", "brandColor", "firstName", "lastName", "userEmail", "userPhone",
     "psiKey", "gtmetrixKey", "qaEmail", "agencyAdminEmail", "qaImapHost", "qaImapUser", "qaImapPassword",
+    "outreachFromName", "outreachFromEmail", "outreachSmtpHost", "outreachSmtpUser", "outreachSmtpPassword", "outreachFooter",
   ];
   if (typeof req.body?.currency === "string" && !/^[A-Z]{3}$/.test(req.body.currency)) return res.status(400).json({ error: "Currency must be a 3-letter code like USD" });
   if (typeof req.body?.currency === "string") allowed.push("currency");
@@ -158,6 +162,9 @@ app.put("/api/settings", (req, res) => {
   }
   const body = req.body ?? {};
   const extra = patch as Record<string, unknown>;
+  if (body.outreachSmtpPort !== undefined) extra.outreachSmtpPort = Math.max(1, Math.min(65535, Math.round(Number(body.outreachSmtpPort)) || 465));
+  if (body.outreachSmtpSecurity !== undefined) extra.outreachSmtpSecurity = ["ssl", "tls", "none"].includes(body.outreachSmtpSecurity) ? body.outreachSmtpSecurity : "ssl";
+  if (body.outreachDailyCap !== undefined) extra.outreachDailyCap = Math.max(1, Math.min(500, Math.round(Number(body.outreachDailyCap)) || 40));
   if (body.qaImapPort !== undefined) extra.qaImapPort = Math.max(1, Math.min(65535, Math.round(Number(body.qaImapPort)) || 993));
   if (body.careDay !== undefined) extra.careDay = Math.max(0, Math.min(28, Math.round(Number(body.careDay)) || 0));
   if (body.careDiffThreshold !== undefined) extra.careDiffThreshold = Math.max(0.1, Math.min(20, Number(body.careDiffThreshold) || 1));
@@ -241,6 +248,7 @@ app.listen(PORT, "127.0.0.1", () => {
   resumeWp();
   startCareTimers();
   startCampaignTimers();
+  startWorkflowTimers();
   startLicenseTimers();
 });
 

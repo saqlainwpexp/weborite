@@ -156,6 +156,16 @@ export interface Settings {
   qaImapUser: string;
   qaImapPasswordSet: boolean;
   seoChecklist: { label: string; group: string }[];
+  /** Automations: the mailbox outreach emails are sent from (direct SMTP) */
+  outreachFromName: string;
+  outreachFromEmail: string;
+  outreachSmtpHost: string;
+  outreachSmtpPort: number;
+  outreachSmtpSecurity: "ssl" | "tls" | "none";
+  outreachSmtpUser: string;
+  outreachSmtpPasswordSet: boolean;
+  outreachDailyCap: number;
+  outreachFooter: string;
   avatarFile: string;
   /** Maintenance */
   careDay: number; // day of the month for the automatic check (1–28, 0 = off)
@@ -249,6 +259,8 @@ export interface Prospect {
   whatsapp: WhatsappStatus;
   whatsappName: string; // WhatsApp Business profile name, when shown
   tags: string[];       // "email", "whatsapp", "website", "no-website"
+  labels?: string[];    // your own labels (automations add and remove these; tags above are recomputed on every scan)
+  labelsAt?: Record<string, string>; // when each label was added
   enrichStatus: "pending" | "running" | "done" | "failed";
   enrichNote?: string;
   mockupLeadId?: string;
@@ -992,4 +1004,60 @@ export interface GoLiveRecord {
   checks: GoLiveCheck[];
   checkedAt: string;
   liveAt: string;
+}
+
+/* ---------- Automations: visual workflows ---------- */
+
+export type WfNodeKind = "trigger" | "email" | "wait" | "condition" | "action";
+
+/**
+ * Node config by kind:
+ * - trigger: { event: "search" | "label" | "mockup_ready", niche?, location?, max?, anySearch?, label? }
+ * - email: { subject, body, attachMockup? }
+ * - wait: { mode: "time" | "mockup", amount?, unit?: "minutes" | "hours" | "days", timeoutHours? }
+ * - condition: { field, op, value? }  (two exits: "yes" and "no")
+ * - action: { type: "create_mockup" | "add_label" | "remove_label" | "notify" | "stop", label?, text? }
+ */
+export interface WfNode {
+  id: string;
+  kind: WfNodeKind;
+  x: number;
+  y: number;
+  config: Record<string, string | number | boolean>;
+}
+
+export interface WfEdge { from: string; to: string; branch?: "yes" | "no" }
+
+export interface Workflow {
+  id: string;
+  name: string;
+  status: "draft" | "active" | "paused";
+  nodes: WfNode[];
+  edges: WfEdge[];
+  createdAt: string;
+  updatedAt: string;
+  activatedAt: string;
+  /** Lead Finder searches this workflow started, and the ones it has already enrolled */
+  searches: string[];
+  seenSearches: string[];
+}
+
+export interface WfEnrollment {
+  id: string;
+  workflowId: string;
+  prospectId: string;
+  business: string;
+  nodeId: string | null;
+  status: "active" | "waiting" | "done" | "failed" | "stopped";
+  wakeAt: string;
+  enrolledAt: string;
+  updatedAt: string;
+  /** The wait node being waited on, and since when */
+  waitingOn?: string;
+  waitSince?: string;
+  log: { at: string; nodeId: string; ok: boolean; text: string }[];
+}
+
+export interface WorkflowSummary extends Workflow {
+  counts: { enrolled: number; active: number; waiting: number; done: number; failed: number; emailsSent: number };
 }

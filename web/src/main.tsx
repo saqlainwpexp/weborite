@@ -35,6 +35,7 @@ import CommsAdd from "./pages/comms/CommsAdd";
 import CommsView from "./pages/comms/CommsView";
 import Campaigns from "./pages/campaigns/Campaigns";
 import CampaignDetail from "./pages/campaigns/CampaignDetail";
+import Workflows from "./pages/automations/Workflows";
 import AdminOverview from "./pages/admin/AdminOverview";
 import AdminClients from "./pages/admin/AdminClients";
 import AdminRevenue from "./pages/admin/AdminRevenue";
@@ -92,6 +93,8 @@ const DASHBOARD = (
           {workspaceEnabled("comms") && <Route path="comms" element={<CommsHome />} />}
           {workspaceEnabled("comms") && <Route path="comms/new" element={<CommsAdd />} />}
           {workspaceEnabled("comms") && <Route path="comms/:id" element={<CommsView />} />}
+          {workspaceEnabled("automations") && <Route path="automations" element={<Workflows />} />}
+          {workspaceEnabled("automations") && <Route path="automations/:id" element={<Workflows />} />}
           {workspaceEnabled("automations") && <Route path="campaigns" element={<Campaigns />} />}
           {workspaceEnabled("automations") && <Route path="campaigns/:id" element={<CampaignDetail />} />}
           {workspaceEnabled("admin") && <Route path="admin" element={<AdminOverview />} />}

@@ -128,10 +128,10 @@ export function usageToday() {
 }
 
 // ---- settings ----
-type StoredSettings = Settings & { apiKey: string; metaPageToken: string; metaAppSecret: string; psiKey: string; gtmetrixKey: string; cloudTriggerToken: string; githubToken: string; qaImapPassword: string };
+type StoredSettings = Settings & { apiKey: string; metaPageToken: string; metaAppSecret: string; psiKey: string; gtmetrixKey: string; cloudTriggerToken: string; githubToken: string; qaImapPassword: string; outreachSmtpPassword: string };
 
 /** Settings that are stored encrypted (see vault.ts). */
-const SECRET_KEYS = new Set(["apiKey", "metaPageToken", "metaAppSecret", "psiKey", "gtmetrixKey", "cloudTriggerToken", "githubToken", "qaImapPassword"]);
+const SECRET_KEYS = new Set(["apiKey", "metaPageToken", "metaAppSecret", "psiKey", "gtmetrixKey", "cloudTriggerToken", "githubToken", "qaImapPassword", "outreachSmtpPassword"]);
 
 const DEFAULTS: StoredSettings = {
   mode: "session",
@@ -172,6 +172,16 @@ const DEFAULTS: StoredSettings = {
   qaImapUser: "",
   qaImapPassword: "",
   qaImapPasswordSet: false,
+  outreachFromName: "",
+  outreachFromEmail: "",
+  outreachSmtpHost: "",
+  outreachSmtpPort: 465,
+  outreachSmtpSecurity: "ssl",
+  outreachSmtpUser: "",
+  outreachSmtpPassword: "",
+  outreachSmtpPasswordSet: false,
+  outreachDailyCap: 40,
+  outreachFooter: "If this isn't useful, reply “no thanks” and I won't email again.",
   seoChecklist: [],
   avatarFile: "",
   careDay: 1,
@@ -194,6 +204,7 @@ export function getSettings(): StoredSettings {
   s.cloudTriggerTokenSet = Boolean(s.cloudTriggerToken);
   s.githubTokenSet = Boolean(s.githubToken);
   s.qaImapPasswordSet = Boolean(s.qaImapPassword);
+  s.outreachSmtpPasswordSet = Boolean(s.outreachSmtpPassword);
   // Older installs stored a single full name.
   if (!s.firstName && !s.lastName && s.userName) [s.firstName, s.lastName] = [String(s.userName).split(" ")[0], String(s.userName).split(" ").slice(1).join(" ")];
   s.userName = [s.firstName, s.lastName].filter(Boolean).join(" ") || "Studio Owner";
@@ -203,7 +214,7 @@ export function getSettings(): StoredSettings {
 }
 
 export function publicSettings(): Settings {
-  const { apiKey: _k, metaPageToken: _t, metaAppSecret: _s, psiKey: _p, gtmetrixKey: _g, cloudTriggerToken: _c, githubToken: _h, qaImapPassword: _ip, ...rest } = getSettings();
+  const { apiKey: _k, metaPageToken: _t, metaAppSecret: _s, psiKey: _p, gtmetrixKey: _g, cloudTriggerToken: _c, githubToken: _h, qaImapPassword: _ip, outreachSmtpPassword: _op, ...rest } = getSettings();
   return rest;
 }
 
