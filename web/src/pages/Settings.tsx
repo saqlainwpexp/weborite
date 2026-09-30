@@ -11,6 +11,7 @@ import { Dropdown } from "../components/Dropdown";
 import { workspaceEnabled } from "../../../shared/features";
 import { CLOUD_ROUTINE_PROMPT } from "../../../shared/cloudPrompt";
 import { PlanLicense } from "../components/PlanLicense";
+import { AiProviderSettings } from "../components/AiSettings";
 import { BRAND_PRESETS, DEFAULT_BRAND, applyBrand, brandPalette, isHex } from "../lib/brand";
 
 type Draft = Partial<S> & { apiKey?: string; metaPageToken?: string; metaAppSecret?: string; psiKey?: string; gtmetrixKey?: string; cloudTriggerToken?: string; githubToken?: string; qaImapPassword?: string; outreachSmtpPassword?: string };
@@ -18,7 +19,7 @@ type Draft = Partial<S> & { apiKey?: string; metaPageToken?: string; metaAppSecr
 const TABS = [
   { key: "profile", label: "Profile" },
   { key: "license", label: "Plan & license" },
-  { key: "claude", label: "Claude" },
+  { key: "claude", label: "AI" },
   { key: "leads", label: "Lead sources" },
   { key: "integrations", label: "Integrations" },
   { key: "maintenance", label: "Maintenance" },
@@ -187,6 +188,13 @@ function OutreachTest({ path = "/api/automations/outreach/test", label = "Test t
   );
 }
 
+function aiLabel(s: S) {
+  const p = s.aiProvider;
+  return p === "openai" ? (s.openaiAccess === "login" ? "ChatGPT · signed in via Codex" : "OpenAI · API key")
+    : p === "gemini" ? (s.geminiAccess === "login" ? "Gemini · signed in via Gemini CLI" : "Gemini · API key")
+    : p === "openrouter" ? "OpenRouter" : p === "compatible" ? "OpenAI-compatible API" : "Custom command";
+}
+
 export default function Settings() {
   const { tab = "profile" } = useParams();
   const { settings, reloadAll } = useOutletContext<LayoutCtx>();
@@ -241,7 +249,8 @@ export default function Settings() {
   const brand = (f: string) => (f ? `/files/brand/${f}` : "");
   const cloudReady = Boolean(settings.githubTokenSet && settings.cloudRepo);
   const cloudRoutine = Boolean(settings.cloudTriggerUrl && settings.cloudTriggerTokenSet);
-  const modeOk = settings.mode === "session" ? Boolean(status?.cli) : settings.mode === "cloud" ? cloudReady : settings.apiKeySet;
+  const other = settings.aiProvider && settings.aiProvider !== "claude";
+  const modeOk = other ? true : settings.mode === "session" ? Boolean(status?.cli) : settings.mode === "cloud" ? cloudReady : settings.apiKeySet;
 
   return (
     <>
@@ -251,7 +260,7 @@ export default function Settings() {
         <div className="actions">
           <span className={`status ${modeOk ? "ready" : "needs_review"}`}>
             <span className="dot" />
-            {settings.mode === "session" ? (status?.cli ? `Session · Claude Code ${status.cli.split(" ")[0]}` : "Session · Claude Code not found") : settings.mode === "cloud" ? (cloudReady ? (cloudRoutine ? "Cloud mode · routine connected" : "Cloud mode · worker session") : "Cloud mode · setup incomplete") : settings.apiKeySet ? "API mode · key saved" : "API mode · no key"}
+            {other ? aiLabel(settings) : settings.mode === "session" ? (status?.cli ? `Session · Claude Code ${status.cli.split(" ")[0]}` : "Session · Claude Code not found") : settings.mode === "cloud" ? (cloudReady ? (cloudRoutine ? "Cloud mode · routine connected" : "Cloud mode · worker session") : "Cloud mode · setup incomplete") : settings.apiKeySet ? "API mode · key saved" : "API mode · no key"}
           </span>
         </div>
       </div>
@@ -307,8 +316,8 @@ export default function Settings() {
         )}
 
         {tab === "claude" && (
-          <>
-            <Section icon={<Cpu />} title="Connection">
+          <AiProviderSettings settings={settings} onSaved={reloadAll}>
+            <Section icon={<Cpu />} title="Claude connection">
               <div className="option-grid" role="radiogroup" aria-label="How the studio talks to Claude">
                 <OptionCard
                   selected={settings.mode === "session"}
@@ -404,7 +413,7 @@ export default function Settings() {
                 </Field>
               </div>
             </Section>
-          </>
+          </AiProviderSettings>
         )}
 
         {tab === "license" && <PlanLicense />}

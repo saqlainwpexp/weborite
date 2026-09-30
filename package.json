@@ -1,7 +1,7 @@
 {
   "name": "mockup-studio",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "scripts": {
     "dev": "concurrently -k -n api,web -c gray,magenta \"npm:dev:api\" \"npm:dev:web\"",

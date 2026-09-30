@@ -2,6 +2,8 @@ import { getSettings, recordRun } from "../db.ts";
 import { runSession } from "./sessionRunner.ts";
 import { runApi } from "./apiRunner.ts";
 import { runCloud } from "./cloudRunner.ts";
+import { runCodexCli, runCompatible, runCustomCli, runGeminiApi, runGeminiCli, runOpenAIApi } from "./providers.ts";
+import type { AiModelKey } from "../../shared/types.ts";
 
 export interface RunRequest {
   leadId: string;
@@ -25,8 +27,24 @@ export interface RunResult {
 
 export class ClaudeUnavailableError extends Error {}
 
+/** Runs a request on whichever AI is chosen in Settings → AI (the name stays: it began as Claude-only). */
 export async function runClaude(req: RunRequest): Promise<RunResult> {
   const s = getSettings();
+  if (s.aiProvider && s.aiProvider !== "claude") {
+    const key: AiModelKey = s.aiProvider === "openai" ? `openai-${s.openaiAccess}` : s.aiProvider === "gemini" ? `gemini-${s.geminiAccess}` : s.aiProvider;
+    const m = s.aiModels[key] ?? { heavy: "", fast: "" };
+    const model = (req.heavy ? m.heavy : m.fast) || m.heavy || m.fast;
+    const result =
+      key === "openai-api" ? await runOpenAIApi(req, { apiKey: s.openaiKey, model })
+      : key === "openai-login" ? await runCodexCli(req, { command: s.codexPath, model })
+      : key === "gemini-api" ? await runGeminiApi(req, { apiKey: s.geminiKey, model })
+      : key === "gemini-login" ? await runGeminiCli(req, { command: s.geminiPath, model })
+      : key === "openrouter" ? await runCompatible(req, { baseUrl: "https://openrouter.ai/api/v1", apiKey: s.openrouterKey, model, name: "OpenRouter", webSuffix: ":online" })
+      : key === "compatible" ? await runCompatible(req, { baseUrl: s.compatibleBaseUrl, apiKey: s.compatibleKey, model, name: "The AI API" })
+      : await runCustomCli(req, { command: s.customCommand, model });
+    recordRun(req.leadId, key, req.task, 0);
+    return result;
+  }
   const model = req.heavy ? s.generateModel : s.fastModel;
   const result =
     s.mode === "api"

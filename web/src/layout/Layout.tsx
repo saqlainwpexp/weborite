@@ -43,6 +43,8 @@ export interface LayoutCtx {
   openAdd: () => void;
 }
 
+const PROVIDER_LABEL: Record<string, string> = { claude: "Claude", openai: "ChatGPT", gemini: "Gemini", openrouter: "OpenRouter", compatible: "API", custom: "Custom" };
+
 const ALL_WORKSPACES: { key: Workspace; label: string; hint: string; home: string; icon: typeof Sparkles }[] = [
   { key: "admin", label: "Super admin", hint: "Earnings, leads, progress and reports across everything", home: "/admin", icon: Crown },
   { key: "mockups", label: "Mockups", hint: "Rebuild lead homepages with Claude", home: "/", icon: Sparkles },
@@ -219,6 +221,7 @@ export default function Layout() {
   };
 
   const mode = settings.data?.mode ?? "session";
+  const provider = settings.data?.aiProvider ?? "claude";
   const user = settings.data?.userName || "Studio Owner";
   const studio = settings.data?.studioName || "Studio";
   const brandUrl = (f?: string) => (f ? `/files/brand/${f}` : "");
@@ -233,7 +236,7 @@ export default function Layout() {
   }, [studio, settings.data, workspace]);
 
   async function setMode(m: "session" | "api" | "cloud") {
-    await api("/api/settings", { method: "PUT", json: { mode: m } });
+    await api("/api/settings", { method: "PUT", json: { mode: m, aiProvider: "claude" } });
     close();
     reloadAll();
   }
@@ -347,16 +350,21 @@ export default function Layout() {
         <span className="spacer" />
 
         <div className="pop-anchor hide-sm" ref={modeRef}>
-          <button className="lang" onClick={() => setPopover(popover === "mode" ? null : "mode")}>{mode === "api" ? "API" : mode === "cloud" ? "Cloud" : "Session"}<ChevronDown /></button>
+          <button className="lang" onClick={() => setPopover(popover === "mode" ? null : "mode")}>{provider !== "claude" ? PROVIDER_LABEL[provider] : mode === "api" ? "API" : mode === "cloud" ? "Cloud" : "Session"}<ChevronDown /></button>
           {popover === "mode" && (
             <div className="popover right" style={{ width: 300 }}>
-              <button className="notif" style={{ border: 0, background: mode === "session" ? "#f6f5f5" : "none", textAlign: "left", width: "100%", gridTemplateColumns: "minmax(0,1fr)" }} onClick={() => setMode("session")}>
+              {provider !== "claude" && (
+                <button className="notif" style={{ border: 0, background: "#f6f5f5", textAlign: "left", width: "100%", gridTemplateColumns: "minmax(0,1fr)" }} onClick={() => { close(); nav("/settings/claude"); }}>
+                  <div><b>Using {PROVIDER_LABEL[provider]}</b><span>Change the AI provider in Settings → AI. Picking a Claude mode below switches back to Claude.</span></div>
+                </button>
+              )}
+              <button className="notif" style={{ border: 0, background: provider === "claude" && mode === "session" ? "#f6f5f5" : "none", textAlign: "left", width: "100%", gridTemplateColumns: "minmax(0,1fr)" }} onClick={() => setMode("session")}>
                 <div><b>Session mode</b><span>Uses your Claude plan through Claude Code</span></div>
               </button>
-              <button className="notif" style={{ border: 0, background: mode === "api" ? "#f6f5f5" : "none", textAlign: "left", width: "100%", gridTemplateColumns: "minmax(0,1fr)" }} onClick={() => setMode("api")}>
+              <button className="notif" style={{ border: 0, background: provider === "claude" && mode === "api" ? "#f6f5f5" : "none", textAlign: "left", width: "100%", gridTemplateColumns: "minmax(0,1fr)" }} onClick={() => setMode("api")}>
                 <div><b>API mode</b><span>Billed per token with your API key</span></div>
               </button>
-              <button className="notif" style={{ border: 0, background: mode === "cloud" ? "#f6f5f5" : "none", textAlign: "left", width: "100%", gridTemplateColumns: "minmax(0,1fr)" }} onClick={() => setMode("cloud")}>
+              <button className="notif" style={{ border: 0, background: provider === "claude" && mode === "cloud" ? "#f6f5f5" : "none", textAlign: "left", width: "100%", gridTemplateColumns: "minmax(0,1fr)" }} onClick={() => setMode("cloud")}>
                 <div><b>Cloud mode</b><span>Runs on your claude.ai cloud sessions (set up in Settings)</span></div>
               </button>
             </div>

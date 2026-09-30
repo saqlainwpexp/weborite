@@ -1,4 +1,5 @@
 import { addEvent } from "../db.ts";
+import { Pool, parallel } from "../pool.ts";
 import { searchMaps } from "./maps.ts";
 import { checkWhatsappBusiness, scanWebsite, whatsappStatus } from "./enrich.ts";
 import { queueQualify } from "./qualify.ts";
@@ -6,33 +7,23 @@ import {
   computeTags, findByPlace, getProspect, getSearch, insertProspect, listProspects, listSearches, refreshSearchCounts, saveProspect, saveSearch,
 } from "./store.ts";
 
-const queue: string[] = [];
-let running: string | null = null;
 const cancelled = new Set<string>();
+// Several searches run at once (Settings → Parallel searches); more at once makes Google Maps more likely to block.
+const pool = new Pool<string>((id) => id, () => parallel("searches"), async (id) => {
+  try {
+    await runSearch(id);
+  } finally {
+    cancelled.delete(id);
+  }
+});
 
 export function enqueueSearch(id: string) {
-  if (!queue.includes(id) && running !== id) queue.push(id);
-  void pump();
+  if (!pool.isActive(id)) pool.push(id);
 }
 
 export function cancelSearch(id: string) {
   cancelled.add(id);
-  const i = queue.indexOf(id);
-  if (i >= 0) queue.splice(i, 1);
-}
-
-async function pump() {
-  if (running) return;
-  const id = queue.shift();
-  if (!id) return;
-  running = id;
-  try {
-    await runSearch(id);
-  } finally {
-    running = null;
-    cancelled.delete(id);
-    void pump();
-  }
+  pool.remove((x) => x === id);
 }
 
 export async function enrichProspect(id: string) {

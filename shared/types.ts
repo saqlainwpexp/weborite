@@ -119,9 +119,28 @@ export interface EventItem {
 }
 
 export type ClaudeMode = "session" | "api" | "cloud";
+/** Which AI does the work. Claude keeps its own modes (session / api / cloud); the others sign in or use a key. */
+export type AiProvider = "claude" | "openai" | "gemini" | "openrouter" | "compatible" | "custom";
+export type AiModelKey = "openai-api" | "openai-login" | "gemini-api" | "gemini-login" | "openrouter" | "compatible" | "custom";
 
 export interface Settings {
   mode: ClaudeMode;
+  aiProvider: AiProvider;
+  openaiAccess: "login" | "api";
+  geminiAccess: "login" | "api";
+  /** Models per provider: heavy = mockups and builds, fast = diagnosis, QA and the rest. Blank on a sign-in CLI = its default. */
+  aiModels: Record<AiModelKey, { heavy: string; fast: string }>;
+  openaiKeySet: boolean;
+  geminiKeySet: boolean;
+  openrouterKeySet: boolean;
+  compatibleKeySet: boolean;
+  compatibleBaseUrl: string;
+  codexPath: string;
+  geminiPath: string;
+  customCommand: string;
+  /** Jobs that run at once: AI work (mockups, builds, WordPress, SEO) and Lead Finder searches */
+  parallelJobs: number;
+  parallelSearches: number;
   apiKeySet: boolean;
   generateModel: string;
   fastModel: string;

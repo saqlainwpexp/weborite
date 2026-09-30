@@ -2,6 +2,7 @@ import { Router } from "express";
 import { existsSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import { addEvent, getSettings } from "../db.ts";
+import { Pool, parallel } from "../pool.ts";
 import type { OnPageResult, QaResult, SeoPhase, SeoSite } from "../../shared/types.ts";
 import { getConversion, getSecrets } from "../wp/store.ts";
 import { pluginPath, rebuildPlugin } from "../wp/pipeline.ts";
@@ -51,22 +52,18 @@ async function connect(s: SeoSite) {
 /* ---------- one background job at a time ---------- */
 
 type Job = { siteId: string; kind: SeoPhase | "forms" | "fixes"; run: (s: SeoSite, progress: (note: string) => void) => Promise<string>; done?: (error?: Error) => void };
-const queue: Job[] = [];
-let busy = false;
+// Several sites at once; one job per site at a time.
+const pool = new Pool<Job>((j) => j.siteId, () => parallel("ai"), (j) => runJob(j));
+const queue = { some: (pred: (j: Job) => boolean) => pool.isQueued(pred) || pool.activeJobs().some(pred) };
 
 function enqueue(job: Job) {
   const s = getSite(job.siteId)!;
   s.runs[job.kind] = { status: "running", startedAt: new Date().toISOString(), note: "Queued" };
   saveSite(s);
-  queue.push(job);
-  void pump();
+  pool.push(job, () => false);
 }
 
-async function pump() {
-  if (busy) return;
-  const job = queue.shift();
-  if (!job) return;
-  busy = true;
+async function runJob(job: Job) {
   const progress = (note: string) => {
     const s = getSite(job.siteId);
     if (!s) return;
@@ -101,9 +98,6 @@ async function pump() {
       saveSite(s);
     }
     console.error(`[seo ${job.siteId} ${job.kind}]`, e);
-  } finally {
-    busy = false;
-    void pump();
   }
 }
 

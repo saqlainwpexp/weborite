@@ -1,28 +1,24 @@
 import { addEvent } from "../db.ts";
+import { Pool, parallel } from "../pool.ts";
 import { ClaudeUnavailableError } from "../claude/runner.ts";
 import { revisePage, runBuild } from "./pipeline.ts";
 import { getBuild, listBuilds, saveBuild } from "./store.ts";
 
 type Job = { id: string; kind: "build" } | { id: string; kind: "revise"; slug: string };
 const RESUME_AFTER_MS = 20 * 60 * 1000;
-const queue: Job[] = [];
-let busy = false;
+// Several builds at once; each build's own jobs (build, page revisions) one at a time.
+const pool = new Pool<Job>((j) => j.id, () => parallel("ai"), (j) => runJob(j));
 
 export function enqueueBuild(job: Job) {
-  if (!queue.some((j) => j.id === job.id && j.kind === job.kind && (j.kind !== "revise" || (job.kind === "revise" && j.slug === job.slug)))) queue.push(job);
+  pool.push(job, (j) => j.id === job.id && j.kind === job.kind && (j.kind !== "revise" || (job.kind === "revise" && j.slug === job.slug)));
   const b = getBuild(job.id);
   if (b && b.status !== "running") {
     b.status = "queued";
     saveBuild(b);
   }
-  void pump();
 }
 
-async function pump() {
-  if (busy) return;
-  const job = queue.shift();
-  if (!job) return;
-  busy = true;
+async function runJob(job: Job) {
   try {
     if (job.kind === "build") await runBuild(job.id);
     else await revisePage(job.id, job.slug);
@@ -41,14 +37,11 @@ async function pump() {
       }
       saveBuild(b);
     }
-  } finally {
-    busy = false;
-    void pump();
   }
 }
 
 export function buildQueueState() {
-  return { busy, queued: queue.length };
+  return { busy: pool.running > 0, queued: pool.queued };
 }
 
 /** Finish builds interrupted by a restart. */

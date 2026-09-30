@@ -4,6 +4,7 @@
 import { build } from "esbuild";
 import { readFileSync, rmSync, writeFileSync } from "node:fs";
 import JavaScriptObfuscator from "javascript-obfuscator";
+import { parse } from "acorn";
 import { join } from "node:path";
 
 const root = join(import.meta.dirname, "..");
@@ -64,7 +65,7 @@ await build({
 // simply be searched or read, and drop any source map an earlier owner build left behind.
 if (!owner) {
   const out = join(root, "app-dist", "server.mjs");
-  const code = readFileSync(out, "utf8");
+  const code = keepBrowserCodePlain(readFileSync(out, "utf8"));
   const obf = JavaScriptObfuscator.obfuscate(code, {
     target: "node",
     compact: true,
@@ -85,6 +86,51 @@ if (!owner) {
   }).getObfuscatedCode();
   writeFileSync(out, obf);
   rmSync(`${out}.map`, { force: true });
+}
+
+/**
+ * Functions handed to Playwright (page.evaluate, $$eval, waitForFunction…) run inside the web page, where the
+ * obfuscator's string decoder doesn't exist: "ReferenceError: hE is not defined". Wrap each of them, inline or
+ * passed by name, in the obfuscator's disable/enable comments so they ship as they are.
+ */
+function keepBrowserCodePlain(code) {
+  const BROWSER = new Set(["evaluate", "evaluateHandle", "$eval", "$$eval", "evalOnSelector", "evalOnSelectorAll", "waitForFunction", "addInitScript"]);
+  const isFn = (n) => n && (n.type === "ArrowFunctionExpression" || n.type === "FunctionExpression");
+  const ast = parse(code, { ecmaVersion: "latest", sourceType: "module" });
+  const byName = new Map(); // function name → its function nodes (declarations and const x = () => …)
+  const calls = [];
+  const walk = (n) => {
+    if (!n || typeof n.type !== "string") return;
+    if (n.type === "FunctionDeclaration" && n.id) byName.set(n.id.name, [...(byName.get(n.id.name) ?? []), n]);
+    if (n.type === "VariableDeclarator" && n.id.type === "Identifier" && isFn(n.init)) byName.set(n.id.name, [...(byName.get(n.id.name) ?? []), n.init]);
+    if (n.type === "CallExpression" && n.callee.type === "MemberExpression" && !n.callee.computed && BROWSER.has(n.callee.property.name)) calls.push(n);
+    for (const k of Object.keys(n)) {
+      const v = n[k];
+      if (Array.isArray(v)) v.forEach(walk);
+      else if (v && typeof v.type === "string" && k !== "loc") walk(v);
+    }
+  };
+  walk(ast);
+  const targets = [];
+  let byRef = 0;
+  for (const c of calls) {
+    for (const a of c.arguments) {
+      if (isFn(a)) targets.push(a);
+      else if (a.type === "Identifier" && byName.has(a.name)) {
+        targets.push(...byName.get(a.name));
+        byRef++;
+      }
+    }
+  }
+  // Outermost ranges only, applied from the end so earlier offsets stay valid.
+  const ranges = [...new Map(targets.map((t) => [t.start, [t.start, t.end]])).values()].sort((a, b) => a[0] - b[0]);
+  const outer = ranges.filter((r, i) => !ranges.some((o, j) => j !== i && o[0] <= r[0] && o[1] >= r[1] && (o[0] !== r[0] || o[1] !== r[1])));
+  let outCode = code;
+  for (const [a, b] of outer.sort((x, y) => y[0] - x[0])) {
+    outCode = outCode.slice(0, a) + "/* javascript-obfuscator:disable */" + outCode.slice(a, b) + "/* javascript-obfuscator:enable */" + outCode.slice(b);
+  }
+  console.log(`Browser-side functions kept readable: ${outer.length} (${byRef} passed by name) in ${calls.length} Playwright calls`);
+  return outCode;
 }
 
 // The installed app imports this folder's data on its first launch.
