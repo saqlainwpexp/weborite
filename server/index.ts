@@ -30,6 +30,7 @@ import { startWorkflowTimers } from "./automations/engine.ts";
 import { license, requireFullLicense, requireLicense, startLicenseTimers } from "./license/index.ts";
 import { assertPublicUrl, localOnly, sandboxFiles } from "./security.ts";
 import { STEPS, type BenchmarkSet, type Capture, type Diagnosis, type GateResult, type LeadDetail, type StepKey, type Usage } from "../shared/types.ts";
+import { ai } from "./claude/aiRoutes.ts";
 
 // Every store has created its tables by now: encrypt anything saved before encryption existed.
 encryptStoredSecrets();
@@ -149,6 +150,7 @@ app.put("/api/settings", (req, res) => {
     "studioName", "brandColor", "firstName", "lastName", "userEmail", "userPhone",
     "psiKey", "gtmetrixKey", "qaEmail", "agencyAdminEmail", "qaImapHost", "qaImapUser", "qaImapPassword",
     "outreachFromName", "outreachFromEmail", "outreachSmtpHost", "outreachSmtpUser", "outreachSmtpPassword", "outreachFooter", "outreachImapHost",
+    "openaiKey", "geminiKey", "openrouterKey", "compatibleKey", "compatibleBaseUrl", "codexPath", "geminiPath", "customCommand",
   ];
   if (typeof req.body?.currency === "string" && !/^[A-Z]{3}$/.test(req.body.currency)) return res.status(400).json({ error: "Currency must be a 3-letter code like USD" });
   if (typeof req.body?.currency === "string") allowed.push("currency");
@@ -164,6 +166,18 @@ app.put("/api/settings", (req, res) => {
   const extra = patch as Record<string, unknown>;
   if (body.outreachSmtpPort !== undefined) extra.outreachSmtpPort = Math.max(1, Math.min(65535, Math.round(Number(body.outreachSmtpPort)) || 465));
   if (body.outreachSmtpSecurity !== undefined) extra.outreachSmtpSecurity = ["ssl", "tls", "none"].includes(body.outreachSmtpSecurity) ? body.outreachSmtpSecurity : "ssl";
+  if (["claude", "openai", "gemini", "openrouter", "compatible", "custom"].includes(body.aiProvider)) extra.aiProvider = body.aiProvider;
+  if (["login", "api"].includes(body.openaiAccess)) extra.openaiAccess = body.openaiAccess;
+  if (["login", "api"].includes(body.geminiAccess)) extra.geminiAccess = body.geminiAccess;
+  if (body.aiModels && typeof body.aiModels === "object") {
+    const cur = getSettings().aiModels as Record<string, { heavy: string; fast: string }>;
+    for (const [k, m] of Object.entries(body.aiModels as Record<string, { heavy?: unknown; fast?: unknown }>)) {
+      if (k in cur && m && typeof m === "object") cur[k] = { heavy: String(m.heavy ?? cur[k].heavy).trim().slice(0, 120), fast: String(m.fast ?? cur[k].fast).trim().slice(0, 120) };
+    }
+    extra.aiModels = cur;
+  }
+  if (body.parallelJobs !== undefined) extra.parallelJobs = Math.max(1, Math.min(8, Math.round(Number(body.parallelJobs)) || 3));
+  if (body.parallelSearches !== undefined) extra.parallelSearches = Math.max(1, Math.min(4, Math.round(Number(body.parallelSearches)) || 2));
   if (body.outreachImapPort !== undefined) extra.outreachImapPort = Math.max(1, Math.min(65535, Math.round(Number(body.outreachImapPort)) || 993));
   if (body.outreachDailyCap !== undefined) extra.outreachDailyCap = Math.max(1, Math.min(500, Math.round(Number(body.outreachDailyCap)) || 40));
   if (body.qaImapPort !== undefined) extra.qaImapPort = Math.max(1, Math.min(65535, Math.round(Number(body.qaImapPort)) || 993));
@@ -204,6 +218,8 @@ app.delete("/api/brand/:kind", (req, res) => {
   setSettings({ [key]: "" });
   res.json(publicSettings());
 });
+
+app.use("/api/ai", ai);
 
 app.get("/api/claude/status", (_req, res) => {
   const s = getSettings();

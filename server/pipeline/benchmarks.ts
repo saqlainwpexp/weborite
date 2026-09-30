@@ -23,6 +23,9 @@ export function saveBenchmarkSet(set: BenchmarkSet) {
 }
 
 /** Reuse the vertical's set if it exists, otherwise run the one-time research pass and store it. */
+// Mockups run in parallel: two leads in the same vertical share one research run instead of racing.
+const researching = new Map<string, Promise<{ set: BenchmarkSet; created: boolean }>>();
+
 export async function ensureBenchmarks(
   leadId: string,
   cwd: string,
@@ -30,6 +33,22 @@ export async function ensureBenchmarks(
 ): Promise<{ set: BenchmarkSet; created: boolean }> {
   const existing = getBenchmarkSet(vertical.key);
   if (existing) return { set: existing, created: false };
+  const pending = researching.get(vertical.key);
+  if (pending) return { set: (await pending).set, created: false };
+  const run = researchBenchmarks(leadId, cwd, vertical);
+  researching.set(vertical.key, run);
+  try {
+    return await run;
+  } finally {
+    researching.delete(vertical.key);
+  }
+}
+
+async function researchBenchmarks(
+  leadId: string,
+  cwd: string,
+  vertical: { key: string; label: string; register: string },
+): Promise<{ set: BenchmarkSet; created: boolean }> {
 
   const res = await runClaude({
     leadId,

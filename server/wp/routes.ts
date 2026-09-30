@@ -7,23 +7,19 @@ import { ClaudeUnavailableError } from "../claude/runner.ts";
 import { NeedsUserError, checkConnection, convertPage, nextPendingPage, pluginPath, rebuildPlugin, resumeConversions } from "./pipeline.ts";
 import { convDir, createConversion, deleteConversionRow, getConversion, listConversions, saveConversion, setSecret } from "./store.ts";
 import { CSV_TEMPLATE, defaultStore, resetStaleStoreRuns, runStore, saveCatalog, storeBusy, updateStore } from "./woo.ts";
+import { Pool, parallel } from "../pool.ts";
 
 /* ---------- queue: one page at a time ---------- */
 
 type Job = { id: string; slug: string; feedback?: string; sectionIndex?: number };
-const queue: Job[] = [];
-let busy = false;
+// Several conversions at once; the pages of one conversion one by one (they share the WordPress site).
+const pool = new Pool<Job>((j) => j.id, () => parallel("ai"), (j) => runJob(j));
 
 function enqueue(job: Job) {
-  if (!queue.some((j) => j.id === job.id && j.slug === job.slug)) queue.push(job);
-  void pump();
+  pool.push(job, (j) => j.id === job.id && j.slug === job.slug);
 }
 
-async function pump() {
-  if (busy) return;
-  const job = queue.shift();
-  if (!job) return;
-  busy = true;
+async function runJob(job: Job) {
   try {
     await convertPage(job.id, job.slug, { feedback: job.feedback, sectionIndex: job.sectionIndex });
   } catch (e) {
@@ -44,9 +40,6 @@ async function pump() {
         console.error(`[wp ${job.id}]`, e);
       }
     }
-  } finally {
-    busy = false;
-    void pump();
   }
 }
 
@@ -93,7 +86,7 @@ wp.post("/", async (req, res) => {
 wp.get("/:id", (req, res) => {
   const c = getConversion(req.params.id);
   if (!c) return res.sendStatus(404);
-  res.json({ ...c, queued: queue.filter((j) => j.id === c.id).map((j) => j.slug), pluginFile: existsSync(pluginPath(c)) });
+  res.json({ ...c, queued: pool.queuedJobs().filter((j) => j.id === c.id).map((j) => j.slug), pluginFile: existsSync(pluginPath(c)) });
 });
 
 wp.put("/:id/credentials", (req, res) => {
@@ -222,7 +215,7 @@ wp.post("/:id/pages/:slug/changes", (req, res) => {
 wp.delete("/:id", (req, res) => {
   const c = getConversion(req.params.id);
   if (!c) return res.sendStatus(404);
-  if (busy && queue.length === 0 && c.status === "running") return res.status(409).json({ error: "Wait for the current page to finish" });
+  if (pool.isActive(c.id)) return res.status(409).json({ error: "Wait for the current page to finish" });
   deleteConversionRow(c.id);
   rmSync(convDir(c.id), { recursive: true, force: true });
   res.json({ ok: true });

@@ -128,13 +128,39 @@ export function usageToday() {
 }
 
 // ---- settings ----
-type StoredSettings = Settings & { apiKey: string; metaPageToken: string; metaAppSecret: string; psiKey: string; gtmetrixKey: string; cloudTriggerToken: string; githubToken: string; qaImapPassword: string; outreachSmtpPassword: string };
+type StoredSettings = Settings & { apiKey: string; metaPageToken: string; metaAppSecret: string; psiKey: string; gtmetrixKey: string; cloudTriggerToken: string; githubToken: string; qaImapPassword: string; outreachSmtpPassword: string; openaiKey: string; geminiKey: string; openrouterKey: string; compatibleKey: string };
 
 /** Settings that are stored encrypted (see vault.ts). */
-const SECRET_KEYS = new Set(["apiKey", "metaPageToken", "metaAppSecret", "psiKey", "gtmetrixKey", "cloudTriggerToken", "githubToken", "qaImapPassword", "outreachSmtpPassword"]);
+const SECRET_KEYS = new Set(["apiKey", "metaPageToken", "metaAppSecret", "psiKey", "gtmetrixKey", "cloudTriggerToken", "githubToken", "qaImapPassword", "outreachSmtpPassword", "openaiKey", "geminiKey", "openrouterKey", "compatibleKey"]);
 
 const DEFAULTS: StoredSettings = {
   mode: "session",
+  aiProvider: "claude",
+  openaiAccess: "login",
+  geminiAccess: "login",
+  aiModels: {
+    "openai-api": { heavy: "gpt-5", fast: "gpt-5-mini" },
+    "openai-login": { heavy: "", fast: "" },
+    "gemini-api": { heavy: "gemini-2.5-pro", fast: "gemini-2.5-flash" },
+    "gemini-login": { heavy: "", fast: "" },
+    openrouter: { heavy: "anthropic/claude-sonnet-4.5", fast: "google/gemini-2.5-flash" },
+    compatible: { heavy: "", fast: "" },
+    custom: { heavy: "", fast: "" },
+  },
+  openaiKey: "",
+  openaiKeySet: false,
+  geminiKey: "",
+  geminiKeySet: false,
+  openrouterKey: "",
+  openrouterKeySet: false,
+  compatibleKey: "",
+  compatibleKeySet: false,
+  compatibleBaseUrl: "",
+  codexPath: "codex",
+  geminiPath: "gemini",
+  customCommand: "",
+  parallelJobs: 3,
+  parallelSearches: 2,
   apiKeySet: false,
   apiKey: "",
   generateModel: "claude-opus-5",
@@ -207,6 +233,12 @@ export function getSettings(): StoredSettings {
   s.githubTokenSet = Boolean(s.githubToken);
   s.qaImapPasswordSet = Boolean(s.qaImapPassword);
   s.outreachSmtpPasswordSet = Boolean(s.outreachSmtpPassword);
+  s.openaiKeySet = Boolean(s.openaiKey);
+  s.geminiKeySet = Boolean(s.geminiKey);
+  s.openrouterKeySet = Boolean(s.openrouterKey);
+  s.compatibleKeySet = Boolean(s.compatibleKey);
+  // Saved model lists from older versions miss newer providers: fill them from the defaults.
+  s.aiModels = { ...DEFAULTS.aiModels, ...((s.aiModels as object) ?? {}) };
   // Older installs stored a single full name.
   if (!s.firstName && !s.lastName && s.userName) [s.firstName, s.lastName] = [String(s.userName).split(" ")[0], String(s.userName).split(" ").slice(1).join(" ")];
   s.userName = [s.firstName, s.lastName].filter(Boolean).join(" ") || "Studio Owner";
@@ -216,7 +248,7 @@ export function getSettings(): StoredSettings {
 }
 
 export function publicSettings(): Settings {
-  const { apiKey: _k, metaPageToken: _t, metaAppSecret: _s, psiKey: _p, gtmetrixKey: _g, cloudTriggerToken: _c, githubToken: _h, qaImapPassword: _ip, outreachSmtpPassword: _op, ...rest } = getSettings();
+  const { apiKey: _k, metaPageToken: _t, metaAppSecret: _s, psiKey: _p, gtmetrixKey: _g, cloudTriggerToken: _c, githubToken: _h, qaImapPassword: _ip, outreachSmtpPassword: _op, openaiKey: _ok, geminiKey: _gk, openrouterKey: _rk, compatibleKey: _ck, ...rest } = getSettings();
   return rest;
 }
 

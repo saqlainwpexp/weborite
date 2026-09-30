@@ -11,26 +11,22 @@ import { pingSite } from "./health.ts";
 import { careAuth, continueRun, newRun, scanSite, type Progress } from "./pipeline.ts";
 import { reportPdf } from "./report.ts";
 import { CARE_DIR, careDir, createCareSite, deleteCareRow, getCareSite, listCareSites, readCare, setCareSecret, updateCareSite, writeCare } from "./store.ts";
+import { Pool, parallel } from "../pool.ts";
 
 /* ---------- one maintenance job at a time (clones and updates are heavy on the client's server) ---------- */
 
 type Job = { siteId: string; kind: string; run: (progress: Progress) => Promise<string> };
-const queue: Job[] = [];
-let active: Job | null = null;
+// Up to two sites at once (clones and updates are heavy); one job per site.
+const pool = new Pool<Job>((j) => j.siteId, () => parallel("care"), (j) => execute(j));
 
 function enqueue(job: Job) {
-  updateCareSite(job.siteId, (s) => (s.job = { kind: job.kind, status: "running", note: queue.length || active ? "Queued" : "Starting…", startedAt: new Date().toISOString() }));
-  queue.push(job);
-  void pump();
+  updateCareSite(job.siteId, (s) => (s.job = { kind: job.kind, status: "running", note: pool.queued || pool.running ? "Queued" : "Starting…", startedAt: new Date().toISOString() }));
+  pool.push(job, () => false);
 }
 
-const busy = (id: string) => active?.siteId === id || queue.some((j) => j.siteId === id);
+const busy = (id: string) => pool.isActive(id) || pool.isQueued((j) => j.siteId === id);
 
-async function pump() {
-  if (active) return;
-  const job = queue.shift();
-  if (!job) return;
-  active = job;
+async function execute(job: Job) {
   const progress: Progress = (note) => updateCareSite(job.siteId, (s) => s.job && (s.job.note = note));
   try {
     const note = await job.run(progress);
@@ -48,9 +44,6 @@ async function pump() {
     const s = getCareSite(job.siteId);
     addEvent({ leadId: null, kind: "failed", title: `Maintenance stopped: ${s?.name ?? job.siteId}`, detail: msg });
     console.error(`[care ${job.siteId} ${job.kind}]`, e);
-  } finally {
-    active = null;
-    void pump();
   }
 }
 
@@ -235,8 +228,8 @@ care.post("/:id/run/resume", (req, res) => {
 care.post("/:id/run/cancel", async (req, res) => {
   const s = getCareSite(req.params.id);
   if (!s?.run) return res.sendStatus(404);
-  if (active?.siteId === s.id) return res.status(409).json({ error: "Wait for the current step to finish, then cancel" });
-  for (let i = queue.length - 1; i >= 0; i--) if (queue[i].siteId === s.id) queue.splice(i, 1);
+  if (pool.isActive(s.id)) return res.status(409).json({ error: "Wait for the current step to finish, then cancel" });
+  pool.remove((j) => j.siteId === s.id);
   updateCareSite(s.id, (x) => {
     x.run!.status = "cancelled";
     x.run!.note = "Cancelled";

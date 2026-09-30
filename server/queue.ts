@@ -1,5 +1,6 @@
 import { addEvent, getLead, readJson, saveLead, writeJson, leadDir } from "./db.ts";
 import { ClaudeUnavailableError } from "./claude/runner.ts";
+import { Pool, parallel } from "./pool.ts";
 import { captureSite, type CaptureOutput } from "./pipeline/capture.ts";
 import { diagnose, diagnoseScratch } from "./pipeline/diagnose.ts";
 import { captureListing } from "./pipeline/listing.ts";
@@ -11,12 +12,12 @@ import { renderSideBySide } from "./pipeline/render.ts";
 import type { Capture, Diagnosis, Fact, GateResult, Lead, StepKey } from "../shared/types.ts";
 
 const RESUME_AFTER_MS = 20 * 60 * 1000;
-const queue: string[] = [];
-let running: string | null = null;
-let resumeTimer: NodeJS.Timeout | null = null;
+// Several mockups run at once (Settings → Parallel jobs); each lead only once at a time.
+const pool = new Pool<string>((id) => id, () => parallel("ai"), (id) => runLead(id));
+const resumeTimers = new Map<string, NodeJS.Timeout>();
 
 export function queueState() {
-  return { running: running ? 1 : 0, queued: queue.length };
+  return { running: pool.running, queued: pool.queued };
 }
 
 export function enqueue(id: string, opts: { restart?: boolean } = {}) {
@@ -26,21 +27,7 @@ export function enqueue(id: string, opts: { restart?: boolean } = {}) {
   lead.status = "queued";
   lead.error = undefined;
   saveLead(lead);
-  if (!queue.includes(id) && running !== id) queue.push(id);
-  void pump();
-}
-
-async function pump() {
-  if (running) return;
-  const id = queue.shift();
-  if (!id) return;
-  running = id;
-  try {
-    await runLead(id);
-  } finally {
-    running = null;
-    void pump();
-  }
+  if (!pool.isActive(id)) pool.push(id);
 }
 
 function step(lead: Lead, key: StepKey) {
@@ -161,12 +148,12 @@ async function runLead(id: string) {
 }
 
 function scheduleResume(id: string) {
-  if (resumeTimer) clearTimeout(resumeTimer);
-  resumeTimer = setTimeout(() => {
-    resumeTimer = null;
+  clearTimeout(resumeTimers.get(id));
+  resumeTimers.set(id, setTimeout(() => {
+    resumeTimers.delete(id);
     const l = getLead(id);
     if (l?.status === "paused") enqueue(id);
-  }, RESUME_AFTER_MS);
+  }, RESUME_AFTER_MS));
 }
 
 /** Pick up anything interrupted by a server restart. */
