@@ -4,6 +4,7 @@ import { dirListing, domainInfo, registrable } from "../care/health.ts";
 import { newContext } from "../pipeline/browser.ts";
 import { archiveUrls, UA } from "../seo/crawl.ts";
 import { addresses, isCloudflareIp, lookup, mxHosts } from "./dns.ts";
+import { smtpProbe } from "./smtp.ts";
 
 type Res = { status: number; headers: Headers; text: string; location: string };
 
@@ -201,8 +202,7 @@ export async function runChecks(siteUrl: string, rec: GoLiveRecord, adminEmail: 
   add("Hosting & DNS", "one-home", "http and www redirect (301) to one address", oneHome ? "pass" : "fail", oneHome ? `Everything ends at https://${finalHosts[0]}` : `http → ${finalHosts[0] || "?"}, www → ${finalHosts[1] || "?"} (${fromHttp.chain.map((c) => c.status).join("→")})`);
 
   const ns = await lookup(domain, "NS");
-  const onCf = ns.some((n) => /\.ns\.cloudflare\.com$/i.test(n));
-  add("Hosting & DNS", "dns-provider", "DNS on Cloudflare", onCf ? "pass" : "info", ns.length ? `Nameservers: ${ns.join(", ")}` : "No NS records found");
+  add("Hosting & DNS", "dns-provider", "DNS is hosted and answering", ns.length ? "info" : "fail", ns.length ? `Nameservers: ${ns.join(", ")} (records are changed there)` : "No NS records found");
 
   const serving = await get(`${liveOrigin}/wp-json/`);
   const isNew = serving?.status === 200 && /studio\\?\/v1/.test(serving.text);
@@ -215,7 +215,7 @@ export async function runChecks(siteUrl: string, rec: GoLiveRecord, adminEmail: 
   const dom = await domainInfo(domain);
   add("Hosting & DNS", "domain-expiry", "Domain renews for at least 60 days", !dom ? "info" : dom.daysLeft >= 60 ? "pass" : dom.daysLeft >= 30 ? "warn" : "fail", dom ? `${dom.registrar || "Registrar unknown"} · expires ${dom.expires.slice(0, 10)} (${dom.daysLeft} days)` : "Registry didn't say (RDAP)");
 
-  if (rec.cloudflare.snapshotAt) {
+  if (rec.dns.snapshotAt || (await addresses(`old.${domain}`)).length) {
     const old = await follow(`http://old.${domain}/`);
     const ok = old.final && old.final.status < 400;
     add("Hosting & DNS", "old-subdomain", `old.${domain} loads the old site`, ok ? "pass" : "warn", ok ? `Status ${old.final!.status}` : "Not loading: add old." + domain + " as an alias on the old host");
@@ -226,7 +226,7 @@ export async function runChecks(siteUrl: string, rec: GoLiveRecord, adminEmail: 
   const mailNames = [...new Set([`mail.${domain}`, ...mx.filter((m) => m.endsWith(domain))])];
   const proxied: string[] = [];
   for (const n of mailNames) for (const ip of await addresses(n)) if (await isCloudflareIp(ip)) proxied.push(n);
-  add("Email", "mail-dns-only", "Mail hostnames not proxied (DNS only)", proxied.length ? "fail" : "pass", proxied.length ? `Proxied: ${[...new Set(proxied)].join(", ")}. Mail can't pass through Cloudflare's proxy.` : mx.length ? `MX: ${mx.join(", ")}` : "No MX records");
+  add("Email", "mail-dns-only", "Mail hostnames point straight at the mail server", proxied.length ? "fail" : "pass", proxied.length ? `Behind a web proxy: ${[...new Set(proxied)].join(", ")}. Mail apps can't connect through it: point these records directly at the mail server (in Cloudflare, “DNS only”).` : mx.length ? `MX: ${mx.join(", ")}` : "No MX records");
   add("Email", "mx", "MX records present", mx.length ? "pass" : "fail", mx.length ? mx.join(", ") : "No MX: the domain can't receive mail");
 
   const txt = await lookup(domain, "TXT");
@@ -251,8 +251,9 @@ export async function runChecks(siteUrl: string, rec: GoLiveRecord, adminEmail: 
   const own = mx.find((m) => m.endsWith(domain)) ?? ((await addresses(`mail.${domain}`)).length ? `mail.${domain}` : "");
   if (!own) add("Email", "mail-tls", "Mail clients can connect over TLS", mx.length ? "pass" : "info", mx.length ? `Mail is hosted by ${mx[0].split(".").slice(-2).join(".")}; clients connect to the provider's own servers` : "No mail on this domain");
   else {
-    const [imaps, smtps] = await Promise.all([tlsCheck(own, 993), tlsCheck(own, 465)]);
-    add("Email", "mail-tls", "Mail clients can connect over TLS", imaps.ok && smtps.ok ? "pass" : imaps.ok || smtps.ok ? "warn" : "fail", `IMAP ${imaps.detail} · SMTP ${smtps.detail}`);
+    const [imaps, ssl, starttls] = await Promise.all([tlsCheck(own, 993), smtpProbe(own, 465, "ssl"), smtpProbe(own, 587, "tls")]);
+    const smtpOk = ssl.ok || starttls.ok;
+    add("Email", "mail-tls", "Mail clients can connect directly (IMAP and SMTP over TLS)", imaps.ok && smtpOk ? "pass" : imaps.ok || smtpOk ? "warn" : "fail", `IMAP ${imaps.detail} · SMTP ${ssl.detail} · ${starttls.detail}`);
   }
 
   if (wp) {

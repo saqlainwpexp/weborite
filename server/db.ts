@@ -128,10 +128,10 @@ export function usageToday() {
 }
 
 // ---- settings ----
-type StoredSettings = Settings & { apiKey: string; metaPageToken: string; metaAppSecret: string; psiKey: string; gtmetrixKey: string; cloudTriggerToken: string; githubToken: string; cloudflareToken: string; qaImapPassword: string };
+type StoredSettings = Settings & { apiKey: string; metaPageToken: string; metaAppSecret: string; psiKey: string; gtmetrixKey: string; cloudTriggerToken: string; githubToken: string; qaImapPassword: string };
 
 /** Settings that are stored encrypted (see vault.ts). */
-const SECRET_KEYS = new Set(["apiKey", "metaPageToken", "metaAppSecret", "psiKey", "gtmetrixKey", "cloudTriggerToken", "githubToken", "cloudflareToken", "qaImapPassword"]);
+const SECRET_KEYS = new Set(["apiKey", "metaPageToken", "metaAppSecret", "psiKey", "gtmetrixKey", "cloudTriggerToken", "githubToken", "qaImapPassword"]);
 
 const DEFAULTS: StoredSettings = {
   mode: "session",
@@ -167,8 +167,6 @@ const DEFAULTS: StoredSettings = {
   gtmetrixKeySet: false,
   qaEmail: "",
   agencyAdminEmail: "",
-  cloudflareToken: "",
-  cloudflareTokenSet: false,
   qaImapHost: "",
   qaImapPort: 993,
   qaImapUser: "",
@@ -195,7 +193,6 @@ export function getSettings(): StoredSettings {
   s.gtmetrixKeySet = Boolean(s.gtmetrixKey);
   s.cloudTriggerTokenSet = Boolean(s.cloudTriggerToken);
   s.githubTokenSet = Boolean(s.githubToken);
-  s.cloudflareTokenSet = Boolean(s.cloudflareToken);
   s.qaImapPasswordSet = Boolean(s.qaImapPassword);
   // Older installs stored a single full name.
   if (!s.firstName && !s.lastName && s.userName) [s.firstName, s.lastName] = [String(s.userName).split(" ")[0], String(s.userName).split(" ").slice(1).join(" ")];
@@ -206,7 +203,7 @@ export function getSettings(): StoredSettings {
 }
 
 export function publicSettings(): Settings {
-  const { apiKey: _k, metaPageToken: _t, metaAppSecret: _s, psiKey: _p, gtmetrixKey: _g, cloudTriggerToken: _c, githubToken: _h, cloudflareToken: _cf, qaImapPassword: _ip, ...rest } = getSettings();
+  const { apiKey: _k, metaPageToken: _t, metaAppSecret: _s, psiKey: _p, gtmetrixKey: _g, cloudTriggerToken: _c, githubToken: _h, qaImapPassword: _ip, ...rest } = getSettings();
   return rest;
 }
 

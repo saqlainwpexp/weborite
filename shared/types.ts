@@ -149,9 +149,8 @@ export interface Settings {
   psiKeySet: boolean;
   gtmetrixKeySet: boolean;
   qaEmail: string;
-  /** Go-live: the agency's own address for WordPress admin mail, Cloudflare API token, and an IMAP inbox the delivery test reads */
+  /** Go-live: the agency's own address for WordPress admin mail, and an IMAP inbox the delivery test reads */
   agencyAdminEmail: string;
-  cloudflareTokenSet: boolean;
   qaImapHost: string;
   qaImapPort: number;
   qaImapUser: string;
@@ -981,7 +980,8 @@ export interface GoLiveRecord {
   human: Record<string, { done: boolean; at: string; note: string }>;
   restoreTest: { at: string; note: string } | null;
   gsc: { verifiedAt: string; sitemapSubmittedAt: string; note: string };
-  cloudflare: { zoneId: string; zoneName: string; snapshotAt: string; cutoverAt: string; rolledBackAt: string; log: { at: string; text: string }[] };
+  /** DNS lives wherever the client's domain is (registrar, host panel, Cloudflare…): the app records, instructs and verifies, it doesn't edit */
+  dns: { snapshotAt: string; cutoverAt: string; rolledBackAt: string; verify: { at: string; lines: { ok: boolean | null; text: string }[] } | null; log: { at: string; text: string }[] };
   redirects: GoLiveRedirect[];
   redirectsPushedAt: string;
   mailTest: GoLiveMailTest | null;

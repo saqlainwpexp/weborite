@@ -8,10 +8,10 @@ import { siteAuth } from "../seo/routes.ts";
 import { getSite, readResult, writeResult } from "../seo/store.ts";
 import { WpError, goliveKit, goliveLive, goliveMailtest, goliveRedirects, goliveSmtp, goliveStatus, ping } from "../wp/client.ts";
 import { runChecks } from "./checks.ts";
-import { CfError, createOld, cutover, exportBind, findZone, fixMail, lite, listRecords, rollback, verifyToken } from "./cloudflare.ts";
-import { lookup, mxHosts } from "./dns.ts";
+import { addresses, lookup, mxHosts } from "./dns.ts";
 import { authResults, findMessageHeaders } from "./imap.ts";
 import { oldSiteUrls, proposeRedirects } from "./redirects.ts";
+import { smtpProbe } from "./smtp.ts";
 import { HUMAN_CHECKS, logDns, readRecord, writeRecord } from "./store.ts";
 
 /* ---------- one background job per site ---------- */
@@ -41,7 +41,6 @@ function start(res: import("express").Response, s: SeoSite, kind: string, run: (
   res.json({ ok: true, job });
 }
 
-const cfToken = () => (getSettings() as unknown as { cloudflareToken: string }).cloudflareToken;
 const imap = () => {
   const s = getSettings() as unknown as { qaImapHost: string; qaImapPort: number; qaImapUser: string; qaImapPassword: string };
   return s.qaImapHost && s.qaImapUser && s.qaImapPassword ? { host: s.qaImapHost, port: s.qaImapPort || 993, user: s.qaImapUser, password: s.qaImapPassword } : null;
@@ -54,7 +53,7 @@ async function refreshWp(s: SeoSite, rec: GoLiveRecord) {
   rec.wpCheckedAt = new Date().toISOString();
 }
 
-type Snapshot = { at: string; zone: string; zoneId: string; records: DnsRecordLite[]; bind: string };
+type Snapshot = { at: string; zone: string; nameservers: string[]; records: DnsRecordLite[] };
 
 /** Registrar transfer method by TLD: .uk moves by IPS tag, almost everything else by auth (EPP) code. */
 export function transferMethod(domain: string) {
@@ -65,7 +64,6 @@ async function transferPlan(s: SeoSite, rec: GoLiveRecord) {
   const d = rec.domain;
   const snap = readResult<Snapshot>(s.id, "dns-snapshot");
   const ns = await lookup(d, "NS");
-  const onCf = ns.some((n) => /cloudflare\.com$/i.test(n));
   const [a, www, mx, txt, dmarc, mail] = await Promise.all([lookup(d, "A"), lookup(`www.${d}`, "A"), mxHosts(d), lookup(d, "TXT"), lookup(`_dmarc.${d}`, "TXT"), lookup(`mail.${d}`, "A")]);
   const now = new Date().toISOString().slice(0, 10);
   const oldA = snap?.records.filter((r) => r.name === d && r.type === "A").map((r) => r.content) ?? a;
@@ -78,7 +76,7 @@ async function transferPlan(s: SeoSite, rec: GoLiveRecord) {
     "## Where things are",
     `- Hosting: ${rec.hosting.provider || "(not recorded)"}${rec.hosting.account ? `, account \`${rec.hosting.account}\`` : ""}${rec.hosting.clientOwns ? " (client's own account, confirmed)" : " (**confirm this is the client's own account before building**)"}`,
     `- Build track: ${rec.track === "A" ? "A (Studio Elementor build)" : rec.track === "B" ? "B (existing theme or builder kept)" : "(not recorded)"}`,
-    `- DNS: ${onCf ? "Cloudflare (authoritative)" : `not on Cloudflare yet (${ns.join(", ") || "no NS found"})`}`,
+    `- DNS is edited at: ${ns.join(", ") || "no nameservers found"}${rec.domainInfo.registrar ? ` (registrar: ${rec.domainInfo.registrar})` : ""}`,
     `- New host IP: ${rec.hosting.newIp || "(not recorded)"}`,
     "",
     "## Current records (rollback values)",
@@ -88,33 +86,24 @@ async function transferPlan(s: SeoSite, rec: GoLiveRecord) {
     `- mail.${d}: ${mail.join(", ") || "none"}`,
     `- SPF: ${txt.find((t) => /^v=spf1/i.test(t)) ?? "none"}`,
     `- DMARC: ${dmarc[0] ?? "none"}`,
-    snap ? `- Full zone snapshot taken ${snap.at.slice(0, 16).replace("T", " ")} (${snap.records.length} records, BIND export kept in the app)` : "- **Take a DNS snapshot in the app before changing anything.**",
+    snap ? `- Snapshot taken ${snap.at.slice(0, 16).replace("T", " ")} (${snap.records.length} records, downloadable from the app)` : "- **Take a DNS snapshot in the app before changing anything.**",
     "",
   ];
-  if (!onCf) L.push(
-    "## Move DNS to Cloudflare first",
-    `1. Add ${d} in Cloudflare (Add a site, Free plan). Let it import the records.`,
-    "2. Compare the imported records with the list above, and add anything missing (DKIM keys, verification TXT records, subdomains).",
-    "3. Set mail., smtp., imap., webmail., autodiscover. and every MX target to **DNS only** (grey cloud).",
-    `4. At the registrar (${rec.domainInfo.registrar || "see domain details"}), replace the nameservers with the two Cloudflare gives you.`,
-    "5. Wait until the app's DNS provider check reads Cloudflare, then carry on.",
-    "",
-  );
   L.push(
     "## Before cutover",
-    "1. Mail hostnames DNS only; mail clients connect (app: Email checks).",
+    "1. mail. and MX hosts point straight at the mail server (no web proxy); mail apps connect over IMAP and SMTP (app: Email checks).",
     "2. FluentSMTP sending as the client's own address; delivery test shows SPF pass in an outside inbox.",
-    `3. old.${d} created and loading the outgoing site.`,
+    `3. old.${d} added as an A record to the current host (${oldA[0] ?? "old IP"}) and loading the outgoing site.`,
     "4. Redirect map pushed to the new site.",
     "5. A complete backup with remote storage.",
     "",
     "## Cutover",
-    `1. Change **A ${d} and www only** to ${rec.hosting.newIp || "the new host's IP"}. Leave mail., MX and TXT alone.`,
+    `1. At the DNS provider, change **A ${d} and www only** to ${rec.hosting.newIp || "the new host's IP"}. Leave mail., MX and TXT alone. Lower the TTL to 300 a day before if the provider allows it.`,
     "2. Remove the staging password and allow search engines (app: Go live).",
     "3. SSL valid on root and www; run the go-live checks: zero failures.",
     "",
     "## Rollback",
-    `1. Set A ${d} back to ${oldA.join(", ") || "the snapshot value"} and www back to ${oldWww.join(", ") || "the snapshot value"} (the app's Roll back button does exactly this from the snapshot).`,
+    `1. Set A ${d} back to ${oldA.join(", ") || "the snapshot value"} and www back to ${oldWww.join(", ") || "the snapshot value"}.`,
     "2. Mail is unaffected: it never moved.",
     "3. Note what failed, fix it on staging, and cut over again.",
     "",
@@ -134,13 +123,14 @@ export const golive = Router();
 golive.get("/:id", (req, res) => {
   const s = getSite(req.params.id);
   if (!s) return res.sendStatus(404);
-  const st = getSettings() as unknown as { agencyAdminEmail: string; cloudflareToken: string; qaImapHost: string; qaEmail: string; userEmail: string };
+  const st = getSettings() as unknown as { agencyAdminEmail: string; qaImapHost: string; qaEmail: string; userEmail: string };
+  const snap = readResult<Snapshot>(s.id, "dns-snapshot");
   res.json({
     record: readRecord(s),
     job: jobs.get(s.id) ?? null,
     human: HUMAN_CHECKS,
-    snapshot: readResult<Snapshot>(s.id, "dns-snapshot") ? { at: readResult<Snapshot>(s.id, "dns-snapshot")!.at, count: readResult<Snapshot>(s.id, "dns-snapshot")!.records.length } : null,
-    setup: { agencyAdminEmail: st.agencyAdminEmail, cloudflare: Boolean(st.cloudflareToken), imap: Boolean(imap()), qaEmail: st.qaEmail || st.userEmail },
+    snapshot: snap ? { at: snap.at, count: snap.records.length, nameservers: snap.nameservers, root: snap.records.filter((r) => r.name === snap.zone && ["A", "AAAA"].includes(r.type)).map((r) => `${r.type} ${r.content}`), www: snap.records.filter((r) => r.name === `www.${snap.zone}`).map((r) => `${r.type} ${r.content}`) } : null,
+    setup: { agencyAdminEmail: st.agencyAdminEmail, imap: Boolean(imap()), qaEmail: st.qaEmail || st.userEmail },
   });
 });
 
@@ -341,92 +331,127 @@ golive.post("/:id/domain/lookup", async (req, res) => {
   res.json(d ? rec : { ...rec, warning: "The registry didn't return an expiry date. Enter it from the registrar." });
 });
 
-/* ---------- Cloudflare ---------- */
+/* ---------- DNS: any provider. The app records, instructs and verifies; the records are changed at the provider. ---------- */
 
-const cfRoute = (fn: (s: SeoSite, rec: GoLiveRecord, token: string, body: Record<string, unknown>) => Promise<string[]>) => async (req: import("express").Request, res: import("express").Response) => {
-  const s = getSite(String(req.params.id));
-  if (!s) return res.sendStatus(404);
-  const rec = readRecord(s);
-  try {
-    const token = cfToken();
-    await verifyToken(token);
-    const lines = await fn(s, rec, token, req.body ?? {});
-    logDns(rec, lines);
-    writeRecord(s.id, rec);
-    res.json({ lines, record: rec });
-  } catch (e) {
-    res.status(e instanceof CfError ? 400 : 500).json({ error: (e as Error).message });
-  }
-};
+const DKIM = ["default", "google", "selector1", "selector2", "k1", "s1", "s2", "mail", "dkim", "hostingermail1", "hostingermail2", "zoho", "titan1"];
 
-async function zone(rec: GoLiveRecord, token: string) {
-  const z = await findZone(token, rec.domain);
-  rec.cloudflare.zoneId = z.id;
-  rec.cloudflare.zoneName = z.name;
-  return z;
+/** Everything public DNS shows for the names that matter (a zone can't be listed from outside, so these are the known names). */
+async function publicRecords(d: string): Promise<DnsRecordLite[]> {
+  const names: [string, ("A" | "AAAA" | "CNAME" | "MX" | "TXT" | "CAA")[]][] = [
+    [d, ["A", "AAAA", "MX", "TXT", "CAA"]],
+    [`www.${d}`, ["CNAME", "A", "AAAA"]],
+    ...["mail", "smtp", "imap", "pop", "webmail", "autodiscover", "autoconfig", "cpanel", "ftp", "old"].map((l) => [`${l}.${d}`, ["CNAME", "A"]] as [string, ("A" | "CNAME")[]]),
+    [`_dmarc.${d}`, ["TXT"]],
+    ...DKIM.map((sel) => [`${sel}._domainkey.${d}`, ["CNAME", "TXT"]] as [string, ("CNAME" | "TXT")[]]),
+  ];
+  const out: DnsRecordLite[] = [];
+  await Promise.all(names.map(async ([name, types]) => {
+    for (const type of types) {
+      const vals = await lookup(name, type);
+      // A CNAME answer also carries the target's addresses: keep the CNAME and skip the rest for that name.
+      if (type === "CNAME" && vals.length) {
+        out.push({ type, name, content: vals[0] });
+        return;
+      }
+      for (const v of vals) {
+        if (type === "MX") {
+          const [prio, host] = v.split(/\s+/);
+          out.push({ type, name, content: host ?? prio, priority: Number(prio) || undefined });
+        } else if ((type === "A" && /^[\d.]+$/.test(v)) || (type === "AAAA" && v.includes(":")) || !["A", "AAAA"].includes(type)) out.push({ type, name, content: v });
+      }
+    }
+  }));
+  const order = (r: DnsRecordLite) => (r.name === d ? "0" : r.name.startsWith("www.") ? "1" : r.name) + r.type;
+  return out.sort((x, y) => order(x).localeCompare(order(y)));
 }
 
-const needSnapshot = (s: SeoSite) => {
-  const snap = readResult<Snapshot>(s.id, "dns-snapshot");
-  if (!snap) throw new CfError("Take a DNS snapshot first: it's what rollback restores");
-  return snap;
-};
-
-golive.post("/:id/dns/snapshot", cfRoute(async (s, rec, token) => {
-  const z = await zone(rec, token);
-  const records = (await listRecords(token, z.id)).map(lite);
-  const snap: Snapshot = { at: new Date().toISOString(), zone: z.name, zoneId: z.id, records, bind: await exportBind(token, z.id) };
+golive.post("/:id/dns/snapshot", async (req, res) => {
+  const s = getSite(req.params.id);
+  if (!s) return res.sendStatus(404);
+  const rec = readRecord(s);
+  if (!rec.domain) return res.status(400).json({ error: "Enter the live domain under Project first" });
+  const snap: Snapshot = { at: new Date().toISOString(), zone: rec.domain, nameservers: await lookup(rec.domain, "NS"), records: await publicRecords(rec.domain) };
   const prev = readResult<Snapshot>(s.id, "dns-snapshot");
-  if (prev && rec.cloudflare.cutoverAt && !rec.cloudflare.rolledBackAt) {
-    // After cutover the first snapshot is the rollback point: keep it, store this one alongside.
-    writeResult(s.id, `dns-snapshot-${snap.at.replace(/[:.]/g, "-")}`, snap);
-    return [`Snapshot of ${records.length} records saved (the pre-cutover snapshot is kept for rollback)`];
-  }
-  writeResult(s.id, "dns-snapshot", snap);
   writeResult(s.id, `dns-snapshot-${snap.at.replace(/[:.]/g, "-")}`, snap);
-  rec.cloudflare.snapshotAt = snap.at;
-  const rootA = records.filter((r) => r.name === z.name && r.type === "A").map((r) => r.content);
-  const www = records.filter((r) => r.name === `www.${z.name}`).map((r) => `${r.type} ${r.content}`);
-  return [`Snapshot of ${records.length} records saved`, `Rollback values: A ${z.name} → ${rootA.join(", ") || "none"}; www → ${www.join(", ") || "none"}`];
-}));
+  // After cutover the first snapshot is the rollback point: keep it, and store this one alongside.
+  const keepOld = prev && rec.dns.cutoverAt && !rec.dns.rolledBackAt;
+  if (!keepOld) {
+    writeResult(s.id, "dns-snapshot", snap);
+    rec.dns.snapshotAt = snap.at;
+  }
+  const rootA = snap.records.filter((r) => r.name === rec.domain && r.type === "A").map((r) => r.content);
+  const www = snap.records.filter((r) => r.name === `www.${rec.domain}`).map((r) => `${r.type} ${r.content}`);
+  const lines = keepOld ? [`Snapshot of ${snap.records.length} records saved (the pre-cutover snapshot stays the rollback point)`]
+    : [`Snapshot of ${snap.records.length} records saved`, `Rollback values: A ${rec.domain} → ${rootA.join(", ") || "none"}; www → ${www.join(", ") || "none"}`];
+  logDns(rec, lines);
+  writeRecord(s.id, rec);
+  res.json({ lines, record: rec });
+});
 
-golive.post("/:id/dns/mail", cfRoute(async (_s, rec, token) => {
-  const z = await zone(rec, token);
-  return (await fixMail(token, z.id, z.name)).map((x) => (x.ok ? x.text : `Failed: ${x.text}`));
-}));
+/** What the world sees right now for the site, www, old. and mail, against what the plan expects. */
+golive.post("/:id/dns/verify", async (req, res) => {
+  const s = getSite(req.params.id);
+  if (!s) return res.sendStatus(404);
+  const rec = readRecord(s);
+  const d = rec.domain;
+  const snap = readResult<Snapshot>(s.id, "dns-snapshot");
+  const oldIps = snap?.records.filter((r) => r.name === d && ["A", "AAAA"].includes(r.type)).map((r) => r.content) ?? [];
+  const [root, www, wwwCname, old, mx] = await Promise.all([addresses(d), addresses(`www.${d}`), lookup(`www.${d}`, "CNAME"), addresses(`old.${d}`), mxHosts(d)]);
+  const ip = rec.hosting.newIp;
+  const lines: { ok: boolean | null; text: string }[] = [];
+  const at = (list: string[]) => list.join(", ") || "nothing";
+  if (ip) {
+    const rootNew = root.includes(ip);
+    const stale = root.filter((x) => oldIps.includes(x));
+    lines.push({ ok: rootNew && !stale.length ? true : rec.dns.cutoverAt ? false : null, text: `${d} → ${at(root)}${rootNew ? (stale.length ? ` (the old ${stale.join(", ")} is still there: remove it)` : " (new host)") : ` (not ${ip} yet)`}` });
+    const wwwNew = www.includes(ip) || wwwCname.some((c) => c === d);
+    lines.push({ ok: wwwNew ? true : rec.dns.cutoverAt ? false : null, text: `www.${d} → ${wwwCname.length ? `CNAME ${wwwCname[0]} → ` : ""}${at(www)}${wwwNew ? "" : ` (not ${ip} yet)`}` });
+    if (!rootNew && root.some((x) => !oldIps.includes(x)) && oldIps.length) lines.push({ ok: null, text: "The address isn't the new host or the snapshot's old one: a proxy (e.g. Cloudflare) may hide the origin. The go-live checks confirm which site answers." });
+  } else lines.push({ ok: null, text: "Record the new host's IP under Project to verify the cutover" });
+  lines.push({ ok: old.length ? (oldIps.length && old.some((x) => oldIps.includes(x)) ? true : null) : null, text: old.length ? `old.${d} → ${at(old)}${oldIps.length && old.some((x) => oldIps.includes(x)) ? " (the old host)" : ""}` : `old.${d} doesn't exist yet` });
+  const mxOwn = mx.filter((m) => m.endsWith(d));
+  lines.push({ ok: mx.length > 0, text: `MX → ${at(mx)}${mxOwn.length ? "" : mx.length ? " (mail hosted by a provider)" : ""}` });
+  rec.dns.verify = { at: new Date().toISOString(), lines };
+  writeRecord(s.id, rec);
+  res.json({ record: rec });
+});
 
-golive.post("/:id/dns/old", cfRoute(async (s, rec, token) => {
-  const z = await zone(rec, token);
-  const lines = (await createOld(token, z.id, z.name, needSnapshot(s).records)).map((x) => (x.ok ? x.text : `Failed: ${x.text}`));
-  if (!rec.oldSiteUrl || rec.oldSiteUrl.includes(`//${z.name}`) || rec.oldSiteUrl.includes(`//www.${z.name}`)) rec.oldSiteUrl = `http://old.${z.name}`;
-  return lines;
-}));
+/** The records were changed at the provider: note when (the checks then expect the new host). */
+golive.post("/:id/dns/mark", (req, res) => {
+  const s = getSite(req.params.id);
+  if (!s) return res.sendStatus(404);
+  const rec = readRecord(s);
+  const what = String(req.body?.what ?? "");
+  if (what === "cutover") {
+    if (!readResult<Snapshot>(s.id, "dns-snapshot")) return res.status(400).json({ error: "Take a DNS snapshot first: it's the record of what to put back" });
+    rec.dns.cutoverAt = new Date().toISOString();
+    rec.dns.rolledBackAt = "";
+    logDns(rec, [`Cutover recorded: A ${rec.domain} and www → ${rec.hosting.newIp || "new host"}`]);
+  } else if (what === "rollback") {
+    rec.dns.rolledBackAt = new Date().toISOString();
+    rec.liveAt = "";
+    logDns(rec, ["Rollback recorded: root and www put back to the snapshot values"]);
+  } else return res.status(400).json({ error: "Unknown step" });
+  writeRecord(s.id, rec);
+  res.json({ record: rec });
+});
 
-golive.post("/:id/dns/cutover", cfRoute(async (s, rec, token, body) => {
-  if (body.confirm !== true) throw new CfError("Confirm the cutover");
-  needSnapshot(s);
-  const ip = String(body.newIp || rec.hosting.newIp).trim();
-  const z = await zone(rec, token);
-  const lines = (await cutover(token, z.id, z.name, ip)).map((x) => x.text);
-  rec.hosting.newIp = ip;
-  rec.cloudflare.cutoverAt = new Date().toISOString();
-  return [...lines, "Mail, MX and TXT records untouched"];
-}));
-
-golive.post("/:id/dns/rollback", cfRoute(async (s, rec, token, body) => {
-  if (body.confirm !== true) throw new CfError("Confirm the rollback");
-  const z = await zone(rec, token);
-  const lines = (await rollback(token, z.id, z.name, needSnapshot(s).records)).map((x) => x.text);
-  rec.cloudflare.rolledBackAt = new Date().toISOString();
-  rec.liveAt = "";
-  return lines;
-}));
-
-golive.get("/:id/dns/snapshot.zone", (req, res) => {
+golive.get("/:id/dns/snapshot.txt", (req, res) => {
   const s = getSite(req.params.id);
   const snap = s && readResult<Snapshot>(s.id, "dns-snapshot");
   if (!snap) return res.sendStatus(404);
-  res.type("text/plain").attachment(`${snap.zone}-${snap.at.slice(0, 10)}.zone`).send(snap.bind || snap.records.map((r) => `${r.name}.\t${r.ttl ?? 1}\tIN\t${r.type}\t${r.priority !== undefined ? r.priority + " " : ""}${r.content}${r.proxied ? "\t; proxied" : ""}`).join("\n") + "\n");
+  const rows = snap.records.map((r) => `${r.name}.\tIN\t${r.type}\t${r.priority !== undefined ? r.priority + " " : ""}${r.content}`);
+  res.type("text/plain").attachment(`${snap.zone}-dns-${snap.at.slice(0, 10)}.txt`).send(`; ${snap.zone} as public DNS showed it on ${snap.at}\n; Nameservers: ${snap.nameservers.join(", ")}\n${rows.join("\n")}\n`);
+});
+
+/** Direct SMTP login test with the mailbox details, before they're saved to FluentSMTP. */
+golive.post("/:id/smtp/test", async (req, res) => {
+  const b = req.body ?? {};
+  const host = String(b.host ?? "").trim();
+  if (!host) return res.status(400).json({ error: "Enter the SMTP host" });
+  const enc = ["ssl", "tls", "none"].includes(b.encryption) ? b.encryption : "ssl";
+  const r = await smtpProbe(host, Number(b.port) || 465, enc, b.password ? { user: String(b.username || b.from || ""), password: String(b.password) } : undefined);
+  res.json(r);
 });
 
 golive.get("/:id/plan", async (req, res) => {

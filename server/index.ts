@@ -144,7 +144,7 @@ app.put("/api/settings", (req, res) => {
     "mode", "apiKey", "generateModel", "fastModel", "metaPageToken", "metaAppSecret", "metaVerifyToken", "elementorSecret", "claudePath",
     "cloudTriggerUrl", "cloudTriggerToken", "githubToken", "cloudRepo", "cloudBranch",
     "studioName", "brandColor", "firstName", "lastName", "userEmail", "userPhone",
-    "psiKey", "gtmetrixKey", "qaEmail", "agencyAdminEmail", "cloudflareToken", "qaImapHost", "qaImapUser", "qaImapPassword",
+    "psiKey", "gtmetrixKey", "qaEmail", "agencyAdminEmail", "qaImapHost", "qaImapUser", "qaImapPassword",
   ];
   if (typeof req.body?.currency === "string" && !/^[A-Z]{3}$/.test(req.body.currency)) return res.status(400).json({ error: "Currency must be a 3-letter code like USD" });
   if (typeof req.body?.currency === "string") allowed.push("currency");

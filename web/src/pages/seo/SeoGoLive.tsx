@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import {
-  AlertTriangle, ArrowRightLeft, Camera, CheckCircle2, Circle, CloudCog, Download, FileText, Globe, Loader2, Mail, Play, Rocket, Save, Send, Server, ShieldCheck, Undo2, Wrench, XCircle,
+  AlertTriangle, ArrowRightLeft, Camera, CheckCircle2, Circle, Download, FileText, Globe, Loader2, Mail, Play, RefreshCw, Rocket, Save, Send, Server, ShieldCheck, Undo2, Wrench, XCircle,
 } from "lucide-react";
 import type { GoLiveCheck, GoLiveRecord, SeoSite } from "../../../../shared/types";
 import { api, timeAgo, usePoll } from "../../lib/api";
@@ -10,8 +10,8 @@ type Data = {
   record: GoLiveRecord;
   job: { kind: string; note: string; startedAt: string; error?: string; finishedAt?: string } | null;
   human: { id: string; label: string; hint: string }[];
-  snapshot: { at: string; count: number } | null;
-  setup: { agencyAdminEmail: string; cloudflare: boolean; imap: boolean; qaEmail: string };
+  snapshot: { at: string; count: number; nameservers: string[]; root: string[]; www: string[] } | null;
+  setup: { agencyAdminEmail: string; imap: boolean; qaEmail: string };
 };
 
 const KIT: { id: string; label: string; hint: string }[] = [
@@ -200,6 +200,11 @@ export default function SeoGoLive({ site }: { site: SeoSite }) {
           <L label="Mailbox password"><input className="input mono" type="password" value={smtp.password} onChange={(e) => setSmtp({ ...smtp, password: e.target.value })} placeholder={rec.smtp.savedAt ? "Saved on the site" : ""} autoComplete="new-password" /></L>
         </div>
         <div className="golive-actions">
+          <Btn k="smtptest" onClick={() => act("smtptest", async () => {
+            const r = await api<{ ok: boolean; detail: string }>(`/api/golive/${site.id}/smtp/test`, { method: "POST", json: smtp });
+            if (!r.ok) throw new Error(r.detail);
+            return r;
+          }, "Connected directly to the mail server" + (smtp.password ? " and the login works." : "."))}><Mail />Test connection</Btn>
           <Btn k="smtp" onClick={() => act("smtp", () => api(`/api/golive/${site.id}/smtp`, { method: "POST", json: smtp }), "FluentSMTP is set up. Now run the delivery test.")}><Save />Save to FluentSMTP</Btn>
           <Btn k="/mailtest" kind="btn-ink" onClick={() => post("/mailtest", {}, "Sending a test through the site…")}><Send />Delivery test</Btn>
           <span className="muted golive-note">{setup.imap ? "Reads the QA inbox and checks SPF and DKIM." : <>Sends to {setup.qaEmail || "your QA email"}. <Link to="/settings/integrations">Connect a QA inbox</Link> to read the result automatically.</>}</span>
@@ -212,32 +217,38 @@ export default function SeoGoLive({ site }: { site: SeoSite }) {
       </Section>
 
       {/* ---------- DNS ---------- */}
-      <Section icon={<CloudCog />} title="DNS and cutover (Cloudflare)" sub={setup.cloudflare ? (data.snapshot ? `Snapshot of ${data.snapshot.count} records from ${day(data.snapshot.at)} · rollback restores it` : "Take a snapshot first: it's what rollback restores") : <>Add a Cloudflare API token in <Link to="/settings/integrations">Settings → Integrations</Link> (Zone Read, DNS Edit)</>}>
+      <Section icon={<Globe />} title="DNS and cutover" sub={data.snapshot ? `Records are changed at ${data.snapshot.nameservers.join(", ") || "the DNS provider"} · snapshot of ${data.snapshot.count} records from ${day(data.snapshot.at)}` : "Wherever the domain's DNS lives (registrar, host panel, Cloudflare). The app tells you what to change and checks it worked."}>
         <ol className="golive-steps">
-          <li><div><b>Snapshot the zone</b><small className="muted">Records the current A and www values for rollback, and a full export.</small></div>
-            <span className="golive-row"><Btn k="/dns/snapshot" disabled={!setup.cloudflare} onClick={() => post("/dns/snapshot", {}, "Snapshot saved")}><Camera />Snapshot</Btn>{data.snapshot && <a className="btn btn-chip btn-sm" href={`/api/golive/${site.id}/dns/snapshot.zone`}><Download />.zone</a>}</span></li>
-          <li><div><b>Mail records to DNS only</b><small className="muted">mail., smtp., imap., webmail., autodiscover. and MX targets. Cloudflare only proxies web traffic.</small></div>
-            <Btn k="/dns/mail" disabled={!setup.cloudflare} onClick={() => post("/dns/mail", {}, "Mail records checked")}><Mail />Fix mail records</Btn></li>
-          <li><div><b>Create old.{rec.domain}</b><small className="muted">Points at the current host so the outgoing site stays reachable. The old host must answer for it too.</small></div>
-            <Btn k="/dns/old" disabled={!setup.cloudflare || !data.snapshot} onClick={() => post("/dns/old", {}, `old.${rec.domain} created`)}><Globe />Create</Btn></li>
-          <li><div><b>Cut over: A and www only</b><small className="muted">Mail, MX and TXT are left alone.</small></div>
+          <li><div><b>Snapshot the current records</b><small className="muted">Reads the site, www, mail, MX, SPF, DKIM and DMARC records from public DNS: these are the values to put back if you roll back.</small></div>
+            <span className="golive-row"><Btn k="/dns/snapshot" disabled={!rec.domain} onClick={() => post("/dns/snapshot", {}, "Snapshot saved")}><Camera />Snapshot</Btn>{data.snapshot && <a className="btn btn-chip btn-sm" href={`/api/golive/${site.id}/dns/snapshot.txt`}><Download />Download</a>}</span></li>
+          <li><div><b>Mail points straight at the mail server</b><small className="muted">mail. and the MX hosts must be plain A or CNAME records to the mail server, never behind a web proxy (in Cloudflare: “DNS only”). The go-live checks confirm mail apps can connect directly over IMAP and SMTP.</small></div><span /></li>
+          <li><div><b>Add old.{rec.domain || "domain"}</b><small className="muted">At the DNS provider, add <span className="mono">A old → {data.snapshot?.root.find((x) => x.startsWith("A "))?.slice(2) ?? "the current host's IP"}</span>. Then add old.{rec.domain} as an alias or parked domain on the old host so it answers.</small></div><span /></li>
+          <li className="golive-stack"><div><b>Cut over: A and www only</b><small className="muted">At the DNS provider, set <span className="mono">A @ → {ip || "new IP"}</span> and <span className="mono">www → CNAME @</span> (or A {ip || "new IP"}). Remove any other A/AAAA on @ that point at the old host. Leave mail., MX and TXT alone.</small></div>
             <span className="golive-row">
-              <input className="input mono" style={{ width: 150 }} value={ip} onChange={(e) => setIp(e.target.value)} placeholder="New host IP" aria-label="New host IP" />
-              <Btn k="/dns/cutover" kind="btn-accent" disabled={!setup.cloudflare || !data.snapshot || !ip} onClick={() => { if (confirm(`Point ${rec.domain} and www at ${ip}? Visitors start reaching the new host within minutes.`)) void post("/dns/cutover", { confirm: true, newIp: ip }, "Cut over. Now take the staging password off and run the checks."); }}><ArrowRightLeft />Cut over</Btn>
+              <input className="input mono" style={{ width: 150 }} value={ip} onChange={(e) => setIp(e.target.value)} onBlur={() => ip !== rec.hosting.newIp && void save({ hosting: { ...rec.hosting, newIp: ip } }, "New host IP saved")} placeholder="New host IP" aria-label="New host IP" />
+              <Btn k="/dns/mark" kind="btn-accent" disabled={!data.snapshot || !ip} onClick={() => { if (confirm(`Have you changed A ${rec.domain} and www to ${ip} at the DNS provider?`)) void post("/dns/mark", { what: "cutover" }, "Cutover recorded. Take the staging protection off, then verify."); }}><ArrowRightLeft />{rec.dns.cutoverAt ? `Changed ${day(rec.dns.cutoverAt)}` : "I've changed them"}</Btn>
             </span></li>
           <li><div><b>Take staging protection off</b><small className="muted">Removes the HTTP password (a backup of .htaccess is kept) and unticks “Discourage search engines”.</small></div>
-            <Btn k="/live" onClick={() => { if (confirm("Remove the staging password and allow search engines on this WordPress?")) void post("/live", { index: true, removeAuth: true }, "Staging protection removed. Run the checks now."); }}><Rocket />Go live</Btn></li>
-          <li><div><b>If anything fails, roll back</b><small className="muted">Puts the root and www back exactly as the snapshot had them.</small></div>
-            <Btn k="/dns/rollback" disabled={!setup.cloudflare || !data.snapshot} onClick={() => { if (confirm(`Put ${rec.domain} and www back to the old host?`)) void post("/dns/rollback", { confirm: true }, "Rolled back"); }}><Undo2 />Roll back</Btn></li>
+            <Btn k="/live" onClick={() => { if (confirm("Remove the staging password and allow search engines on this WordPress?")) void post("/live", { index: true, removeAuth: true }, "Staging protection removed. Verify DNS and run the checks now."); }}><Rocket />Go live</Btn></li>
+          <li><div><b>Verify</b><small className="muted">Looks the records up in public DNS: the site and www on the new host, old. on the old one, MX unchanged. Changes can take a few minutes to an hour to show.</small></div>
+            <Btn k="/dns/verify" disabled={!rec.domain} onClick={() => post("/dns/verify")}><RefreshCw />Verify DNS</Btn></li>
+          <li><div><b>If anything fails, roll back</b><small className="muted">{data.snapshot ? <>Put back <span className="mono">{[...data.snapshot.root, ...data.snapshot.www.map((w) => `www ${w}`)].join(" · ") || "the snapshot values"}</span> at the DNS provider.</> : "Take a snapshot first: it holds the values to put back."}</small></div>
+            <Btn k="rollback" disabled={!rec.dns.cutoverAt} onClick={() => { if (confirm("Have you put the old records back at the DNS provider?")) void post("/dns/mark", { what: "rollback" }, "Rollback recorded", "rollback"); }}><Undo2 />{rec.dns.rolledBackAt ? `Rolled back ${day(rec.dns.rolledBackAt)}` : "I've rolled back"}</Btn></li>
         </ol>
+        {rec.dns.verify && (
+          <ul className="golive-log">
+            {rec.dns.verify.lines.map((l, i) => <li key={i}>{ico(l.ok === true ? "pass" : l.ok === false ? "fail" : "todo")}<span>{l.text}</span></li>)}
+            <li className="muted">Checked {timeAgo(rec.dns.verify.at)}</li>
+          </ul>
+        )}
         <div className="golive-actions">
           <Btn k="plan" onClick={() => act("plan", async () => setPlan(await fetch(`/api/golive/${site.id}/plan`).then((r) => r.text())))}><FileText />Transfer plan</Btn>
           {plan && <a className="btn btn-chip btn-sm" href={`/api/golive/${site.id}/plan?download=1`}><Download />Download .md</a>}
         </div>
         {plan && <pre className="golive-plan">{plan}</pre>}
-        {rec.cloudflare.log.length > 0 && (
-          <details className="golive-details"><summary>DNS change log ({rec.cloudflare.log.length})</summary>
-            <ul className="golive-log">{rec.cloudflare.log.slice(0, 40).map((l, i) => <li key={i}><span className="muted mono">{l.at.slice(0, 16).replace("T", " ")}</span> {l.text}</li>)}</ul>
+        {rec.dns.log.length > 0 && (
+          <details className="golive-details"><summary>DNS log ({rec.dns.log.length})</summary>
+            <ul className="golive-log">{rec.dns.log.slice(0, 40).map((l, i) => <li key={i}><span className="muted mono">{l.at.slice(0, 16).replace("T", " ")}</span> {l.text}</li>)}</ul>
           </details>
         )}
       </Section>

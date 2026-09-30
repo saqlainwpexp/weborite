@@ -441,9 +441,6 @@ export default function Settings() {
                 <Field label="Agency admin email" icon={<AtSign />} htmlFor="i-admin" hint="Client sites send WordPress admin mail here (update failures, security notices). The go-live kit pins it on every site.">
                   <input id="i-admin" className="input" type="email" placeholder="wpadmin@your-agency.com" value={v("agencyAdminEmail")} onChange={set("agencyAdminEmail")} />
                 </Field>
-                <Field label="Cloudflare API token" icon={<KeyRound />} htmlFor="i-cf" hint={<>Create one under My Profile → API Tokens with Zone → Zone → Read and Zone → DNS → Edit, for the client zones. Used for snapshots, mail records, old. and cutover.</>}>
-                  <input id="i-cf" className="input mono" type="password" placeholder={settings.cloudflareTokenSet ? "•••••••• saved" : "Paste the token"} value={draft.cloudflareToken ?? ""} onChange={set("cloudflareToken")} autoComplete="off" />
-                </Field>
               </div>
             </Section>
             <Section icon={<Mail />} title="QA inbox (email delivery test)">

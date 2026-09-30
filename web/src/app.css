@@ -1250,6 +1250,8 @@ small.warn, span.warn, .warn { color: var(--amber); }
 .golive-steps li::before { content: counter(gl); width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 600; background: var(--hairline); color: var(--muted); }
 .golive-steps b { font-weight: 500; display: block; font-size: 15px; }
 .golive-steps small { display: block; font-size: 13px; }
+.golive-steps li.golive-stack { grid-template-columns: 28px minmax(0, 1fr); }
+.golive-steps li.golive-stack > :last-child { grid-column: 2; }
 .golive-plan { white-space: pre-wrap; font-size: 12.5px; line-height: 1.5; max-height: 420px; overflow: auto; padding: 14px; border-radius: 10px; background: var(--hairline); margin: 0; }
 .golive-details summary { cursor: pointer; font-size: 14px; color: var(--muted); margin-bottom: 8px; }
 .golive-redirects td { vertical-align: top; }

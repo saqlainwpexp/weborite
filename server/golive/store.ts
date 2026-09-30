@@ -23,7 +23,7 @@ export function blankRecord(s: SeoSite): GoLiveRecord {
     human: {},
     restoreTest: null,
     gsc: { verifiedAt: "", sitemapSubmittedAt: "", note: "" },
-    cloudflare: { zoneId: "", zoneName: "", snapshotAt: "", cutoverAt: "", rolledBackAt: "", log: [] },
+    dns: { snapshotAt: "", cutoverAt: "", rolledBackAt: "", verify: null, log: [] },
     redirects: [],
     redirectsPushedAt: "",
     mailTest: null,
@@ -40,7 +40,7 @@ export function blankRecord(s: SeoSite): GoLiveRecord {
 export function readRecord(s: SeoSite): GoLiveRecord {
   const blank = blankRecord(s);
   const r = readResult<Partial<GoLiveRecord>>(s.id, "golive") ?? {};
-  return { ...blank, ...r, hosting: { ...blank.hosting, ...r.hosting }, domainInfo: { ...blank.domainInfo, ...r.domainInfo }, gsc: { ...blank.gsc, ...r.gsc }, cloudflare: { ...blank.cloudflare, ...r.cloudflare }, smtp: { ...blank.smtp, ...r.smtp } };
+  return { ...blank, ...r, hosting: { ...blank.hosting, ...r.hosting }, domainInfo: { ...blank.domainInfo, ...r.domainInfo }, gsc: { ...blank.gsc, ...r.gsc }, dns: { ...blank.dns, ...r.dns }, smtp: { ...blank.smtp, ...r.smtp } };
 }
 
 export function writeRecord(siteId: string, r: GoLiveRecord) {
@@ -49,5 +49,5 @@ export function writeRecord(siteId: string, r: GoLiveRecord) {
 
 export function logDns(r: GoLiveRecord, lines: string[]) {
   const at = new Date().toISOString();
-  r.cloudflare.log = [...lines.map((text) => ({ at, text })), ...r.cloudflare.log].slice(0, 200);
+  r.dns.log = [...lines.map((text) => ({ at, text })), ...r.dns.log].slice(0, 200);
 }
