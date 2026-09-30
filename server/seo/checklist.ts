@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { getSettings } from "../db.ts";
-import type { ChecklistItem, OnPageResult, PerfResult, QaResult, SeoSite } from "../../shared/types.ts";
+import type { ChecklistItem, GoLiveRecord, OnPageResult, PerfResult, QaResult, SeoSite } from "../../shared/types.ts";
+import { HUMAN_CHECKS } from "../golive/store.ts";
 import { readResult, writeResult } from "./store.ts";
 
 /** pass: null = measured but still waiting on you (e.g. forms not tested yet). */
@@ -57,6 +58,16 @@ export function buildChecklist(site: SeoSite): ChecklistItem[] {
     const override = manual[r.id];
     return { id: r.id, label: r.label, group: r.group, auto: true, status: override === "done" ? "done" : res && res.pass !== null ? (res.pass ? "pass" : "fail") : "todo", detail: res?.detail ?? "Run the audit to check this" };
   });
+  // Go-live: every measured check (info-only rows left out), then the checks only a person can judge.
+  const golive = readResult<GoLiveRecord>(site.id, "golive");
+  for (const c of golive?.checks ?? []) {
+    if (c.status === "info") continue;
+    const id = `g-${c.id}`;
+    items.push({ id, label: c.label, group: `Go-live: ${c.group}`, auto: true, status: manual[id] === "done" ? "done" : c.status === "pass" ? "pass" : c.status === "fail" ? "fail" : "todo", detail: c.detail });
+  }
+  for (const h of HUMAN_CHECKS) {
+    items.push({ id: `h-${h.id}`, label: h.label, group: "Go-live: people check", auto: false, status: golive?.human?.[h.id]?.done ? "done" : "todo", detail: h.hint });
+  }
   for (const c of getSettings().seoChecklist) {
     const id = customId(c.label);
     items.push({ id, label: c.label, group: c.group || "Custom", auto: false, status: manual[id] === "done" ? "done" : "todo" });
@@ -65,6 +76,14 @@ export function buildChecklist(site: SeoSite): ChecklistItem[] {
 }
 
 export function setChecklistItem(siteId: string, itemId: string, status: "done" | "todo") {
+  if (itemId.startsWith("h-")) {
+    const rec = readResult<GoLiveRecord>(siteId, "golive");
+    if (rec) {
+      rec.human = { ...rec.human, [itemId.slice(2)]: { done: status === "done", at: new Date().toISOString(), note: rec.human?.[itemId.slice(2)]?.note ?? "" } };
+      writeResult(siteId, "golive", rec);
+      return;
+    }
+  }
   const manual = readResult<Record<string, "done" | "todo">>(siteId, "checklist") ?? {};
   if (status === "todo") delete manual[itemId];
   else manual[itemId] = status;

@@ -1221,3 +1221,41 @@ small.warn, span.warn, .warn { color: var(--amber); }
 .limit-left { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 16px; font-size: 13.5px; color: var(--text-2); }
 .limit-left b { color: var(--text); }
 .plan-card > .btn { justify-self: start; }
+
+/* ---------- Launch & SEO → Go-live ---------- */
+.golive-card { display: flex; flex-direction: column; gap: 14px; }
+.golive-head { display: flex; gap: 12px; align-items: flex-start; }
+.golive-head > svg { width: 20px; height: 20px; margin-top: 7px; color: var(--accent); flex: none; }
+.golive-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px 16px; }
+.golive-field { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--muted); }
+.golive-field.wide { grid-column: 1 / -1; }
+.golive-field .input { color: var(--ink); }
+.golive-check { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.4; cursor: pointer; }
+.golive-check input { margin-top: 3px; accent-color: var(--accent); }
+.golive-check b { font-weight: 500; display: block; }
+.golive-check small { display: block; font-size: 13px; }
+.golive-kit { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px 20px; padding: 14px 0; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+.golive-actions, .golive-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.golive-note { font-size: 13px; }
+.golive-toggle { font-size: 13px; color: var(--muted); }
+.golive-facts { margin-top: 0; }
+.golive-facts .field { grid-template-columns: 120px minmax(0, 1fr); }
+.golive-log { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; font-size: 13px; }
+.golive-log li { display: flex; gap: 8px; align-items: flex-start; }
+.golive-log svg { width: 16px; height: 16px; flex: none; margin-top: 1px; }
+.golive-result { display: flex; gap: 8px; align-items: flex-start; font-size: 14px; margin: 0; padding: 10px 12px; border-radius: 10px; background: var(--hairline); }
+.golive-result svg { width: 18px; height: 18px; flex: none; margin-top: 1px; }
+.golive-steps { list-style: none; margin: 0; padding: 0; counter-reset: gl; }
+.golive-steps li { counter-increment: gl; display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px 0; border-top: 1px solid var(--hairline); }
+.golive-steps li::before { content: counter(gl); width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 600; background: var(--hairline); color: var(--muted); }
+.golive-steps b { font-weight: 500; display: block; font-size: 15px; }
+.golive-steps small { display: block; font-size: 13px; }
+.golive-plan { white-space: pre-wrap; font-size: 12.5px; line-height: 1.5; max-height: 420px; overflow: auto; padding: 14px; border-radius: 10px; background: var(--hairline); margin: 0; }
+.golive-details summary { cursor: pointer; font-size: 14px; color: var(--muted); margin-bottom: 8px; }
+.golive-redirects td { vertical-align: top; }
+.golive-redirects td small { display: block; font-family: inherit; font-size: 12px; margin-top: 2px; }
+.golive-redirects .input { min-width: 180px; }
+@media (max-width: 640px) {
+  .golive-steps li { grid-template-columns: 28px minmax(0, 1fr); }
+  .golive-steps li > :last-child { grid-column: 2; }
+}

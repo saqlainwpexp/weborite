@@ -33,6 +33,8 @@ define( 'STUDIO_PREVIEW_TOKEN', '${previewToken}' );
 require_once __DIR__ . '/care.php';
 // WooCommerce store setup and product import (woo.php).
 require_once __DIR__ . '/woo.php';
+// Go-live kit: plugins, SMTP, security, redirects, forms, cutover (golive.php).
+require_once __DIR__ . '/golive.php';
 
 /* ---------- REST API ---------- */
 
@@ -54,6 +56,7 @@ add_action( 'rest_api_init', function () {
 				'seo_plugin' => studio_seo_plugin(),
 				'care'      => STUDIO_CARE_VERSION,
 				'woo'       => STUDIO_WOO_VERSION,
+				'golive'    => STUDIO_GOLIVE_VERSION,
 				'woocommerce' => class_exists( 'WooCommerce' ) ? WC()->version : '',
 			);
 		},
@@ -346,25 +349,68 @@ add_action( 'wp_head', function () {
 			echo '<meta name="description" content="' . esc_attr( $desc ) . '">' . "\\n";
 		}
 	}
-	$blocks = array();
-	$site   = get_option( 'studio_schema_site' );
-	if ( $site ) {
-		$blocks[] = $site;
+	// With an SEO plugin, the studio's schema joins that plugin's graph (below) instead of a second script tag.
+	if ( studio_seo_plugin() ) {
+		return;
 	}
-	if ( is_singular() ) {
-		$page = get_post_meta( get_queried_object_id(), '_studio_schema', true );
-		if ( $page ) {
-			$blocks[] = $page;
-		}
-	}
-	foreach ( $blocks as $json ) {
+	foreach ( studio_schema_nodes() as $data ) {
 		// Re-encode so nothing in stored data can break out of the script tag.
-		$data = json_decode( $json, true );
-		if ( $data ) {
-			echo '<script type="application/ld+json">' . wp_json_encode( $data, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG ) . '</script>' . "\\n";
-		}
+		echo '<script type="application/ld+json">' . wp_json_encode( array( '@context' => 'https://schema.org' ) + $data, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG ) . '</script>' . "\\n";
 	}
 }, 2 );
+
+/** The studio's schema for this request (site-wide + this page), as graph nodes without @context. */
+function studio_schema_nodes() {
+	$nodes = array();
+	$raw   = array( get_option( 'studio_schema_site' ) );
+	if ( is_singular() ) {
+		$raw[] = get_post_meta( get_queried_object_id(), '_studio_schema', true );
+	}
+	foreach ( array_filter( $raw ) as $json ) {
+		$data = json_decode( $json, true );
+		if ( ! is_array( $data ) ) {
+			continue;
+		}
+		foreach ( isset( $data['@graph'] ) && is_array( $data['@graph'] ) ? $data['@graph'] : array( $data ) as $node ) {
+			if ( is_array( $node ) ) {
+				unset( $node['@context'] );
+				$nodes[] = $node;
+			}
+		}
+	}
+	return $nodes;
+}
+
+// One source of structured data: hand the studio's nodes to Rank Math / Yoast, which print a single graph.
+/** Our nodes whose @type the SEO plugin's graph doesn't already have (it prints its own WebPage, WebSite, breadcrumbs). */
+function studio_schema_missing( $graph ) {
+	$have = array();
+	foreach ( (array) $graph as $piece ) {
+		if ( is_array( $piece ) && isset( $piece['@type'] ) ) {
+			foreach ( (array) $piece['@type'] as $t ) {
+				$have[ strtolower( (string) $t ) ] = true;
+			}
+		}
+	}
+	return array_values( array_filter( studio_schema_nodes(), function ( $node ) use ( $have ) {
+		foreach ( (array) ( $node['@type'] ?? array() ) as $t ) {
+			if ( isset( $have[ strtolower( (string) $t ) ] ) ) {
+				return false;
+			}
+		}
+		return true;
+	} ) );
+}
+add_filter( 'rank_math/json_ld', function ( $data ) {
+	foreach ( studio_schema_missing( $data ) as $i => $node ) {
+		$data[ 'studio_' . $i ] = $node;
+	}
+	return $data;
+}, 99 );
+add_filter( 'wpseo_schema_graph', function ( $pieces ) {
+	$pieces = is_array( $pieces ) ? $pieces : array();
+	return array_merge( $pieces, studio_schema_missing( $pieces ) );
+}, 99 );
 `;
 }
 
@@ -394,6 +440,7 @@ export async function buildPluginZip(out: string, opts: { version: number; previ
     zip.append(mainPhp(opts.version, opts.previewToken, opts.widgets), { name: "studio-connector/studio-connector.php" });
     zip.append(readFileSync(join(PHP_DIR, "care.php")), { name: "studio-connector/care.php" });
     zip.append(readFileSync(join(PHP_DIR, "woo.php")), { name: "studio-connector/woo.php" });
+    zip.append(readFileSync(join(PHP_DIR, "golive.php")), { name: "studio-connector/golive.php" });
     zip.append(readFileSync(join(PHP_DIR, "staging-mu.php")), { name: "studio-connector/staging/guard.php" });
     for (const w of opts.widgets) zip.append(widgetPhp(w, w.php), { name: `studio-connector/widgets/${w.name}.php` });
     zip.append(`Studio Connector ${opts.version}\n\nUpload this zip under Plugins → Add New → Upload Plugin, then activate it.\nCreate an Application Password under Users → Profile and paste it into the dashboard.\n`, { name: "studio-connector/readme.txt" });

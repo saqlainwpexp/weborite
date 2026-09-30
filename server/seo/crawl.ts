@@ -12,8 +12,8 @@ async function fetchText(url: string) {
   }
 }
 
-/** Page URLs from sitemap.xml / wp-sitemap.xml (follows sitemap indexes one level). */
-async function fromSitemap(origin: string) {
+/** Page URLs from sitemap.xml / wp-sitemap.xml (follows sitemap indexes one level). `all` keeps posts and archives too. */
+export async function fromSitemap(origin: string, all = false) {
   const urls = new Set<string>();
   for (const path of ["/sitemap.xml", "/wp-sitemap.xml", "/sitemap_index.xml"]) {
     const xml = await fetchText(origin + path);
@@ -22,7 +22,7 @@ async function fromSitemap(origin: string) {
     for (const loc of locs) {
       if (/sitemap[^/]*\.xml/i.test(loc)) {
         // Skip post/taxonomy/user sitemaps; keep pages.
-        if (/users|tags?|categor|author|taxonom/i.test(loc)) continue;
+        if (!all && /users|tags?|categor|author|taxonom/i.test(loc)) continue;
         const sub = await fetchText(loc);
         for (const m of sub.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)) urls.add(m[1].replace(/&amp;/g, "&"));
       } else urls.add(loc);
@@ -30,6 +30,17 @@ async function fromSitemap(origin: string) {
     if (urls.size) break;
   }
   return [...urls].filter((u) => u.startsWith(origin) && !SKIP.test(u));
+}
+
+/** Archive URLs (categories, tags, other taxonomies) from the WordPress sitemap: the page crawl leaves these out. */
+export async function archiveUrls(origin: string, max = 6) {
+  const index = (await fetchText(origin + "/wp-sitemap.xml")) + (await fetchText(origin + "/sitemap_index.xml"));
+  const subs = [...index.matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)].map((m) => m[1]).filter((l) => /taxonomies|categor|tags?-sitemap|post_tag/i.test(l));
+  const out: string[] = [];
+  for (const sub of subs) {
+    for (const m of (await fetchText(sub)).matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)) if (out.length < max) out.push(m[1].replace(/&amp;/g, "&"));
+  }
+  return out;
 }
 
 /** Discover the site's pages: sitemap first, otherwise follow internal links from the homepage. */

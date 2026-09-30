@@ -13,7 +13,7 @@ import { CLOUD_ROUTINE_PROMPT } from "../../../shared/cloudPrompt";
 import { PlanLicense } from "../components/PlanLicense";
 import { BRAND_PRESETS, DEFAULT_BRAND, applyBrand, brandPalette, isHex } from "../lib/brand";
 
-type Draft = Partial<S> & { apiKey?: string; metaPageToken?: string; metaAppSecret?: string; psiKey?: string; gtmetrixKey?: string; cloudTriggerToken?: string; githubToken?: string };
+type Draft = Partial<S> & { apiKey?: string; metaPageToken?: string; metaAppSecret?: string; psiKey?: string; gtmetrixKey?: string; cloudTriggerToken?: string; githubToken?: string; cloudflareToken?: string; qaImapPassword?: string };
 
 const TABS = [
   { key: "profile", label: "Profile" },
@@ -433,6 +433,33 @@ export default function Settings() {
               <div className="set-grid">
                 <Field label="QA email address" icon={<AtSign />} htmlFor="i-qa" hint="Form tests submit this address so the confirmation lands with you. Defaults to your profile email.">
                   <input id="i-qa" className="input" type="email" placeholder={settings.userEmail || "you@agency.com"} value={v("qaEmail")} onChange={set("qaEmail")} />
+                </Field>
+              </div>
+            </Section>
+            <Section icon={<ShieldCheck />} title="Go-live">
+              <div className="set-grid">
+                <Field label="Agency admin email" icon={<AtSign />} htmlFor="i-admin" hint="Client sites send WordPress admin mail here (update failures, security notices). The go-live kit pins it on every site.">
+                  <input id="i-admin" className="input" type="email" placeholder="wpadmin@your-agency.com" value={v("agencyAdminEmail")} onChange={set("agencyAdminEmail")} />
+                </Field>
+                <Field label="Cloudflare API token" icon={<KeyRound />} htmlFor="i-cf" hint={<>Create one under My Profile → API Tokens with Zone → Zone → Read and Zone → DNS → Edit, for the client zones. Used for snapshots, mail records, old. and cutover.</>}>
+                  <input id="i-cf" className="input mono" type="password" placeholder={settings.cloudflareTokenSet ? "•••••••• saved" : "Paste the token"} value={draft.cloudflareToken ?? ""} onChange={set("cloudflareToken")} autoComplete="off" />
+                </Field>
+              </div>
+            </Section>
+            <Section icon={<Mail />} title="QA inbox (email delivery test)">
+              <p className="muted" style={{ fontSize: 14, marginBottom: 14 }}>An outside mailbox (Gmail, Outlook) on a different server from your client sites. The delivery test sends mail through the client's site to this address and reads the headers here, so SPF and DKIM face a real check. For Gmail, turn on IMAP and use an app password.</p>
+              <div className="set-grid">
+                <Field label="IMAP server" icon={<Globe />} htmlFor="i-imap">
+                  <input id="i-imap" className="input mono" placeholder="imap.gmail.com" value={v("qaImapHost")} onChange={set("qaImapHost")} />
+                </Field>
+                <Field label="Port (TLS)" icon={<Hash />} htmlFor="i-imap-port">
+                  <input id="i-imap-port" className="input" type="number" min={1} max={65535} value={String(v("qaImapPort") || 993)} onChange={(e) => setDraft({ ...draft, qaImapPort: Number(e.target.value) })} />
+                </Field>
+                <Field label="Email address" icon={<AtSign />} htmlFor="i-imap-user">
+                  <input id="i-imap-user" className="input" type="email" placeholder="agency.qa@gmail.com" value={v("qaImapUser")} onChange={set("qaImapUser")} autoComplete="off" />
+                </Field>
+                <Field label="App password" icon={<KeyRound />} htmlFor="i-imap-pass">
+                  <input id="i-imap-pass" className="input mono" type="password" placeholder={settings.qaImapPasswordSet ? "•••••••• saved" : "16-character app password"} value={draft.qaImapPassword ?? ""} onChange={set("qaImapPassword")} autoComplete="new-password" />
                 </Field>
               </div>
             </Section>

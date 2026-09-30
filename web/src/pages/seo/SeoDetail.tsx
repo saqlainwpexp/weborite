@@ -7,8 +7,9 @@ import type { ChecklistItem, OnPageResult, PerfMetrics, PerfResult, QaResult, Se
 import type { LayoutCtx } from "../../layout/Layout";
 import { api, host, timeAgo, usePoll } from "../../lib/api";
 import { phaseState } from "./SeoList";
+import SeoGoLive from "./SeoGoLive";
 
-type Tab = "qa" | "perf" | "onpage" | "checklist";
+type Tab = "qa" | "perf" | "onpage" | "checklist" | "golive";
 type Results = { qa: QaResult | null; perf: PerfResult | null; onpage: OnPageResult | null; checklist: ChecklistItem[] };
 
 const kb = (b: number | null | undefined) => (b == null ? "–" : b > 1_000_000 ? `${(b / 1_048_576).toFixed(1)} MB` : `${Math.round(b / 1024)} KB`);
@@ -93,6 +94,7 @@ export default function SeoDetail() {
     { key: "perf", label: "2 · Performance", icon: s.runs.perf?.status === "done" ? <CheckCircle2 className="ok" /> : null },
     { key: "onpage", label: "3 · On-page SEO", icon: !s.qaSignedOff ? <Lock className="muted" /> : s.runs.fixes?.status === "done" ? <CheckCircle2 className="ok" /> : null },
     { key: "checklist", label: `4 · Checklist${failing ? ` (${failing})` : ""}`, icon: null },
+    { key: "golive", label: "5 · Go-live", icon: null },
   ];
   const canApply = s.qaSignedOff && s.connected?.ok;
 
@@ -380,6 +382,8 @@ export default function SeoDetail() {
               </div>
             </>
           )}
+
+          {tab === "golive" && <SeoGoLive site={s} />}
 
           {/* ---------- Checklist ---------- */}
           {tab === "checklist" && (

@@ -149,6 +149,13 @@ export interface Settings {
   psiKeySet: boolean;
   gtmetrixKeySet: boolean;
   qaEmail: string;
+  /** Go-live: the agency's own address for WordPress admin mail, Cloudflare API token, and an IMAP inbox the delivery test reads */
+  agencyAdminEmail: string;
+  cloudflareTokenSet: boolean;
+  qaImapHost: string;
+  qaImapPort: number;
+  qaImapUser: string;
+  qaImapPasswordSet: boolean;
   seoChecklist: { label: string; group: string }[];
   avatarFile: string;
   /** Maintenance */
@@ -901,4 +908,88 @@ export interface CareHardening {
   settings: { key: string; label: string; ok: boolean }[];
   xmlrpc_off: boolean;
   notes: string[];
+}
+
+/* ---------- Go-live (Launch & SEO → Go-live) ---------- */
+
+export type GoLiveStatus = "pass" | "fail" | "warn" | "todo" | "info";
+
+export interface GoLiveCheck {
+  id: string;
+  group: "Security" | "SEO" | "Privacy" | "Hosting & DNS" | "Email" | "Redirects" | "Backups";
+  label: string;
+  status: GoLiveStatus;
+  detail: string;
+}
+
+export interface GoLiveWpStatus {
+  version: number;
+  server: string;
+  litespeed: boolean;
+  apache: boolean;
+  is_admin: boolean;
+  jobs: Record<"seo" | "forms" | "cache" | "backup" | "smtp" | "security" | "captcha", string[]>;
+  seo_plugin: string;
+  updraft: { active: boolean; remote: string[]; files: string; db: string; last: { at: string; success: boolean; errors: number; parts: string[] } | null };
+  smtp: { active: boolean; connections: { from: string; provider: string; host: string; default: boolean }[] };
+  admin_email: string;
+  user_email: string;
+  user_login: string;
+  form_recipient: string;
+  blog_public: boolean;
+  site_icon: { url: string; width: number; height: number } | null;
+  webp: { rules: boolean; uploads: boolean; server_can: boolean };
+  security_rules: boolean;
+  mu: { security: boolean; admin: boolean };
+  llms: boolean;
+  redirects: number;
+  http_auth: boolean;
+  htaccess: { exists: boolean; writable: boolean };
+  theme: { name: string; stylesheet: string };
+  elementor: string;
+  elementor_pro: boolean;
+  home: string;
+}
+
+export interface DnsRecordLite { id?: string; type: string; name: string; content: string; proxied?: boolean; ttl?: number; priority?: number }
+
+export interface GoLiveMailTest {
+  at: string;
+  token: string;
+  to: string;
+  sent: boolean;
+  mailer: string;
+  error: string;
+  received: boolean | null;   // null = no QA inbox to read
+  spf: string;                // pass / fail / softfail / neutral / none / ""
+  dkim: string;
+  dmarc: string;
+  from: string;
+  detail: string;
+}
+
+export interface GoLiveRedirect { from: string; to: string; status?: number | string; note?: string }
+
+export interface GoLiveRecord {
+  /** Old site being replaced (its URLs get 301s) and the live domain at cutover */
+  oldSiteUrl: string;
+  domain: string;
+  /** Hosting: the account must be the client's own */
+  hosting: { provider: string; account: string; clientOwns: boolean; newIp: string; notes: string };
+  track: "" | "A" | "B";      // A = the studio's Elementor build, B = existing theme/builder kept
+  domainInfo: { registrar: string; expires: string; tld: string; transfer: "" | "not-needed" | "ips-tag" | "auth-code"; ipsTag: string; authCodeReceived: boolean; notes: string };
+  human: Record<string, { done: boolean; at: string; note: string }>;
+  restoreTest: { at: string; note: string } | null;
+  gsc: { verifiedAt: string; sitemapSubmittedAt: string; note: string };
+  cloudflare: { zoneId: string; zoneName: string; snapshotAt: string; cutoverAt: string; rolledBackAt: string; log: { at: string; text: string }[] };
+  redirects: GoLiveRedirect[];
+  redirectsPushedAt: string;
+  mailTest: GoLiveMailTest | null;
+  smtp: { host: string; port: number; encryption: "ssl" | "tls" | "none"; username: string; from: string; savedAt: string };
+  wp: GoLiveWpStatus | null;
+  wpCheckedAt: string;
+  kitLog: { at: string; steps: { id: string; ok: boolean; note: string }[] } | null;
+  checks: GoLiveCheck[];
+  checkedAt: string;
+  liveAt: string;
 }
