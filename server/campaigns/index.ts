@@ -23,7 +23,7 @@ function mockupStatus(leadStatus: string | undefined): CampaignItem["mockupStatu
 }
 
 /** Create a mockup lead from a scraped prospect (mirrors the Lead Finder "Create mockup" action). */
-function mockupFromProspect(p: Prospect): CampaignItem {
+export function mockupFromProspect(p: Prospect): CampaignItem {
   const scratch = !p.website || Boolean(p.fit?.audit?.socialOnly);
   const fields: Record<string, string> = scratch
     ? { Business: p.name, "Google Maps": p.mapsUrl, Website: p.website || "None" }

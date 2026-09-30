@@ -16,7 +16,7 @@ import { createSite, deleteSiteRow, getSite, listSites, readResult, saveSite, se
 
 /* ---------- auth + plugin (a linked WordPress conversion shares its connector) ---------- */
 
-function siteAuth(s: SeoSite): WpAuth {
+export function siteAuth(s: SeoSite): WpAuth {
   if (s.conversionId) {
     const c = getConversion(s.conversionId);
     if (c) return { siteUrl: c.siteUrl, user: c.wpUser, appPassword: getSecrets(c.id).secret };

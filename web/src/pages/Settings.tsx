@@ -13,7 +13,7 @@ import { CLOUD_ROUTINE_PROMPT } from "../../../shared/cloudPrompt";
 import { PlanLicense } from "../components/PlanLicense";
 import { BRAND_PRESETS, DEFAULT_BRAND, applyBrand, brandPalette, isHex } from "../lib/brand";
 
-type Draft = Partial<S> & { apiKey?: string; metaPageToken?: string; metaAppSecret?: string; psiKey?: string; gtmetrixKey?: string; cloudTriggerToken?: string; githubToken?: string };
+type Draft = Partial<S> & { apiKey?: string; metaPageToken?: string; metaAppSecret?: string; psiKey?: string; gtmetrixKey?: string; cloudTriggerToken?: string; githubToken?: string; qaImapPassword?: string; outreachSmtpPassword?: string };
 
 const TABS = [
   { key: "profile", label: "Profile" },
@@ -167,6 +167,25 @@ function BrandColorField({ value, onChange }: { value: string; onChange: (hex: s
 }
 
 /* ---------- page ---------- */
+
+function OutreachTest({ path = "/api/automations/outreach/test", label = "Test the mailbox" }: { path?: string; label?: string }) {
+  const [state, setState] = useState<{ busy: boolean; ok?: boolean; text?: string }>({ busy: false });
+  return (
+    <div style={{ display: "flex", gap: 12, alignItems: "center", marginTop: 14, flexWrap: "wrap" }}>
+      <button type="button" className="btn btn-white btn-sm" disabled={state.busy} onClick={async () => {
+        setState({ busy: true });
+        try {
+          const r = await api<{ ok: boolean; detail: string }>(path, { method: "POST" });
+          setState({ busy: false, ok: r.ok, text: r.detail });
+        } catch (e) {
+          setState({ busy: false, ok: false, text: (e as Error).message });
+        }
+      }}><Mail />{label}</button>
+      <span className="muted" style={{ fontSize: 13 }}>Save first, then test: it connects and logs in without sending or changing anything.</span>
+      {state.text && <span style={{ fontSize: 14, color: state.ok ? "#2f7a4f" : "#b03a3a" }}>{state.text}</span>}
+    </div>
+  );
+}
 
 export default function Settings() {
   const { tab = "profile" } = useParams();
@@ -433,6 +452,75 @@ export default function Settings() {
               <div className="set-grid">
                 <Field label="QA email address" icon={<AtSign />} htmlFor="i-qa" hint="Form tests submit this address so the confirmation lands with you. Defaults to your profile email.">
                   <input id="i-qa" className="input" type="email" placeholder={settings.userEmail || "you@agency.com"} value={v("qaEmail")} onChange={set("qaEmail")} />
+                </Field>
+              </div>
+            </Section>
+            <Section icon={<ShieldCheck />} title="Go-live">
+              <div className="set-grid">
+                <Field label="Agency admin email" icon={<AtSign />} htmlFor="i-admin" hint="Client sites send WordPress admin mail here (update failures, security notices). The go-live kit pins it on every site.">
+                  <input id="i-admin" className="input" type="email" placeholder="wpadmin@your-agency.com" value={v("agencyAdminEmail")} onChange={set("agencyAdminEmail")} />
+                </Field>
+              </div>
+            </Section>
+            <Section icon={<Megaphone />} title="Outreach email (automations)">
+              <p className="muted" style={{ fontSize: 14, marginBottom: 14 }}>The mailbox workflows send from, over a direct SMTP connection. Use a mailbox on your own domain (not Gmail's free limits), with SPF and DKIM set up, and warm it up with a low daily limit.</p>
+              <div className="set-grid">
+                <Field label="From name" icon={<User />} htmlFor="o-name">
+                  <input id="o-name" className="input" placeholder={settings.userName || "Your name"} value={v("outreachFromName")} onChange={set("outreachFromName")} />
+                </Field>
+                <Field label="From address" icon={<AtSign />} htmlFor="o-from">
+                  <input id="o-from" className="input" type="email" placeholder="you@your-agency.com" value={v("outreachFromEmail")} onChange={set("outreachFromEmail")} />
+                </Field>
+                <Field label="SMTP server" icon={<Globe />} htmlFor="o-host">
+                  <input id="o-host" className="input mono" placeholder="smtp.your-host.com" value={v("outreachSmtpHost")} onChange={set("outreachSmtpHost")} />
+                </Field>
+                <Field label="Port and security" icon={<ShieldCheck />} htmlFor="o-port">
+                  <select id="o-port" className="input" value={`${v("outreachSmtpPort") || 465}/${v("outreachSmtpSecurity") || "ssl"}`} onChange={(e) => { const [port, sec] = e.target.value.split("/"); setDraft({ ...draft, outreachSmtpPort: Number(port), outreachSmtpSecurity: sec as S["outreachSmtpSecurity"] }); }}>
+                    <option value="465/ssl">465 · SSL</option>
+                    <option value="587/tls">587 · STARTTLS</option>
+                    <option value="25/none">25 · none</option>
+                  </select>
+                </Field>
+                <Field label="Username" icon={<User />} htmlFor="o-user" hint="Usually the from address">
+                  <input id="o-user" className="input" placeholder={v("outreachFromEmail") || "you@your-agency.com"} value={v("outreachSmtpUser")} onChange={set("outreachSmtpUser")} autoComplete="off" />
+                </Field>
+                <Field label="Password" icon={<KeyRound />} htmlFor="o-pass">
+                  <input id="o-pass" className="input mono" type="password" placeholder={settings.outreachSmtpPasswordSet ? "•••••••• saved" : "Mailbox or app password"} value={draft.outreachSmtpPassword ?? ""} onChange={set("outreachSmtpPassword")} autoComplete="new-password" />
+                </Field>
+                <Field label="Emails per day" icon={<Hash />} htmlFor="o-cap" hint="Across every workflow. Start around 30–40 for a new mailbox. Emails go out 45 seconds apart.">
+                  <input id="o-cap" className="input" type="number" min={1} max={500} value={String(v("outreachDailyCap") || 40)} onChange={(e) => setDraft({ ...draft, outreachDailyCap: Number(e.target.value) })} />
+                </Field>
+                <Field label="Footer on every email" icon={<FileText />} htmlFor="o-foot" hint="An easy way to opt out keeps you on the right side of spam rules (and spam filters).">
+                  <input id="o-foot" className="input" value={v("outreachFooter")} onChange={set("outreachFooter")} />
+                </Field>
+              </div>
+              <OutreachTest />
+              <h4 className="set-sub" style={{ margin: "22px 0 6px", fontSize: 15, fontWeight: 600 }}>Replies inbox</h4>
+              <p className="muted" style={{ fontSize: 14, marginBottom: 14 }}>The app reads this inbox every few minutes. When a business writes back, from the address you emailed or another address at their business, every workflow stops for them and they get the label “replied”. Out-of-office replies and bounces don't count. It only reads headers and never marks mail as read. It uses the login above.</p>
+              <div className="set-grid">
+                <Field label="IMAP server" icon={<Globe />} htmlFor="o-imap" hint="Usually imap. or mail. followed by your domain">
+                  <input id="o-imap" className="input mono" placeholder={String(v("outreachSmtpHost") || "").replace(/^smtp\./, "imap.") || "imap.your-host.com"} value={v("outreachImapHost")} onChange={set("outreachImapHost")} />
+                </Field>
+                <Field label="Port (TLS)" icon={<Hash />} htmlFor="o-imap-port">
+                  <input id="o-imap-port" className="input" type="number" min={1} max={65535} value={String(v("outreachImapPort") || 993)} onChange={(e) => setDraft({ ...draft, outreachImapPort: Number(e.target.value) })} />
+                </Field>
+              </div>
+              <OutreachTest path="/api/automations/replies/test" label="Test the replies inbox" />
+            </Section>
+            <Section icon={<Mail />} title="QA inbox (email delivery test)">
+              <p className="muted" style={{ fontSize: 14, marginBottom: 14 }}>An outside mailbox (Gmail, Outlook) on a different server from your client sites. The delivery test sends mail through the client's site to this address and reads the headers here, so SPF and DKIM face a real check. For Gmail, turn on IMAP and use an app password.</p>
+              <div className="set-grid">
+                <Field label="IMAP server" icon={<Globe />} htmlFor="i-imap">
+                  <input id="i-imap" className="input mono" placeholder="imap.gmail.com" value={v("qaImapHost")} onChange={set("qaImapHost")} />
+                </Field>
+                <Field label="Port (TLS)" icon={<Hash />} htmlFor="i-imap-port">
+                  <input id="i-imap-port" className="input" type="number" min={1} max={65535} value={String(v("qaImapPort") || 993)} onChange={(e) => setDraft({ ...draft, qaImapPort: Number(e.target.value) })} />
+                </Field>
+                <Field label="Email address" icon={<AtSign />} htmlFor="i-imap-user">
+                  <input id="i-imap-user" className="input" type="email" placeholder="agency.qa@gmail.com" value={v("qaImapUser")} onChange={set("qaImapUser")} autoComplete="off" />
+                </Field>
+                <Field label="App password" icon={<KeyRound />} htmlFor="i-imap-pass">
+                  <input id="i-imap-pass" className="input mono" type="password" placeholder={settings.qaImapPasswordSet ? "•••••••• saved" : "16-character app password"} value={draft.qaImapPassword ?? ""} onChange={set("qaImapPassword")} autoComplete="new-password" />
                 </Field>
               </div>
             </Section>

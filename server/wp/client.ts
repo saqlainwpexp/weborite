@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { basename, extname } from "node:path";
 
-import type { WooStatus } from "../../shared/types.ts";
+import type { GoLiveWpStatus, WooStatus } from "../../shared/types.ts";
 
 export interface WpAuth {
   siteUrl: string;
@@ -47,7 +47,7 @@ async function call<T>(auth: WpAuth, path: string, init: RequestInit & { timeout
 }
 
 export function ping(auth: WpAuth) {
-  return call<{ plugin: string; elementor: string; pro: boolean; widgets: string[]; seo?: boolean; seo_plugin?: string; care?: number; woo?: number; woocommerce?: string }>(auth, "/studio/v1/ping");
+  return call<{ plugin: string; elementor: string; pro: boolean; widgets: string[]; seo?: boolean; seo_plugin?: string; care?: number; woo?: number; golive?: number; woocommerce?: string }>(auth, "/studio/v1/ping");
 }
 
 export function seoResolve(auth: WpAuth, url: string) {
@@ -90,3 +90,16 @@ export const wooSetup = (auth: WpAuth, body: unknown) =>
   wooPost<{ steps: { label: string; ok: boolean; detail: string }[]; notes: string[]; retry?: boolean; status?: WooStatus }>(auth, "/studio/v1/woo/setup", body);
 export const wooProducts = (auth: WpAuth, products: unknown[]) =>
   wooPost<{ saved: { sku: string; id: number; type: string }[]; errors: { sku: string; name: string; error: string }[] }>(auth, "/studio/v1/woo/products", { products });
+
+/* ---------- Go-live kit (golive.php) ---------- */
+
+export const goliveStatus = (auth: WpAuth) => call<GoLiveWpStatus>(auth, "/studio/v1/golive/status");
+export const goliveKit = (auth: WpAuth, body: { steps: string[]; admin_email?: string; user_email?: boolean; form_recipient?: string }) =>
+  wooPost<{ steps: { id: string; ok: boolean; note: string }[]; status: GoLiveWpStatus }>(auth, "/studio/v1/golive/kit", body);
+export const goliveSmtp = (auth: WpAuth, body: { sender_name: string; sender_email: string; host: string; port: number; encryption: string; username: string; password: string }) =>
+  wooPost<{ ok: boolean; from: string; own_domain: boolean; status: GoLiveWpStatus }>(auth, "/studio/v1/golive/smtp", body);
+export const goliveMailtest = (auth: WpAuth, body: { to: string; token: string }) => post<{ sent: boolean; error: string; mailer: string }>(auth, "/studio/v1/golive/mailtest", body);
+export const goliveRedirects = (auth: WpAuth, map: { from: string; to: string }[]) =>
+  call<{ ok: boolean; count: number }>(auth, "/studio/v1/golive/redirects", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ map }) });
+export const goliveLive = (auth: WpAuth, body: { index: boolean; remove_auth: boolean }) =>
+  post<{ indexing: boolean; auth_removed: boolean; backup: string; status: GoLiveWpStatus }>(auth, "/studio/v1/golive/live", body);

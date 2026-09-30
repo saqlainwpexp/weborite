@@ -1,0 +1,93 @@
+# Builds the Windows installer and publishes it as a GitHub release.
+# To release: bump "version" in package.json and add .github/release-notes/v<version>.md, then push
+# (or push a tag like v0.2.0). The release and its tag are created from the version in package.json.
+# Needs the repository secret LICENSE_PUBLIC_KEY: the App public key from studio.weborite.com/license/.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+    branches: ["**"]
+    paths: [".github/release-notes/**"]
+  workflow_dispatch:
+    inputs:
+      owner:
+        description: "Also build the owner copy (licensing off) as a private download on the run page. Never share it."
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Work out the version
+        id: v
+        shell: bash
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then tag="$GITHUB_REF_NAME"; else tag="v$(node -p "require('./package.json').version")"; fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          test -f ".github/release-notes/$tag.md" || { echo "::error::Add .github/release-notes/$tag.md"; exit 1; }
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+
+      - name: Check the license key secret
+        shell: bash
+        env:
+          LICENSE_PUBLIC_KEY: ${{ secrets.LICENSE_PUBLIC_KEY }}
+        run: |
+          if [ -z "$LICENSE_PUBLIC_KEY" ]; then
+            echo "::error::Add the repository secret LICENSE_PUBLIC_KEY (Settings → Secrets and variables → Actions) with the App public key from studio.weborite.com/license/"
+            exit 1
+          fi
+
+      - name: Build the customer installer
+        run: npm run dist
+        env:
+          LICENSE_PUBLIC_KEY: ${{ secrets.LICENSE_PUBLIC_KEY }}
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+
+      - name: Publish the release
+        if: github.event_name == 'push'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.v.outputs.tag }}
+          target_commitish: ${{ github.sha }}
+          name: Weborite Studio ${{ steps.v.outputs.tag }}
+          body_path: .github/release-notes/${{ steps.v.outputs.tag }}.md
+          files: release/*.exe
+
+      - name: Keep the installer on the run page (manual runs)
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: weborite-studio-installer
+          path: release/*.exe
+          retention-days: 14
+
+      - name: Build the owner copy
+        if: ${{ inputs.owner }}
+        run: npm run dist:owner
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+
+      - name: Keep the owner copy on the run page (private, 3 days)
+        if: ${{ inputs.owner }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: weborite-studio-OWNER-do-not-share
+          path: release-owner/*.exe
+          retention-days: 3

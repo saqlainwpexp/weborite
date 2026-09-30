@@ -46,7 +46,7 @@ export interface LayoutCtx {
 const ALL_WORKSPACES: { key: Workspace; label: string; hint: string; home: string; icon: typeof Sparkles }[] = [
   { key: "admin", label: "Super admin", hint: "Earnings, leads, progress and reports across everything", home: "/admin", icon: Crown },
   { key: "mockups", label: "Mockups", hint: "Rebuild lead homepages with Claude", home: "/", icon: Sparkles },
-  { key: "automations", label: "Automations", hint: "Prompt → scrape → auto-mockups → outreach", home: "/campaigns", icon: Workflow },
+  { key: "automations", label: "Automations", hint: "Workflows: search → mockups → emails → follow-ups", home: "/automations", icon: Workflow },
   { key: "finder", label: "Lead Finder", hint: "Find businesses on Google Maps", home: "/finder", icon: Radar },
   { key: "builds", label: "Builds", hint: "Turn approved mockups into full websites", home: "/builds", icon: Blocks },
   { key: "wordpress", label: "WordPress", hint: "Convert builds into Elementor pages", home: "/wp", icon: PanelsTopLeft },
@@ -106,7 +106,7 @@ export default function Layout() {
     return w === "finder" || w === "builds" || w === "wordpress" || w === "seo" || w === "care" || w === "comms" || w === "admin" ? w : "mockups";
   });
   const path = location.pathname;
-  const routeWorkspace: Workspace = path.startsWith("/campaigns") ? "automations" : path.startsWith("/finder") ? "finder" : path.startsWith("/builds") ? "builds" : path.startsWith("/wp") ? "wordpress" : path.startsWith("/seo") ? "seo" : path.startsWith("/care") ? "care" : path.startsWith("/comms") ? "comms" : path.startsWith("/admin") ? "admin" : path.startsWith("/settings") ? lastWorkspace : "mockups";
+  const routeWorkspace: Workspace = path.startsWith("/campaigns") || path.startsWith("/automations") ? "automations" : path.startsWith("/finder") ? "finder" : path.startsWith("/builds") ? "builds" : path.startsWith("/wp") ? "wordpress" : path.startsWith("/seo") ? "seo" : path.startsWith("/care") ? "care" : path.startsWith("/comms") ? "comms" : path.startsWith("/admin") ? "admin" : path.startsWith("/settings") ? lastWorkspace : "mockups";
   // A hidden workspace's URL renders the Mockups shell while the router redirects to "/".
   const workspace: Workspace = workspaceEnabled(routeWorkspace) ? routeWorkspace : "mockups";
   useEffect(() => {
@@ -122,6 +122,7 @@ export default function Layout() {
   const isCare = workspace === "care";
   const isComms = workspace === "comms";
   const isAdmin = workspace === "admin";
+  const isAuto = workspace === "automations";
 
   const leads = usePoll<Lead[]>("/api/leads", 5000);
   const events = usePoll<EventItem[]>("/api/events", 5000);
@@ -191,7 +192,7 @@ export default function Layout() {
     overlay: popover !== null || adding || agentOpen,
     workspace,
     reloadAll,
-    openAdd: () => (isAdmin ? nav("/admin/revenue?new=1") : isComms ? nav("/comms/new") : isCare ? nav("/care/new") : isSeo ? nav("/seo/new") : isWp ? nav("/wp/new") : isBuilds ? nav("/builds/new") : setAdding(true)),
+    openAdd: () => (isAuto ? nav("/automations?new=1") : isAdmin ? nav("/admin/revenue?new=1") : isComms ? nav("/comms/new") : isCare ? nav("/care/new") : isSeo ? nav("/seo/new") : isWp ? nav("/wp/new") : isBuilds ? nav("/builds/new") : setAdding(true)),
   };
 
   const needle = q.trim().toLowerCase();
@@ -322,7 +323,7 @@ export default function Layout() {
           )}
         </div>
 
-        <button className="btn btn-chip hide-sm" onClick={ctx.openAdd}>{isAdmin ? <Banknote /> : isComms ? <MessagesSquare /> : isCare ? <Server /> : isSeo ? <Gauge /> : isWp ? <PanelsTopLeft /> : isBuilds ? <FilePlus2 /> : isFinder ? <MapPinned /> : <UserPlus />}{isAdmin ? "Record payment" : isComms ? "Add channel" : isCare ? "Add site" : isSeo ? "Add live site" : isWp ? "New conversion" : isBuilds ? "New build" : isFinder ? "New search" : "Add lead"}</button>
+        <button className="btn btn-chip hide-sm" onClick={ctx.openAdd}>{isAuto ? <Plus /> : isAdmin ? <Banknote /> : isComms ? <MessagesSquare /> : isCare ? <Server /> : isSeo ? <Gauge /> : isWp ? <PanelsTopLeft /> : isBuilds ? <FilePlus2 /> : isFinder ? <MapPinned /> : <UserPlus />}{isAuto ? "New workflow" : isAdmin ? "Record payment" : isComms ? "Add channel" : isCare ? "Add site" : isSeo ? "Add live site" : isWp ? "New conversion" : isBuilds ? "New build" : isFinder ? "New search" : "Add lead"}</button>
         <span className="top-divider hide-sm" />
 
         <div className="pop-anchor" ref={notifRef}>
@@ -378,7 +379,7 @@ export default function Layout() {
             </div>
           )}
         </div>
-        <button className="btn btn-ink btn-wide" onClick={isCare ? () => nav("/care/all?show=approve") : isComms ? () => nav("/comms") : isAdmin ? () => nav("/admin/clients") : ctx.openAdd}>{isAdmin ? "Clients" : isComms ? (commsUnread ? `${commsUnread} unread` : "All channels") : isCare ? "Approvals" : isSeo ? "Audit a site" : isWp ? "Convert" : isBuilds ? "New build" : isFinder ? "Find leads" : "Create"} <ArrowRight /></button>
+        <button className="btn btn-ink btn-wide" onClick={isCare ? () => nav("/care/all?show=approve") : isComms ? () => nav("/comms") : isAdmin ? () => nav("/admin/clients") : ctx.openAdd}>{isAuto ? "Create" : isAdmin ? "Clients" : isComms ? (commsUnread ? `${commsUnread} unread` : "All channels") : isCare ? "Approvals" : isSeo ? "Audit a site" : isWp ? "Convert" : isBuilds ? "New build" : isFinder ? "Find leads" : "Create"} <ArrowRight /></button>
       </header>
 
       <div className={`shell${collapsed ? " is-collapsed" : ""}`}>

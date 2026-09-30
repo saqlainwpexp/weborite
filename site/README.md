@@ -10,7 +10,8 @@ hidden `.htaccess` files, to the subdomain's web root. No build step. Needs PHP 
 - `demo.html`: free demo page with the download and install steps
 - `site.js`: feature tabs, carousels and the order form
 - `privacy.html`, `terms.html`, `refund.html`: legal pages. The app links to `/privacy` and `/terms`
-  (see `shared/legal.ts`); `.htaccess` serves them without the `.html` extension.
+  (see `shared/legal.ts`). `.htaccess` gives every page a clean address (`/buy`, `/demo`, `/privacy`…) and
+  redirects the old `.html` addresses to them.
 - `download/Weborite-Studio-Setup.exe`: upload the installer from `npm run dist` here, renamed.
 - `license/`: the license service.
 
