@@ -64,11 +64,47 @@ export function extractFenced(text: string, lang: string): string {
   return text.trim();
 }
 
+/**
+ * The first real JSON value in a reply. Models sometimes put prose or bracketed placeholders ("[placeholder]",
+ * "[Your name]") before the JSON, so each "{" or "[" is tried in turn, matched to its closing bracket (strings
+ * respected), and the first block that parses wins. Objects and arrays are preferred over bare tokens.
+ */
 export function extractJson<T>(text: string): T {
-  const body = extractFenced(text, "json");
-  const start = body.search(/[[{]/);
-  const end = Math.max(body.lastIndexOf("}"), body.lastIndexOf("]"));
-  return JSON.parse(body.slice(start, end + 1)) as T;
+  for (const body of [extractFenced(text, "json"), text]) {
+    for (let i = 0; i < body.length; i++) {
+      const c = body[i];
+      if (c !== "{" && c !== "[") continue;
+      const end = matchBracket(body, i);
+      if (end < 0) continue;
+      try {
+        return JSON.parse(body.slice(i, end + 1)) as T;
+      } catch {
+        /* not JSON (e.g. "[placeholder]"): try the next bracket */
+      }
+    }
+  }
+  throw new Error(`The AI's answer had no valid JSON in it: “${text.trim().slice(0, 120)}${text.trim().length > 120 ? "…" : ""}”. Try again, or pick a stronger model in Settings → AI.`);
+}
+
+/** Index of the bracket that closes the one at `start`, skipping brackets inside strings; -1 if unbalanced. */
+function matchBracket(s: string, start: number) {
+  const stack: string[] = [];
+  let inStr = false;
+  for (let i = start; i < s.length; i++) {
+    const c = s[i];
+    if (inStr) {
+      if (c === "\\") i++;
+      else if (c === '"') inStr = false;
+      continue;
+    }
+    if (c === '"') inStr = true;
+    else if (c === "{" || c === "[") stack.push(c === "{" ? "}" : "]");
+    else if (c === "}" || c === "]") {
+      if (stack.pop() !== c) return -1;
+      if (!stack.length) return i;
+    }
+  }
+  return -1;
 }
 
 export function extractHtml(text: string): string {
