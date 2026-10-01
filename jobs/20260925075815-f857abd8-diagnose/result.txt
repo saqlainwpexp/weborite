@@ -1,0 +1,11 @@
+```json
+{"strongestAsset": null,
+ "issues": [
+  {"severity": "high", "category": "content", "title": "Spam text injected into the hero caption", "detail": "The 'Single Houses' slide caption starts 'We build one-off quality homes' and then runs into Norwegian online-casino promotion text, which looks like injected SEO spam and badly damages trust; the site should be checked for a compromise."},
+  {"severity": "high", "category": "structure", "title": "No clear offer or call to action above the fold", "detail": "The first screen is a slider photo with a grey caption box; there is no headline saying what they build or where, and no quote or call button until the sidebar form further down."},
+  {"severity": "medium", "category": "content", "title": "Portfolio hidden and weak", "detail": "Their strongest proof (houses, apartment blocks, restaurants and hotels since 1994) is reduced to four small thumbnails, one of which is just the company van, below a long text block."},
+  {"severity": "medium", "category": "structure", "title": "Dated, narrow layout", "detail": "A fixed narrow centre column, Arial type, a boxed contact form with a CAPTCHA image and bordered photo frames make the site look early-2010s next to modern builders' sites."},
+  {"severity": "low", "category": "content", "title": "Trust signals buried in the footer", "detail": "The NHBC logo and the '1994' founding year are the main credentials but appear only as a small footer badge and inside body copy."}
+ ],
+ "vertical": {"key": "building-contractor", "label": "Builder", "register": "The buyer is planning a new home, extension or commercial build and is judging whether this local building contractor looks established, capable and trustworthy enough for a large project, compared with other regional builders and construction firms rather than national housebuilders."}}
+```

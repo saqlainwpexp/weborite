@@ -1,0 +1,10 @@
+{
+  "system": "You are a senior web designer judging small-business websites for a web agency deciding who to pitch. Be honest and specific.",
+  "prompt": "The 1 images are the top of these businesses' homepages, in this order:\n1. id=1e775b02 · Air-Innovations Airconditioning & Klimaattechniek\n\nFor each, rate how professional and modern the design looks from 1 to 10:\nIf an image shows a security check, CAPTCHA, cookie wall, error page or a blank page instead of the website, return design 0 for it.\n1–3 = dated, broken or amateur (old layout, clashing colours, stretched images, clip-art, walls of text, obvious template defaults)\n4–6 = acceptable but plain or visibly aging\n7–8 = modern and competent\n9–10 = agency-quality, polished\n\nReturn only JSON:\n```json\n[{\"id\":\"…\",\"design\":1-10,\"note\":\"one short sentence on the biggest visual strength or problem\"}]\n```",
+  "images": [
+    "img-1.jpg"
+  ],
+  "web": false,
+  "model": "claude-sonnet-5",
+  "task": "qualify"
+}

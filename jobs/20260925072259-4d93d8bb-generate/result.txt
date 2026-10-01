@@ -1,0 +1,572 @@
+```html
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Air-Innovations Airconditioning &amp; Klimaattechniek | Airco installateur Diemen &amp; Amsterdam</title>
+<meta name="description" content="Vakkundige airconditioning installateur voor particuliere en zakelijke klanten. Meer dan 5.000 succesvol uitgevoerde airconditioning installaties.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="../assets/69986713d9.jpg">
+<style>
+:root{--primary:#104276;--accent:#f9770d;--ink:#104276;--body:#5a5a5a;--surface:#ffffff;--surface-alt:#f4f6fa;--footer:#0b2f55;--container:1280px;--gutter:32px;--section-y:88px;
+  --brand:#5472a4;--accent-ink:#b35500;--on-accent:#1b1b1b;--pale:#eef2f8;--line:#dfe5ef}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Poppins',sans-serif;font-size:15px;line-height:1.87;color:var(--body);background:var(--surface);overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}
+.container>*{min-width:0}
+h1,h2,h3{overflow-wrap:break-word;hyphens:auto}
+section{padding:var(--section-y) 0 70px}
+h1,h2,h3,h4{font-family:'Inter',sans-serif;color:var(--ink);margin:0}
+h2 em,h1 em{font-style:normal;color:var(--accent-ink)}
+.eyebrow{font-family:'Inter',sans-serif;font-size:16px;font-weight:500;line-height:1.2;text-transform:uppercase;color:var(--accent-ink);margin:0 0 14px;letter-spacing:.04em}
+.hero-title{font-size:58px;font-weight:800;line-height:1.12;text-transform:uppercase;color:var(--primary)}
+h2{font-size:40px;font-weight:700;line-height:1.25;margin:0}
+h3{font-size:22px;font-weight:600;line-height:1.2}
+p{margin:0}
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;height:60px;padding:0 42px;border-radius:5px 30px 30px 5px;font-size:15px;font-weight:500;background:var(--primary);color:#fff;text-decoration:none;border:0;cursor:pointer;font-family:'Poppins',sans-serif;transition:background .2s}
+.btn::after{content:'+';position:absolute;right:-12px;top:50%;transform:translateY(-50%);width:24px;height:24px;border-radius:50%;background:#fff;color:var(--primary);border:2px solid var(--primary);display:grid;place-items:center;font-size:14px;line-height:1}
+.btn:hover{background:#0b2f55}
+.btn-accent{background:var(--accent);color:var(--on-accent);border-radius:5px;height:52px;padding:0 35px;font-weight:600}
+.btn-accent::after{display:none}
+.btn-accent:hover{background:#ff8a2a}
+.panel{background:#fff;border-radius:10px;box-shadow:0 20px 60px rgba(16,66,118,.12);padding:80px}
+.house-badge{width:84px;height:96px;background:var(--accent);clip-path:polygon(50% 0,100% 42%,88% 42%,88% 100%,12% 100%,12% 42%,0 42%);display:grid;place-items:end center;padding-bottom:14px;color:var(--on-accent);flex:none}
+.house-badge svg{width:30px;height:30px}
+.skip{position:absolute;left:-999px;top:0;background:#fff;color:var(--primary);padding:10px 16px;z-index:100}
+.skip:focus{left:12px;top:12px}
+.head-stack{max-width:620px}
+.head-stack p{margin-top:20px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* top bar + header */
+.topbar{background:var(--footer);color:#c9d6ea;font-size:14px}
+.topbar .container{display:flex;justify-content:space-between;align-items:center;min-height:50px;gap:16px}
+.topbar a{text-decoration:none;color:#fff}
+.topbar-left{display:flex;gap:28px;flex-wrap:wrap}
+.topbar-right strong{color:var(--accent);font-weight:600}
+.site-header{background:#fff;box-shadow:0 2px 20px rgba(16,66,118,.08);position:sticky;top:0;z-index:50}
+.site-header .container{display:flex;align-items:center;justify-content:space-between;min-height:100px;gap:24px}
+.logo img{width:170px;height:auto}
+.nav{display:flex;align-items:center;gap:34px}
+.nav a{font-size:15px;font-weight:500;color:var(--primary);text-decoration:none;padding:10px 0;position:relative}
+.nav a:hover::after,.nav a[aria-current]::after{content:'';position:absolute;left:0;right:0;bottom:2px;height:2px;background:var(--accent)}
+.head-cta{display:flex;align-items:center;gap:22px}
+.head-phone{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--primary)}
+.head-phone .ring{width:46px;height:46px;border-radius:50%;background:var(--pale);display:grid;place-items:center;color:var(--primary)}
+.head-phone .ring svg{width:20px;height:20px}
+.head-phone small{display:block;font-size:12px;line-height:1.2;color:var(--body)}
+.head-phone b{font-family:'Inter',sans-serif;font-size:18px;font-weight:700;line-height:1.2}
+.burger{display:none;width:48px;height:48px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--primary);cursor:pointer;place-items:center}
+.burger svg{width:24px;height:24px}
+
+/* hero */
+.hero{position:relative;padding:0;min-height:760px;display:flex;align-items:center;color:#fff;
+  background-color:#0b2f55;background-image:linear-gradient(90deg,rgba(11,47,85,.92) 0%,rgba(11,47,85,.78) 42%,rgba(11,47,85,.15) 100%),url('../assets/c337c8b971.jpg'),url('../assets/69986713d9.jpg');background-size:cover;background-position:center 60%}
+.hero .container{width:100%;padding-top:90px;padding-bottom:200px}
+.hero-copy{max-width:680px;position:relative;padding-left:34px}
+.hero-copy::before{content:'';position:absolute;left:0;top:10px;bottom:8px;width:4px;background:var(--accent)}
+.hero-copy::after{content:'';position:absolute;left:0;top:10px;width:24px;height:4px;background:var(--accent)}
+.chip{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);color:#fff;font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;border-radius:30px;padding:6px 16px;margin-bottom:22px}
+.hero .hero-title{color:#fff;font-size:68px}
+.hero .hero-title em{color:var(--accent)}
+.hero-sub{font-size:19px;line-height:1.6;color:#e6edf7;margin:24px 0 36px;max-width:560px}
+.hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:34px}
+.hero-actions .btn{background:var(--accent);color:var(--on-accent);font-weight:600}
+.hero-actions .btn::after{color:var(--accent-ink);border-color:var(--accent)}
+.hero-actions .btn:hover{background:#ff8a2a}
+.hero-link{color:#fff;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:10px;min-height:44px}
+.hero-link span{border-bottom:1px solid rgba(255,255,255,.5)}
+.proof-row{display:flex;flex-wrap:wrap;gap:26px;margin-top:42px;font-size:14px;color:#e6edf7}
+.proof-row div{display:flex;align-items:center;gap:8px}
+.proof-row svg{width:18px;height:18px;color:var(--accent);flex:none}
+
+.tiles{position:relative;z-index:5;margin-top:-120px}
+.tiles .container{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.tile{display:flex;align-items:flex-start;gap:22px;padding:42px 44px;text-decoration:none;min-height:220px;transition:transform .2s}
+.tile:hover{transform:translateY(-4px)}
+.tile-a{background:var(--accent);color:var(--on-accent);border-radius:10px 0 0 10px}
+.tile-b{background:var(--primary);color:#fff;border-radius:0 10px 10px 0}
+.tile .ico{width:58px;height:58px;flex:none}
+.tile h3{font-size:30px;font-weight:700;color:inherit;margin-bottom:8px}
+.tile p{font-size:15px;line-height:1.7}
+.tile .go{margin-left:auto;align-self:flex-end;width:48px;height:48px;border-radius:50%;border:2px solid currentColor;display:grid;place-items:center;flex:none}
+.tile .go svg{width:20px;height:20px}
+
+/* stats */
+.stats{padding-top:110px}
+.stats .container{display:grid;grid-template-columns:1fr 1.05fr;gap:70px;align-items:center}
+.stats .lead{font-size:16px;margin-top:20px}
+.stats .lead + .lead{margin-top:14px}
+.stats .btn{margin-top:34px}
+.masonry{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+.masonry>*{min-width:0}
+.masonry img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:10px}
+.stat{border-radius:10px;aspect-ratio:1/1;padding:30px;display:flex;flex-direction:column;justify-content:flex-end}
+.stat b{font-family:'Inter',sans-serif;font-size:52px;font-weight:800;line-height:1}
+.stat span{margin-top:12px;font-size:15px;line-height:1.5}
+.stat-pale{background:var(--pale)}
+.stat-pale b{color:var(--primary)}
+.stat-deep{background:var(--primary);color:#fff}
+.stat-deep span{color:#dbe4f1}
+.masonry .m2{transform:translateY(40px)}
+.masonry .m4{transform:translateY(40px)}
+
+/* services */
+.services{background:var(--surface-alt);padding-top:110px}
+.services-top{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:50px}
+.line-eyebrow{display:flex;align-items:center;gap:12px}
+.line-eyebrow::before{content:'';width:35px;height:2px;background:var(--accent-ink)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:#fff;border-bottom:4px solid var(--accent);padding:36px 32px 32px;display:flex;flex-direction:column}
+.card .icon-sq{width:80px;height:80px;background:var(--pale);display:grid;place-items:center;color:var(--primary);margin-bottom:26px}
+.card .icon-sq svg{width:36px;height:36px}
+.card p{margin:12px 0 26px}
+.card img{width:100%;height:170px;object-fit:cover;margin-top:auto}
+.card a{margin-top:18px;font-weight:600;color:var(--primary);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;gap:8px}
+.arrows{display:flex;gap:10px}
+.arrows button{width:52px;height:52px;border:1px solid var(--line);background:#fff;color:var(--primary);cursor:pointer;display:grid;place-items:center}
+.arrows button:last-child{background:var(--primary);color:#fff;border-color:var(--primary)}
+.arrows svg{width:20px;height:20px}
+
+/* process */
+.process{position:relative;color:#fff;text-align:center;background-color:#0b2f55;background-image:linear-gradient(rgba(11,47,85,.9),rgba(11,47,85,.9)),url('../assets/stock-IUuVB1nLsQU.jpg');background-size:cover;background-position:center;padding-bottom:100px}
+.process h2{color:#fff}
+.process .eyebrow{color:var(--accent)}
+.process .intro{max-width:640px;margin:18px auto 0;color:#dbe4f1}
+.steps{list-style:none;padding:0;margin:64px 0 0;display:grid;grid-template-columns:repeat(4,1fr);gap:30px;position:relative}
+.steps::before{content:'';position:absolute;top:18px;left:12.5%;right:12.5%;border-top:2px dashed rgba(255,255,255,.35)}
+.steps li{position:relative}
+.steps .num{width:36px;height:36px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-family:'Inter',sans-serif;font-weight:700;display:grid;place-items:center;margin:0 auto 22px;position:relative;z-index:1;box-shadow:0 0 0 8px rgba(249,119,13,.18)}
+.steps h3{color:#fff;font-size:20px;margin-bottom:10px}
+.steps p{color:#dbe4f1;font-size:14px;line-height:1.7;max-width:250px;margin:0 auto}
+
+/* about */
+.about .container{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.about-media{position:relative}
+.about-media img{width:100%;aspect-ratio:607/576;object-fit:cover;border-radius:10px}
+.about-stat{position:absolute;right:-26px;bottom:40px;background:#fff;border-radius:10px;box-shadow:0 20px 60px rgba(16,66,118,.16);padding:24px 28px;max-width:250px}
+.about-stat b{font-family:'Inter',sans-serif;font-size:40px;font-weight:800;color:var(--primary);line-height:1}
+.about-stat span{display:block;margin-top:8px;font-size:14px;line-height:1.5}
+.about p.body{margin-top:20px}
+.feature{display:flex;gap:22px;align-items:flex-start;margin:34px 0 30px;padding:26px;background:var(--surface-alt);border-radius:10px}
+.feature h3{font-size:20px;margin-bottom:6px}
+.feature p{font-size:14px;line-height:1.7}
+.checks{list-style:none;padding:0;margin:0 0 38px;display:grid;grid-template-columns:1fr 1fr;gap:14px 26px}
+.checks li{display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.6;color:var(--ink);font-weight:500}
+.checks li::before{content:'';flex:none;width:22px;height:22px;border-radius:50%;margin-top:1px;background:var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231b1b1b' stroke-width='3'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/12px no-repeat}
+
+/* contact */
+.contact{background:var(--primary);color:#fff}
+.contact .container{display:grid;grid-template-columns:1fr 1.1fr;gap:70px;align-items:center}
+.contact h2{color:#fff}
+.contact h2 em{color:var(--accent)}
+.contact .eyebrow{color:var(--accent)}
+.contact .intro{color:#dbe4f1;margin-top:18px}
+.callout{display:flex;align-items:center;gap:18px;margin-top:38px;text-decoration:none;color:#fff}
+.callout .ring{width:60px;height:60px;border-radius:50%;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;flex:none}
+.callout .ring svg{width:26px;height:26px}
+.callout small{display:block;font-size:15px;font-weight:300;color:#dbe4f1;line-height:1.3}
+.callout b{font-family:'Inter',sans-serif;font-size:26px;font-weight:700;line-height:1.3}
+.contact-lines{margin-top:28px;display:grid;gap:10px;font-size:15px}
+.contact-lines a{color:#fff;text-decoration:none;min-height:44px;display:inline-flex;align-items:center;gap:12px}
+.contact-lines svg{width:18px;height:18px;color:var(--accent)}
+.form{background:#fff;border-radius:10px;padding:44px;color:var(--body)}
+.form h3{margin-bottom:6px}
+.form .note{font-size:14px;margin-bottom:24px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form label{display:block;font-size:13px;font-weight:500;color:var(--ink);margin-bottom:6px}
+.form input,.form select,.form textarea{width:100%;min-height:50px;border:1px solid var(--line);border-radius:5px;padding:12px 14px;font:inherit;font-size:15px;color:#222;background:#fbfcfe}
+.form textarea{min-height:110px;resize:vertical}
+.form .full{grid-column:1/-1}
+.form .btn{margin-top:22px}
+
+/* projects (testimonial slot) */
+.projects .container{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.feature-project{margin-top:30px;padding-left:26px;border-left:4px solid var(--accent)}
+.feature-project .quote{margin:0;font-family:'Inter',sans-serif;font-size:18px;font-weight:300;line-height:1.78;color:#333}
+.feature-project .who{margin-top:18px;display:flex;align-items:center;gap:14px}
+.feature-project .who b{font-family:'Inter',sans-serif;color:var(--ink);font-size:17px}
+.feature-project .who span{font-size:14px}
+.proj-list{list-style:none;padding:0;margin:30px 0 0;display:flex;flex-wrap:wrap;gap:10px}
+.proj-list li{font-size:13px;font-weight:500;color:var(--primary);background:var(--pale);border-radius:30px;padding:6px 14px}
+.dots{display:flex;gap:8px;margin-top:34px}
+.dots span{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.dots span:first-child{background:var(--accent);width:28px;border-radius:6px}
+.projects .text-link{display:inline-flex;align-items:center;gap:8px;margin-top:26px;font-weight:600;color:var(--primary);text-decoration:none;min-height:44px}
+.proj-grid{display:grid;grid-template-columns:1.3fr 1fr;grid-template-rows:1fr 1fr;gap:18px;height:520px}
+.proj-grid figure{margin:0;position:relative;border-radius:10px;overflow:hidden}
+.proj-grid figure:first-child{grid-row:1/3}
+.proj-grid img{width:100%;height:100%;object-fit:cover}
+.proj-grid figcaption{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(11,47,85,.92));color:#fff;padding:40px 18px 14px;font-size:14px;font-weight:500}
+
+/* brands */
+.brands{padding:70px 0;border-top:1px solid var(--line)}
+.brands h2{font-size:22px;text-align:center;margin-bottom:34px;font-weight:600}
+.ticker{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.ticker-track{display:flex;gap:56px;width:max-content;animation:scroll 30s linear infinite}
+.ticker:hover .ticker-track{animation-play-state:paused}
+.wordmark{height:40px;display:flex;align-items:center;white-space:nowrap;font-family:'Inter',sans-serif;font-weight:700;font-size:18px;color:#8a93a3;letter-spacing:.02em;transition:color .2s}
+.wordmark:hover{color:var(--primary)}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.ticker-track{animation:none}.tile,.btn{transition:none}}
+
+/* footer */
+.footer{background:var(--footer);color:#c9d6ea;padding:115px 0 0}
+.footer .grid{display:grid;grid-template-columns:1.4fr 1fr 1.1fr 1.2fr;gap:48px}
+.footer h3{color:#fff;font-size:18px;margin-bottom:20px}
+.footer ul{list-style:none;padding:0;margin:0;display:grid;gap:4px}
+.footer a{color:#c9d6ea;text-decoration:none;display:inline-flex;min-height:36px;align-items:center}
+.footer a:hover{color:#fff}
+.footer .flogo{background:#fff;border-radius:8px;padding:12px 14px;display:inline-block;margin-bottom:22px}
+.footer .flogo img{width:150px;height:auto}
+.footer .em-label{color:var(--accent);font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.footer .em-phone{font-family:'Inter',sans-serif;font-size:24px;font-weight:700;color:#fff;min-height:44px}
+.footer .bottom{margin-top:80px;border-top:1px solid rgba(255,255,255,.12)}
+.footer .bottom .container{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:22px;padding-bottom:22px;font-size:13px}
+
+@media (max-width:1180px){
+  .nav{gap:22px}
+  .head-phone{display:none}
+}
+@media (max-width:1024px){
+  .burger{display:grid}
+  .nav{display:none;position:absolute;left:0;right:0;top:100%;background:#fff;flex-direction:column;align-items:stretch;gap:0;padding:8px var(--gutter) 20px;box-shadow:0 20px 30px rgba(16,66,118,.12)}
+  .nav.open{display:flex}
+  .nav a{padding:12px 0;min-height:44px;border-bottom:1px solid var(--line)}
+  .head-cta .btn-accent{display:none}
+  .stats .container,.about .container,.contact .container,.projects .container{grid-template-columns:minmax(0,1fr);gap:50px}
+  .cards{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr 1fr;row-gap:44px}
+  .steps::before{display:none}
+  .footer .grid{grid-template-columns:1fr 1fr}
+  .about-stat{right:16px}
+}
+@media (max-width:768px){
+  :root{--section-y:64px;--gutter:20px}
+  .hero-title{font-size:36px}h2{font-size:30px}.panel{padding:32px 20px}
+  .topbar .topbar-left span.addr{display:none}
+  .topbar .container{min-height:44px;font-size:13px}
+  .site-header .container{min-height:76px}
+  .logo img{width:130px}
+  .hero{min-height:0}
+  .hero .container{padding-top:60px;padding-bottom:150px}
+  .hero .hero-title{font-size:38px}
+  .hero-copy{padding-left:22px}
+  .hero-sub{font-size:16px}
+  .hero-actions{gap:18px}
+  .tiles{margin-top:-100px}
+  .tiles .container{grid-template-columns:1fr}
+  .tile{padding:28px 24px;min-height:0;border-radius:0}
+  .tile-a{border-radius:10px 10px 0 0}
+  .tile-b{border-radius:0 0 10px 10px}
+  .tile h3{font-size:24px}
+  .stats{padding-top:70px}
+  .masonry .m2,.masonry .m4{transform:none}
+  .stat{padding:18px;aspect-ratio:auto;min-height:100%}
+  .masonry{gap:12px}
+  .stat b{font-size:36px}
+  .stat span{font-size:12px;line-height:1.45}
+  .services-top{flex-direction:column;align-items:flex-start}
+  .cards{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+  .checks{grid-template-columns:1fr}
+  .form{padding:28px 20px}
+  .form-grid{grid-template-columns:1fr}
+  .proj-grid{height:auto;grid-template-columns:1fr;grid-template-rows:auto}
+  .proj-grid figure:first-child{grid-row:auto}
+  .proj-grid img{height:220px}
+  .footer{padding-top:70px}
+  .footer .grid{grid-template-columns:1fr;gap:36px}
+  .callout b{font-size:22px}
+  .about-stat{position:static;margin-top:-40px;margin-left:16px;max-width:none;display:inline-block}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Ga naar de inhoud</a>
+
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-left">
+      <span class="addr">Visseringweg 74, 1112 AT te Diemen</span>
+      <a href="mailto:info@air-innovations.nl">info@air-innovations.nl</a>
+    </div>
+    <div class="topbar-right">Bel ons: <a href="tel:+31203080484"><strong>020 3080 484</strong></a></div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="#" aria-label="Air-Innovations Airconditioning &amp; Klimaattechniek, naar home">
+      <img src="../assets/e7e06b598c.png" width="213" height="78" alt="Air-Innovations Airconditioning &amp; Klimaattechniek">
+    </a>
+    <nav class="nav" id="nav" aria-label="Hoofdmenu">
+      <a href="#" aria-current="page">Home</a>
+      <a href="#diensten">Zakelijk</a>
+      <a href="#diensten">Particulier</a>
+      <a href="#projecten">Projecten</a>
+      <a href="#over-ons">Over ons</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="head-cta">
+      <a class="head-phone" href="tel:+31203080484">
+        <span class="ring" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></span>
+        <span><small>Bel ons</small><b>020 3080 484</b></span>
+      </a>
+      <a class="btn btn-accent" href="#contact">Offerte aanvragen</a>
+      <button class="burger" id="burger" aria-controls="nav" aria-expanded="false" aria-label="Menu openen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" aria-label="Introductie">
+    <div class="container">
+      <div class="hero-copy">
+        <span class="chip">Airconditioning &amp; klimaattechniek · Diemen</span>
+        <h1 class="hero-title">Airconditioning installateur <em>zonder verrassingen</em></h1>
+        <p class="hero-sub">Voor particuliere en zakelijke klanten: helder advies, een nette en veilige plaatsing en onderhoud door onze eigen STEK erkende monteurs.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#contact">Vraag een airco offerte aan</a>
+          <a class="hero-link" href="tel:+31203080484" aria-label="Bel 020 3080 484">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+            <span>020 3080 484</span>
+          </a>
+        </div>
+        <div class="proof-row">
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Meer dan 5.000 installaties</div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>STEK, F-gassen en VCA gediplomeerd</div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Tot 5 jaar garantie</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="tiles">
+    <div class="container">
+      <a class="tile tile-a" href="#diensten">
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="6" y="10" width="36" height="30" rx="2"/><path d="M6 18h36M14 26h6M14 32h6M28 26h6M28 32h6M18 6v8M30 6v8"/></svg>
+        <div><h3>Zakelijk</h3><p>Airconditioning &amp; klimaattechniek voor kantoren, winkels, hotels en restaurants.</p></div>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="tile tile-b" href="#diensten">
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 22L24 8l18 14"/><path d="M11 19v21h26V19"/><rect x="19" y="26" width="10" height="14"/></svg>
+        <div><h3>Particulier</h3><p>Split airco installatie voor thuis: in de zomer koel, in de winter behaaglijk warm.</p></div>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </div>
+
+  <section class="stats" id="over-ons">
+    <div class="container">
+      <div>
+        <p class="eyebrow">Zeer hoge klanttevredenheid</p>
+        <h2>Een van de beste <em>airco</em> installateurs in ervaring</h2>
+        <p class="lead">Met meer dan 5.000 succesvol uitgevoerde airconditioning installaties staat Air-Innovations klaar, of je nu een airco koopt inclusief montage of een betrouwbare airco monteur in de buurt zoekt.</p>
+        <p class="lead">Wij werken uitsluitend met energiezuinige split airco installaties (A+/A++ of hoger): comfort voor jou, en een bijdrage aan een beter milieu.</p>
+        <a class="btn" href="#contact">Vrijblijvend advies</a>
+      </div>
+      <div class="masonry">
+        <img src="../assets/c2279a42b1.jpg" alt="Het team van Air-Innovations voor de bedrijfsbussen" loading="lazy">
+        <div class="stat stat-pale m2"><b>5.000</b><span>Meer dan 5.000 succesvol uitgevoerde airconditioning installaties</span></div>
+        <div class="stat stat-deep"><b>5 jaar</b><span>Tot 5 jaar garantie op nieuw geïnstalleerde apparatuur</span></div>
+        <img class="m4" src="../assets/d7026f1d82.jpg" alt="Monteurs van Air-Innovations bij het bedrijfspand" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section class="services" id="diensten">
+    <div class="container">
+      <div class="services-top">
+        <div class="head-stack">
+          <p class="eyebrow line-eyebrow">Wij zijn gespecialiseerd in</p>
+          <h2>Klimaat op maat voor <em>elk</em> gebouw</h2>
+          <p>Van een split airco voor thuis tot een complete klimaatoplossing voor je bedrijfspand, met een zeer laag geluidsniveau en uitmuntende energieprestaties.</p>
+        </div>
+        <div class="arrows" aria-hidden="true">
+          <button tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+          <button tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="icon-sq" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 9h18M8 13h2M8 16h2M14 13h2M14 16h2"/></svg></div>
+          <h3>Zakelijk gebruik</h3>
+          <p>Kantoren, winkels, hotels, restaurants, praktijkruimten en computer/serverruimten.</p>
+          <img src="../assets/d91e3bf73a.jpg" alt="Licht kantoor met werkplekken" loading="lazy">
+          <a href="#contact">Meer info <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="card">
+          <div class="icon-sq" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg></div>
+          <h3>Particulier gebruik</h3>
+          <p>Particuliere woningen en woonboten: koelen in de zomer, verwarmen in de winter.</p>
+          <img src="../assets/7b16463b9c.jpg" alt="Behaaglijk warm thuis met een kop thee" loading="lazy">
+          <a href="#contact">Meer info <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="card">
+          <div class="icon-sq" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.5-.5-.5-2.5z"/></svg></div>
+          <h3>Onderhoud</h3>
+          <p>Een passend onderhoudscontract, uitgevoerd door onze eigen STEK erkende monteurs.</p>
+          <img src="../assets/stock-VsjNRXO_c2w.jpg" alt="Buitenunits van airconditioning aan een witte gevel" loading="lazy">
+          <a href="#contact">Meer info <span aria-hidden="true">→</span></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="process" aria-labelledby="proces-titel">
+    <div class="container">
+      <p class="eyebrow">Zo werken wij</p>
+      <h2 id="proces-titel">Van advies tot onderhoud</h2>
+      <p class="intro">Helder advies over de mogelijkheden en de airco installatie kosten, zodat u nooit voor verrassingen komt te staan.</p>
+      <ol class="steps">
+        <li><span class="num">1</span><h3>Advies</h3><p>Wij maken graag een afspraak om de installatie op locatie te bespreken.</p></li>
+        <li><span class="num">2</span><h3>Offerte</h3><p>Vraag eenvoudig, snel en vrijblijvend een airco offerte aan.</p></li>
+        <li><span class="num">3</span><h3>De installatie</h3><p>Nette plaatsing, met minimaal zichtbare leidingen of bedrading.</p></li>
+        <li><span class="num">4</span><h3>Onderhoud</h3><p>Een jaarlijkse controle verlengt de levensduur van uw installatie.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="about" aria-labelledby="partner-titel">
+    <div class="container">
+      <div class="about-media">
+        <img src="../assets/10de69076b.jpg" alt="Een installatie wordt ontworpen aan de tekentafel" loading="lazy">
+        <div class="about-stat"><b>500%</b><span>Het verwarmingsrendement van een warmtepomp kan oplopen tot circa 500%</span></div>
+      </div>
+      <div>
+        <p class="eyebrow">Uitstekende airco partner</p>
+        <h2 id="partner-titel">Dé specialist in <em>klimaattechniek</em></h2>
+        <p class="body">Door onze professionaliteit en de keuze van de toe te passen producten, waarbij de wensen van de klant centraal staan, zijn wij dé uitstekende partner voor uw airconditioner of klimaatbeheersing.</p>
+        <div class="feature">
+          <span class="house-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+          <div>
+            <h3>Installatie onder STEK-erkenning</h3>
+            <p>Air-Innovations is bevoegd en bekwaam om te werken aan airconditioning en koelinstallaties met CFK, HCFK en HFK houdende koudemiddelen.</p>
+          </div>
+        </div>
+        <ul class="checks">
+          <li>Correcte installatie volgens de hoogste installatie normen</li>
+          <li>Tot 5 jaar garantie op nieuw geïnstalleerde apparatuur</li>
+          <li>Producten met de hoogste kwaliteit en energienormen</li>
+          <li>Monteurs STEK, F-gassen en VCA gediplomeerd</li>
+        </ul>
+        <a class="btn" href="#contact">Offerte aanvragen</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact" aria-labelledby="contact-titel">
+    <div class="container">
+      <div>
+        <p class="eyebrow">Direct een airco laten installeren?</p>
+        <h2 id="contact-titel">Vraag uw <em>offerte</em> aan</h2>
+        <p class="intro">Vraag eenvoudig, snel en vrijblijvend een airco offerte aan. Wij beantwoorden uw bericht zo spoedig mogelijk.</p>
+        <a class="callout" href="tel:+31203080484">
+          <span class="ring" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></span>
+          <span><small>Bel voor informatie</small><b>020 3080 484</b></span>
+        </a>
+        <div class="contact-lines">
+          <a href="mailto:info@air-innovations.nl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>info@air-innovations.nl</a>
+          <a href="https://maps.google.com/?q=Visseringweg+74+1112+AT+Diemen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>Visseringweg 74, 1112 AT te Diemen</a>
+        </div>
+      </div>
+      <form class="form" action="#" method="post">
+        <h3>Offerte aanvragen</h3>
+        <p class="note">Wilt u meer weten over onze producten of wilt u een offerte aanvragen?</p>
+        <div class="form-grid">
+          <div><label for="f-aanhef">Aanhef</label><select id="f-aanhef" name="aanhef"><option>De heer</option><option>Mevrouw</option></select></div>
+          <div><label for="f-naam">Naam</label><input id="f-naam" name="naam" autocomplete="name" required></div>
+          <div><label for="f-mail">E-mail</label><input id="f-mail" name="email" type="email" autocomplete="email" required></div>
+          <div><label for="f-tel">Telefoon</label><input id="f-tel" name="telefoon" type="tel" autocomplete="tel"></div>
+          <div class="full"><label for="f-msg">Uw vraag</label><textarea id="f-msg" name="bericht"></textarea></div>
+        </div>
+        <button class="btn" type="submit">Versturen</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="projects" id="projecten" aria-labelledby="projecten-titel">
+    <div class="container">
+      <div>
+        <p class="eyebrow">Airconditioning projecten</p>
+        <h2 id="projecten-titel">Toegepast in <em>hotels</em>, horeca en woningen</h2>
+        <div class="feature-project">
+          <p class="quote">Van een grand hotel op Texel tot een monumentaal grachtenpand in Amsterdam: onze installaties worden toegepast in vrijwel iedere ruimte, met een zeer laag geluidsniveau.</p>
+          <div class="who"><b>Grand Hotel Opduin, Texel</b></div>
+        </div>
+        <ul class="proj-list">
+          <li>Hotels</li><li>Restaurants</li><li>Kantoren</li><li>Winkels</li><li>Woonboten</li><li>Ziekenhuizen</li><li>Clean rooms</li>
+        </ul>
+        <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
+        <a class="text-link" href="#projecten">Meer projecten <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="proj-grid">
+        <figure><img src="../assets/955b8e1411.jpg" alt="Lounge van Grand Hotel Opduin op Texel" loading="lazy"><figcaption>Grand Hotel Opduin, Texel</figcaption></figure>
+        <figure><img src="../assets/d8d20fb925.jpg" alt="Gevel van Bardak in Amsterdam" loading="lazy"><figcaption>Bardak, Amsterdam</figcaption></figure>
+        <figure><img src="../assets/db101991ce.jpeg" alt="Vloerroosters in een monumentaal grachtenpand" loading="lazy"><figcaption>Monumentaal grachtenpand 2, Amsterdam</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="brands" aria-labelledby="opdrachtgevers-titel">
+    <div class="container">
+      <h2 id="opdrachtgevers-titel">Onze opdrachtgevers</h2>
+      <div class="ticker">
+        <div class="ticker-track">
+          <span class="wordmark">Grand Hotel Opduin</span><span class="wordmark">Delta Hotel</span><span class="wordmark">Hotel de Looier</span><span class="wordmark">Hotel Bellevue</span><span class="wordmark">Dümmen Orange</span><span class="wordmark">Startup Village</span><span class="wordmark">Restaurant Pastis</span><span class="wordmark">Zadig et Voltaire</span><span class="wordmark">Sensi Seeds</span><span class="wordmark">VANS</span><span class="wordmark">FAB (Fabienne Chapot)</span><span class="wordmark">Bardak</span>
+          <span class="wordmark" aria-hidden="true">Grand Hotel Opduin</span><span class="wordmark" aria-hidden="true">Delta Hotel</span><span class="wordmark" aria-hidden="true">Hotel de Looier</span><span class="wordmark" aria-hidden="true">Hotel Bellevue</span><span class="wordmark" aria-hidden="true">Dümmen Orange</span><span class="wordmark" aria-hidden="true">Startup Village</span><span class="wordmark" aria-hidden="true">Restaurant Pastis</span><span class="wordmark" aria-hidden="true">Zadig et Voltaire</span><span class="wordmark" aria-hidden="true">Sensi Seeds</span><span class="wordmark" aria-hidden="true">VANS</span><span class="wordmark" aria-hidden="true">FAB (Fabienne Chapot)</span><span class="wordmark" aria-hidden="true">Bardak</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container grid">
+    <div>
+      <span class="flogo"><img src="../assets/e7e06b598c.png" width="213" height="78" alt="Air-Innovations" loading="lazy"></span>
+      <p>Vakkundige airconditioning installateur voor zowel particuliere als zakelijke klanten, met maatwerk voor elk type gebouw.</p>
+    </div>
+    <div>
+      <h3>Menu</h3>
+      <ul><li><a href="#diensten">Zakelijk</a></li><li><a href="#diensten">Particulier</a></li><li><a href="#projecten">Projecten</a></li><li><a href="#over-ons">Over ons</a></li><li><a href="#">Vacatures</a></li><li><a href="#contact">Contact</a></li></ul>
+    </div>
+    <div>
+      <h3>Wij zijn gespecialiseerd in</h3>
+      <ul><li>Airconditioning</li><li>Klimaattechniek</li><li>WTW (warmteterugwinning bij ventilatie)</li><li>Computerkoeling</li><li>Hete luchtgordijnen</li></ul>
+    </div>
+    <div>
+      <h3>Contact</h3>
+      <p class="em-label">Bel ons</p>
+      <a class="em-phone" href="tel:+31203080484">020 3080 484</a>
+      <ul>
+        <li><a href="mailto:info@air-innovations.nl">info@air-innovations.nl</a></li>
+        <li>Visseringweg 74</li>
+        <li>1112 AT te Diemen</li>
+      </ul>
+    </div>
+  </div>
+  <div class="bottom">
+    <div class="container">
+      <span>© Air-Innovations Airconditioning &amp; Klimaattechniek B.V.</span>
+      <span><a href="#">Leveringsvoorwaarden</a> · <a href="#">Cookies</a> · <a href="#">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){var b=document.getElementById('burger'),n=document.getElementById('nav');b.addEventListener('click',function(){var o=n.classList.toggle('open');b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Menu sluiten':'Menu openen');});n.addEventListener('click',function(e){if(e.target.tagName==='A'){n.classList.remove('open');b.setAttribute('aria-expanded','false');}});})();
+</script>
+</body>
+</html>
+
+```

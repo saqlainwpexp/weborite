@@ -1,0 +1,11 @@
+```json
+{"strongestAsset": null,
+ "issues": [
+  {"severity": "high", "category": "content", "title": "Generic 3D cartoon mascot as the hero visual", "detail": "The hero's main image is a stock-style 3D cartoon man with a tablet, which looks cheap for an agency selling design and shows none of the team's real work or people."},
+  {"severity": "high", "category": "content", "title": "Seasonal promo headline instead of a value proposition", "detail": "'New Year, New Website! Kick Off 2026 with Our Special Web Development Offers.' dates the page and says nothing about who they help or why they are better; the offer itself is never stated."},
+  {"severity": "medium", "category": "structure", "title": "Crowded hero competing for attention", "detail": "Headline, a six-line service list paragraph, CTA button, two rating badges, the mascot and a full quote form all share the first screen, so nothing leads; the long service list belongs lower down."},
+  {"severity": "medium", "category": "structure", "title": "Overloaded header", "detail": "Top bar plus eight nav items with two dropdowns, a phone pill and a floating WhatsApp button repeat the same contact actions several times."},
+  {"severity": "medium", "category": "mobile", "title": "Mobile page is a long run of dark red slabs with repeated copy", "detail": "On phones the services become tall dark-red cards with small centred text, the 'best Web Design Company in Lahore' paragraph repeats, and large empty dark areas break the flow."}
+ ],
+ "vertical": {"key": "web-design-agency", "label": "Web Agency", "register": "The buyer is a small or mid-sized business owner deciding whether this local agency looks skilled and trustworthy enough to build and market their website, judged against other modern web design and digital marketing studios rather than solo freelancers or large enterprise consultancies."}}
+```
