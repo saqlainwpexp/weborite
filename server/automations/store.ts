@@ -58,6 +58,10 @@ export function saveEnrollment(e: WfEnrollment) {
 export const isEnrolled = (workflowId: string, prospectId: string) =>
   Boolean(db.prepare("SELECT 1 FROM wf_enrollments WHERE workflow_id = ? AND prospect_id = ?").get(workflowId, prospectId));
 
+/** Total enrollments ever made, across every workflow (the demo caps this). */
+export const countEnrollments = (): number =>
+  (db.prepare("SELECT COUNT(*) AS n FROM wf_enrollments").get() as { n: number }).n;
+
 /** Enrollments ready for their next step, in active workflows only (paused ones keep their place). */
 export function dueEnrollments(workflowIds: string[], limit = 50): WfEnrollment[] {
   if (!workflowIds.length) return [];

@@ -1,8 +1,9 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import {
-  AlertTriangle, ArrowRight, ArrowUpRight, Blocks, CheckCircle2, ChevronDown, Clock, Download, ExternalLink, FileOutput,
-  Image as ImageIcon, Info, Layers, Monitor, RefreshCw, Smartphone, StickyNote, Trash2, Users, XCircle,
+  AlertTriangle, ArrowRight, ArrowUpRight, Blocks, Check, CheckCircle2, ChevronDown, Clock, Copy, Download, ExternalLink,
+  FileOutput, Image as ImageIcon, Info, Layers, Loader2, Mail, MessageCircle, Monitor, RefreshCw, Smartphone, Sparkles, StickyNote,
+  Trash2, Users, X, XCircle,
 } from "lucide-react";
 import { STEPS, type LeadDetail as Detail, type StepKey } from "../../../shared/types";
 import { workspaceEnabled } from "../../../shared/features";
@@ -48,6 +49,13 @@ export default function LeadDetail() {
   const [rerunOpen, setRerunOpen] = useState(false);
   const [bust, setBust] = useState(0);
 
+  // "How do I win this lead?" — draft the closing email.
+  const [pitchOpen, setPitchOpen] = useState(false);
+  const [pitch, setPitch] = useState<{ subject: string; body: string } | null>(null);
+  const [pitchBusy, setPitchBusy] = useState(false);
+  const [pitchErr, setPitchErr] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+
   // Refresh the mockup iframe when a new version lands.
   const genDone = lead?.steps.find((s) => s.key === "generate")?.finishedAt;
   useEffect(() => setBust(Date.now()), [genDone]);
@@ -72,6 +80,41 @@ export default function LeadDetail() {
     void reload();
     reloadAll();
   }
+
+  async function winLead(regenerate = false) {
+    setPitchOpen(true);
+    setPitchBusy(true);
+    setPitchErr(null);
+    setCopied(false);
+    if (regenerate) setPitch(null);
+    try {
+      const r = await api<{ subject: string; body: string }>(`/api/pitch/${lead!.id}`, { method: "POST", json: {} });
+      setPitch(r);
+    } catch (e) {
+      setPitchErr((e as Error).message);
+    } finally {
+      setPitchBusy(false);
+    }
+  }
+
+  async function copyPitch() {
+    if (!pitch) return;
+    try {
+      await navigator.clipboard.writeText(`Subject: ${pitch.subject}\n\n${pitch.body}`);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch { /* clipboard blocked: the textarea is there to copy by hand */ }
+  }
+
+  const mailtoHref = pitch
+    ? `mailto:${lead.email || ""}?subject=${encodeURIComponent(pitch.subject)}&body=${encodeURIComponent(pitch.body)}`
+    : "";
+
+  // One-click WhatsApp: wa.me needs digits only (best effort — strips spaces, dashes and a leading +).
+  const waDigits = (lead.phone || "").replace(/[^\d]/g, "");
+  const waHref = waDigits
+    ? `https://wa.me/${waDigits}?text=${encodeURIComponent(`Hi, I put together a new homepage mockup for ${name} — can I send it over?`)}`
+    : "";
 
   async function remove() {
     if (!confirm(`Delete ${name} and all its files?`)) return;
@@ -311,9 +354,16 @@ export default function LeadDetail() {
             </div>
             <div className="notif-foot">
               <button className="btn btn-ink btn-sm" onClick={() => nav("/leads")}>See all leads <ArrowRight /></button>
-              <a className="link-btn" href={`mailto:${lead.email}`} style={!lead.email ? { pointerEvents: "none", opacity: .5 } : undefined}><StickyNote />Email lead</a>
+              <div style={{ display: "flex", gap: 14 }}>
+                <a className="link-btn" href={waHref || undefined} target="_blank" rel="noreferrer" style={!waHref ? { pointerEvents: "none", opacity: .5 } : undefined} title={waHref ? "Open WhatsApp" : "No phone number on this lead"}><MessageCircle />WhatsApp</a>
+                <a className="link-btn" href={`mailto:${lead.email}`} style={!lead.email ? { pointerEvents: "none", opacity: .5 } : undefined}><StickyNote />Email lead</a>
+              </div>
             </div>
           </div>
+
+          <button className="btn btn-accent win-lead" onClick={() => winLead()}>
+            <Sparkles />How do I win this lead?
+          </button>
 
           <div className="card">
             <h3 className="card-title">Form entries <ArrowUpRight size={22} strokeWidth={1.6} /></h3>
@@ -349,6 +399,53 @@ export default function LeadDetail() {
           </div>
         </div>
       </div>
+
+      {pitchOpen && (
+        <div className="backdrop" onClick={() => setPitchOpen(false)}>
+          <div className="modal pitch-modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-label="Closing email">
+            <div className="card-head">
+              <div>
+                <h3 className="card-title" style={{ fontSize: 24 }}>How to win {name}</h3>
+                <p className="card-sub" style={{ margin: "2px 0 0" }}>A closing email built from this lead's form answers, the issues found, and the new mockup. Edit anything before you send.</p>
+              </div>
+              <button type="button" className="icon-btn" aria-label="Close" onClick={() => setPitchOpen(false)}><X /></button>
+            </div>
+
+            {pitchBusy && !pitch && (
+              <div className="pitch-loading"><Loader2 className="spin" /><span>Writing the email…</span></div>
+            )}
+            {pitchErr && !pitchBusy && (
+              <div className="banner err" style={{ margin: 0 }}><XCircle /><div>{pitchErr}</div></div>
+            )}
+
+            {pitch && (
+              <>
+                <label className="pitch-field">
+                  <span>Subject</span>
+                  <input className="input" value={pitch.subject} onChange={(e) => setPitch({ ...pitch, subject: e.target.value })} />
+                </label>
+                <label className="pitch-field">
+                  <span>Email</span>
+                  <textarea className="input pitch-body" rows={16} value={pitch.body} onChange={(e) => setPitch({ ...pitch, body: e.target.value })} />
+                </label>
+                <p className="card-sub" style={{ margin: 0 }}>Fill in anything in [brackets] — the price, the mockup link, and any figures the AI couldn't know.</p>
+              </>
+            )}
+
+            <div className="foot" style={{ justifyContent: "space-between" }}>
+              <button type="button" className="btn btn-white" onClick={() => winLead(true)} disabled={pitchBusy}>
+                {pitchBusy ? <Loader2 className="spin" /> : <RefreshCw />}Regenerate
+              </button>
+              <div style={{ display: "flex", gap: 12 }}>
+                <button type="button" className="btn btn-white" onClick={() => void copyPitch()} disabled={!pitch}>
+                  {copied ? <Check /> : <Copy />}{copied ? "Copied" : "Copy"}
+                </button>
+                <a className="btn btn-ink" href={mailtoHref} style={!pitch ? { pointerEvents: "none", opacity: .5 } : undefined}><Mail />Open in email</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

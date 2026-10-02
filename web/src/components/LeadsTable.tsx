@@ -5,6 +5,12 @@ import { fileUrl, host, timeAgo } from "../lib/api";
 import { StatusPill } from "./ui";
 
 const SOURCE: Record<Lead["source"], string> = { elementor: "Elementor", meta: "Meta Ads", manual: "Manual", maps: "Google Maps" };
+const TEMP_LABEL = { hot: "Hot", warm: "Warm", cold: "Cold" } as const;
+
+function TempPill({ temp, score }: { temp?: Lead["temp"]; score?: number }) {
+  if (!temp) return <span className="muted">—</span>;
+  return <span className={`temp-pill ${temp}`} title={typeof score === "number" ? `Lead score ${score}/100` : undefined}>{TEMP_LABEL[temp]}</span>;
+}
 
 export function LeadsTable({ leads, benchmarks, compact = false }: { leads: Lead[]; benchmarks: BenchmarkSet[]; compact?: boolean }) {
   const nav = useNavigate();
@@ -23,6 +29,7 @@ export function LeadsTable({ leads, benchmarks, compact = false }: { leads: Lead
           <tr>
             <th>Lead</th>
             {!compact && <th className="hide-sm">Source</th>}
+            <th className="hide-sm">Score</th>
             <th className="hide-sm">Vertical</th>
             <th>Status</th>
             <th className="hide-sm">Received</th>
@@ -45,6 +52,7 @@ export function LeadsTable({ leads, benchmarks, compact = false }: { leads: Lead
                   </div>
                 </td>
                 {!compact && <td className="hide-sm"><span className="chip">{SOURCE[l.source]}</span></td>}
+                <td className="hide-sm"><TempPill temp={l.temp} score={l.score} /></td>
                 <td className="hide-sm">{v ? <span className="vchip"><i style={{ background: v.color }} />{v.label}</span> : <span className="muted">—</span>}</td>
                 <td><StatusPill status={l.status} /></td>
                 <td className="hide-sm muted">{timeAgo(l.createdAt)}</td>

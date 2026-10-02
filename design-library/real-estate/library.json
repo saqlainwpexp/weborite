@@ -1,0 +1,1322 @@
+{
+ "niche": "Real estate agents, brokers, investors & mortgage",
+ "match": "real.?estate|realtor|realty|estate.?agent|makelaar|vastgoed|immobili|broker(age)?|mortgage|hypothe|home.?loan|properties|property.?(investment|investor|management|manager|agency|group)|homes?.for.sale|sell.your.(house|home)|we.buy.houses|cash.for.(houses|homes)|house.?flip|apprais|taxat|home.?inspect|building.?inspect|timeshare|letting|lettings|landlord|condo|listing",
+ "about": "Mix-and-match sections for real-estate homepages (solo agents, agencies, luxury brokers, investors / we-buy-houses, commercial groups, mortgage brokers), from 12 Dribbble full-page references in this folder (1–12.webp; shot links in _sources.json). Every mockup = one base STYLE + an ordered set of SECTIONS from different references. Crops live in sections/<id>.jpg. Property photography and the agent's portrait carry these designs: use the lead's real listings, agent headshot and local neighbourhood photos first, then architecture stock. Listing prices, sold counts, $ volume and ratings must come from FACTS — otherwise use neutral placeholders like 'Recently sold' without numbers.",
+ "styles": [
+  {
+   "id": "agent-glow",
+   "name": "Personal agent, soft glow",
+   "fits": "solo agent realtor personal brand buyer seller modern young independent city",
+   "character": "A personal-brand agent site: pale blue-grey page frame, rounded 16px image cards, a GIANT white 'AGENT' word set behind a modern building photo, a portrait cut-out with a big pale 'Hello there' in grey italic and a soft yellow radial glow, black bands for services and testimonials, tiny pill labels floating around the hero. (Ref 1 Scofield.)",
+   "fonts": "Instrument Sans (400/500) for everything; the giant word at 300px",
+   "cssStarter": ":root{--accent:#f4e27a;--frame:#cedae1;--ink:#0d0d0d;--body:#55595c;--bg:#ffffff;--dark:#000000;--line:#e6e8ea;--container:1280px;--gutter:32px;--section-y:110px;--radius:16px}\nbody{font-family:'Instrument Sans',sans-serif;font-size:15px;line-height:1.6;color:var(--body);background:var(--frame)}\n.page{background:var(--bg);max-width:1360px;margin:0 auto}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.dark{background:var(--dark);color:#bdbdbd}.dark h2{color:#fff}\nh1,h2,h3{font-weight:400;color:var(--ink);letter-spacing:-.02em;line-height:1.1}\nh1{font-size:48px}\nh2{font-size:40px}\nh3{font-size:18px;font-weight:500}\n.giant{font-size:clamp(140px,22vw,320px);font-weight:400;color:#fff;line-height:.8;letter-spacing:-.04em}\n.glow{background:radial-gradient(60% 60% at 70% 90%,#fff3a6 0%,transparent 70%)}\n.pill{display:inline-flex;height:26px;padding:0 12px;border-radius:99px;border:1px solid var(--line);background:#fff;font-size:11px;align-items:center}\n.btn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 6px 0 16px;border-radius:99px;background:#fff;color:var(--ink);font-size:12px}\n.btn i{width:24px;height:24px;border-radius:50%;background:var(--ink);display:grid;place-items:center;color:#fff}\n.card{border-radius:var(--radius);overflow:hidden}\n@media(max-width:768px){:root{--section-y:68px;--gutter:20px}h1{font-size:34px}h2{font-size:28px}}"
+  },
+  {
+   "id": "plum-agent",
+   "name": "Plum solo agent",
+   "fits": "solo agent realtor female local suburban family homes buyer seller friendly trusted",
+   "character": "Warm, personal local agent: off-white/ivory page, one rich plum-purple accent (pill buttons with a round arrow chip, contact card, portrait panel), the agent as a white-outlined cut-out holding a small house model, a teal script signature, rounded listing photos with price + View details, a map card of service areas. (Ref 2 Amelia Homes.)",
+   "fonts": "Inter (300/400/500) for everything; a script (Mrs Saint Delafield / Allura) for the signature",
+   "cssStarter": ":root{--accent:#6b0f5c;--teal:#2c8a86;--ink:#161616;--body:#5b5b5b;--bg:#f7f8f1;--surface:#ffffff;--dark:#0a1616;--line:#e4e6df;--container:1280px;--gutter:32px;--section-y:110px;--radius:10px}\nbody{font-family:'Inter',sans-serif;font-size:15px;line-height:1.6;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\nh1,h2,h3{font-weight:400;color:var(--ink);letter-spacing:-.02em;line-height:1.12}\nh1{font-size:60px;color:#fff}\nh2{font-size:44px}\nh2 .muted{color:#b6b6b0}\nh3{font-size:20px}\n.eyebrow{font-size:11px;color:var(--ink);border-bottom:1px solid var(--teal);display:inline-block;margin-bottom:24px}\n.btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 4px 0 18px;border-radius:99px;background:var(--accent);color:#fff;font-size:13px}\n.btn i{width:32px;height:32px;border-radius:50%;background:#fff;color:var(--accent);display:grid;place-items:center}\n.stat{display:flex;gap:24px;align-items:center;background:var(--surface);padding:18px 24px;border-radius:6px}.stat b{font-size:40px;font-weight:400;color:var(--ink)}\n.listing{border-radius:var(--radius);overflow:hidden;position:relative;color:#fff}\n.signature{font-family:'Allura',cursive;font-size:40px;color:#fff;background:var(--teal);padding:4px 18px;transform:rotate(-6deg);display:inline-block}\nfooter{background:var(--dark);color:#b7bcbc}\n@media(max-width:768px){:root{--section-y:68px;--gutter:20px}h1{font-size:38px}h2{font-size:30px}}"
+  },
+  {
+   "id": "luxury-noir",
+   "name": "Luxury noir & gold",
+   "fits": "luxury high end villa penthouse waterfront international dubai premium private advisor broker exclusive",
+   "character": "Private-advisor luxury: near-black page inside a thin grey border frame, UPPERCASE light grotesk headings where the second half of each heading turns mid-grey, a soft gold accent (#f1c96a) for pill buttons and one highlighted table row, big dusk photos of villas, tiny tracked labels at the far left of each section, an awards table, a giant gold wordmark in the footer. (Ref 3 LandMarka.)",
+   "fonts": "Inter Tight (300/400) UPPERCASE for headings + Inter (400) for text",
+   "cssStarter": ":root{--accent:#f1c96a;--bg:#0a0a0a;--surface:#141414;--ink:#f5f5f5;--muted:#8a8a8a;--line:rgba(255,255,255,.1);--container:1200px;--gutter:32px;--section-y:110px;--radius:2px}\nbody{background:#000;color:var(--muted);font-family:'Inter',sans-serif;font-size:13px;line-height:1.6}\n.page{max-width:1160px;margin:0 auto;background:var(--bg);border-left:1px solid var(--line);border-right:1px solid var(--line)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0;border-top:1px solid var(--line)}\nh1,h2,h3{font-family:'Inter Tight',sans-serif;font-weight:300;text-transform:uppercase;color:var(--ink);line-height:1.05}\nh1{font-size:64px}\nh2{font-size:30px;max-width:640px}h2 span{color:var(--muted)}\nh3{font-size:15px;font-weight:400}\n.label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}.label::before{content:'• '}\n.btn{display:inline-flex;align-items:center;height:32px;padding:0 18px;border-radius:99px;background:var(--accent);color:#111;font-size:10px;text-transform:uppercase;letter-spacing:.06em}\n.stat{border:1px solid var(--line);padding:20px;text-align:center}.stat b{display:block;font-size:26px;font-weight:300;color:var(--accent)}\n.table-row{display:grid;grid-template-columns:1fr 2fr 1fr 60px;padding:10px 0;border-bottom:1px solid var(--line);font-size:10px;text-transform:uppercase}.table-row.on{background:var(--accent);color:#111}\n.wordmark{font-size:120px;font-weight:300;color:var(--accent);letter-spacing:-.03em}\n@media(max-width:768px){:root{--section-y:68px;--gutter:20px}h1{font-size:38px}h2{font-size:22px}.wordmark{font-size:56px}}"
+  },
+  {
+   "id": "orange-agency",
+   "name": "Orange agency",
+   "fits": "agency brokerage buy rent listings search modern urban apartments new developments property portal",
+   "character": "Friendly, app-like agency: a very pale lavender-white canvas, a single vivid orange (#ff5a1f) for the second headline line, buttons and step numbers, big rounded-corner architecture photos (32px radius) with a soft pink offset shadow, a Buy/Rent tabbed search bar, a rotating 'special price' sticker badge, a numbered 1-2-3 process beside a tall photo, an orange CTA banner with a diagonal photo cut. (Ref 4 UrbanNest Realty.)",
+   "fonts": "Raleway (600/700) for headings + Poppins (400/500) for text",
+   "cssStarter": ":root{--accent:#ff5a1f;--ink:#1e1e1e;--body:#6b6b75;--bg:#f3f4fb;--surface:#ffffff;--dark:#262626;--line:#e7e7ef;--container:1200px;--gutter:32px;--section-y:100px;--radius:32px}\nbody{font-family:'Poppins',sans-serif;font-size:14px;line-height:1.7;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\nh1,h2,h3{font-family:'Raleway',sans-serif;font-weight:700;color:var(--ink);line-height:1.15}\nh1{font-size:64px}h1 em{font-style:normal;color:var(--accent)}\nh2{font-size:36px;font-weight:600;text-align:center}\nh3{font-size:22px;font-weight:600}\n.btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 22px;background:var(--accent);color:#fff;font-size:13px;font-weight:500}\n.photo{border-radius:var(--radius);box-shadow:14px 14px 0 #fde3dc}\n.search{background:var(--surface);display:grid;grid-template-columns:repeat(3,1fr) auto;gap:24px;padding:20px 24px;box-shadow:0 10px 30px rgba(0,0,0,.05)}\n.tabs button{height:36px;padding:0 28px}.tabs .on{background:var(--accent);color:#fff}\n.step{display:flex;gap:18px}.step b{flex:none;width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center}\n.card{background:var(--surface);border-radius:8px;padding:10px 10px 18px}\nfooter{background:var(--dark);color:#bbb}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px;--radius:20px}h1{font-size:40px}h2{font-size:28px}.search{grid-template-columns:1fr}}"
+  },
+  {
+   "id": "invest-clean",
+   "name": "Clean investment platform",
+   "fits": "real estate investment investor platform fund property investing portfolio proptech verified listings rental yield",
+   "character": "Trustworthy fintech-meets-property: white canvas inside a soft grey rounded page frame, near-black navy text, a coral-orange accent for tiny uppercase labels, key words in headings and pill buttons, pale grey rounded stat tiles, a small 'portfolio overview' data table card, rounded 16px photos, navy rounded CTA and footer blocks. (Ref 5 Evermont.)",
+   "fonts": "Outfit (400/500/600) for everything",
+   "cssStarter": ":root{--accent:#f05a28;--primary:#101c2b;--ink:#101c2b;--body:#63676b;--bg:#ffffff;--surface-alt:#f4f4f5;--line:#ececec;--container:1240px;--gutter:32px;--section-y:96px;--radius:16px}\nbody{font-family:'Outfit',sans-serif;font-size:15px;line-height:1.6;color:var(--body);background:#e9e9e9}\n.page{background:var(--bg);border-radius:28px;max-width:1300px;margin:24px auto;overflow:hidden}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\nh1,h2,h3{font-weight:500;color:var(--ink);letter-spacing:-.02em;line-height:1.12}\nh1{font-size:56px;color:#fff}\nh2{font-size:44px}h2 em{font-style:normal;color:var(--accent)}\nh3{font-size:22px}\n.label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}\n.btn{display:inline-flex;align-items:center;height:36px;padding:0 18px;border-radius:99px;background:var(--accent);color:#fff;font-size:13px;font-weight:500}\n.btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.35)}\n.tile{background:var(--surface-alt);border-radius:12px;padding:24px}.tile b{display:block;font-size:40px;font-weight:500;color:var(--ink)}\n.block{background:var(--primary);color:#c9ced6;border-radius:20px;padding:64px;text-align:center}\n.photo{border-radius:var(--radius)}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:36px}h2{font-size:30px}}"
+  },
+  {
+   "id": "golden-realtor",
+   "name": "Golden realtor",
+   "fits": "realtor agent personal brand luxury family homes buyer seller advocate warm confident bold",
+   "character": "Confident, warm personal brand: saturated mustard/amber hero and contact bands with a black brush-stroke swash, a deep chocolate-brown band for the agent bio with an arched portrait, a warm cream canvas elsewhere, a wide-set decorative display serif (Federo-like) for headings, arch-topped property photos, rounded white listing cards with a price pill. (Ref 6 Hello Angie.)",
+   "fonts": "Federo (400) or Marcellus for headings + Inter (400/500) for text",
+   "cssStarter": ":root{--accent:#d8952f;--dark:#160b00;--ink:#1a1206;--body:#6d6150;--bg:#f9eee0;--cream:#fffcf9;--line:#eadfce;--container:1200px;--gutter:32px;--section-y:110px;--radius:20px}\nbody{font-family:'Inter',sans-serif;font-size:14px;line-height:1.65;color:var(--body);background:var(--cream)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.amber{background:linear-gradient(135deg,#c98619,#e0a23c);color:#2a1a02}\n.brown{background:var(--dark);color:#bba98f}.brown h2{color:#fff}\n.sand{background:var(--bg)}\nh1,h2,h3{font-family:'Federo',sans-serif;font-weight:400;color:var(--ink);line-height:1.1}\nh1{font-size:72px;color:#fff;text-align:center}\nh2{font-size:36px;text-align:center}\nh3{font-size:20px}\n.eyebrow{display:flex;align-items:center;gap:10px;font-size:11px;color:#a07a36;justify-content:center}.eyebrow::before{content:'';width:40px;height:1px;background:currentColor}\n.arch{border-radius:200px 200px 16px 16px;overflow:hidden}\n.btn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 4px 0 16px;border-radius:99px;border:1px solid var(--ink);font-size:12px}\n.btn i{width:28px;height:28px;border-radius:50%;background:#f1d38e;display:grid;place-items:center}\n.stat b{font-family:'Federo',sans-serif;font-size:44px;color:#fff;font-weight:400}\n.card{background:#fff;border-radius:var(--radius);overflow:hidden}\n@media(max-width:768px){:root{--section-y:68px;--gutter:20px}h1{font-size:40px}h2{font-size:28px}}"
+  },
+  {
+   "id": "cash-buyer",
+   "name": "Cash home buyer",
+   "fits": "we buy houses cash offer sell fast investor home buyer flip distressed foreclosure as is sell my house",
+   "character": "Direct-response 'we buy houses for cash': a dark house photo hero with a big 2-line headline in heavy sans where one word is yellow, a checklist of promises, a phone button, and a lead-capture form card in a thin yellow frame; centred section headings flanked by thin horizontal rules; yellow offset boxes behind photos; a comparison table ('Sold to us' vs 'Selling with an agent'); a yellow testimonial band. (Ref 7 GoldMine Homes.)",
+   "fonts": "Montserrat (600/700/800) for headings + Montserrat (400/500) for text",
+   "cssStarter": ":root{--accent:#f5c63c;--dark:#1a1a1a;--ink:#161616;--body:#555;--bg:#ffffff;--surface-alt:#f1f1f1;--line:#dcdcdc;--container:1200px;--gutter:32px;--section-y:90px;--radius:0}\nbody{font-family:'Montserrat',sans-serif;font-size:14px;line-height:1.7;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.alt{background:var(--surface-alt)}\nh1,h2,h3{font-weight:800;color:var(--ink);line-height:1.1}\nh1{font-size:60px;color:var(--accent)}\nh2{font-size:32px;display:flex;align-items:center;gap:20px;justify-content:center;text-align:center}\nh2::before,h2::after{content:'';flex:0 0 90px;height:1px;background:#bbb}\nh2 em{font-style:normal;color:var(--accent)}\nh3{font-size:16px;font-weight:700}\n.checks li{list-style:none;padding-left:22px;position:relative;color:#fff;font-weight:600;font-size:12px}.checks li::before{content:'\\2713';position:absolute;left:0;color:var(--accent)}\n.btn{display:inline-flex;align-items:center;height:44px;padding:0 22px;background:var(--accent);color:#111;font-size:12px;font-weight:800;text-transform:uppercase}\n.btn-outline{background:transparent;border:2px solid var(--accent);color:var(--ink)}\n.form-card{background:#fff;padding:20px;outline:2px solid var(--accent);outline-offset:6px}\n.form-card input{width:100%;height:36px;background:#eee;border:0;margin-bottom:8px;padding:0 10px}\n.offset{box-shadow:16px 16px 0 var(--accent)}\n.compare .us{background:var(--accent);font-weight:700;text-align:center}\n@media(max-width:768px){:root{--section-y:60px;--gutter:20px}h1{font-size:38px}h2{font-size:24px}h2::before,h2::after{flex-basis:24px}}"
+  },
+  {
+   "id": "bold-grid",
+   "name": "Bold grid agency",
+   "fits": "agency developer new builds projects architecture brokerage modern bold team commercial residential",
+   "character": "Architectural and punchy: HUGE heavy UPPERCASE 2-line headings, a faint graph-paper grid behind pale pink/cream sections, a dark navy hero with a white tower photo and a big orange quarter-circle behind it, an orange frame behind a photo collage, a navy spec card with a blue 'Learn more' button, pale numbered process cards with a big outlined numeral, a blue 'Meet our team' block. (Ref 8 PropHub.)",
+   "fonts": "Archivo (800) UPPERCASE for headings + Inter (400/500) for text",
+   "cssStarter": ":root{--accent:#ffae2b;--blue:#0f86e8;--primary:#1c2430;--ink:#1c2430;--body:#5e636b;--bg:#fbfaf1;--pink:#fdf3f3;--line:rgba(0,0,0,.05);--container:1200px;--gutter:32px;--section-y:110px;--radius:0}\nbody{font-family:'Inter',sans-serif;font-size:13px;line-height:1.65;color:var(--body);background:var(--bg)}\n.grid-bg{background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:120px 120px}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.pink{background-color:var(--pink)}\nh1,h2,h3{font-family:'Archivo',sans-serif;font-weight:800;text-transform:uppercase;color:var(--ink);line-height:1.02}\nh1{font-size:60px;color:#fff}\nh2{font-size:52px}\nh3{font-size:14px}\n.btn{display:inline-flex;align-items:center;height:36px;padding:0 18px;background:var(--blue);color:#fff;font-size:12px}\n.spec{background:var(--primary);color:#c7ccd4;padding:24px}.spec h3{color:#fff}\n.frame{outline:28px solid var(--accent);outline-offset:-1px}\n.num{font-family:'Archivo',sans-serif;font-size:60px;font-weight:800;color:transparent;-webkit-text-stroke:1px #d9cfcf;line-height:1}\n.tile{background:#f3eaea;padding:28px}\n.team-block{background:var(--blue);color:#fff;padding:40px}\nfooter{background:var(--primary);color:#b9c0ca}\n@media(max-width:768px){:root{--section-y:68px;--gutter:20px}h1{font-size:38px}h2{font-size:34px}}"
+  },
+  {
+   "id": "navy-agent",
+   "name": "Navy brokerage agent",
+   "fits": "agent realtor brokerage compass keller williams remax neighborhoods relocation buyer seller investment established professional",
+   "character": "Polished brokerage-agent site: a dark photo hero with a centred 'Hi, I'm <Name>' and two thin rectangular buttons, then clean white sections with small mint-green tag labels, a square agent portrait beside a bio and credentials row, listing and neighbourhood carousels with thin outline 'View all' bars, full-width deep navy bands, a pale blue 'Experience. Integrity. Results.' band, a Buying? | Selling? split CTA. (Ref 9 Travis-Lee Moore.)",
+   "fonts": "Figtree (300/400/500) for everything",
+   "cssStarter": ":root{--accent:#6fcf97;--primary:#12214a;--deep:#0a1333;--ink:#141a2b;--body:#5c6272;--bg:#ffffff;--pale:#e8eefc;--line:#d6dbe6;--container:1200px;--gutter:32px;--section-y:100px;--radius:0}\nbody{font-family:'Figtree',sans-serif;font-size:14px;line-height:1.65;color:var(--body);background:#e6e6e6}\n.page{background:var(--bg);max-width:1380px;margin:0 auto}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.navy{background:var(--primary);color:#c1c9dd}.navy h2{color:#fff}\n.pale{background:var(--pale)}\nh1,h2,h3{font-weight:400;color:var(--ink);letter-spacing:-.01em;line-height:1.15}\nh1{font-size:56px;color:#fff;text-align:center}\nh2{font-size:36px}\nh3{font-size:16px;font-weight:500}\n.tag{display:inline-block;font-size:9px;font-weight:600;text-transform:uppercase;padding:2px 6px;background:linear-gradient(90deg,var(--accent) 0 6px,transparent 6px);padding-left:10px;margin-bottom:14px}\n.btn{display:inline-flex;align-items:center;height:36px;padding:0 24px;border:1px solid #fff;color:#fff;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}\n.btn-solid{background:#fff;color:var(--ink)}\n.bar-btn{display:block;text-align:center;border:1px solid var(--line);padding:10px;font-size:10px;text-transform:uppercase}\n.carousel{display:flex;gap:20px;overflow:hidden}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:36px}h2{font-size:28px}}"
+  },
+  {
+   "id": "commercial-blue",
+   "name": "Commercial blue & lime",
+   "fits": "commercial real estate investment group holding fund developer corporate retail office logistics partners institutional",
+   "character": "Corporate investment group: a deep royal-blue gradient that fades to white (hero, timeline, contact), a subtle glassy square pattern, a signal lime-green accent (#7ee26b) for small buttons with a separate arrow square and the active portfolio tile, a white building cut-out in the hero, a centred 'about' statement with the last words fading grey, 3 mission/vision/goals columns split by rules, a numbered vertical portfolio timeline, big NAV stats, black-and-white team portraits. (Ref 10 Oakridge Realty Group.)",
+   "fonts": "Manrope (400/500/600/700) for everything",
+   "cssStarter": ":root{--accent:#7ee26b;--primary:#0c2168;--deep:#02194c;--ink:#111a33;--body:#5d6277;--bg:#ffffff;--line:#e2e5ec;--container:1240px;--gutter:32px;--section-y:110px;--radius:2px}\nbody{font-family:'Manrope',sans-serif;font-size:14px;line-height:1.65;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.blue{background:linear-gradient(180deg,#1d3a9a 0%,#122a7a 55%,#ffffff 100%);color:#d6ddf5}\n.blue-solid{background:linear-gradient(180deg,#ffffff 0%,#15307e 18%,#0c2168 100%);color:#c8d1ef}\n.blue h1,.blue h2,.blue-solid h2{color:#fff}\nh1,h2,h3{font-weight:600;color:var(--ink);letter-spacing:-.02em;line-height:1.15}\nh1{font-size:52px}\nh2{font-size:36px}\nh3{font-size:18px}\n.label{font-size:10px;font-weight:600;color:var(--ink)}.label::before{content:'• '}\n.btn{display:inline-flex;align-items:stretch;height:30px;font-size:11px;font-weight:600}\n.btn span{background:var(--accent);color:#0b2a0b;padding:0 12px;display:flex;align-items:center}.btn i{width:30px;background:#fff;display:grid;place-items:center;color:#111}\n.statement{font-size:24px;line-height:1.45;text-align:center;color:var(--ink)}.statement .fade{color:#8a8fa3}\n.cols{display:grid;grid-template-columns:repeat(3,1fr)}.cols>div{padding:24px;border-left:1px solid var(--line)}\n.stat b{display:block;font-size:44px;font-weight:600;color:#fff}\n.portrait{filter:grayscale(1)}\n@media(max-width:768px){:root{--section-y:68px;--gutter:20px}h1{font-size:34px}h2{font-size:28px}.cols{grid-template-columns:1fr}}"
+  },
+  {
+   "id": "desert-luxury",
+   "name": "Sunlit luxury community",
+   "fits": "luxury community development new homes resort second home villa architecture sustainable desert coastal mountain vacation estates",
+   "character": "Calm, sunlit lifestyle development: golden-hour architecture photography edge to edge, white rounded search card floating on the hero, a burnt-orange accent (#d97a0b) for pill buttons and prices, a 2×2 grid of rounded photos each with a centred frosted-white caption card, a full-bleed sunset feature image with small glass thumbnail cards, clean property cards, a big centred quote under a trio of round thumbnails. (Ref 11 Desertia.)",
+   "fonts": "Urbanist (400/500/600) for everything",
+   "cssStarter": ":root{--accent:#d97a0b;--ink:#1e1a16;--body:#6a625a;--bg:#ffffff;--sand:#f6efe6;--line:#ece6de;--container:1240px;--gutter:32px;--section-y:110px;--radius:18px}\nbody{font-family:'Urbanist',sans-serif;font-size:15px;line-height:1.6;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\nh1,h2,h3{font-weight:500;color:var(--ink);letter-spacing:-.01em;line-height:1.15}\nh1{font-size:52px;color:#fff}\nh2{font-size:40px}\nh3{font-size:18px}\n.btn{display:inline-flex;align-items:center;height:40px;padding:0 22px;border-radius:99px;background:var(--accent);color:#fff;font-size:13px;font-weight:600}\n.btn-white{background:#fff;color:var(--ink)}\n.search-card{background:#fff;border-radius:16px;padding:20px;box-shadow:0 20px 50px rgba(0,0,0,.18)}\n.photo{border-radius:var(--radius);overflow:hidden;position:relative}\n.photo .cap{position:absolute;inset:auto 20% 30% 20%;background:rgba(255,255,255,.92);border-radius:10px;padding:16px;text-align:center}.cap b{color:var(--accent)}\n.price{color:var(--accent);font-size:22px;font-weight:600}\n.card{border:1px solid var(--line);border-radius:12px;overflow:hidden}\n@media(max-width:768px){:root{--section-y:68px;--gutter:20px}h1{font-size:34px}h2{font-size:28px}}"
+  },
+  {
+   "id": "aurus-bold",
+   "name": "Bold luxury advisory",
+   "fits": "luxury advisory private clients penthouse waterfront investment properties high net worth agency bold modern",
+   "character": "Bold and premium: an ultra-heavy tight sans (Archivo Black-like) for hero and section titles (hero 3 lines ≈110px, white on a photo), a navy-black + safety-orange palette, a stats strip and an orange-diamond ticker of property types under the hero, listing cards in a tight 3×2 grid with orange 'FOR SALE' tags, a navy about block with a giant ghosted 'LUXURY' word and an orange stat tile, numbered service rows with outlined arrow squares, an orange CTA strip above the footer. (Ref 12 Aurus.)",
+   "fonts": "Archivo Black (400) for display + Inter (400/500/600) for text",
+   "cssStarter": ":root{--accent:#e8743b;--primary:#0c1221;--ink:#0c1221;--body:#5b606b;--bg:#ffffff;--surface-alt:#f1f2f5;--line:#e3e5ea;--container:1200px;--gutter:32px;--section-y:100px;--radius:6px}\nbody{font-family:'Inter',sans-serif;font-size:13px;line-height:1.6;color:var(--body);background:var(--surface-alt)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.dark{background:var(--primary);color:#aeb3bf}.dark h2{color:#fff}\nh1,h2{font-family:'Archivo Black',sans-serif;font-weight:400;color:var(--ink);letter-spacing:-.02em;line-height:.92}\nh1{font-size:110px;color:#fff;text-transform:uppercase}\nh2{font-size:48px}\nh3{font-size:15px;font-weight:600;color:var(--ink)}\n.label{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}\n.ticker{background:var(--primary);color:#fff;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;display:flex;gap:28px;padding:12px 0}.ticker span::before{content:'\\2726  ';color:var(--accent)}\n.tag{background:var(--accent);color:#fff;font-size:9px;font-weight:700;padding:3px 8px;border-radius:99px}\n.btn{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 16px;background:var(--primary);color:#fff;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:3px}\n.btn-light{background:#fff;color:var(--ink)}\n.ghost{font-family:'Archivo Black',sans-serif;font-size:200px;color:rgba(255,255,255,.04);line-height:.8}\n.row{display:flex;align-items:center;gap:24px;padding:18px 0;border-bottom:1px solid var(--line)}.row b{font-size:26px;color:#d5d8df}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:56px}h2{font-size:32px}}"
+  }
+ ],
+ "orders": [
+  [
+   "hero",
+   "about",
+   "services",
+   "listings",
+   "testimonials",
+   "process",
+   "cta",
+   "footer"
+  ],
+  [
+   "hero",
+   "stats",
+   "services",
+   "about",
+   "listings",
+   "testimonials",
+   "faq",
+   "contact",
+   "footer"
+  ],
+  [
+   "hero",
+   "listings",
+   "about",
+   "neighborhoods",
+   "testimonials",
+   "blog",
+   "contact",
+   "footer"
+  ],
+  [
+   "hero",
+   "about",
+   "listings",
+   "neighborhoods",
+   "why",
+   "testimonials",
+   "cta",
+   "footer"
+  ],
+  [
+   "hero",
+   "why",
+   "listings",
+   "process",
+   "team",
+   "testimonials",
+   "contact",
+   "footer"
+  ],
+  [
+   "hero",
+   "services",
+   "stats",
+   "listings",
+   "team",
+   "faq",
+   "cta",
+   "footer"
+  ],
+  [
+   "hero",
+   "about",
+   "process",
+   "why",
+   "testimonials",
+   "faq",
+   "contact",
+   "footer"
+  ]
+ ],
+ "sections": [
+  {
+   "id": "hero-scofield",
+   "role": "hero",
+   "from": "1 Scofield",
+   "crop": {
+    "src": "1.webp",
+    "x": 44,
+    "y": 0,
+    "w": 1352,
+    "h": 960
+   },
+   "spec": "Thin header (small wordmark, 5-link nav, 'Get in touch ●'). A big rounded card (pale blue sky): a 2-line 44px headline top-left, three tiny pill tags stacked top-right, a GIANT white 'AGENT' word across the card behind a modern building photo; bottom-left two small white pill buttons, bottom-right a 2-line uppercase caption + the agent's small portrait in a rounded box."
+  },
+  {
+   "id": "hero-amelia",
+   "role": "hero",
+   "from": "2 Amelia Homes",
+   "crop": {
+    "src": "2.webp",
+    "x": 40,
+    "y": 0,
+    "w": 1120,
+    "h": 840
+   },
+   "spec": "Full-width sunset photo of a home. Header with a script wordmark, a pill nav group (active item white), a plum pill CTA and a light/dark toggle. LEFT a 3-line 60px white headline, 2 lines, a plum pill button with round arrow + outline pill. RIGHT the agent as a white-outlined cut-out holding a small house model and keys. Bottom-left two small glass badges (licence number, verified reviews)."
+  },
+  {
+   "id": "hero-landmarka",
+   "role": "hero",
+   "from": "3 LandMarka",
+   "crop": {
+    "src": "3.webp",
+    "x": 154,
+    "y": 0,
+    "w": 1132,
+    "h": 760
+   },
+   "spec": "Framed dark page. Header: gold logo + tagline, two small nav columns, search + contact. A dusk villa photo: bottom-left a 2-line 60px UPPERCASE light headline, bottom-right a 3-line intro + gold pill 'Book a private consultation' + text link. A small round scroll indicator centred."
+  },
+  {
+   "id": "hero-urbannest",
+   "role": "hero",
+   "from": "4 UrbanNest",
+   "crop": {
+    "src": "4.webp",
+    "y": 0,
+    "h": 1000
+   },
+   "spec": "Pale canvas. Header: stacked logo, nav with the active item orange, orange 'Get started' button. LEFT a 2-line 64px headline with the second line's first word orange, 2 lines of text. RIGHT a big rounded tower/sky photo with a black circular 'Special price' sticker overlapping its lower-left corner. Under the text a Buy | Rent tab row and a white search bar (Location · Type · Price range with icons) with an orange 'Explore now' button."
+  },
+  {
+   "id": "hero-evermont",
+   "role": "hero",
+   "from": "5 Evermont",
+   "crop": {
+    "src": "5.webp",
+    "x": 72,
+    "y": 0,
+    "w": 1296,
+    "h": 800
+   },
+   "spec": "Inside a rounded page frame: a white rounded header pill (logo, 4-link nav with the active item underlined in coral, 'Log in' outline pill). A rounded full-width villa-and-pool photo with a 2-line 40px white headline bottom-left, a one-line sub, a coral pill + a glass pill; bottom-right a small rounded inset photo card with two tiny stats ('12 docs verified', '$410K valuation')."
+  },
+  {
+   "id": "hero-angie",
+   "role": "hero",
+   "from": "6 Hello Angie",
+   "crop": {
+    "src": "6.webp",
+    "y": 0,
+    "h": 1050
+   },
+   "spec": "Amber gradient hero with black brush-stroke swashes top-right and bottom-left. Header: light serif name, small nav, outlined 'Contact us' pill with a phone icon. A centred 2-line 72px display-serif headline ('More than a Realtor — Your Advocate'), 3 lines of text left, a row of press/partner logos. The agent's cut-out on the right with a rotated white 'Free consultation' sticker, and a white listing card (title, 'View listing ↗' pill, house photo with price chip) at the bottom-right overlapping the next section."
+  },
+  {
+   "id": "hero-goldmine",
+   "role": "hero",
+   "from": "7 GoldMine Homes",
+   "crop": {
+    "src": "7.webp",
+    "y": 0,
+    "h": 690
+   },
+   "spec": "White header with the logo left, phone number and a yellow 'Get my fair cash offer' button top-right, nav below. Dark house photo hero: small tracked eyebrow, a 2-line 60px heavy yellow/white headline, a 2-column checklist of promises (✓ No fees, ✓ No repairs…), an outlined phone button. RIGHT a white lead form card in a thin yellow frame: 'Sell your house in as quick as 7 days', 3 grey inputs, a consent line and a yellow full-width button."
+  },
+  {
+   "id": "hero-prophub",
+   "role": "hero",
+   "from": "8 PropHub",
+   "crop": {
+    "src": "8.webp",
+    "x": 54,
+    "y": 0,
+    "w": 1332,
+    "h": 900
+   },
+   "spec": "Dark navy block with a faint grid. Header: logo + 5-link nav. LEFT a 2-line 56px heavy UPPERCASE headline, 2 lines, a compact search (Apartment ▾ · California ▾ · blue search square), and 3 stats (15k · 100K · 15Y) in light numerals. RIGHT a tall white building photo with a big orange quarter circle behind it, bleeding off the block's right and bottom edge."
+  },
+  {
+   "id": "hero-travislee",
+   "role": "hero",
+   "from": "9 Travis-Lee Moore",
+   "crop": {
+    "src": "9.webp",
+    "x": 31,
+    "y": 0,
+    "w": 1378,
+    "h": 800
+   },
+   "spec": "Full-width dark-toned photo (modern house, dusk). Header over it: monogram logo, 4 uppercase links with thin dividers, a white 'Let's connect' button and a small square menu icon. A centred 48px 'Hi, I'm <Name>', one line of text, an outline 'Browse listings' + white 'Schedule a consultation' button pair, a small mouse 'Scroll more' icon at the bottom."
+  },
+  {
+   "id": "hero-oakridge",
+   "role": "hero",
+   "from": "10 Oakridge Realty Group",
+   "crop": {
+    "src": "10.webp",
+    "y": 0,
+    "h": 1150
+   },
+   "spec": "Royal-blue gradient fading to white. Header: logo, nav with a dot before the first item, language switch, lime 'Join us' button. LEFT a 2-line 52px white headline, 4 lines, a lime + white-arrow button. RIGHT a white modern building cut-out floating. Below, fading into white: a tiny '• About' label and a centred 4-line 24px statement where the last words turn grey."
+  },
+  {
+   "id": "hero-desertia",
+   "role": "hero",
+   "from": "11 Desertia",
+   "crop": {
+    "src": "11.webp",
+    "y": 0,
+    "h": 920
+   },
+   "spec": "Full-bleed golden-hour photo of a low desert house. Transparent header: small logo, nav, orange 'Contact us' pill. Bottom-left a 2-line 44px white headline, 2 lines, an orange pill + white pill. RIGHT a white rounded search card: 'Find your sanctuary', two selects with icons, a price range slider with min/max fields, and a full-width orange 'Search properties' pill."
+  },
+  {
+   "id": "hero-aurus",
+   "role": "hero",
+   "from": "12 Aurus",
+   "crop": {
+    "src": "12.webp",
+    "x": 100,
+    "y": 0,
+    "w": 1235,
+    "h": 1110
+   },
+   "spec": "A photo hero (white modern villa, pool): header with a bold wordmark, small nav, white 'Enquire now' button. A 3-line ≈110px ultra-heavy white UPPERCASE headline top-left, a 2-line caption + small white 'Explore →' button bottom-left, a small white featured-listing card with an orange 'FOR SALE' strip on the right. Under it a navy ticker of property types with orange ✦, a white 4-column stats strip, and a thin search bar (location · type · price · navy 'Search')."
+  },
+  {
+   "id": "about-scofield-hello",
+   "role": "about",
+   "from": "1 Scofield",
+   "crop": {
+    "src": "1.webp",
+    "x": 44,
+    "y": 960,
+    "w": 1352,
+    "h": 830
+   },
+   "spec": "White section fading into a soft yellow radial glow at the bottom. Tiny pill tags scattered at the top. A HUGE pale grey italic 'Hello. there' across the middle with the agent's cut-out portrait in front; bottom-left 'I'M / <NAME>' in 48px uppercase + 'REAL ESTATE AGENT'; bottom-right a 6-line bio and a small 'Learn more ●' pill."
+  },
+  {
+   "id": "about-amelia-map",
+   "role": "about",
+   "from": "2 Amelia Homes",
+   "crop": {
+    "src": "2.webp",
+    "x": 40,
+    "y": 2690,
+    "w": 1120,
+    "h": 1010
+   },
+   "spec": "Small 'Meet <Name>' eyebrow. LEFT a plum panel with the agent's portrait, a rotated teal script signature badge and a 6-line bio. RIGHT a grey street map with a teal pin on the city, and below it a plum 'Contact <Name>' card listing location/service areas, email and phone, each with an underlined action link ↗ on the right."
+  },
+  {
+   "id": "about-landmarka",
+   "role": "about",
+   "from": "3 LandMarka",
+   "crop": {
+    "src": "3.webp",
+    "x": 154,
+    "y": 760,
+    "w": 1132,
+    "h": 1090
+   },
+   "spec": "Dark. Two small laurel award badges centred. A tiny '• About the agent' label at the left; a 4-line UPPERCASE statement whose second half is grey; a medium photo of the agent at a laptop; a list of 4 short lines with rules; a gold text link 'Book a private consultation ↗' at the far left; a row of 4 bordered stat boxes (10+ · 150+ · $500M+ · a logo)."
+  },
+  {
+   "id": "about-evermont",
+   "role": "about",
+   "from": "5 Evermont",
+   "crop": {
+    "src": "5.webp",
+    "x": 72,
+    "y": 800,
+    "w": 1296,
+    "h": 1150
+   },
+   "spec": "LEFT: a coral label + 'Our journey so far', lower an open timeline item (bold 'Founding' + 2 lines) and 3 greyed items. RIGHT a pale rounded card with a photo, a bold 2-line statement, a paragraph and a white pill 'Learn about us →'. Below: a square photo (a team huddle with a big orange letter) and on its right a coral label + 'Why we're called <Name>' with 2 short paragraphs."
+  },
+  {
+   "id": "about-angie",
+   "role": "about",
+   "from": "6 Hello Angie",
+   "crop": {
+    "src": "6.webp",
+    "y": 1750,
+    "h": 740
+   },
+   "spec": "Chocolate-brown band. LEFT an arch-topped portrait of the agent (arms crossed) on a sand background. RIGHT a small gold label with a leading rule, the agent's name in 26px display serif, a 5-line bio, and 3 big serif stats (15+ · 260+ · 04) with small labels."
+  },
+  {
+   "id": "about-goldmine",
+   "role": "about",
+   "from": "7 GoldMine Homes",
+   "crop": {
+    "src": "7.webp",
+    "y": 690,
+    "h": 710
+   },
+   "spec": "White. A centred heading flanked by thin rules with one yellow word ('Better way to Sell your house') and a bold 2-line sub. LEFT a photo of a couple in front of a house inside a thin yellow frame with a yellow offset block; RIGHT 3 paragraphs (last line bold) and an outlined phone button."
+  },
+  {
+   "id": "about-travislee",
+   "role": "about",
+   "from": "9 Travis-Lee Moore",
+   "crop": {
+    "src": "9.webp",
+    "x": 31,
+    "y": 800,
+    "w": 1378,
+    "h": 780
+   },
+   "spec": "White. LEFT a large square portrait of the agent on a dark background. RIGHT a mint tag 'Meet <Name>', a 30px 'Real Estate Professional', a 5-line bio, a thin outline 'More about me' button, and a 3-column credentials row (designation name + 2 grey lines each)."
+  },
+  {
+   "id": "about-travislee-community",
+   "role": "about",
+   "from": "9 Travis-Lee Moore",
+   "crop": {
+    "src": "9.webp",
+    "x": 31,
+    "y": 3790,
+    "w": 1378,
+    "h": 760
+   },
+   "spec": "White. LEFT a portrait-format photo of the agent with community members. RIGHT a mint tag, a 30px 'Community & Philanthropy' heading, 2 lines, 3 mint-dot bullet lines (organisations), and an outline 'See how we give back' button."
+  },
+  {
+   "id": "about-aurus",
+   "role": "about",
+   "from": "12 Aurus",
+   "crop": {
+    "src": "12.webp",
+    "x": 100,
+    "y": 2440,
+    "w": 1235,
+    "h": 860
+   },
+   "spec": "Navy block with a huge ghosted 'LUXURY' word along the bottom. LEFT a rounded photo of a white villa with a thin inner frame, an orange stat tile ('18 years building trust…') overlapping its bottom-right. RIGHT an orange label, a 2-line 48px ultra-heavy white heading, 2 paragraphs, a white 'Our story →' + outline 'Meet the team' button pair."
+  },
+  {
+   "id": "about-oakridge-values",
+   "role": "about",
+   "from": "10 Oakridge Realty Group",
+   "crop": {
+    "src": "10.webp",
+    "y": 1150,
+    "h": 1450
+   },
+   "spec": "White. A wide rounded-corner banner photo (pink modern building at dusk) with 'CORE VALUES' and a 2-line 30px bold white statement + a lime/arrow button inside it. Then '• We stand for' + a 2-line heading, and 3 columns split by vertical rules: an outline ↗ arrow, a right-aligned title + grey subtitle, 4 lines of grey text, a blue-toned photo at the bottom."
+  },
+  {
+   "id": "services-scofield",
+   "role": "services",
+   "from": "1 Scofield",
+   "crop": {
+    "src": "1.webp",
+    "x": 44,
+    "y": 1790,
+    "w": 1352,
+    "h": 890
+   },
+   "spec": "Black band. A 2-line 36px white heading left, a white pill 'Book a free consultation ●' right. A list of numbered services (/001 Buying assistance …) with rules and small round arrow buttons; the active row is a white rounded card with a description, and a photo (agent shaking hands with a client) pops out of it in the middle."
+  },
+  {
+   "id": "services-amelia",
+   "role": "services",
+   "from": "2 Amelia Homes",
+   "crop": {
+    "src": "2.webp",
+    "x": 40,
+    "y": 1620,
+    "w": 1120,
+    "h": 1070
+   },
+   "spec": "Ivory. Small 'Smart guidance' eyebrow left; right a 2-line 40px heading and a 3-line paragraph. A numbered accordion (01 For home buyers / 02 For home sellers / 03 Local market expertise) in 28px light type with + / − on the right; the open row shows a paragraph and a rounded photo (hands holding a house model and keys) with a plum pill 'Sell with confidence →'."
+  },
+  {
+   "id": "services-landmarka",
+   "role": "services",
+   "from": "3 LandMarka",
+   "crop": {
+    "src": "3.webp",
+    "x": 154,
+    "y": 1850,
+    "w": 1132,
+    "h": 630
+   },
+   "spec": "Dark. '• Services' label left, a 2-line UPPERCASE heading (second half grey). 3 tall dark cards split by thin rules with slanted corner cuts: the first has a photo of two agents; each has a small number, a gold line icon, a 2-line UPPERCASE title and 2 grey lines."
+  },
+  {
+   "id": "services-angie-arches",
+   "role": "services",
+   "from": "6 Hello Angie",
+   "crop": {
+    "src": "6.webp",
+    "y": 1050,
+    "h": 700
+   },
+   "spec": "Sand band. 3 arch-topped photos of grand homes side by side, each fading to white at the bottom with a tiny label ('Luxury listing') and a 26px display-serif title ('Buy a home', 'Sell my home', …); the first has a round black ↗ button in its centre."
+  },
+  {
+   "id": "services-prophub",
+   "role": "services",
+   "from": "8 PropHub",
+   "crop": {
+    "src": "8.webp",
+    "x": 54,
+    "y": 900,
+    "w": 1332,
+    "h": 680
+   },
+   "spec": "Cream grid-paper band. LEFT a 2-line 48px heavy UPPERCASE 'What we offer' and two square photos side by side. RIGHT 3 feature blocks with a small dark square icon, a bold UPPERCASE 2-line title and 5 lines, separated by thin vertical/horizontal rules."
+  },
+  {
+   "id": "services-aurus",
+   "role": "services",
+   "from": "12 Aurus",
+   "crop": {
+    "src": "12.webp",
+    "x": 100,
+    "y": 3300,
+    "w": 1235,
+    "h": 890
+   },
+   "spec": "Light grey. An orange label, a 2-line 44px ultra-heavy heading left, a 2-line grey note right. Numbered service rows (01–04) with a big pale numeral, a bold title and 2 lines, and an outlined arrow square on the right; the active row is a white raised card with a filled navy arrow square."
+  },
+  {
+   "id": "listings-scofield-sold",
+   "role": "listings",
+   "from": "1 Scofield",
+   "crop": {
+    "src": "1.webp",
+    "x": 44,
+    "y": 2680,
+    "w": 1352,
+    "h": 870
+   },
+   "spec": "White. A centred 36px 'Showcasing proven success'. A 2-row masonry of rounded property photos with 2 photos replaced by text tiles: property title, '/ 4 beds / 3 baths / suburb', a 3-line result ('Sold above asking…'), and a small round → button."
+  },
+  {
+   "id": "listings-amelia",
+   "role": "listings",
+   "from": "2 Amelia Homes",
+   "crop": {
+    "src": "2.webp",
+    "x": 40,
+    "y": 3700,
+    "w": 1120,
+    "h": 1300
+   },
+   "spec": "Ivory. Small eyebrow + centred 2-line 40px heading ('Some beautiful homes I have on hand') + 2 grey lines. A 3×2 grid of tall rounded listing photos with the address, beds/baths/sqft icons and the price in white over a dark gradient, and a small plum pill 'View details' bottom-right. A centred plum 'See all properties →' pill."
+  },
+  {
+   "id": "listings-landmarka",
+   "role": "listings",
+   "from": "3 LandMarka",
+   "crop": {
+    "src": "3.webp",
+    "x": 154,
+    "y": 2480,
+    "w": 1132,
+    "h": 1980
+   },
+   "spec": "Dark. '• Properties' label; a 4-line UPPERCASE heading (second half grey). A wide featured villa photo with a gold 'For sale' tag, then a caption row (title left, price in gold right, small spec icons). A second large photo left-aligned with its caption, then a carousel row of 3+ smaller listings running off the edge, and a thin progress slider with round arrows."
+  },
+  {
+   "id": "listings-urbannest",
+   "role": "listings",
+   "from": "4 UrbanNest",
+   "crop": {
+    "src": "4.webp",
+    "y": 1700,
+    "h": 780
+   },
+   "spec": "Pale canvas. A centred 2-line 36px 'Recommended dream house for you' + 2 grey lines. 3 white cards: a rounded photo, 'N km away from you' + price on one line, a 24px bold city name and a small uppercase country."
+  },
+  {
+   "id": "listings-angie-neighborhoods",
+   "role": "listings",
+   "from": "6 Hello Angie",
+   "crop": {
+    "src": "6.webp",
+    "y": 3480,
+    "h": 750
+   },
+   "spec": "Chocolate band. Centred small gold eyebrow + 30px display-serif 'Neighborhoods'. 2 horizontal white listing cards with a rounded-top-right photo on their right half: a price pill, a 2-line serif title, address, beds/baths/area lines with icons, an outline 'View listing ↗' pill. Two round outline arrows under them."
+  },
+  {
+   "id": "listings-prophub-feature",
+   "role": "listings",
+   "from": "8 PropHub",
+   "crop": {
+    "src": "8.webp",
+    "x": 54,
+    "y": 1580,
+    "w": 1332,
+    "h": 1300
+   },
+   "spec": "Pale pink grid-paper band. 2-line 48px heavy 'Our latest project' left, 3-line note right. A thick orange L-shaped frame behind a collage (2 interior photos stacked, a big exterior photo) and a navy spec card: UPPERCASE name + price, a paragraph, a 3×2 spec grid with icons (bedrooms, SQF, stories, parking, year built) and a blue 'Learn more' button."
+  },
+  {
+   "id": "listings-prophub-grid",
+   "role": "listings",
+   "from": "8 PropHub",
+   "crop": {
+    "src": "8.webp",
+    "x": 54,
+    "y": 2880,
+    "w": 1332,
+    "h": 950
+   },
+   "spec": "Cream grid-paper. 2-line 48px heavy heading left, 4-line note right. 3 columns: a tall photo of a modern building, a bold UPPERCASE name, 3 grey lines, then the price in 22px bold and a small blue 'Learn more' button on one line."
+  },
+  {
+   "id": "listings-travislee",
+   "role": "listings",
+   "from": "9 Travis-Lee Moore",
+   "crop": {
+    "src": "9.webp",
+    "x": 31,
+    "y": 1580,
+    "w": 1378,
+    "h": 750
+   },
+   "spec": "White. Mint tag 'Properties', a 2-line 34px heading left; a 2-line note and ‹ › arrows right. A carousel of listing photos (For sale / For rent tag top-left, navy price chip bottom-right) running off the right edge, with address, city and beds · baths · sqft under each. A full-width thin outline bar button 'View all listings'."
+  },
+  {
+   "id": "listings-desertia",
+   "role": "listings",
+   "from": "11 Desertia",
+   "crop": {
+    "src": "11.webp",
+    "y": 3300,
+    "h": 1160
+   },
+   "spec": "White. A centred 32px heading. A 3×2 grid of bordered cards: a rounded sunset photo with a small type tag, a name, a small location, the price in 22px orange, and a row of tiny spec icons."
+  },
+  {
+   "id": "listings-aurus",
+   "role": "listings",
+   "from": "12 Aurus",
+   "crop": {
+    "src": "12.webp",
+    "x": 100,
+    "y": 1110,
+    "w": 1235,
+    "h": 1330
+   },
+   "spec": "Light grey. An orange '01 — Featured' label, a 2-line 44px ultra-heavy 'Curated Listings' left and a pill filter (All · For sale · For rent) right. A tight 3×2 grid of white cards with no gaps: photo with an orange/navy status pill, orange price, bold name, small location, spec icons. A centred navy 'View all properties →' button."
+  },
+  {
+   "id": "neighborhoods-travislee",
+   "role": "neighborhoods",
+   "from": "9 Travis-Lee Moore",
+   "crop": {
+    "src": "9.webp",
+    "x": 31,
+    "y": 2330,
+    "w": 1378,
+    "h": 970
+   },
+   "spec": "Deep navy band. Mint tag 'Your guide to <city>', a 2-line 34px white heading left, a 2-line note + ‹ › arrows right. A carousel of tall neighbourhood photos with the area name bottom-left and a small district label bottom-right, running off the edge. A full-width outline bar 'Explore more neighborhoods'."
+  },
+  {
+   "id": "neighborhoods-angie-press",
+   "role": "neighborhoods",
+   "from": "6 Hello Angie",
+   "crop": {
+    "src": "6.webp",
+    "y": 2490,
+    "h": 990
+   },
+   "spec": "Cream. A small gold label with rule + 26px serif 'Press & Media' (or 'Areas we serve'). A 3-column masonry of rounded photos (interiors, a house, a portrait) with the centre tile dark: a round gold ↗ chip, a serif title and 3 lines of text."
+  },
+  {
+   "id": "neighborhoods-desertia-feature",
+   "role": "neighborhoods",
+   "from": "11 Desertia",
+   "crop": {
+    "src": "11.webp",
+    "y": 2300,
+    "h": 1000
+   },
+   "spec": "A full-bleed sunset photo (modern house on a dune) with a centred 2-line 40px white heading at the top; along the bottom, small white feature captions at the edges and 3 frosted glass thumbnail cards in the middle ('Private sanctuaries', 'Panoramic views', 'Off-grid ready')."
+  },
+  {
+   "id": "stats-amelia",
+   "role": "stats",
+   "from": "2 Amelia Homes",
+   "crop": {
+    "src": "2.webp",
+    "x": 40,
+    "y": 840,
+    "w": 1120,
+    "h": 780
+   },
+   "spec": "Ivory. A tiny 'Proven results' eyebrow left; right a 3-line 30px statement where the second half is pale grey. LEFT a big photo of a classic family house; RIGHT a stack of 4 white stat rows (40px number + a 2-line description)."
+  },
+  {
+   "id": "stats-evermont",
+   "role": "stats",
+   "from": "5 Evermont",
+   "crop": {
+    "src": "5.webp",
+    "x": 72,
+    "y": 1950,
+    "w": 1296,
+    "h": 450
+   },
+   "spec": "White. A 2-line 36px heading with 'real and lasting' in coral. A row of 4 pale grey rounded tiles: a 40px number and a small grey label."
+  },
+  {
+   "id": "stats-oakridge-timeline",
+   "role": "stats",
+   "from": "10 Oakridge Realty Group",
+   "crop": {
+    "src": "10.webp",
+    "y": 3950,
+    "h": 1510
+   },
+   "spec": "Royal-blue gradient band with faint glass squares. '<Name> Timeline' title, a HUGE white year ('2014') and a thin timeline with lime dots and later years, ‹ › square buttons. Then '• Statistics', the company name left and 2 paragraphs right, and a row of 5 big white stats (US$ 270 M · +2,000 · 13 · 11 · 6) with tiny labels, fading to white at the bottom."
+  },
+  {
+   "id": "stats-landmarka-awards",
+   "role": "stats",
+   "from": "3 LandMarka",
+   "crop": {
+    "src": "3.webp",
+    "x": 154,
+    "y": 5000,
+    "w": 1132,
+    "h": 760
+   },
+   "spec": "Dark. '• Awards' label; a 60px UPPERCASE 'AWARDS' + a 2-line grey subline. LEFT a photo of a crystal trophy; RIGHT a table (number · award · location · year) with thin rules where the first row is highlighted in gold."
+  },
+  {
+   "id": "why-urbannest",
+   "role": "why",
+   "from": "4 UrbanNest",
+   "crop": {
+    "src": "4.webp",
+    "y": 1000,
+    "h": 700
+   },
+   "spec": "LEFT a tall rounded architecture photo with a pink offset shadow. RIGHT a 2-line 30px heading, 2 grey lines, an orange 'Learn more' button. A white card with 2 features (bold title, 2 lines, orange 'See more ⟶') overlaps the photo's bottom-right."
+  },
+  {
+   "id": "why-evermont-standards",
+   "role": "why",
+   "from": "5 Evermont",
+   "crop": {
+    "src": "5.webp",
+    "x": 72,
+    "y": 2400,
+    "w": 1296,
+    "h": 850
+   },
+   "spec": "White. LEFT: coral label, a 26px heading, then 3 items (a grey title + one line). RIGHT a rounded photo of a modern house with a pool. Below: LEFT a pale card with a mini 'Portfolio overview' table (property · status · yield % in coral); RIGHT a coral label, a 2-line 26px heading and a paragraph."
+  },
+  {
+   "id": "why-goldmine-benefits",
+   "role": "why",
+   "from": "7 GoldMine Homes",
+   "crop": {
+    "src": "7.webp",
+    "y": 2860,
+    "h": 790
+   },
+   "spec": "Light grey band. Centred 2-line heading with rules and a yellow word, 3 lines of grey text. 3 benefits on each side (a square line icon, a bold title, 4 lines) around a big yellow-and-black logo mark in the centre, with a yellow 'Get my fair cash offer' + outlined phone button under it."
+  },
+  {
+   "id": "why-goldmine-compare",
+   "role": "why",
+   "from": "7 GoldMine Homes",
+   "crop": {
+    "src": "7.webp",
+    "y": 3650,
+    "h": 850
+   },
+   "spec": "White. Centred heading with rules ('Are you searching for \"Sell your house ASAP\"?') and a sub. A comparison table: row labels with yellow bullets on the left, a yellow-headed 'Sold to <Company>' column in the middle (NONE / Date of your choice…), a grey 'Selling w/ an agent' column on the right. An outlined phone button below with a doodle arrow."
+  },
+  {
+   "id": "why-goldmine-fast",
+   "role": "why",
+   "from": "7 GoldMine Homes",
+   "crop": {
+    "src": "7.webp",
+    "y": 2230,
+    "h": 630
+   },
+   "spec": "White. LEFT a small logo icon, a 2-line bold heading with one yellow word, two paragraphs (one bold lead), an outlined phone button. RIGHT a layered collage: a house photo in a thin yellow frame, a photo of two people signing papers in front of it, a gold '5-star rating Google' seal on the corner."
+  },
+  {
+   "id": "why-travislee",
+   "role": "why",
+   "from": "9 Travis-Lee Moore",
+   "crop": {
+    "src": "9.webp",
+    "x": 31,
+    "y": 3300,
+    "w": 1378,
+    "h": 490
+   },
+   "spec": "Pale blue band. LEFT a mint tag and a 3-line 30px 'Experience. / Integrity. / Results.' + a navy 'Start your journey' button. RIGHT a 2×2 grid of features: a small line icon, a bold title, one grey line."
+  },
+  {
+   "id": "why-desertia",
+   "role": "why",
+   "from": "11 Desertia",
+   "crop": {
+    "src": "11.webp",
+    "y": 920,
+    "h": 1380
+   },
+   "spec": "White. A 2-line 32px heading left. A 2×2 grid of large rounded photos (interiors, solar roof, screens, rammed-earth walls), each with a centred frosted-white caption card: an orange title and 2 grey lines."
+  },
+  {
+   "id": "why-desertia-location",
+   "role": "why",
+   "from": "11 Desertia",
+   "crop": {
+    "src": "11.webp",
+    "y": 4460,
+    "h": 690
+   },
+   "spec": "White. A rounded pool photo top-right and a 2-line 36px heading left ('Secluded by nature. Connected by design.') with a small sub. A row of 4 features: a small orange line icon, a title, 2 grey lines."
+  },
+  {
+   "id": "process-scofield",
+   "role": "process",
+   "from": "1 Scofield",
+   "crop": {
+    "src": "1.webp",
+    "x": 44,
+    "y": 4430,
+    "w": 1352,
+    "h": 730
+   },
+   "spec": "White fading into a pale yellow glow at the bottom. Centred 2-line 36px 'How it works / A simple, stress-free process'. A 3×2 grid of steps, each with a thin rule on top, 'STEP N', a bold 2-line title and 4 grey lines."
+  },
+  {
+   "id": "process-urbannest",
+   "role": "process",
+   "from": "4 UrbanNest",
+   "crop": {
+    "src": "4.webp",
+    "y": 2480,
+    "h": 990
+   },
+   "spec": "Pale canvas. Centred 2-line 36px heading. LEFT 3 steps each with an orange numbered circle, a bold title and 3 grey lines. RIGHT a tall rounded architecture photo (orange louvres)."
+  },
+  {
+   "id": "process-goldmine",
+   "role": "process",
+   "from": "7 GoldMine Homes",
+   "crop": {
+    "src": "7.webp",
+    "y": 1400,
+    "h": 640
+   },
+   "spec": "Light grey band with a faint house-outline graphic. Centred heading with rules ('Sell your home in 3 easy steps', 'easy' in yellow) and a 4-line paragraph. 3 white cards with a line icon, bold title and 3 lines, each with a yellow number flag in the top-right corner; the middle one raised."
+  },
+  {
+   "id": "process-prophub",
+   "role": "process",
+   "from": "8 PropHub",
+   "crop": {
+    "src": "8.webp",
+    "x": 54,
+    "y": 3830,
+    "w": 1332,
+    "h": 870
+   },
+   "spec": "Pale pink grid-paper. A 2-line 48px heavy 'Process of buying' left. Staggered pale rose tiles: each with a big outlined numeral (01/02/03) behind a bold UPPERCASE title and 3 grey lines."
+  },
+  {
+   "id": "process-oakridge-portfolio",
+   "role": "process",
+   "from": "10 Oakridge Realty Group",
+   "crop": {
+    "src": "10.webp",
+    "y": 2600,
+    "h": 1350
+   },
+   "spec": "White. '• Portfolio snapshot' + a 2-line 32px heading left. A vertical numbered timeline (1–6) in the middle: the active item is a lime tile with a black-and-white photo and a bold title; the others are bold titles next to grey numbered circles. Bottom-left a white bordered card 'Proven results and smart strategies.' with a black 'Explore our cases' button."
+  },
+  {
+   "id": "team-evermont",
+   "role": "team",
+   "from": "5 Evermont",
+   "crop": {
+    "src": "5.webp",
+    "x": 72,
+    "y": 3250,
+    "w": 1296,
+    "h": 580
+   },
+   "spec": "White. A 26px 'Our leadership' and a small pill tab row (Leadership team · Advisory board). 4 portrait photos on a pale grey background, name bold and role grey under each."
+  },
+  {
+   "id": "team-prophub",
+   "role": "team",
+   "from": "8 PropHub",
+   "crop": {
+    "src": "8.webp",
+    "x": 54,
+    "y": 4700,
+    "w": 1332,
+    "h": 780
+   },
+   "spec": "Pale pink. A blue block 'MEET OUR TEAM' (heavy uppercase, white) with a 2-line intro, next to a founder portrait with a white name label. Below, 3 portraits in a row, each with a white name + role label overlapping its bottom-left."
+  },
+  {
+   "id": "team-oakridge",
+   "role": "team",
+   "from": "10 Oakridge Realty Group",
+   "crop": {
+    "src": "10.webp",
+    "y": 5700,
+    "h": 1640
+   },
+   "spec": "White. '• Team' label, a 2-line 32px heading left, a 3-line note right. A 3×2 grid of black-and-white portraits on light grey, each with a bold 20px name and a grey role under it."
+  },
+  {
+   "id": "testimonials-scofield",
+   "role": "testimonials",
+   "from": "1 Scofield",
+   "crop": {
+    "src": "1.webp",
+    "x": 44,
+    "y": 3550,
+    "w": 1352,
+    "h": 880
+   },
+   "spec": "Black band. A 2-line 36px white heading left, a 3-line grey note right. LEFT a tall rounded photo of the happy clients; CENTRE big quote marks, a bold one-line quote title, 4 lines, client names, round ← → buttons and a thin progress line; RIGHT a small rounded photo of the sold house and a white 'Explore the property ●' pill."
+  },
+  {
+   "id": "testimonials-amelia",
+   "role": "testimonials",
+   "from": "2 Amelia Homes",
+   "crop": {
+    "src": "2.webp",
+    "x": 40,
+    "y": 5000,
+    "w": 1120,
+    "h": 960
+   },
+   "spec": "Ivory. Small eyebrow + centred 2-line 40px heading. A fan of tilted client photo cards with the centre card straight and larger and a plum round quote badge under it. A centred 4-line quote, a Trustpilot 5-star badge, name and role; round ← → buttons at the sides (the → filled plum)."
+  },
+  {
+   "id": "testimonials-landmarka",
+   "role": "testimonials",
+   "from": "3 LandMarka",
+   "crop": {
+    "src": "3.webp",
+    "x": 154,
+    "y": 4460,
+    "w": 1132,
+    "h": 560
+   },
+   "spec": "Dark. '• Testimonials' label, a 3-line UPPERCASE heading (second half grey). A horizontal row of testimonials cut off at both edges: small portrait + big quote marks + a 4-line quote + name + gold stars, with a slider under it."
+  },
+  {
+   "id": "testimonials-angie",
+   "role": "testimonials",
+   "from": "6 Hello Angie",
+   "crop": {
+    "src": "6.webp",
+    "y": 5040,
+    "h": 960
+   },
+   "spec": "Cream/white. A centred 36px display-serif 'Our Client Says'. A 4-column wall of small white social-post style review cards (avatar, name, @handle, a blue network icon, 5 lines, an orange #hashtag) with a second staggered row; the outer columns cut off at the edges."
+  },
+  {
+   "id": "testimonials-goldmine",
+   "role": "testimonials",
+   "from": "7 GoldMine Homes",
+   "crop": {
+    "src": "7.webp",
+    "y": 4500,
+    "h": 700
+   },
+   "spec": "Yellow band. A big black quote mark + 'What our clients say' left, round ‹ › buttons right. 3 video testimonial thumbnails with a round yellow play button, each followed by a 5-line italic quote and a bold 'Name, City'."
+  },
+  {
+   "id": "testimonials-goldmine-strip",
+   "role": "testimonials",
+   "from": "7 GoldMine Homes",
+   "crop": {
+    "src": "7.webp",
+    "y": 2040,
+    "h": 190
+   },
+   "spec": "A thin dark band with a big yellow quote mark on the left, a centred 3-line italic white quote and a bold name under it, a small logo icon on the right."
+  },
+  {
+   "id": "testimonials-prophub",
+   "role": "testimonials",
+   "from": "8 PropHub",
+   "crop": {
+    "src": "8.webp",
+    "x": 54,
+    "y": 5480,
+    "w": 1332,
+    "h": 670
+   },
+   "spec": "Cream grid-paper. A 2-line 48px heavy 'Client feedback' left with a row of 3 small client portraits under it; a tall portrait of the featured client in the centre; on the right a bold name and an 11-line quote, ← and a blue round → button."
+  },
+  {
+   "id": "testimonials-desertia",
+   "role": "testimonials",
+   "from": "11 Desertia",
+   "crop": {
+    "src": "11.webp",
+    "y": 5320,
+    "h": 740
+   },
+   "spec": "White, lots of space. 3 round photo thumbnails overlapping in a row, an orange quote glyph, a centred 3-line 22px quote, name and role."
+  },
+  {
+   "id": "testimonials-aurus",
+   "role": "testimonials",
+   "from": "12 Aurus",
+   "crop": {
+    "src": "12.webp",
+    "x": 100,
+    "y": 4900,
+    "w": 1235,
+    "h": 560
+   },
+   "spec": "White. An orange '04 — Testimonials' label and a 2-line 44px ultra-heavy 'Client Voices'. 3 columns split by vertical rules: orange stars, a 4-line quote, a round avatar + name + role."
+  },
+  {
+   "id": "faq-amelia",
+   "role": "faq",
+   "from": "2 Amelia Homes",
+   "crop": {
+    "src": "2.webp",
+    "x": 40,
+    "y": 5960,
+    "w": 1120,
+    "h": 890
+   },
+   "spec": "White. LEFT a small eyebrow, a 2-line 36px 'Frequently Asked Questions', a rounded photo of a couple holding up keys, and a 'Still have questions?' note with a plum 'Contact us →' pill. RIGHT a stack of white question rows with + icons; the first open."
+  },
+  {
+   "id": "faq-goldmine",
+   "role": "faq",
+   "from": "7 GoldMine Homes",
+   "crop": {
+    "src": "7.webp",
+    "y": 5200,
+    "h": 580
+   },
+   "spec": "White. A bold 28px '<Company> FAQ' with one word in yellow left and a small 'View more →' right. A full-width accordion: the first open with a yellow − circle icon and a paragraph, the rest with outline + circle icons and thin rules."
+  },
+  {
+   "id": "blog-angie",
+   "role": "blog",
+   "from": "6 Hello Angie",
+   "crop": {
+    "src": "6.webp",
+    "y": 4230,
+    "h": 810
+   },
+   "spec": "Sand band. Centred gold eyebrow + 30px display-serif heading. LEFT a large rounded photo article card; RIGHT 2 horizontal white cards (thumbnail, date + read time, a serif title, 3 lines, 'View blog ↗')."
+  },
+  {
+   "id": "blog-landmarka",
+   "role": "blog",
+   "from": "3 LandMarka",
+   "crop": {
+    "src": "3.webp",
+    "x": 154,
+    "y": 6300,
+    "w": 1132,
+    "h": 680
+   },
+   "spec": "Dark. '• Blogs' label, a 2-line UPPERCASE heading. 3 photo cards (handshake over a house model, a city skyline, a meeting), each with tiny meta and a 2-line UPPERCASE title; a small gold 'Read more blogs ↗' link centred."
+  },
+  {
+   "id": "blog-oakridge",
+   "role": "blog",
+   "from": "10 Oakridge Realty Group",
+   "crop": {
+    "src": "10.webp",
+    "y": 7340,
+    "h": 810
+   },
+   "spec": "White. '• News' label, a 32px 'News & event' left and a lime 'View all news' + arrow square right. 3 bordered cards: photo, small grey tag chips, a bold 3-line title, date · read time and 'Read the article' on one line."
+  },
+  {
+   "id": "cta-scofield-agent",
+   "role": "cta",
+   "from": "1 Scofield",
+   "crop": {
+    "src": "1.webp",
+    "x": 44,
+    "y": 5160,
+    "w": 1352,
+    "h": 840
+   },
+   "spec": "A full-width modern villa photo with a GIANT white 'AGENT' word behind the house at the top, a dark gradient at the bottom holding a 2-line 30px white 'Let's make your real estate move simple and successful' left and a 3-line note + small 'Book a free consultation ●' link right."
+  },
+  {
+   "id": "cta-urbannest",
+   "role": "cta",
+   "from": "4 UrbanNest",
+   "crop": {
+    "src": "4.webp",
+    "y": 3470,
+    "h": 480
+   },
+   "spec": "An orange banner inside the container: a 2-line 32px white heading, 2 lines, a black 'Get started' button on the left; on the right a modern house photo cut by a diagonal/angled edge into the orange."
+  },
+  {
+   "id": "cta-evermont",
+   "role": "cta",
+   "from": "5 Evermont",
+   "crop": {
+    "src": "5.webp",
+    "x": 72,
+    "y": 3830,
+    "w": 1296,
+    "h": 470
+   },
+   "spec": "A navy rounded block: a centred 2-line 30px white heading with 3 words in coral, a small grey line, a coral pill button."
+  },
+  {
+   "id": "cta-travislee-split",
+   "role": "cta",
+   "from": "9 Travis-Lee Moore",
+   "crop": {
+    "src": "9.webp",
+    "x": 31,
+    "y": 5320,
+    "w": 1378,
+    "h": 450
+   },
+   "spec": "Navy band split in two by a thin vertical rule: 'Buying?' and 'Selling?' in 36px light white, each with one grey line and a thin outline button ('Download buyer's guide', 'Learn more')."
+  },
+  {
+   "id": "cta-desertia",
+   "role": "cta",
+   "from": "11 Desertia",
+   "crop": {
+    "src": "11.webp",
+    "y": 6060,
+    "h": 960
+   },
+   "spec": "A full-bleed interior photo (living room with a huge window onto the landscape) and a wide white rounded bar across its lower part: a 26px heading + one grey line on the left, an orange 'Schedule a private tour' pill on the right."
+  },
+  {
+   "id": "cta-aurus",
+   "role": "cta",
+   "from": "12 Aurus",
+   "crop": {
+    "src": "12.webp",
+    "x": 100,
+    "y": 4190,
+    "w": 1235,
+    "h": 710
+   },
+   "spec": "A turquoise beach-and-pool photo band: LEFT a tiny tracked label, a 3-line 44px ultra-heavy white heading ('Your dream property awaits'), 2 lines, a white + outline button pair; RIGHT a rounded glass frame outlining part of the photo."
+  },
+  {
+   "id": "cta-oakridge-contact",
+   "role": "contact",
+   "from": "10 Oakridge Realty Group",
+   "crop": {
+    "src": "10.webp",
+    "y": 8150,
+    "h": 820
+   },
+   "spec": "White fading into royal blue. LEFT '• Contact us', a 2-line 30px white heading, 3 small lines with yellow links. RIGHT a translucent blue form panel 'Please fill out the form.' with a subject select and 4 dark inputs, a lime 'Send' + arrow square."
+  },
+  {
+   "id": "contact-amelia",
+   "role": "contact",
+   "from": "2 Amelia Homes",
+   "crop": {
+    "src": "2.webp",
+    "x": 40,
+    "y": 6850,
+    "w": 1120,
+    "h": 710
+   },
+   "spec": "A full-width photo of a home at dusk with the agent as a white-outlined cut-out on the left, and a white form card on the right: a 2-line 28px 'Let's talk about your next move', 2 lines, 4 inputs, a plum 'Send message →' pill."
+  },
+  {
+   "id": "contact-landmarka",
+   "role": "contact",
+   "from": "3 LandMarka",
+   "crop": {
+    "src": "3.webp",
+    "x": 154,
+    "y": 5760,
+    "w": 1132,
+    "h": 540
+   },
+   "spec": "Dark with a faint abstract photo. LEFT tiny contact info (phones, email, location, round social icons). RIGHT a 4-line UPPERCASE heading (second half grey) and underline-only inputs (name, email, phone, message) with a full-width gold pill 'Send a message'."
+  },
+  {
+   "id": "contact-angie",
+   "role": "contact",
+   "from": "6 Hello Angie",
+   "crop": {
+    "src": "6.webp",
+    "y": 6000,
+    "h": 530
+   },
+   "spec": "Amber band with a black brush swash. LEFT the agent's cut-out with a small white card (email + phone with gold icons). RIGHT a form: amber inputs with thin dark borders (name, email, message) and a black 'Send' button."
+  },
+  {
+   "id": "contact-prophub",
+   "role": "contact",
+   "from": "8 PropHub",
+   "crop": {
+    "src": "8.webp",
+    "x": 54,
+    "y": 6150,
+    "w": 1332,
+    "h": 830
+   },
+   "spec": "Pale pink. LEFT a 2-line 48px heavy 'Contact us', 3 grey lines and a short thick navy bar. RIGHT a form with small uppercase labels and pale rose inputs (name + last name, email, message) and a blue 'Send' button right-aligned."
+  },
+  {
+   "id": "footer-scofield",
+   "role": "footer",
+   "from": "1 Scofield",
+   "crop": {
+    "src": "1.webp",
+    "x": 44,
+    "y": 6000,
+    "w": 1352,
+    "h": 661
+   },
+   "spec": "Black. 3 link columns (Quick links · Contact information · Legal) left, round outline social icons right; a rule; the uppercase wordmark left and © right."
+  },
+  {
+   "id": "footer-amelia",
+   "role": "footer",
+   "from": "2 Amelia Homes",
+   "crop": {
+    "src": "2.webp",
+    "x": 40,
+    "y": 7560,
+    "w": 1120,
+    "h": 1023
+   },
+   "spec": "A photo of the house with the agent's name as a huge white script signature over the sky, fading into a dark green-black footer: a plum 'How can <Name> help?' card with phone/email/hours and the agent's portrait on the right edge, a 4-line bio, 2 link columns; © and social icons at the bottom."
+  },
+  {
+   "id": "footer-landmarka",
+   "role": "footer",
+   "from": "3 LandMarka",
+   "crop": {
+    "src": "3.webp",
+    "x": 154,
+    "y": 6980,
+    "w": 1132,
+    "h": 630
+   },
+   "spec": "Dark. Logo + 3-line tagline + gold link left, 4 small link columns + round social icons right. A big faint monogram in the background and a giant gold '© — <name>' wordmark across the bottom."
+  },
+  {
+   "id": "footer-urbannest",
+   "role": "footer",
+   "from": "4 UrbanNest",
+   "crop": {
+    "src": "4.webp",
+    "y": 3950,
+    "h": 659
+   },
+   "spec": "An orange 'Get daily update into your mail — Join now' pill tab sitting on the top edge. Dark charcoal footer: stacked logo + 3-line vision, 3 link columns with orange titles, a newsletter column (input, orange 'Subscribe', checkbox, social icons); © and legal links."
+  },
+  {
+   "id": "footer-goldmine",
+   "role": "footer",
+   "from": "7 GoldMine Homes",
+   "crop": {
+    "src": "7.webp",
+    "y": 5780,
+    "h": 393
+   },
+   "spec": "Near-black. Centred white logo, a row of uppercase nav links, location + social + an outlined phone button; the lead form card (yellow-framed) repeats on the right, overlapping the section above."
+  },
+  {
+   "id": "footer-travislee",
+   "role": "footer",
+   "from": "9 Travis-Lee Moore",
+   "crop": {
+    "src": "9.webp",
+    "x": 31,
+    "y": 5770,
+    "w": 1378,
+    "h": 1010
+   },
+   "spec": "Very dark navy. A mint tag + 30px 'Let's find your perfect home or investment'; LEFT 3 lines, phone, address, email, round outline social icons; RIGHT underline-only form (name, surname, email, phone, message) and a full-width white 'Schedule a consultation' button. Then a row of uppercase links, © and legal disclaimer text, the brokerage logo, regulatory links."
+  },
+  {
+   "id": "footer-oakridge",
+   "role": "footer",
+   "from": "10 Oakridge Realty Group",
+   "crop": {
+    "src": "10.webp",
+    "y": 8970,
+    "h": 507
+   },
+   "spec": "Royal blue. White logo left with X/LinkedIn squares at the bottom; Navigation and Contacts columns right; a lime 'Back to top ↑' link; a darker bottom strip with Privacy · company · ©."
+  },
+  {
+   "id": "footer-aurus",
+   "role": "footer",
+   "from": "12 Aurus",
+   "crop": {
+    "src": "12.webp",
+    "x": 100,
+    "y": 5460,
+    "w": 1235,
+    "h": 617
+   },
+   "spec": "An orange strip 'Ready for your next landmark?' with phone + email on the right. Navy footer: wordmark + 3-line text + tiny language switch; Properties · Company · Contact columns with tracked uppercase titles; a giant ghosted wordmark behind; © + legal links."
+  }
+ ]
+}

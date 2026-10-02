@@ -1,0 +1,1009 @@
+{
+ "niche": "Interior designers, architects & bespoke furniture",
+ "match": "interior.?design|interieur|binnenhuis|interior.?decor|home.?decor|home.?stag|space.?planning|furnitur|meubel|bespoke.?furnitur|kitchen.?design|cabinetry|joinery|architect|architectuur|architectur|building.?design|residential.?design|renovat.?design|fit.?out|styling|decorator|studio\\b",
+ "about": "Mix-and-match sections for interior design studios, architecture firms and bespoke-furniture/kitchen makers, from 12 Dribbble full-page references (1–12.webp; shot links in _sources.json). Every mockup = one base STYLE + an ordered set of SECTIONS. Crops live in sections/<id>.jpg. Beautiful room and project photography is the whole product here: use the lead's real project photos, renders and studio portraits first, then high-end interiors stock. Years, project counts, awards and client ratings must come from FACTS.",
+ "styles": [
+  {
+   "id": "editorial-serif",
+   "name": "Warm editorial serif",
+   "fits": "interior design studio residential styling boutique premium calm warm thoughtful",
+   "character": "Magazine-calm: warm greige/cream canvas, a high-contrast book serif with an italic accent phrase in every heading, tiny '// STEP' and '• LABEL' markers, thin rules, line-icon process steps, a near-black footer with a giant wordmark. (Refs 3 Nestora, 11 Elysian, 12 Modora.)",
+   "fonts": "Cormorant Garamond or Playfair Display (400/500, italic) for headings + Inter (400/500) for text",
+   "cssStarter": ":root{--accent:#1d1a16;--ink:#241f18;--body:#6a6256;--bg:#f4efe6;--card:#fbf8f1;--line:#e4ddd0;--dark:#1a1713;--container:1160px;--gutter:32px;--section-y:110px;--radius:8px}\nbody{font-family:'Inter',sans-serif;font-size:13px;line-height:1.65;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.dark{background:var(--dark);color:#bdb3a2}.dark h2{color:#fff}\nh1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:500;color:var(--ink);line-height:1.12}\nh1{font-size:64px;text-align:center}\nh2{font-size:40px}h1 em,h2 em{font-style:italic}\nh3{font-size:20px;font-family:'Inter',sans-serif;font-weight:500}\n.label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#9a917f;text-align:center}.label::before{content:'• '}\n.btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 22px;border-radius:99px;background:var(--dark);color:#fff;font-size:11px}\n.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}\n.wordmark{font-size:120px;font-weight:600;letter-spacing:-.02em;color:#fff;line-height:1}\n@media(max-width:768px){:root{--section-y:68px;--gutter:20px}h1{font-size:40px}h2{font-size:30px}}"
+  },
+  {
+   "id": "classic-cream",
+   "name": "Classic cream & bronze",
+   "fits": "interior design luxury residential villa premium high end elegant traditional bespoke",
+   "character": "Elevated and warm: soft cream-beige canvas, a classic serif for headings, a bronze/espresso (#4a3420) accent for pill labels and buttons, soft rounded photo cards with small location+title captions, a dark espresso footer with a giant white wordmark and a pill 'Book a consultation'. (Ref 11 Elysian.)",
+   "fonts": "Cormorant Garamond (500/600) for headings + Jost (400/500) for text",
+   "cssStarter": ":root{--accent:#4a3420;--gold:#b08a4a;--ink:#2b2114;--body:#6e6354;--bg:#f6efe3;--card:#fffaf0;--line:#e7ddcb;--dark:#271c12;--container:1160px;--gutter:32px;--section-y:100px;--radius:14px}\nbody{font-family:'Jost',sans-serif;font-size:13px;line-height:1.6;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.dark{background:var(--dark);color:#cdbfa9}.dark h2{color:#fff}\nh1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:600;color:var(--ink);line-height:1.1}\nh1{font-size:52px;text-align:center}\nh2{font-size:38px;text-align:center}\nh3{font-size:18px;font-family:'Jost',sans-serif;font-weight:500}\n.label{display:inline-flex;align-items:center;gap:6px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}.label::before{content:'●';font-size:7px}\n.btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 22px;border-radius:99px;background:var(--dark);color:#fff;font-size:11px}\n.card{background:var(--card);border-radius:var(--radius);overflow:hidden}\n.stat b{font-size:34px;color:var(--ink);font-family:'Cormorant Garamond',serif}\n.wordmark{font-size:120px;font-weight:700;color:#fff;letter-spacing:.02em}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:38px}h2{font-size:28px}}"
+  },
+  {
+   "id": "bold-display",
+   "name": "Bold display studio",
+   "fits": "interior design studio creative bold modern brand young urban statement",
+   "character": "Loud and confident: light grey/cream page, a GIANT ultra-bold condensed wordmark across the hero over a room photo, a vivid orange (#f24e1e) accent for round arrow buttons, the active service row and one highlighted card, black service bands with big numbered rows, a huge wordmark footer. (Refs 4 rawrxyz, 5 AWE Studio.)",
+   "fonts": "Anton or Archivo Expanded (800) for display + Inter (400/500) for text",
+   "cssStarter": ":root{--accent:#f24e1e;--ink:#141414;--body:#5e5e5e;--bg:#f3f1ec;--dark:#0e0e0e;--line:#e4e1da;--container:1160px;--gutter:32px;--section-y:96px;--radius:4px}\nbody{font-family:'Inter',sans-serif;font-size:13px;line-height:1.6;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.dark{background:var(--dark);color:#bbb}.dark h2,.dark h3{color:#fff}\nh1,h2,h3{font-weight:800;color:var(--ink);line-height:1.02;letter-spacing:-.01em}\nh1{font-family:'Anton',sans-serif;font-weight:400;font-size:120px;color:#fff;text-transform:uppercase}\nh2{font-size:40px}\nh3{font-size:24px;font-weight:500}\n.btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 6px 0 18px;border-radius:99px;background:var(--accent);color:#fff;font-size:12px}.btn i{width:26px;height:26px;border-radius:50%;background:#fff;color:var(--accent);display:grid;place-items:center}\n.row{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.14)}.row.on{background:var(--accent);margin:0 -24px;padding:16px 24px;border:0}\n.stat b{font-size:40px;color:var(--ink);font-weight:500}\n.wordmark{font-family:'Anton',sans-serif;font-size:200px;color:#fff;text-transform:lowercase;line-height:.9}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:56px}h2{font-size:30px}.wordmark{font-size:80px}}"
+  },
+  {
+   "id": "dark-luxe",
+   "name": "Dark luxe interiors",
+   "fits": "luxury interior design high end villa penthouse premium dramatic evening bespoke",
+   "character": "Moody and premium: dark warm-charcoal page, dramatic low-lit interior photography, a script accent word ('Interior', 'About', 'Services') over a bold sans heading, a warm tan/terracotta (#b5702e) accent for round 'See more' badges and buttons, masonry photo clusters, a tan testimonial band. (Ref 6 Ocean.)",
+   "fonts": "Poppins (500/600) for headings + a script (Sacramento/Allura) for accents + Inter (400) for text",
+   "cssStarter": ":root{--accent:#b5702e;--ink:#1a1712;--body:#625a50;--bg:#ffffff;--dark:#161210;--line:#ece6dc;--container:1120px;--gutter:32px;--section-y:100px;--radius:10px}\nbody{font-family:'Inter',sans-serif;font-size:13px;line-height:1.6;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.dark{background:var(--dark);color:#bdb2a4}.tan{background:var(--accent);color:#f7ead9}.tan h2{color:#fff}\nh1,h2,h3{font-family:'Poppins',sans-serif;font-weight:600;color:var(--ink);line-height:1.15}\nh1{font-size:44px;color:#fff}\nh2{font-size:36px}\nh3{font-size:16px;font-weight:600}\n.script{font-family:'Sacramento',cursive;font-size:40px;color:var(--accent);font-weight:400}\n.btn{display:inline-flex;align-items:center;height:36px;padding:0 20px;border-radius:4px;background:var(--accent);color:#fff;font-size:11px}\n.badge{width:90px;height:90px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;text-align:center;font-size:11px}\n.num{font-family:'Poppins',sans-serif;font-size:40px;color:transparent;-webkit-text-stroke:1px var(--accent)}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:32px}h2{font-size:26px}}"
+  },
+  {
+   "id": "mono-architect",
+   "name": "Mono architecture",
+   "fits": "architecture firm architect studio residential commercial urban planning renovation modern bold",
+   "character": "Clean architectural: white page, a bold rounded grotesk, black rounded-card bands with big numbered service lists, black-and-white project and team photography with rounded white caption chips overlapping, a soft-shadow card look, a black 'Let's create spaces' CTA strip. (Refs 9 Archi, 10 Archova.)",
+   "fonts": "Clash Grotesk or Satoshi (500/700) for everything",
+   "cssStarter": ":root{--accent:#111;--ink:#111;--body:#5e5e5e;--bg:#f6f6f4;--dark:#111;--line:#e6e6e3;--container:1160px;--gutter:32px;--section-y:96px;--radius:20px}\nbody{font-family:'Satoshi',sans-serif;font-size:13px;line-height:1.6;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.dark{background:var(--dark);color:#bbb;border-radius:var(--radius)}.dark h2{color:#fff}\nh1,h2,h3{font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.1}\nh1{font-size:56px}\nh2{font-size:40px}\nh3{font-size:18px;font-weight:600}\n.pill{display:inline-flex;height:30px;padding:0 16px;border-radius:99px;border:1px solid var(--line);background:#fff;font-size:11px;align-items:center}\n.btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 20px;border-radius:99px;background:var(--dark);color:#fff;font-size:12px}\n.list b{font-size:28px;color:#fff;font-weight:700}\n.card{background:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.06);overflow:hidden}\n.chip{background:#fff;border-radius:12px;padding:8px 12px;box-shadow:0 4px 14px rgba(0,0,0,.1);font-size:12px;font-weight:600;color:var(--ink)}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:38px}h2{font-size:28px}}"
+  },
+  {
+   "id": "mono-studio",
+   "name": "Minimal studio mono",
+   "fits": "interior design studio architecture bespoke furniture minimal premium gallery quiet refined",
+   "character": "Gallery-quiet: near-white page with a grid-aligned editorial layout, a plain grotesk, a huge uppercase brand wordmark in the hero and footer, full-bleed interior photography with thin labels and ruled rows, a '/ TIMELESS DESIGN' running caption, a black contact footer. (Refs 7 LAGO, 8 Renova.)",
+   "fonts": "Inter Tight or Neue Haas (400/500) for everything",
+   "cssStarter": ":root{--accent:#111;--ink:#141414;--body:#666;--bg:#fbfaf8;--dark:#111;--line:#e8e6e2;--container:1200px;--gutter:32px;--section-y:100px;--radius:0}\nbody{font-family:'Inter Tight',sans-serif;font-size:12px;line-height:1.6;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.dark{background:var(--dark);color:#999}.dark h1,.dark h2{color:#fff}\nh1,h2,h3{font-weight:500;color:var(--ink);letter-spacing:-.01em;line-height:1.1}\nh1{font-size:36px;text-transform:uppercase}\nh2{font-size:30px}h2 em{font-style:italic;font-weight:400}\nh3{font-size:15px;font-weight:500}\n.label{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#999}\n.btn{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 16px;background:var(--dark);color:#fff;font-size:10px}\n.row{display:grid;grid-template-columns:1fr 2fr;padding:16px 0;border-bottom:1px solid var(--line)}\n.wordmark{font-size:160px;font-weight:700;color:#fff;letter-spacing:-.03em;line-height:1}\n.caption{font-size:26px;font-weight:500;color:var(--ink)}.caption em{font-style:italic;font-weight:400}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:28px}h2{font-size:24px}.wordmark{font-size:64px}}"
+  },
+  {
+   "id": "bespoke-kitchen",
+   "name": "Bespoke kitchen & joinery",
+   "fits": "bespoke kitchen cabinetry joinery furniture maker woodwork craftsman handcrafted workshop premium",
+   "character": "Crafted and tactile: warm off-white page, a refined serif in centred uppercase with a subtle ligature, close-up photography of wood, workshop and hand-tools, line-drawing sketches beside photos, generous whitespace, a dark footer with a giant serif wordmark that has a decorative ligature. (Ref 1 Collison.)",
+   "fonts": "Fraunces or Cormorant (400/500) for headings + Inter (400) for text",
+   "cssStarter": ":root{--accent:#1b1714;--ink:#201b16;--body:#6b6459;--bg:#f3efe7;--card:#fbf8f1;--line:#e4ddd0;--dark:#1a1612;--container:1120px;--gutter:32px;--section-y:120px;--radius:0}\nbody{font-family:'Inter',sans-serif;font-size:13px;line-height:1.7;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.dark{background:var(--dark);color:#bdb3a2}.dark h2{color:#fff}\nh1,h2,h3{font-family:'Fraunces',serif;font-weight:400;color:var(--ink);line-height:1.15;text-transform:uppercase;letter-spacing:.01em}\nh1{font-size:40px;text-align:center}\nh2{font-size:30px}\nh3{font-size:18px;text-transform:none}\n.lead{font-size:20px;line-height:1.5;color:var(--ink);text-align:center;max-width:620px;margin:0 auto}\n.btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 20px;background:var(--dark);color:#fff;font-size:11px}.btn::before{content:'●';font-size:7px}\n.stat b{font-family:'Fraunces',serif;font-size:40px;color:var(--ink)}\n.wordmark{font-family:'Fraunces',serif;font-size:160px;color:#fff;line-height:1}\n@media(max-width:768px){:root{--section-y:72px;--gutter:20px}h1{font-size:30px}h2{font-size:24px}.wordmark{font-size:64px}}"
+  },
+  {
+   "id": "furniture-shop",
+   "name": "Furniture shop warm",
+   "fits": "furniture ecommerce home decor interiors shop collection beds chairs tables rugs premium catalogue",
+   "character": "A refined furniture store: warm white page, a clean sans with an editorial feel, full-bleed room hero with a 'Shop now' pill, collection category cards, product cards with regular + member prices and colour swatches, big lifestyle photo bands with white captions, a dark footer. (Ref 2 Lignora.)",
+   "fonts": "Inter Tight (400/500/600) for everything",
+   "cssStarter": ":root{--accent:#8a5a3b;--ink:#1a1a1a;--body:#666;--bg:#fbfaf7;--dark:#1b1813;--line:#eae5dc;--container:1160px;--gutter:32px;--section-y:90px;--radius:4px}\nbody{font-family:'Inter Tight',sans-serif;font-size:12px;line-height:1.6;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.dark{background:var(--dark);color:#bcae9c}.dark h2{color:#fff}\nh1,h2,h3{font-weight:500;color:var(--ink);letter-spacing:-.01em;line-height:1.15}\nh1{font-size:44px;color:#fff}\nh2{font-size:30px}\nh3{font-size:14px;font-weight:500}\n.btn{display:inline-flex;align-items:center;height:36px;padding:0 20px;background:#fff;color:var(--ink);font-size:11px}.btn-dark{background:var(--dark);color:#fff}\n.price{font-size:13px;color:var(--ink);font-weight:500}.price .member{color:var(--accent)}\n.swatch{width:12px;height:12px;border-radius:2px;display:inline-block;border:1px solid #ddd}\n.card{overflow:hidden}\n@media(max-width:768px){:root{--section-y:60px;--gutter:20px}h1{font-size:32px}h2{font-size:24px}}"
+  },
+  {
+   "id": "archova-warm",
+   "name": "Warm architecture renders",
+   "fits": "architecture firm studio residential sustainable modern renders villa concept design 3d",
+   "character": "Soft and premium: light warm-grey page, a large clean sans heading, dreamy 3D architectural renders (golden-hour villas, wooden interiors), floating rounded photo clusters, a frosted glass 'thoughtful design' card over a render, a frosted glass contact form over a photo, numbered concept cards with one black, a dark footer. (Ref 10 Archova.)",
+   "fonts": "General Sans or Inter (400/500/600) for everything",
+   "cssStarter": ":root{--accent:#111;--ink:#1c1a17;--body:#5f5a52;--bg:#f2f0ec;--dark:#15130f;--line:#e4e1db;--container:1180px;--gutter:32px;--section-y:100px;--radius:16px}\nbody{font-family:'Inter',sans-serif;font-size:13px;line-height:1.6;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.dark{background:var(--dark);color:#b6aea1}.dark h2{color:#fff}\nh1,h2,h3{font-weight:500;color:var(--ink);letter-spacing:-.02em;line-height:1.1}\nh1{font-size:60px}\nh2{font-size:36px}\nh3{font-size:16px;font-weight:500}\n.btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 20px;border-radius:99px;background:var(--dark);color:#fff;font-size:11px}\n.glass{background:rgba(255,255,255,.65);backdrop-filter:blur(12px);border-radius:18px;padding:28px}\n.card{border:1px solid var(--line);border-radius:4px;padding:16px}.card.on{background:var(--dark);color:#fff}\n.photo{border-radius:var(--radius);overflow:hidden}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:40px}h2{font-size:28px}}"
+  },
+  {
+   "id": "modora-serif",
+   "name": "Modora everyday serif",
+   "fits": "interior design residential commercial everyday modern warm serif project management renovation",
+   "character": "Refined-but-friendly: white page, a warm serif heading where part of the line is lighter, soft neutral interior photography with small black 'OFFICE SPACE' tags and /01 numbering, bordered service cards with 'See details', product-style project cards with prices, dark editorial footer with a ghosted wordmark. (Ref 12 Modora.)",
+   "fonts": "Cormorant Garamond or Newsreader (500) for headings + Inter (400/500) for text",
+   "cssStarter": ":root{--accent:#1a1a1a;--ink:#1c1c1c;--body:#666;--bg:#fff;--alt:#f4f4f2;--dark:#111;--line:#e7e5e0;--container:1140px;--gutter:32px;--section-y:96px;--radius:4px}\nbody{font-family:'Inter',sans-serif;font-size:12px;line-height:1.6;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.alt{background:var(--alt)}.dark{background:var(--dark);color:#999}.dark h2{color:#fff}\nh1,h2,h3{font-family:'Newsreader',serif;font-weight:500;color:var(--ink);line-height:1.15}\nh1{font-size:44px;color:#fff}\nh2{font-size:34px}h2 .muted{color:#aaa}\nh3{font-size:16px;font-family:'Inter',sans-serif;font-weight:600}\n.btn{display:inline-flex;align-items:center;height:36px;padding:0 20px;background:var(--dark);color:#fff;font-size:10px;text-transform:uppercase;letter-spacing:.06em}\n.tag{background:#111;color:#fff;font-size:9px;padding:3px 8px;text-transform:uppercase}\n.card{border:1px solid var(--line);padding:20px}\n.wordmark{font-family:'Newsreader',serif;font-size:120px;color:rgba(255,255,255,.06)}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:32px}h2{font-size:26px}}"
+  }
+ ],
+ "orders": [
+  [
+   "hero",
+   "about",
+   "services",
+   "projects",
+   "process",
+   "testimonials",
+   "cta",
+   "footer"
+  ],
+  [
+   "hero",
+   "stats",
+   "services",
+   "about",
+   "projects",
+   "team",
+   "contact",
+   "footer"
+  ],
+  [
+   "hero",
+   "about",
+   "projects",
+   "services",
+   "team",
+   "testimonials",
+   "blog",
+   "footer"
+  ],
+  [
+   "hero",
+   "services",
+   "about",
+   "projects",
+   "process",
+   "testimonials",
+   "contact",
+   "footer"
+  ],
+  [
+   "hero",
+   "about",
+   "collection",
+   "projects",
+   "testimonials",
+   "blog",
+   "cta",
+   "footer"
+  ],
+  [
+   "hero",
+   "stats",
+   "about",
+   "services",
+   "projects",
+   "process",
+   "team",
+   "footer"
+  ]
+ ],
+ "sections": [
+  {
+   "id": "hero-collison",
+   "role": "hero",
+   "from": "1 Collison",
+   "crop": {
+    "src": "1.webp",
+    "y": 0,
+    "h": 1000
+   },
+   "spec": "Warm cream. Minimal header: centred serif wordmark, 'Collection · Kitchens · About' nav, 'Contact us' right. A centred uppercase serif 'QUIET FORM SHAPED / BY INTENTION' with a small italic note on the right; a wide warm photo of a dining room with handcrafted furniture; the brand name as a big serif wordmark bottom-left."
+  },
+  {
+   "id": "hero-lignora",
+   "role": "hero",
+   "from": "2 Lignora",
+   "crop": {
+    "src": "2.webp",
+    "y": 0,
+    "h": 870
+   },
+   "spec": "Thin top header: wordmark, a furniture-category nav (Furniture · Bathroom · Rug & Textiles · Outdoor · Lighting · Dining), language + search icons. A full-bleed photo of a plush living room (olive sofa, patterned armchair, fireplace) with a 2-line 44px white headline 'Where Craft Meets Class.' bottom-left, 2 lines, and a white 'Shop Now' pill on the right."
+  },
+  {
+   "id": "hero-nestora",
+   "role": "hero",
+   "from": "3 Nestora",
+   "crop": {
+    "src": "3.webp",
+    "y": 0,
+    "h": 1000
+   },
+   "spec": "Cream with a faint line-art sketch. Header: 'Home · About Us · Services · Projects' nav, centred serif wordmark, dark 'Contact Us' pill. A centred 2-line 48px serif headline 'Crafting Atmospheres / Shaping Experiences' (second line italic), 2 lines, a dark 'Start Your Project' pill; a row of 5 rounded interior photos spanning the width along the bottom."
+  },
+  {
+   "id": "hero-rawrxyz",
+   "role": "hero",
+   "from": "4 rawrxyz",
+   "crop": {
+    "src": "4.webp",
+    "y": 0,
+    "h": 940
+   },
+   "spec": "Light grey. Header: '|| Rawr.' logo, 'Home · About us · Discover us · Meet the team' nav, orange round 'Become a member' pill. A GIANT black 'rawrxyz' wordmark over a full-bleed modern living room photo with a small 'INTERIOR DESIGN STUDIO' label at the bottom-left and a round orange → button at the right."
+  },
+  {
+   "id": "hero-awe",
+   "role": "hero",
+   "from": "5 AWE Studio",
+   "crop": {
+    "src": "5.webp",
+    "y": 0,
+    "h": 940
+   },
+   "spec": "Cream. Top bar: social icons left, 'AWE STUDIO' centred, theme + language right. A huge 2-line black display 'INTERIOR DESIGN' with a purple flower replacing the 'O'; LEFT a boxed nav list (Home · Services · About Us · Projects · Blog) and a small arched interior photo with a caption + orange 'Recent projects' pill; RIGHT a tall photo of a dried-flower vase on a red cabinet."
+  },
+  {
+   "id": "hero-ocean",
+   "role": "hero",
+   "from": "6 Ocean",
+   "crop": {
+    "src": "6.webp",
+    "y": 0,
+    "h": 960
+   },
+   "spec": "A dark low-lit restaurant/lounge interior photo. Header: flower logo + 'Ocean', 'About · Services · Blog' nav, tan 'Get in Touch' pill. LEFT a script 'Interior' over a 2-line 44px white 'Exploring The Luxury / Interior For You', 3 lines; a '01/03' slider counter; a row of 3 small interior thumbnails on the right and a round tan 'Scroll ↓' badge."
+  },
+  {
+   "id": "hero-lago",
+   "role": "hero",
+   "from": "7 LAGO",
+   "crop": {
+    "src": "7.webp",
+    "y": 0,
+    "h": 960
+   },
+   "spec": "A dark full-bleed photo of a warm wood-panelled living wall with a TV. A thin header: 'Contact Us' left, Studio / Services / Projects / Connect link columns, logo. A white card bottom-right: a tiny label, 'Begin your journey with Ruellia Bespoke…' 3 lines, a dark '● Start Your Project' pill, and a small inset photo. The brand 'LAGO' as a huge white wordmark bottom-left."
+  },
+  {
+   "id": "hero-renova",
+   "role": "hero",
+   "from": "8 Renova",
+   "crop": {
+    "src": "8.webp",
+    "y": 0,
+    "h": 940
+   },
+   "spec": "A greige full-bleed photo of a calm minimalist living room. Header: 'RENOVA' wordmark, 'Studio · Services · Work · Contact' nav. A centred 48px uppercase 'TIMELESS COMFORT' over the photo; a 2-line note bottom-left and 'Book Consultation · View Projects' text links bottom-right."
+  },
+  {
+   "id": "hero-archi",
+   "role": "hero",
+   "from": "9 Archi",
+   "crop": {
+    "src": "9.webp",
+    "y": 0,
+    "h": 1000
+   },
+   "spec": "White. Header: 'Archi.' logo, 'Home · Services · Projects · Contact Us' nav. A rounded black-and-white photo of a sculptural concrete building; a 2-line 48px bold 'Designing Spaces, / Building Futures.' overlapping its bottom-left inside a white rounded card with a 2-line note and a 'Start a Project ↗' pill."
+  },
+  {
+   "id": "hero-archova",
+   "role": "hero",
+   "from": "10 Archova",
+   "crop": {
+    "src": "10.webp",
+    "y": 0,
+    "h": 1000
+   },
+   "spec": "Warm grey. Header: 'About Archova · Design Process · Awards' nav left, 'Archova.' logo centre, search/menu/mail icons right. A huge 56px 'Crafting Living Dreams' headline over a dreamy render of a timber villa in the desert; a small floating render card ('Aurora Residence') top-left, a 2-line caption and a dark 'Explore Portfolio ↓' pill at the bottom."
+  },
+  {
+   "id": "hero-elysian",
+   "role": "hero",
+   "from": "11 Elysian",
+   "crop": {
+    "src": "11.webp",
+    "y": 0,
+    "h": 1000
+   },
+   "spec": "Warm cream. Header: 'ELYSIAN' wordmark, 'Home · Projects · Services · Team · About' nav, dark 'Contact Us' pill. A centred 48px serif 'Spaces Beyond Ordinary', 2 lines, a dark 'Book a Consultation →' pill; a warm photo of a cosy living room (cream sofa, rattan cabinet, plants) fills the lower hero."
+  },
+  {
+   "id": "hero-modora",
+   "role": "hero",
+   "from": "12 Modora",
+   "crop": {
+    "src": "12.webp",
+    "y": 0,
+    "h": 900
+   },
+   "spec": "A warm photo of a modern wood-toned living room. Header over it: 'MODORA' wordmark, 'Home · About Us · Services · Projects · Pricing' nav, 'Contact Us' right. A 2-line 40px serif 'Interior design that / elevates everyday living' bottom-left, 2 lines, a white 'Get Started' + 'View Service ↗' text link."
+  },
+  {
+   "id": "about-nestora",
+   "role": "about",
+   "from": "3 Nestora",
+   "crop": {
+    "src": "3.webp",
+    "y": 1000,
+    "h": 640
+   },
+   "spec": "Cream. A tiny '• About Us' label, a centred 2-line serif 'Designing Spaces Beyond the / Ordinary Creating Interiors' (second line italic), 3 lines, an underlined 'More About Us →'; small interior photos scattered at the left and right edges."
+  },
+  {
+   "id": "about-collison",
+   "role": "about",
+   "from": "1 Collison",
+   "crop": {
+    "src": "1.webp",
+    "y": 1000,
+    "h": 1480
+   },
+   "spec": "Cream. A centred 20px 'We design and produce furniture and interiors with a focus on balance, precision, and material depth…' statement; below, 'CRAFT, AT ITS CORE.' with two close-up workshop photos (a lathe turning wood, a hand on leather) and two paragraphs."
+  },
+  {
+   "id": "about-ocean",
+   "role": "about",
+   "from": "6 Ocean",
+   "crop": {
+    "src": "6.webp",
+    "y": 960,
+    "h": 1100
+   },
+   "spec": "White. A script 'About' over 'Thoughtful / Interior Design' left and 3 lines right. A masonry of 4 interior photos with a large central lounge photo carrying a round tan 'SEE MORE' badge."
+  },
+  {
+   "id": "about-renova",
+   "role": "about",
+   "from": "8 Renova",
+   "crop": {
+    "src": "8.webp",
+    "y": 940,
+    "h": 760
+   },
+   "spec": "White. 'THE RENOVA PHILOSOPHY' left, a 3-line note right. 3 bordered cards: 01 a photo + 'Function First', 02 a line-drawing + 'Timeless Aesthetic', 03 a pendant-light drawing + 'Material-Led Craftsmanship', each with 2 lines."
+  },
+  {
+   "id": "about-elysian-stats",
+   "role": "stats",
+   "from": "11 Elysian",
+   "crop": {
+    "src": "11.webp",
+    "y": 1000,
+    "h": 1000
+   },
+   "spec": "Cream. A pill label '● Proven Excellence' + centred serif 'Built On Trust' + 2 lines. A bento of white rounded cards and interior photos: '15+ Years of Experience', '12 Design Awards', '250+ Project Completed', '98+ Client Satisfaction', each with 2 lines, plus two photo tiles."
+  },
+  {
+   "id": "about-archova",
+   "role": "about",
+   "from": "10 Archova",
+   "crop": {
+    "src": "10.webp",
+    "y": 1000,
+    "h": 1000
+   },
+   "spec": "Warm grey. A 3-line 30px 'At Archova, we create timeless architectural designs…' with the tail in grey; a cluster of 3 floating rounded render cards; then 3 numbered lines (01/02/03) of short captions and a dark 'Explore Portfolio ↓' pill."
+  },
+  {
+   "id": "about-modora",
+   "role": "about",
+   "from": "12 Modora",
+   "crop": {
+    "src": "12.webp",
+    "y": 900,
+    "h": 700
+   },
+   "spec": "White. LEFT a 2-line serif 'Our expertise in design / and precision craft', 3 lines, an underlined 'More About Us ↗'; RIGHT two overlapping interior photos (a styled sofa, a smaller inset)."
+  },
+  {
+   "id": "about-lago",
+   "role": "about",
+   "from": "7 LAGO",
+   "crop": {
+    "src": "7.webp",
+    "y": 1200,
+    "h": 1000
+   },
+   "spec": "White. A tiny 'Our Story' label, a 3-line 'Lago Design creates refined interiors and bespoke furniture through a considered balance…', a dark '● Discover Our Story' pill, and a list (Custom-Made Furniture / Personalized Interior Design / Premium Craftsmanship); RIGHT a tall photo of a minimalist kitchen."
+  },
+  {
+   "id": "about-modora-reveal",
+   "role": "about",
+   "from": "8 Renova",
+   "crop": {
+    "src": "8.webp",
+    "y": 2450,
+    "h": 1100
+   },
+   "spec": "White. A big '[ ]BLE USE  CRAFTED INTERIOR SPACES / TIMELESS DESIGN' editorial line; 'PEOPLE BEHIND RENOVA' with a 2-line heading and a note; a row of 4 warm portraits of the team seated in designed rooms with name + role under each."
+  },
+  {
+   "id": "services-nestora",
+   "role": "services",
+   "from": "3 Nestora",
+   "crop": {
+    "src": "3.webp",
+    "y": 1640,
+    "h": 720
+   },
+   "spec": "Cream. A '• Our Services' label, a 2-line serif 'Transforming Spaces Into / Elevated Everyday Experiences' and a 'View All Services' pill. 3 columns split by rules: a line icon, a title (Space Planning / Lighting Design / Furniture & Styling), 2 lines and 'VIEW DETAILS'."
+  },
+  {
+   "id": "services-rawrxyz",
+   "role": "services",
+   "from": "4 rawrxyz",
+   "crop": {
+    "src": "4.webp",
+    "y": 1570,
+    "h": 790
+   },
+   "spec": "A black rounded band. 'OUR SERVICE' label + an 'Explore More ●' pill; a stacked list of numbered services (01 Sustainable Design, 02 Landscape Design, 03 Garden Design, 04 Metro Architecture) in 30px type; the active row is an orange bar with a white round → and a floating interior photo on the right."
+  },
+  {
+   "id": "services-awe",
+   "role": "services",
+   "from": "5 AWE Studio",
+   "crop": {
+    "src": "5.webp",
+    "y": 1600,
+    "h": 500
+   },
+   "spec": "Cream. 'OUR SERVICES' in bold left, 2 lines + 'Let's Talk →' below. RIGHT a numbered ruled list (01 Furniture decore … 07 Furniture decore) each with a ↗ at the far right."
+  },
+  {
+   "id": "services-ocean",
+   "role": "services",
+   "from": "6 Ocean",
+   "crop": {
+    "src": "6.webp",
+    "y": 2200,
+    "h": 1200
+   },
+   "spec": "Cream. A script 'Services' over 'We Serve The / Best For You' left, 3 lines right. 3 columns with a big outline number (01/02/03), an interior photo and a label (RESIDENTIAL SPACES, PUBLIC SPACES, COMMERCIAL SPACES)."
+  },
+  {
+   "id": "services-renova-philosophy",
+   "role": "services",
+   "from": "8 Renova",
+   "crop": {
+    "src": "8.webp",
+    "y": 4450,
+    "h": 1100
+   },
+   "spec": "White. 'What We're Known For' with a note; ruled rows (Design Awards, Featured Work, Crafted With Care, Built to Last, Client Experience) each a bold title left and a 2-line description right, with a small photo at the top."
+  },
+  {
+   "id": "services-archi",
+   "role": "services",
+   "from": "9 Archi",
+   "crop": {
+    "src": "9.webp",
+    "y": 1000,
+    "h": 1000
+   },
+   "spec": "A black rounded band. A centred 'Our Services' pill; a big numbered list laid out in a grid (01 Architectural Design, 02 Interior Design, 03 Urban Planning, 04 Renovation & Restoration, 05 Landscape Architecture, 06 3D Modeling & Visualization) in 30px white type with two small B&W texture images inline."
+  },
+  {
+   "id": "services-elysian",
+   "role": "services",
+   "from": "11 Elysian",
+   "crop": {
+    "src": "11.webp",
+    "y": 3300,
+    "h": 950
+   },
+   "spec": "Cream. A pill '● Our Services' + centred serif 'Tailored Interior Solutions' + 2 lines. 3 tall interior photo cards with a white caption chip at the bottom (Residential Interior, Commercial Interior, Custom Furniture) and a dark 'Explore All Services →' pill."
+  },
+  {
+   "id": "services-modora",
+   "role": "services",
+   "from": "12 Modora",
+   "crop": {
+    "src": "12.webp",
+    "y": 2850,
+    "h": 1000
+   },
+   "spec": "White. A centred serif 'Complete interior services / for modern spaces'. A 2×2 grid of bordered cards (/01 Residential interior design, /02 Commercial spaces, /03 Project Management, /04 Renovation & Remodeling) with 2 lines and 'SEE DETAILS', plus a photo tile; a dark 'VIEW ALL SERVICE' pill."
+  },
+  {
+   "id": "services-modora-smart",
+   "role": "services",
+   "from": "12 Modora",
+   "crop": {
+    "src": "12.webp",
+    "y": 1600,
+    "h": 1250
+   },
+   "spec": "Light grey. A 2-line serif 'Smart interior solutions / for modern living' + a dark 'VIEW MORE' pill. 4 interior photo cards of different heights with a small black space tag (OFFICE SPACE / DINNER SPACE / LIVING SPACE / BEDROOM), a /0N number and a short caption."
+  },
+  {
+   "id": "services-lago",
+   "role": "services",
+   "from": "7 LAGO",
+   "crop": {
+    "src": "7.webp",
+    "y": 2200,
+    "h": 1800
+   },
+   "spec": "White. 'Lago Design specializes in interior design and custom furniture creation' + a dark pill. A big close-up photo of a push-to-open drawer with a 'Custom Space Solutions' caption, then two photo cards (Interior Design, Bespoke Furniture) with captions; then 'Our Product Craftsmanship Process' with a ruled Understand / Refine / Develop / Evolve list."
+  },
+  {
+   "id": "projects-nestora",
+   "role": "projects",
+   "from": "3 Nestora",
+   "crop": {
+    "src": "3.webp",
+    "y": 2360,
+    "h": 880
+   },
+   "spec": "Cream. A '• Our Projects' label, a 2-line serif 'Elevating Everyday Living / Through Thoughtful Design' + round ← → buttons. A masonry of 4 project photos with name + price + location captions (Cedar House, Arden Villa, Residential Living, Maison Verde)."
+  },
+  {
+   "id": "projects-awe",
+   "role": "projects",
+   "from": "5 AWE Studio",
+   "crop": {
+    "src": "5.webp",
+    "y": 2460,
+    "h": 2200
+   },
+   "spec": "Cream. A centred 'RECENT PROJECTS'. A staggered set of large interior project photos each with a 'MODERN CORPORATE SPACE REDESIGN' title, a /0N number and a room-type tag; a centred '+ ALL PROJECTS' pill at the bottom."
+  },
+  {
+   "id": "projects-renova",
+   "role": "projects",
+   "from": "8 Renova",
+   "crop": {
+    "src": "8.webp",
+    "y": 1700,
+    "h": 750
+   },
+   "spec": "A dark full-bleed interior photo with a year timeline (2017 … 2019) and a white card overlapping: 'FIRST FULL-SCALE RESIDENTIAL PROJECT' + 2 lines + a small inset photo; round ‹ › at the sides."
+  },
+  {
+   "id": "projects-archi",
+   "role": "projects",
+   "from": "9 Archi",
+   "crop": {
+    "src": "9.webp",
+    "y": 3000,
+    "h": 1600
+   },
+   "spec": "Light grey. 'Our Projects' pill, a 3-line 'Some of Our / Architectural Projects / in Various Places.' + a 3-line note; a '1/10' slider with ← →. A carousel of architecture project cards: a rounded photo, a ↗ chip, a bold name (Neo Modern Apartment, Modern Minimalist Business Centre), 3 lines and a 'See This Project' pill; dark cards alternate."
+  },
+  {
+   "id": "projects-archova",
+   "role": "projects",
+   "from": "10 Archova",
+   "crop": {
+    "src": "10.webp",
+    "y": 2000,
+    "h": 1400
+   },
+   "spec": "Warm grey. A centred 'Showcasing timeless designs that / Inspire spaces and lives'. A masonry of villa/render photos of different sizes with small 'Aurora Residence · Copenhagen, Denmark' captions and round ⊕ chips; a centred 'View More ⊕'."
+  },
+  {
+   "id": "projects-elysian",
+   "role": "projects",
+   "from": "11 Elysian",
+   "crop": {
+    "src": "11.webp",
+    "y": 2000,
+    "h": 800
+   },
+   "spec": "Cream. A pill '● Signature Spaces' + centred serif 'Elite Interior Works' + 2 lines. A row of 4 interior photo cards with a small 'Residential · New York' meta line and a project title under each; round ← → below."
+  },
+  {
+   "id": "projects-modora",
+   "role": "projects",
+   "from": "12 Modora",
+   "crop": {
+    "src": "12.webp",
+    "y": 3900,
+    "h": 860
+   },
+   "spec": "Light grey. A 2-line serif 'Modern interior projects / for inspired living' + square ← → buttons. A row of 4 product-style project photos with a decor title and a price ($390.00 etc.); the centre one larger with a 'VIEW' chip."
+  },
+  {
+   "id": "projects-ocean-list",
+   "role": "projects",
+   "from": "6 Ocean",
+   "crop": {
+    "src": "6.webp",
+    "y": 3400,
+    "h": 1200
+   },
+   "spec": "White. A script 'Projects' over 'We Serve The / Best For You' + 3 lines. A ruled accordion list of projects (The Art Deco style, Modern Art, Arab Materials, The geometric designs, The interior walls) each with a role sub-line, years and a ↗; the active row is a tan bar that reveals an interior photo; a 'Get in Touch' + 'All Project →' row."
+  },
+  {
+   "id": "process-nestora",
+   "role": "process",
+   "from": "3 Nestora",
+   "crop": {
+    "src": "3.webp",
+    "y": 3240,
+    "h": 830
+   },
+   "spec": "Cream. A '• How It Works' label + centred 2-line serif 'Building Beautiful Interiors / Through Intentional Process'. 3 columns split by rules: '// STEP 0N', a geometric line icon, a title (Consultation & Vision, Design & Development, Execution & Delivery) and 2 lines."
+  },
+  {
+   "id": "process-lago",
+   "role": "process",
+   "from": "7 LAGO",
+   "crop": {
+    "src": "7.webp",
+    "y": 4000,
+    "h": 1000
+   },
+   "spec": "White. 'From Concept To Creation' label + 'Our Product Craftsmanship / Process'. A ruled list (Understand, Refine, Develop, Evolve) with a 2-line description on the right of each; a photo + dark 'Discover Our Services' pill inset in the Refine row."
+  },
+  {
+   "id": "process-archova",
+   "role": "process",
+   "from": "10 Archova",
+   "crop": {
+    "src": "10.webp",
+    "y": 4600,
+    "h": 1400
+   },
+   "spec": "Warm. A frosted glass card over a render: 'Transforming ideas into / Thoughtful design', 2 lines, a 'View More ⊕' pill, and a numbered list (01 Concept Development, 02 Design Refinement, 03 Execution & Delivery, 04 Collaboration & Feedback) each with a short note; the render shows a sunlit minimalist room with a tree."
+  },
+  {
+   "id": "process-archova-design",
+   "role": "process",
+   "from": "10 Archova",
+   "crop": {
+    "src": "10.webp",
+    "y": 3900,
+    "h": 700
+   },
+   "spec": "White. 'Refining concepts into seamless / Architectural design' + a 3-line note. A 2×3 grid of bordered cards (Enhancing details…, Optimizing functions…, Balancing aesthetics…, Selecting durable materials…, Incorporating innovations…, Aligning refinements…) each with 4 lines and a big faint number; the 02 card is solid black."
+  },
+  {
+   "id": "process-ocean",
+   "role": "process",
+   "from": "1 Collison",
+   "crop": {
+    "src": "1.webp",
+    "y": 2530,
+    "h": 1100
+   },
+   "spec": "A photo of hands sketching at a workbench with a translucent overlay: 'DESIGNED AND MADE / IN ONE PLACE', 3 lines, a round white play button, and 3 stats along the bottom (CLIENTS 120+, COLLABORATIONS 70+, PROJECTS 80+)."
+  },
+  {
+   "id": "team-archi",
+   "role": "team",
+   "from": "9 Archi",
+   "crop": {
+    "src": "9.webp",
+    "y": 2000,
+    "h": 1000
+   },
+   "spec": "White. A 2-line 'Meet Our Passionate / & Professional Team.' with an 'Our Team' pill. 3 tall black-and-white portrait cards with a rounded white name chip (Alexandro Terobose · Architect, Monica Andrade · Interior Designer, Steven Monjitu · Project Manager) overlapping each; round ← → and a '2/6' counter below."
+  },
+  {
+   "id": "team-renova",
+   "role": "team",
+   "from": "8 Renova",
+   "crop": {
+    "src": "8.webp",
+    "y": 2950,
+    "h": 700
+   },
+   "spec": "White. 'Designers, strategists, and collaborators working together…' 3-line statement. A row of 4 warm portraits of the team seated in designed interiors, with name + role (Nadia · Project Lead, Marcus · Creative Strategist, Elaine · Lead Designer, Sofia) under each."
+  },
+  {
+   "id": "team-elysian",
+   "role": "team",
+   "from": "11 Elysian",
+   "crop": {
+    "src": "11.webp",
+    "y": 4250,
+    "h": 800
+   },
+   "spec": "Cream. A pill '● Our Team' + centred serif 'Meet Our Experts' + 2 lines. A row of 4 portrait cards of smartly-dressed designers with name + role below (Ethan Carter · Founder, Noah Bennett · Principal Designer, Liam Brooks, Oliver Reed)."
+  },
+  {
+   "id": "team-rawrxyz",
+   "role": "team",
+   "from": "4 rawrxyz",
+   "crop": {
+    "src": "4.webp",
+    "y": 3350,
+    "h": 950
+   },
+   "spec": "Light grey. 'OUR TEAM' label, 'Meet The / – Team' heading + 2 lines left. RIGHT a ruled list of names with roles (Dave Growl · Interior Design, Paul Mac Alister · Architect, John Robbert · Civil Engineer (a black bar with a small portrait), Ruppert Grint · Architect, Nat Peterson · Electric Engineer) and an 'All Teams ●' pill."
+  },
+  {
+   "id": "testimonials-nestora",
+   "role": "testimonials",
+   "from": "3 Nestora",
+   "crop": {
+    "src": "3.webp",
+    "y": 4070,
+    "h": 900
+   },
+   "spec": "Cream. A '• Testimonials' label + centred 2-line serif 'Experiences Elevated Through / Intentional Design Polished'. A grid of quote cards: a photo card and several text cards with a 3-line quote, an avatar + name + role and a quote glyph; then a '4.9/5 · 120+ · 98%' stat row."
+  },
+  {
+   "id": "testimonials-ocean",
+   "role": "testimonials",
+   "from": "6 Ocean",
+   "crop": {
+    "src": "6.webp",
+    "y": 5050,
+    "h": 950
+   },
+   "spec": "A tan band. A script 'Testimonials' over 'What Our / Client Says' + a 2-line note. 3 columns: a portrait photo, a 3-line quote, name + role (Annette Black, Devon Lane, Savannah Nguyen); a black round 'VIEW ALL' badge in the centre."
+  },
+  {
+   "id": "testimonials-archova",
+   "role": "testimonials",
+   "from": "10 Archova",
+   "crop": {
+    "src": "10.webp",
+    "y": 6800,
+    "h": 760
+   },
+   "spec": "White. 'Voices of Trust' + 'Stories of Design'. A big faint quote glyph, a 5-line 24px quote, a round avatar + 'Emily Carter · Homeowner in London, UK' and ‹ • • › dots."
+  },
+  {
+   "id": "testimonials-archi",
+   "role": "testimonials",
+   "from": "9 Archi",
+   "crop": {
+    "src": "9.webp",
+    "y": 3900,
+    "h": 1200
+   },
+   "spec": "Light grey. A 'Testimonials' pill, 'Feedback From / Clients Who Have / Worked With Us.' + a '+500 client feedbacks' avatar chip. A carousel of rounded white quote cards (avatar with a coloured frame, name + role, a 3-line quote) with a '1/10' counter and round ← →."
+  },
+  {
+   "id": "testimonials-elysian",
+   "role": "testimonials",
+   "from": "11 Elysian",
+   "crop": {
+    "src": "11.webp",
+    "y": 4900,
+    "h": 700
+   },
+   "spec": "Cream. A pill '● Testimonials' + centred serif 'Words Of Trust' + 2 lines. A wide white card: a bedroom photo on the left, gold stars and a 5-line quote on the right, 'Theo Atlanta · Homeowner, Mondeo'; round ‹ › buttons below."
+  },
+  {
+   "id": "testimonials-modora",
+   "role": "testimonials",
+   "from": "12 Modora",
+   "crop": {
+    "src": "12.webp",
+    "y": 4750,
+    "h": 450
+   },
+   "spec": "White. Two testimonial columns side by side: a 2-line quote, a name + gold stars and a square portrait of a smiling client (Delbert Patterson, james smith)."
+  },
+  {
+   "id": "collection-lignora-explore",
+   "role": "collection",
+   "from": "2 Lignora",
+   "crop": {
+    "src": "2.webp",
+    "y": 870,
+    "h": 780
+   },
+   "spec": "White. 'Explore / The Collection' heading left; a row of 4 product category cards (Bedside Tables & Chest of Drawers, Beds & Mattresses, Dinning Table & Chairs, Armchairs) with a soft-lit furniture photo and label, round ‹ › and a 'More Product' pill."
+  },
+  {
+   "id": "collection-lignora-products",
+   "role": "collection",
+   "from": "2 Lignora",
+   "crop": {
+    "src": "2.webp",
+    "y": 2990,
+    "h": 900
+   },
+   "spec": "White. 'Interiors by Lignora.' heading; a row of 4 product cards: a room-set photo with a category label and a short note over a dark gradient, a colour-swatch row, a 'Regular Price' and a coloured 'Member Price'; a 'More Product' pill and round ‹ ›."
+  },
+  {
+   "id": "collection-lignora-lifestyle",
+   "role": "collection",
+   "from": "2 Lignora",
+   "crop": {
+    "src": "2.webp",
+    "y": 2200,
+    "h": 790
+   },
+   "spec": "White. A wide 2-panel lifestyle band: a sculptural round mirror with 'Mirrors made for every space' and a sunlit home office with 'New In : Home Office', each with a 2-line white caption."
+  },
+  {
+   "id": "collection-lignora-story",
+   "role": "about",
+   "from": "2 Lignora",
+   "crop": {
+    "src": "2.webp",
+    "y": 1650,
+    "h": 550
+   },
+   "spec": "White. LEFT a 6-line statement 'At Lignora, we believe furniture should do more than fill a space…' with underlined key phrases and a 'Learn More' pill; RIGHT a warm checkerboard rug photo in a rounded frame."
+  },
+  {
+   "id": "blog-archova",
+   "role": "blog",
+   "from": "10 Archova",
+   "crop": {
+    "src": "10.webp",
+    "y": 6000,
+    "h": 800
+   },
+   "spec": "White. 'Exploring architectural trends Ideas / And inspiring design stories' + round ← →. 3 cards: a warm interior/render photo, a 2-line title 'Sustainable Minimalism: Redefining Modern Residential Architecture', 2 lines and 'View More ⊕'."
+  },
+  {
+   "id": "blog-nestora",
+   "role": "blog",
+   "from": "3 Nestora",
+   "crop": {
+    "src": "3.webp",
+    "y": 4970,
+    "h": 1030
+   },
+   "spec": "Cream. A '• Our Blog' label + 2-line serif 'Thoughts on Creating / Elevated Everyday Spaces' + a dark 'View All Blog' pill. 2 wide cards: a date block (20 July), an interior photo, a 2-line title and 'Read More →'."
+  },
+  {
+   "id": "blog-modora",
+   "role": "blog",
+   "from": "12 Modora",
+   "crop": {
+    "src": "12.webp",
+    "y": 5150,
+    "h": 850
+   },
+   "spec": "White. A 2-line serif 'Stories trends & ideas / for beautiful spaces' + a black 'VIEW ALL ARTICLES' pill. A big featured card (bedroom photo, 'Designing small spaces that feel spacious', date, 'READ MORE') beside two smaller stacked article cards."
+  },
+  {
+   "id": "cta-nestora",
+   "role": "cta",
+   "from": "3 Nestora",
+   "crop": {
+    "src": "3.webp",
+    "y": 6000,
+    "h": 360
+   },
+   "spec": "A dark band: a 2-line serif 'Creating Spaces That Feel / Beautiful Personal & Timeless' + a '220k+ Happy Homeowners' avatar chip and a white 'Start a Conversation' pill."
+  },
+  {
+   "id": "cta-rawrxyz",
+   "role": "cta",
+   "from": "4 rawrxyz",
+   "crop": {
+    "src": "4.webp",
+    "y": 4950,
+    "h": 600
+   },
+   "spec": "A black band: 'START DESIGN YOUR / IMAGINE HOME FOR / – HEALTY SOUL' left with an email input + orange arrow; a nav list and 'info@rawrxyz.com' right; the brand 'rawrxyz' as a huge white wordmark with a round orange → button at the bottom."
+  },
+  {
+   "id": "cta-archova",
+   "role": "cta",
+   "from": "10 Archova",
+   "crop": {
+    "src": "10.webp",
+    "y": 7560,
+    "h": 760
+   },
+   "spec": "A photo of a concrete-walled room with plants and a frosted glass 'Get in Touch' form (full name, email, phone, project type, message, dark 'Submit' pill) floating over it."
+  },
+  {
+   "id": "cta-renova",
+   "role": "cta",
+   "from": "8 Renova",
+   "crop": {
+    "src": "8.webp",
+    "y": 5150,
+    "h": 850
+   },
+   "spec": "A warm photo of a minimalist fireplace room: a centred 2-line uppercase 'LET'S CREATE SOMETHING / EXTRAORDINARY TOGETHER.' and a 'Start Your Project ↗' pill."
+  },
+  {
+   "id": "contact-awe",
+   "role": "contact",
+   "from": "5 AWE Studio",
+   "crop": {
+    "src": "5.webp",
+    "y": 6000,
+    "h": 760
+   },
+   "spec": "Cream. 'CONTACT US' heading. LEFT a tall interior photo and a smaller tilted inset; RIGHT 'LET'S WORK' with 2 lines and a big orange '+ LET'S TALK' pill; a footer row with social icons, 'AWE STUDIO' and legal links."
+  },
+  {
+   "id": "contact-archova-form",
+   "role": "contact",
+   "from": "10 Archova",
+   "crop": {
+    "src": "10.webp",
+    "y": 7560,
+    "h": 760
+   },
+   "spec": "A render of a concrete room with plants and a large frosted 'Get in Touch' glass form (full name, email, phone number, project type, message) and a dark pill 'Submit ⊕'."
+  },
+  {
+   "id": "contact-elysian",
+   "role": "contact",
+   "from": "11 Elysian",
+   "crop": {
+    "src": "11.webp",
+    "y": 2800,
+    "h": 500
+   },
+   "spec": "Cream. LEFT a wide interior photo of a bright living room; RIGHT a pill '● About Us' + serif 'Where Ideas Meet Art', 5 lines and a dark 'Learn More →' pill."
+  },
+  {
+   "id": "footer-nestora",
+   "role": "footer",
+   "from": "3 Nestora",
+   "crop": {
+    "src": "3.webp",
+    "y": 6000,
+    "h": 1009
+   },
+   "spec": "A dark band: a 2-line serif 'Creating Spaces That Feel / Beautiful Personal & Timeless' + a '220k+' chip and a 'Start a Conversation' pill; Contact · Services · Company columns and a newsletter input with a round → ; the brand 'Nestora' as a big white wordmark with social icons and a © line."
+  },
+  {
+   "id": "footer-collison",
+   "role": "footer",
+   "from": "1 Collison",
+   "crop": {
+    "src": "1.webp",
+    "y": 5700,
+    "h": 1180
+   },
+   "spec": "A dark band: a 4-line 'EDWARD COLLINSON' founder bio with a B&W portrait; then 'Bringing timeless aesthetics and comfort to your home and workspace' with Collections · Studio · Projects columns and an email input; the brand 'COLLISON' as a giant white serif wordmark with a decorative ligature."
+  },
+  {
+   "id": "footer-rawrxyz",
+   "role": "footer",
+   "from": "4 rawrxyz",
+   "crop": {
+    "src": "4.webp",
+    "y": 4950,
+    "h": 1100
+   },
+   "spec": "A black band: 'START DESIGN YOUR IMAGINE HOME FOR – HEALTY SOUL' + email input, a link list, legal links and 'info@rawrxyz.com'; the 'rawrxyz' wordmark huge in white with an orange round → button and a © line."
+  },
+  {
+   "id": "footer-ocean",
+   "role": "footer",
+   "from": "6 Ocean",
+   "crop": {
+    "src": "6.webp",
+    "y": 6020,
+    "h": 700
+   },
+   "spec": "White. A partner-logo row (Vertex, martino, SquareStone, waverio, fireli; Virogan, aromix, Natroma), then a flower logo + 'Ocean' with 2 lines + social icons, About · Services · Blogs · Contact Us columns and a 'Newsletter' input + orange 'Subscribe ↗'."
+  },
+  {
+   "id": "footer-lago",
+   "role": "footer",
+   "from": "7 LAGO",
+   "crop": {
+    "src": "7.webp",
+    "y": 6940,
+    "h": 587
+   },
+   "spec": "A black band: 'Begin your journey with Ruellia Bespoke…' with an underlined 'hello@lagodesign.com', Studio · Services · Projects columns, office hours and address; the brand 'LAGO' as a giant white wordmark and a © + legal row."
+  },
+  {
+   "id": "footer-renova",
+   "role": "footer",
+   "from": "8 Renova",
+   "crop": {
+    "src": "8.webp",
+    "y": 6000,
+    "h": 650
+   },
+   "spec": "A black band split into a grid: 'INTERIOR / ARCHITECTURE' labels, '+44 20 7946 0892 · hello@renova.studio', studio address and '2025 Renova. All rights reserved.'; the brand 'RENOVA' as a giant white wordmark filling the bottom."
+  },
+  {
+   "id": "footer-archi",
+   "role": "footer",
+   "from": "9 Archi",
+   "crop": {
+    "src": "9.webp",
+    "y": 5200,
+    "h": 800
+   },
+   "spec": "White. A dark rounded 'Let's create spaces that inspire and leave a lasting impact.' band with an email input and a white round ↗; then 'Archi.' + a 2-line note + address, Project · Company · Community columns, a © line and round social icons."
+  },
+  {
+   "id": "footer-elysian",
+   "role": "footer",
+   "from": "11 Elysian",
+   "crop": {
+    "src": "11.webp",
+    "y": 5850,
+    "h": 800
+   },
+   "spec": "A dark espresso band: 'Stay Updated With Elysian Connect' + an email input with a round send button, Navigation · Social · Contact columns; a © + legal row and the brand 'ELYSIAN' as a giant white wordmark."
+  },
+  {
+   "id": "footer-modora",
+   "role": "footer",
+   "from": "12 Modora",
+   "crop": {
+    "src": "12.webp",
+    "y": 6000,
+    "h": 1000
+   },
+   "spec": "A black band: an email input + serif 'Let's talk'; 'MODORA' + 2 lines, Address · Address 2 · Phone · Email columns, a 2-line note and social icons; privacy links and a huge ghosted 'MODORA' wordmark along the bottom."
+  },
+  {
+   "id": "footer-archova",
+   "role": "footer",
+   "from": "10 Archova",
+   "crop": {
+    "src": "10.webp",
+    "y": 8320,
+    "h": 507
+   },
+   "spec": "A black band: 'Archova.' + 'Crafting Living Dreams Into / Timeless Architectural Realities' + a 'Contact Us ⊕' pill; FOLLOW US social icons and Home · About Archova · Portfolio · Design Process · Awards link columns, with a © + legal row."
+  }
+ ]
+}

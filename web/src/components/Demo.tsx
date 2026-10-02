@@ -58,19 +58,21 @@ export function DemoBanner() {
   const out = demo.left.mockups === 0;
   return (
     <>
-      <div className={`demo-bar${out ? " out" : ""}`} role="status">
+      <div className={`demo-bar${out || demo.expired ? " out" : ""}`} role="status">
         <Sparkles />
         <span>
-          <b>Demo</b> · {demo.left.mockups} of {DEMO_LIMITS.mockups} mockups left
+          <b>Free trial</b> · {demo.expired ? "ended" : demo.daysLeft === 0 ? "ends today" : `${demo.daysLeft} day${demo.daysLeft === 1 ? "" : "s"} left`} · {demo.left.mockups} of {DEMO_LIMITS.mockups} mockups
           <details className="demo-limits">
-            <summary>All demo limits</summary>
+            <summary>All trial limits</summary>
             <ul>
               {KINDS.map((k) => (
                 <li key={k} className={demo.left[k] === 0 ? "used" : ""}>
                   <b>{demo.left[k]}</b> of {DEMO_LIMITS[k]} {DEMO_LABELS[k][DEMO_LIMITS[k] === 1 ? 0 : 1]} left
                 </li>
               ))}
-              <li>Up to {demo.results} results per search or campaign, {demo.products} products per store</li>
+              <li><b>{demo.automationLeadsLeft}</b> businesses left for automations to enrol</li>
+              <li>Up to {demo.results} leads per search, {demo.products} products per store</li>
+              <li>Everything stops 7 days after the trial began{demo.expiresAt ? ` (${new Date(demo.expiresAt).toLocaleDateString("en-US", { month: "long", day: "numeric" })})` : ""} unless you enter a key.</li>
             </ul>
           </details>
         </span>

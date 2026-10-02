@@ -1,0 +1,1402 @@
+{
+ "niche": "Coaches, consultants, therapists & creators",
+ "match": "life.?coach|business.?coach|executive.?coach|career.?coach|leadership.?coach|mindset|mentor|consultan|consulting|advisor(y)?|counsel+or|counsel+ing|therap(y|ist)|psycholog|psychotherap|hypno|grief|wellbeing.?coach|nutrition(ist)?|dietit|dietic|weight.?loss.?coach|health.?coach|speaker|keynote|author|content.?creator|creator|influencer|personal.?brand|course|masterclass|coaching",
+ "about": "Mix-and-match sections for personal-brand service businesses — life, business, career, executive and branding coaches, consultants, counsellors/therapists/hypnotherapists, nutrition & weight-loss coaches, speakers and content creators — from 12 Dribbble full-page references (1–12.webp; shot links in _sources.json). Every mockup = one base STYLE + an ordered set of SECTIONS. Crops live in sections/<id>.jpg. These pages sell a PERSON: use the lead's own portraits, speaking/session photos and their real story first, then lifestyle stock. Client counts, revenue figures, 'as seen in' logos, prices and credentials must come from FACTS — otherwise drop them. Therapy/counselling pages must not promise outcomes or imply medical treatment.",
+ "styles": [
+  {
+   "id": "olive-calm",
+   "name": "Olive calm (therapy)",
+   "fits": "therapist hypnotherapist counsellor anxiety stress trauma mindfulness holistic calm healer wellbeing",
+   "character": "Soothing and grounded: a pale sage page frame, a big rounded hero photo of a gentle session with an italic light serif headline, deep olive-green rounded bands with a soft green-gold glow, italic serif section headings throughout, small amber-gold pill buttons with a tiny round avatar, organic gradient 'bloom' icons, a fanned arc of session photos, frosted cards over a candle/crystal still life. (Ref 1 Lina Ralph.)",
+   "fonts": "Instrument Serif (400 italic) for headings + Inter (400/500) for text",
+   "cssStarter": ":root{--accent:#f5a524;--primary:#2c3f21;--ink:#1d2419;--body:#646b5f;--bg:#f3f2ec;--frame:#c9d19c;--line:#e3e2d8;--container:1120px;--gutter:32px;--section-y:110px;--radius:28px}\nbody{font-family:'Inter',sans-serif;font-size:13px;line-height:1.65;color:var(--body);background:var(--frame)}\n.page{background:var(--bg);max-width:1200px;margin:0 auto}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.olive{background:radial-gradient(90% 70% at 70% 100%,#6d7a2c 0%,var(--primary) 60%);color:#d8ddc9;border-radius:var(--radius)}.olive h2{color:#fff}\nh1,h2,h3{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--ink);line-height:1.12}\nh1{font-size:56px;color:#fff}\nh2{font-size:40px;text-align:center}\nh3{font-size:20px;font-style:normal;font-family:'Inter',sans-serif;font-weight:500}\n.btn{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 4px 0 14px;border-radius:8px;background:var(--accent);color:#1d1600;font-size:11px}\n.btn img{width:26px;height:26px;border-radius:6px}\n.btn-ghost{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.35)}\n.card{background:#fff;border-radius:14px;padding:12px}\n.photo{border-radius:var(--radius);overflow:hidden}\n.glass{background:rgba(60,50,30,.45);backdrop-filter:blur(8px);border-radius:12px;color:#fff;padding:14px}\n@media(max-width:768px){:root{--section-y:68px;--gutter:20px;--radius:20px}h1{font-size:36px}h2{font-size:28px}}"
+  },
+  {
+   "id": "sage-healing",
+   "name": "Sage healing serif",
+   "fits": "grief coach healing coach therapist counsellor emotional support women wellness spiritual gentle",
+   "character": "Soft and compassionate: warm cream canvas, a misty sage-green photo hero with a big serif headline, a hazy golden-hour 'flowing dress in a meadow' feature with concern labels arranged around a thin circle, tall portrait-ratio service cards fading into cream, dusty sage pill buttons with a dot, a Trustpilot-style avatar chip, a big cursive wordmark over a sage gradient footer. (Ref 2 Chirona.)",
+   "fonts": "Playfair Display (400/500) for headings + Inter (400/500) for text; a script (Great Vibes) for the footer wordmark",
+   "cssStarter": ":root{--accent:#7fa39a;--ink:#2a2620;--body:#6f685d;--bg:#f7efe0;--cream:#fbf6ec;--sage:#8aa896;--line:#e8dfcf;--container:1140px;--gutter:32px;--section-y:110px;--radius:16px}\nbody{font-family:'Inter',sans-serif;font-size:13px;line-height:1.65;color:var(--body);background:var(--cream)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\nh1,h2,h3{font-family:'Playfair Display',serif;font-weight:400;color:var(--ink);line-height:1.15}\nh1{font-size:52px;color:#fff}\nh2{font-size:38px;text-align:center}\nh3{font-size:20px}\n.quote{font-family:'Playfair Display',serif;font-style:italic;font-size:26px;color:var(--ink)}\n.label{font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}.label::before{content:'• '}\n.btn{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 16px;border-radius:6px;background:var(--accent);color:#fff;font-size:10px;letter-spacing:.06em;text-transform:uppercase}.btn::after{content:'';width:5px;height:5px;border-radius:50%;background:#fff}\n.card{border:1px solid var(--line);border-radius:10px;padding:16px;background:rgba(255,255,255,.4)}\n.tall{border-radius:12px 12px 0 0;aspect-ratio:3/5;overflow:hidden;position:relative;-webkit-mask-image:linear-gradient(#000 70%,transparent)}\n.script{font-family:'Great Vibes',cursive;font-size:130px;color:#f7efe0}\nfooter{background:linear-gradient(180deg,var(--cream),#7c9b87)}\n@media(max-width:768px){:root{--section-y:68px;--gutter:20px}h1{font-size:34px}h2{font-size:28px}}"
+  },
+  {
+   "id": "clean-mono-coach",
+   "name": "Clean mono coach",
+   "fits": "life coach mindset coach personal coach men professional simple minimal honest story",
+   "character": "Plain and personal: white/light-grey page, a black-and-white cut-out portrait of the coach in the hero surrounded by small thin-bordered stat cards, the name in a big bold grotesk, one royal-blue (#3d2fe0) accent for the '1:1 coaching — $/hr' button and links, payment-method icons under the CTA, a personal story told in two photo/text rows, a numbered ruled list beside a photo, a staircase 'how coaching works' diagram with beige tags. (Ref 3 David Roberts.)",
+   "fonts": "Inter (400/500/700) for everything",
+   "cssStarter": ":root{--accent:#3d2fe0;--ink:#111111;--body:#555;--bg:#ffffff;--alt:#f7f7f7;--tag:#cdbfa8;--line:#e5e5e5;--container:1100px;--gutter:32px;--section-y:100px;--radius:6px}\nbody{font-family:'Inter',sans-serif;font-size:13px;line-height:1.65;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.alt{background:var(--alt)}\nh1{font-size:56px;font-weight:700;color:var(--ink);line-height:1;letter-spacing:-.02em}\nh2{font-size:30px;font-weight:600;color:var(--ink);line-height:1.2}\nh3{font-size:14px;font-weight:600;color:var(--ink)}\n.btn{display:inline-flex;align-items:center;height:40px;padding:0 18px;border-radius:4px;background:var(--accent);color:#fff;font-size:12px;font-weight:500}\n.stat{border:1px solid var(--line);border-radius:4px;padding:10px 12px;background:#fff;font-size:11px}.stat b{display:block;font-size:18px;color:var(--ink);font-weight:500}\n.bw{filter:grayscale(1)}\n.list-row{display:grid;grid-template-columns:24px 1fr 2fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}\n.num{width:20px;height:20px;border-radius:50%;border:1px solid #ccc;display:grid;place-items:center;font-size:10px}\n.tag{background:var(--tag);color:#3b3326;font-size:11px;padding:4px 10px;border-radius:3px}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:40px}h2{font-size:24px}}"
+  },
+  {
+   "id": "violet-night",
+   "name": "Violet night coach",
+   "fits": "life coach women confidence career coaching mindset transformation programs modern bold",
+   "character": "Moody and warm: a dark navy-ink page, a cinematic lamp-lit library hero photo of the coach, a WIDE heavy uppercase geometric sans for headings, bright periwinkle-violet (#6b5cff) rounded blocks for the intro and program cards, a hot orange (#ff8a1e) accent for stats, stars and pill buttons with an outlined ↗ chip, photo cards with violet gradient bottoms, a violet 'insights' band, a giant ghosted wordmark behind the contact form. (Ref 4 Mindora.)",
+   "fonts": "Poppins (500/600/700) for everything; headings uppercase",
+   "cssStarter": ":root{--accent:#ff8a1e;--violet:#6b5cff;--bg:#11132a;--surface:#1b1e3a;--ink:#ffffff;--muted:#b3b6d1;--line:rgba(255,255,255,.1);--container:1160px;--gutter:32px;--section-y:100px;--radius:10px}\nbody{background:var(--bg);color:var(--muted);font-family:'Poppins',sans-serif;font-size:13px;line-height:1.6}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.white{background:#fff;color:#555}.white h2{color:#111}\n.violet{background:var(--violet);color:#e7e5ff;border-radius:var(--radius)}\nh1,h2,h3{font-weight:600;text-transform:uppercase;color:var(--ink);line-height:1.15;letter-spacing:.01em}\nh1{font-size:44px}\nh2{font-size:36px}\nh3{font-size:15px;text-transform:none}\n.stat b{font-size:30px;color:var(--accent);font-weight:600}\n.btn{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 4px 0 14px;border-radius:99px;background:var(--accent);color:#fff;font-size:11px}\n.btn i{width:24px;height:24px;border-radius:50%;border:1.5px solid #fff;display:grid;place-items:center}\n.card{border-radius:var(--radius);overflow:hidden;position:relative}.card .cap{position:absolute;inset:auto 0 0 0;padding:14px;background:linear-gradient(transparent,rgba(107,92,255,.9));color:#fff}\n.stars{color:var(--accent)}\n.ghost{font-size:150px;font-weight:700;color:rgba(255,255,255,.05);text-transform:uppercase}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:30px}h2{font-size:26px}}"
+  },
+  {
+   "id": "pastel-playful",
+   "name": "Pastel playful coach",
+   "fits": "life coach women coach business coach friendly creative colourful fun modern mindset clarity",
+   "character": "Cheerful and light: warm off-white page, a deep wine/burgundy hero card with the coach's first name HUGE in white and a lilac squiggle, pastel card colours (butter yellow, baby blue, lilac, mint, pink) for problems, process and packages, a small italic-serif accent phrase with a pink squiggle under every heading, tilted pastel process cards on a looping line with sparkle stars, stacked colour tabs (01–04), pink pill buttons with a lilac round arrow, a dark forest footer with a huge butter-yellow wordmark. (Ref 5 Coachly.)",
+   "fonts": "Manrope (500/600/700) for headings + Instrument Serif (italic) for accent phrases + Inter (400) for text",
+   "cssStarter": ":root{--accent:#f472b6;--lilac:#b9a6ff;--wine:#6b1030;--butter:#fde68a;--blue:#cfe6ff;--mint:#d9f7d0;--pink:#f9d3ec;--ink:#1f1a1c;--body:#645e60;--bg:#f7f3ec;--dark:#1a2419;--container:1120px;--gutter:32px;--section-y:100px;--radius:16px}\nbody{font-family:'Inter',sans-serif;font-size:13px;line-height:1.65;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.wine{background:var(--wine);color:#fff;border-radius:var(--radius)}\nh1{font-family:'Manrope',sans-serif;font-weight:800;font-size:96px;color:#fff;line-height:.95;text-transform:uppercase}\nh2{font-family:'Manrope',sans-serif;font-weight:600;font-size:28px;color:var(--ink);text-align:center;line-height:1.25}\nh2 em{display:block;font-family:'Instrument Serif',serif;font-style:italic;font-weight:400}\nh2 em::after{content:'';display:block;width:60px;height:6px;margin:4px auto 0;background:radial-gradient(circle,var(--accent) 40%,transparent 41%) 0 0/8px 6px}\nh3{font-size:16px;font-weight:600;color:var(--ink)}\n.label{font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:#8a8386;text-align:center}.label::before,.label::after{content:' \\2726 ';color:var(--accent)}\n.btn{display:inline-flex;align-items:center;gap:4px;height:26px;padding:0 3px 0 14px;border-radius:99px;background:var(--accent);color:#fff;font-size:9px}\n.btn i{width:20px;height:20px;border-radius:50%;background:var(--lilac)}\n.card{border-radius:14px;padding:18px}.y{background:var(--butter)}.b{background:var(--blue)}.l{background:var(--lilac)}.m{background:var(--mint)}.p{background:var(--pink)}\n.tilt{transform:rotate(-6deg)}\nfooter{background:var(--dark);color:#bbb}.wordmark{font-size:180px;font-weight:600;color:var(--butter);line-height:1}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:54px}h2{font-size:22px}.wordmark{font-size:80px}}"
+  },
+  {
+   "id": "purple-brand",
+   "name": "Purple personal brand",
+   "fits": "personal branding coach linkedin creator podcast speaker author consultant marketing thought leader",
+   "character": "Creator/brand coach: a violet page frame, a moody podcast-studio photo hero with a big 2-line white headline and a translucent stats bar, light lavender gradients, headings with one or two words in medium purple (#7b5bd6), a two-row partner logo wall, a horizontal carousel of dated service cards (first filled purple), a process accordion with the active row dark, a big video band, dated blog cards, and a giant grey-black name wordmark footer. (Ref 6 BrandElevate / Roberta Lane.)",
+   "fonts": "Inter (300/400/500) for everything",
+   "cssStarter": ":root{--accent:#7b5bd6;--frame:#8a63d2;--ink:#1c1c1f;--body:#6a6a72;--bg:#ffffff;--lav:#f1ecfb;--dark:#2b2b2e;--line:#ececf2;--container:1100px;--gutter:32px;--section-y:100px;--radius:12px}\nbody{font-family:'Inter',sans-serif;font-size:13px;line-height:1.6;color:var(--body);background:var(--frame)}\n.page{background:var(--bg);max-width:1300px;margin:0 auto}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.lav{background:linear-gradient(180deg,var(--lav),#fff)}\nh1,h2,h3{font-weight:400;color:var(--ink);letter-spacing:-.02em;line-height:1.12}\nh1{font-size:44px;color:#fff}\nh2{font-size:36px}h2 em{font-style:normal;color:var(--accent)}\nh3{font-size:18px}\n.label{font-size:9px;color:var(--ink);display:flex;gap:8px;align-items:center}.label::before{content:'';width:20px;height:1px;background:currentColor}\n.btn{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 4px 0 14px;border-radius:99px;background:var(--accent);color:#fff;font-size:11px}.btn i{width:22px;height:22px;border-radius:50%;background:#fff;color:var(--accent);display:grid;place-items:center}\n.card{border:1px solid var(--line);border-radius:var(--radius);padding:12px;background:#fff}.card.on{background:var(--accent);color:#fff}\n.date{display:inline-block;border:1px solid var(--line);border-radius:99px;font-size:9px;padding:2px 8px}\n.row.on{background:var(--dark);color:#fff;border-radius:10px;padding:14px}\n.wordmark{font-size:120px;letter-spacing:-.04em;color:#333;line-height:1}.wordmark span{color:#bbb}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:30px}h2{font-size:26px}.wordmark{font-size:56px}}"
+  },
+  {
+   "id": "blush-mindset",
+   "name": "Warm glow mindset",
+   "fits": "mindset coach confidence coach performance coach men professionals high achievers modern personal",
+   "character": "Friendly and modern: a soft grey-blue hero where the coach's smiling portrait fades into a warm orange/pink glow and his NAME is spelled in huge pixelated/blurred letters behind him, three italic role lines '(01) Mindset Mentor'; then pale periwinkle-grey bands, a large statement with the tail in grey, 4 small stats, white icon cards with a teal round icon, a teal pill accent, a dark navy footer with a giant scrolling 'Contact Me •' marquee and an amber glow. (Ref 7 David Miller.)",
+   "fonts": "Onest or Inter (400/500/600) for everything",
+   "cssStarter": ":root{--accent:#4e8f8f;--glow:#ff8a4c;--ink:#141414;--body:#63666c;--bg:#ffffff;--pale:#eceef5;--dark:#0b0d24;--line:#e6e8ee;--container:1080px;--gutter:32px;--section-y:100px;--radius:12px}\nbody{font-family:'Onest',sans-serif;font-size:13px;line-height:1.6;color:var(--body);background:var(--dark)}\n.page{background:var(--bg);max-width:1300px;margin:0 auto;border-radius:0 0 28px 28px;overflow:hidden}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.pale{background:var(--pale)}\n.hero{background:radial-gradient(60% 60% at 20% 90%,rgba(255,138,76,.8),transparent 70%),linear-gradient(#dfe3ec,#c9cfdb)}\n.giant{font-size:180px;font-weight:700;color:rgba(255,170,120,.55);filter:blur(1px);letter-spacing:.02em;text-transform:uppercase}\n.roles i{display:block;font-size:24px;color:#fff;font-style:italic}.roles small{font-size:10px;margin-right:6px}\nh2{font-size:30px;font-weight:600;color:var(--ink);line-height:1.2}\n.statement{font-size:24px;line-height:1.45;color:var(--ink)}.statement .g{color:#9aa0aa}\nh3{font-size:14px;font-weight:600;color:var(--ink)}\n.btn{display:inline-flex;align-items:center;height:28px;padding:0 14px;border-radius:99px;background:var(--accent);color:#fff;font-size:10px}\n.card{background:#fff;border-radius:var(--radius);padding:16px}\n.icon{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center}\n.marquee{font-size:90px;color:#fff;white-space:nowrap}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}.giant{font-size:80px}h2{font-size:24px}.statement{font-size:18px}}"
+  },
+  {
+   "id": "peach-business",
+   "name": "Peach business coach",
+   "fits": "business coach entrepreneur founder growth coach sales leadership consultant small business owner",
+   "character": "Warm and confident: a peach-to-coral gradient hero with the coach cut out on the right and his name as a big ghosted white wordmark behind/below him, a bold 3-line headline on the left, a coral (#ff5a36) accent for key words, pills and arrows, a 'Trusted by 500+ …' line with coral words over a logo row, pain-point list with coral icons beside a portrait, service cards with photo bottoms and round carousel arrows, a case-study story with grey trailing text, a big video band, a coral-gradient follow CTA and a footer with the giant faded name. (Ref 8 James David.)",
+   "fonts": "Inter Tight (400/500/600) for everything",
+   "cssStarter": ":root{--accent:#ff5a36;--peach:#ffb49a;--ink:#161616;--body:#666;--bg:#ffffff;--alt:#fff6f2;--line:#efe6e2;--container:1100px;--gutter:32px;--section-y:100px;--radius:12px}\nbody{font-family:'Inter Tight',sans-serif;font-size:13px;line-height:1.6;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.hero{background:linear-gradient(120deg,#ff9f86,#ffc6b0 60%,#ffd9cc)}\n.alt{background:var(--alt)}\nh1,h2,h3{font-weight:500;color:var(--ink);letter-spacing:-.02em;line-height:1.12}\nh1{font-size:44px}\nh2{font-size:32px}h2 em{font-style:normal;color:var(--accent)}\nh3{font-size:16px}\n.ghost{font-size:90px;font-weight:600;font-style:italic;color:rgba(255,255,255,.45);text-transform:uppercase}\n.btn{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 4px 0 14px;border-radius:99px;background:var(--accent);color:#fff;font-size:11px}.btn i{width:22px;height:22px;border-radius:50%;background:#fff;color:var(--accent);display:grid;place-items:center}\n.btn-dark{background:#161616}\n.btn-outline{background:#fff;border:1px solid #ccc;color:var(--ink);padding:0 14px}\n.card{border:1px solid var(--line);border-radius:var(--radius);padding:14px;background:#fff}\n.photo{border-radius:var(--radius);overflow:hidden}\n.wordmark{font-size:120px;font-weight:600;color:#eee;letter-spacing:-.02em}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:32px}h2{font-size:24px}}"
+  },
+  {
+   "id": "forest-brand",
+   "name": "Forest & butter strategist",
+   "fits": "personal brand strategist business coach consultant author speaker professional established calm",
+   "character": "Quietly professional: a dark navy-charcoal hero card with a dramatic profile portrait and the name in a large white geometric sans, 4 role columns (Author · Speaker · Coach · Creator) along the bottom, warm cream bands, deep forest-green (#1f4d3a) headings and pill buttons, a 2×2 photo/text service grid, a butter-yellow CTA tile beside a video card, a dark photo band with white feature cards, pale blue + butter pricing tiles, a best-selling-books row, a black footer. (Ref 9 David Reynolds.)",
+   "fonts": "Figtree (400/500/600) for everything",
+   "cssStarter": ":root{--accent:#1f4d3a;--butter:#f2eab7;--sky:#c7d6f0;--ink:#1f3a2e;--body:#5f6660;--bg:#ffffff;--cream:#f6f2ea;--dark:#161b25;--line:#e6e3dc;--container:960px;--gutter:32px;--section-y:96px;--radius:12px}\nbody{font-family:'Figtree',sans-serif;font-size:12px;line-height:1.65;color:var(--body);background:#d8d8d8}\n.page{background:var(--bg);max-width:1000px;margin:0 auto}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.cream{background:var(--cream)}\n.dark{background:var(--dark);color:#b7bcc6}.dark h1,.dark h2{color:#fff}\nh1,h2,h3{font-weight:400;color:var(--ink);letter-spacing:-.01em;line-height:1.15}\nh1{font-size:48px}\nh2{font-size:30px}\nh3{font-size:14px;font-weight:500}\n.label{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#aab0b8}\n.btn{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 16px;border-radius:99px;background:var(--accent);color:#fff;font-size:8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}\n.btn-white{background:#fff;color:var(--ink)}\n.tile{border-radius:var(--radius);padding:20px}.tile.butter{background:var(--butter)}.tile.sky{background:var(--sky)}\n.price{font-size:44px;color:var(--ink)}\n.card{background:#fff;border-radius:10px;padding:14px}\n.photo{border-radius:var(--radius);overflow:hidden}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:34px}h2{font-size:24px}}"
+  },
+  {
+   "id": "lavender-spirit",
+   "name": "Lavender spiritual coach",
+   "fits": "life coach women spiritual manifestation mindset empowerment feminine inner power workshops",
+   "character": "Feminine and uplifting: a pink-lilac wash over a lavender-field photo, a centred high-contrast serif headline between two portraits of the coach and her script signature, magenta-to-violet gradient buttons, lotus-shaped icon badges with a small heart divider under every heading, a From → To comparison (magenta card vs lilac outline card), a 6-column process row with circular magenta icons, a book/freebie mock-up card over lavender, a deep purple footer. (Ref 10 Emmy Riker.)",
+   "fonts": "Playfair Display (400) for headings + Montserrat (400/500/600) for text; a script (Allura) for the signature",
+   "cssStarter": ":root{--accent:#d63ad8;--accent-2:#a01cc9;--ink:#3a1f3d;--body:#6f5d70;--bg:#fbe9fb;--card:#ffffff;--purple:#4a1257;--line:#f1cff1;--container:1100px;--gutter:32px;--section-y:100px;--radius:10px}\nbody{font-family:'Montserrat',sans-serif;font-size:12px;line-height:1.7;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\nh1,h2,h3{font-family:'Playfair Display',serif;font-weight:400;color:var(--ink);line-height:1.12;text-align:center}\nh1{font-size:60px}\nh2{font-size:30px}\nh2::after{content:'\\2665';display:block;font-size:10px;color:#d6a53a;margin-top:6px}\nh3{font-size:18px}\n.btn{display:inline-flex;align-items:center;height:32px;padding:0 20px;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;box-shadow:0 4px 12px rgba(214,58,216,.35)}\n.btn-outline{background:#fff;color:var(--ink);border:1px solid #d9b9db;box-shadow:none}\n.lotus{width:72px;height:72px;border-radius:50%;background:radial-gradient(circle,var(--accent) 50%,#f3c4f3 51%);display:grid;place-items:center;color:#fff}\n.card{background:var(--card);border-radius:var(--radius);padding:18px;text-align:center}\n.from{background:linear-gradient(135deg,var(--accent-2),var(--accent));color:#fff;border-radius:12px;padding:22px}\n.to{border:1px solid var(--line);border-radius:12px;padding:22px;background:#fdf1fd}\n.script{font-family:'Allura',cursive;font-size:44px;color:var(--accent-2)}\nfooter{background:var(--purple);color:#d9c3dd}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:38px}h2{font-size:24px}}"
+  },
+  {
+   "id": "orange-career",
+   "name": "Career coach orange",
+   "fits": "career coach resume interview job search professionals clarity growth modern minimal",
+   "character": "Clean editorial: white card on a soft apricot frame, headings mixing a regular grotesk with a light condensed italic serif word in orange ('Clarity', 'What I', 'Your Next'), a hero with a stacked 3-word headline, a portrait in the middle and a small top-right credential, a statement with italic orange words, big light stats on thin rules, a services list where each row has a big right-aligned keyword and one row reveals a photo, a progress-tab process, orange pill buttons with a round arrow. (Ref 11 career.ly.)",
+   "fonts": "Inter (400/500) + Instrument Serif (italic) for accent words",
+   "cssStarter": ":root{--accent:#f47a3a;--frame:#ffd9a0;--ink:#161616;--body:#666;--bg:#ffffff;--alt:#f8f8f8;--line:#e8e8e8;--container:1000px;--gutter:32px;--section-y:100px;--radius:4px}\nbody{font-family:'Inter',sans-serif;font-size:12px;line-height:1.6;color:var(--body);background:linear-gradient(90deg,var(--frame),#fff2dc 50%,var(--frame))}\n.page{background:var(--bg);max-width:1080px;margin:0 auto}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\nh1,h2{font-weight:400;color:var(--ink);letter-spacing:-.02em;line-height:1.08}\nh1{font-size:60px}\nh2{font-size:40px}\nh1 em,h2 em,.statement em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--accent)}\n.statement{font-size:28px;line-height:1.35;color:var(--ink)}\n.label{font-size:8px;color:#888}.label::before{content:'\\25CF ';color:var(--accent)}\n.stat{font-size:48px;font-weight:400;color:var(--ink);border-bottom:1px solid var(--line);padding-bottom:8px}\n.row{display:flex;justify-content:space-between;align-items:center;padding:18px;background:var(--alt);margin-bottom:12px}.row b{font-size:26px;font-weight:400;color:var(--ink)}.row .n{font-family:'Instrument Serif',serif;font-style:italic;font-size:18px;color:#999}\n.btn{display:inline-flex;align-items:center;gap:8px;height:28px;padding:0 4px 0 14px;border-radius:99px;background:var(--accent);color:#fff;font-size:10px}.btn i{width:20px;height:20px;border-radius:50%;border:1.5px solid #fff;display:grid;place-items:center}\n.btn-outline{background:#fff;border:1px solid var(--accent);color:var(--ink)}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:40px}h2{font-size:28px}.statement{font-size:20px}}"
+  },
+  {
+   "id": "espresso-gold",
+   "name": "Espresso & gold executive",
+   "fits": "executive coach business coach founders ceo consultant scale leadership premium high ticket",
+   "character": "Premium executive: warm ivory page, a transitional serif (Playfair) for headings with the last line in italic gold (#b48a4a), thin gold rule labels, a portrait with one rounded corner and a floating 'avg. revenue growth' card, an 'as seen in' row of serif italic publication names, feature rows with small gold icon squares, 3 program cards with the middle one deep espresso (#1d1410), a numbered vertical process timeline with gold dots, a stats strip with gold unit marks, espresso testimonial and CTA bands, a gold pill button. (Ref 12 Eleanor Voss.)",
+   "fonts": "Playfair Display (400/500, italic) for headings + Outfit (400/500) for text",
+   "cssStarter": ":root{--accent:#b48a4a;--gold-soft:#d8b77a;--dark:#1d1410;--ink:#1d1a16;--body:#6b655d;--bg:#f8f6f1;--card:#fbfaf6;--line:#e7e2d8;--container:1080px;--gutter:32px;--section-y:110px;--radius:16px}\nbody{font-family:'Outfit',sans-serif;font-size:12px;line-height:1.65;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.dark{background:var(--dark);color:#bfb5a9}.dark h2{color:#fff}\nh1,h2,h3{font-family:'Playfair Display',serif;font-weight:400;color:var(--ink);line-height:1.12}\nh1{font-size:52px}h1 em,h2 em{color:var(--accent);font-style:italic;display:block}\nh2{font-size:40px}\nh3{font-size:16px;font-weight:500}\n.label{font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:10px}.label::before{content:'';width:24px;height:1px;background:currentColor}\n.btn{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 18px;border-radius:99px;background:var(--gold-soft);color:#2a1d0d;font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}\n.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:22px}.card.dark{background:var(--dark);color:#cbbfb0}\n.num{font-family:'Playfair Display',serif;font-size:30px;color:var(--accent)}\n.stat{font-family:'Playfair Display',serif;font-size:32px;color:var(--ink)}.stat sup{color:var(--accent)}\n.feature{display:flex;gap:12px;border:1px solid var(--line);border-radius:8px;padding:12px;background:#f1efea}\n.feature i{width:22px;height:22px;border:1px solid var(--accent);border-radius:4px}\n.photo{border-radius:0 90px 16px 16px;overflow:hidden}\n@media(max-width:768px){:root{--section-y:68px;--gutter:20px}h1{font-size:36px}h2{font-size:28px}}"
+  }
+ ],
+ "orders": [
+  [
+   "hero",
+   "about",
+   "problems",
+   "services",
+   "process",
+   "testimonials",
+   "faq",
+   "cta",
+   "footer"
+  ],
+  [
+   "hero",
+   "trust",
+   "problems",
+   "about",
+   "services",
+   "testimonials",
+   "blog",
+   "footer"
+  ],
+  [
+   "hero",
+   "stats",
+   "about",
+   "services",
+   "process",
+   "pricing",
+   "testimonials",
+   "footer"
+  ],
+  [
+   "hero",
+   "about",
+   "services",
+   "results",
+   "process",
+   "faq",
+   "contact",
+   "footer"
+  ],
+  [
+   "hero",
+   "trust",
+   "about",
+   "services",
+   "pricing",
+   "testimonials",
+   "cta",
+   "footer"
+  ],
+  [
+   "hero",
+   "problems",
+   "process",
+   "about",
+   "testimonials",
+   "faq",
+   "cta",
+   "footer"
+  ],
+  [
+   "hero",
+   "stats",
+   "services",
+   "about",
+   "results",
+   "blog",
+   "contact",
+   "footer"
+  ]
+ ],
+ "sections": [
+  {
+   "id": "hero-lina",
+   "role": "hero",
+   "from": "1 Lina Ralph",
+   "crop": {
+    "src": "1.webp",
+    "x": 44,
+    "y": 0,
+    "w": 1352,
+    "h": 1010
+   },
+   "spec": "Inside a browser frame on a sage page: a big rounded photo of a calm session (a practitioner's hands at a client's temples) with a script wordmark top-left, a tiny pill nav and an amber 'Contact us' button with a small avatar. A 3-line 52px italic serif headline top-left in white; bottom-right a frosted testimonial card (icon label, a 2-line quote, avatar + name) with an amber 'Book a free consultation' + ghost 'See how it works' pair."
+  },
+  {
+   "id": "hero-chirona",
+   "role": "hero",
+   "from": "2 Chirona",
+   "crop": {
+    "src": "2.webp",
+    "y": 0,
+    "h": 940
+   },
+   "spec": "A misty sage-green rounded photo of the coach (soft focus, wavy hair) with a script wordmark and small nav + sage 'Work with me' pill. Bottom-left a tiny '• Hi, I'm <Name>' and a 3-line 52px white serif headline; right a 3-line note + a sage 'Begin gently •' pill; a thin row of three italic tiny labels along the bottom edge."
+  },
+  {
+   "id": "hero-david-roberts",
+   "role": "hero",
+   "from": "3 David Roberts",
+   "crop": {
+    "src": "3.webp",
+    "y": 0,
+    "h": 780
+   },
+   "spec": "White. A tiny avatar logo + 4 small links. LEFT 'Hi, I am' then the name in 2 lines 56px bold, a 3-line intro with a bold phrase, a royal-blue '1:1 Coaching — Just $/hr' button with payment icons, a tiny '200+ booked a consultation last week' line and social icons. CENTRE a black-and-white cut-out portrait. RIGHT 4 small thin-bordered stat cards floating at different heights (88+ · 300+ · 5+ · 1200+)."
+  },
+  {
+   "id": "hero-mindora",
+   "role": "hero",
+   "from": "4 Mindora",
+   "crop": {
+    "src": "4.webp",
+    "y": 0,
+    "h": 1000
+   },
+   "spec": "A cinematic dark photo (the coach in a lamp-lit home library holding a pen). Header: flame logo + wordmark, a pill nav group, an orange 'Book a session' pill. LEFT a 3-line 40px white wide uppercase headline and 3 orange-dot bullet lines. RIGHT-bottom a 4-line paragraph and an orange 'Start your journey ↗' pill."
+  },
+  {
+   "id": "hero-coachly",
+   "role": "hero",
+   "from": "5 Coachly",
+   "crop": {
+    "src": "5.webp",
+    "y": 0,
+    "h": 820
+   },
+   "spec": "Off-white page. Header: sparkle logo + wordmark, dropdown nav, a pink 'Get started' pill with a lilac arrow chip. A deep wine rounded hero card: the coach's FIRST NAME in huge white caps with a lilac squiggle stroke under it and the LAST NAME below, a small pink pill; phone + email at the bottom; the coach cut out on the right (glasses, pink shirt), standing inside the card."
+  },
+  {
+   "id": "hero-roberta",
+   "role": "hero",
+   "from": "6 Roberta Lane",
+   "crop": {
+    "src": "6.webp",
+    "x": 64,
+    "y": 0,
+    "w": 1312,
+    "h": 910
+   },
+   "spec": "In a browser window on a violet frame: a dark podcast-studio photo (the coach at a microphone with warm bokeh). Header: logo, 5-link nav, a dark outline 'Book a consultation' pill. A 2-line 40px white headline top-left, a small ghost 'Request a call' pill with a round arrow + a 2-line note. A translucent stats bar along the bottom (4 stats with round icons)."
+  },
+  {
+   "id": "hero-david-miller",
+   "role": "hero",
+   "from": "7 David Miller",
+   "crop": {
+    "src": "7.webp",
+    "x": 64,
+    "y": 0,
+    "w": 1312,
+    "h": 1010
+   },
+   "spec": "In a browser window: a soft blue-grey background with the coach's smiling portrait centred and a warm orange/pink glow bottom-left; his first and last name in huge pixel-blurred peach letters behind him; top-right a small italic 'I'm <Name>!' + 3 lines; bottom-left three italic white role lines with tiny '(01) (02) (03)' numbers. Header minimal: logo, 'Book free call' + a hamburger."
+  },
+  {
+   "id": "hero-james-david",
+   "role": "hero",
+   "from": "8 James David",
+   "crop": {
+    "src": "8.webp",
+    "x": 64,
+    "y": 0,
+    "w": 1312,
+    "h": 1000
+   },
+   "spec": "In a browser window: a peach-coral gradient with a ghosted giant letter behind. Header: logo, small nav, a black 'Book a call' pill. LEFT a 3-line 44px headline and 2 lines. RIGHT the coach cut out (glasses, jacket), with his name as a big white italic ghost wordmark at the bottom-right. A frosted pill 'See client case study ▶' at the bottom-centre and faint geometric shards."
+  },
+  {
+   "id": "hero-reynolds",
+   "role": "hero",
+   "from": "9 David Reynolds",
+   "crop": {
+    "src": "9.webp",
+    "x": 80,
+    "y": 60,
+    "w": 900,
+    "h": 620
+   },
+   "spec": "A dark navy card: a round monogram logo, a pill nav, a white 'Contact me' pill. LEFT a tiny tracked label, the name in 48px white, 3 lines, a forest-green 'Let's work together →' pill. RIGHT a dramatic side-profile portrait in a suit. Along the bottom 4 role columns (Author · Speaker · Coach · Creator) each with 2 grey lines."
+  },
+  {
+   "id": "hero-emmy",
+   "role": "hero",
+   "from": "10 Emmy Riker",
+   "crop": {
+    "src": "10.webp",
+    "y": 0,
+    "h": 1010
+   },
+   "spec": "A pink-lilac wash over a lavender field. Header: a lotus logo with a spaced serif name + script subtitle, small uppercase nav, a magenta gradient 'Request a consult' button. A centred 3-line 60px serif headline with a gold heart divider, 2 lines, a magenta + outline button pair, and the coach's script signature. A full-length portrait on the left and a waist-up portrait on the right, both on pale pink panels."
+  },
+  {
+   "id": "hero-careerly",
+   "role": "hero",
+   "from": "11 career.ly",
+   "crop": {
+    "src": "11.webp",
+    "x": 64,
+    "y": 0,
+    "w": 1312,
+    "h": 900
+   },
+   "spec": "A white card on an apricot frame. Header: lowercase wordmark, small nav, an outline 'Started now' pill with an orange arrow chip. LEFT a tiny orange ruled name label and a stacked 3-word 60px headline (first word orange italic serif, second word crossing into the photo in white outline), 2 lines and an orange pill 'Book a free call'. CENTRE a dark portrait of the coach (arms crossed). RIGHT a small 'Top Career Coach – 2025' credential with 2 grey lines, and lower a stacked avatar row '10k+ loved by professionals'."
+  },
+  {
+   "id": "hero-eleanor",
+   "role": "hero",
+   "from": "12 Eleanor Voss",
+   "crop": {
+    "src": "12.webp",
+    "y": 0,
+    "h": 1100
+   },
+   "spec": "Ivory. Header: serif name with the surname in gold italic, small uppercase nav, a black 'Book a call' pill. LEFT a gold ruled label, a 3-line 52px serif headline with the last line in gold italic, 3 lines, a gold pill 'Book a strategy call' + a text link, a rule and 3 serif stats (12+ · 340+ · $2.4B). RIGHT a portrait photo with a big rounded top-right corner and a small white 'Avg. revenue growth +240%' card overlapping its bottom-left. Under the hero a thin 'As seen in & trusted by' row of italic serif publication names."
+  },
+  {
+   "id": "trust-roberta-logos",
+   "role": "trust",
+   "from": "6 Roberta Lane",
+   "crop": {
+    "src": "6.webp",
+    "x": 64,
+    "y": 910,
+    "w": 1312,
+    "h": 280
+   },
+   "spec": "A pale lavender band: a centred 'Partners and Clients' in purple and two rows of grey client logos in thin rounded chips."
+  },
+  {
+   "id": "trust-james-logos",
+   "role": "trust",
+   "from": "8 James David",
+   "crop": {
+    "src": "8.webp",
+    "x": 64,
+    "y": 1000,
+    "w": 1312,
+    "h": 280
+   },
+   "spec": "White. A centred 2-line 28px 'Trusted by 500+ Entrepreneurs, CEOs, and Founders' with the first words coral, and a row of dark grey partner logos."
+  },
+  {
+   "id": "trust-reynolds-logos",
+   "role": "trust",
+   "from": "9 David Reynolds",
+   "crop": {
+    "src": "9.webp",
+    "x": 80,
+    "y": 680,
+    "w": 900,
+    "h": 180
+   },
+   "spec": "Cream. A centred small green 'Trusted by leading brands' and a row of 6 pale grey logos."
+  },
+  {
+   "id": "trust-eleanor-press",
+   "role": "trust",
+   "from": "12 Eleanor Voss",
+   "crop": {
+    "src": "12.webp",
+    "y": 990,
+    "h": 160
+   },
+   "spec": "White strip between thin rules: a tiny tracked 'As seen in & trusted by' and a row of 6 gold italic serif publication names. Only real press from FACTS."
+  },
+  {
+   "id": "about-lina",
+   "role": "about",
+   "from": "1 Lina Ralph",
+   "crop": {
+    "src": "1.webp",
+    "x": 44,
+    "y": 6650,
+    "w": 1352,
+    "h": 720
+   },
+   "spec": "Off-white. LEFT a 4-line italic serif statement ('5+ years helping people understand the patterns that keep them stuck.'). CENTRE a portrait photo of the practitioner meditating in a calm room. RIGHT a small gradient 'head' line icon and a 5-line bio."
+  },
+  {
+   "id": "about-chirona",
+   "role": "about",
+   "from": "2 Chirona",
+   "crop": {
+    "src": "2.webp",
+    "y": 940,
+    "h": 1520
+   },
+   "spec": "Cream. A small round portrait top-left and another bottom-right around a centred 3-line 24px quote with curly quote marks, faint concentric circles and a sparkle icon; a 'Trusted by 100K clients · Trustpilot' avatar chip. Below: LEFT a tiny label, a 4-line italic serif belief statement, the coach's avatar + name + credential line, 3 lines of bio and a row of press logos; RIGHT a tall rounded portrait on sage."
+  },
+  {
+   "id": "about-david-roberts",
+   "role": "about",
+   "from": "3 David Roberts",
+   "crop": {
+    "src": "3.webp",
+    "y": 780,
+    "h": 890
+   },
+   "spec": "Light grey. A 2-line 28px heading ('How I overcame my challenges and focused on improving?'). Two story rows: a paragraph left + a wide photo collage right; a mountain photo left + 2 paragraphs right ending in a blue 'Read my full story here' link."
+  },
+  {
+   "id": "about-mindora",
+   "role": "about",
+   "from": "4 Mindora",
+   "crop": {
+    "src": "4.webp",
+    "y": 1000,
+    "h": 900
+   },
+   "spec": "Dark navy band. LEFT a violet rounded card: a 2-line 36px 'HI, MY NAME / IS <NAME>' (name in italic), a 2-line lavender subline, a 4-line paragraph and an orange 'More about me ↗' pill. RIGHT a matching-height photo of the coach in her library. Under both, 4 violet stat tiles with an orange number (50+ · 100% · 5+yr · 25) and a white label."
+  },
+  {
+   "id": "about-coachly",
+   "role": "about",
+   "from": "5 Coachly",
+   "crop": {
+    "src": "5.webp",
+    "y": 820,
+    "h": 830
+   },
+   "spec": "Off-white. A butter-yellow flower-shaped rotating badge with a ↗ on the left; a tiny ✦ label and a 5-line statement on the right whose first half is wine-coloured bold and the rest grey italic serif. Under it a white rounded panel with 4 pale stat tiles (88% · 12+ · 50+ · 1,200+) with 4-line descriptions."
+  },
+  {
+   "id": "about-coachly-coach",
+   "role": "about",
+   "from": "5 Coachly",
+   "crop": {
+    "src": "5.webp",
+    "y": 6800,
+    "h": 900
+   },
+   "spec": "A white rounded card: LEFT an oval-framed photo of the coach with a thin outer ring and two sparkle stars; RIGHT a tiny ✦ label, a 2-line heading with an italic serif second line and a squiggle, 4 lines, 'Why clients choose to work with me' + 3 dark-check bullets, a pink pill."
+  },
+  {
+   "id": "about-roberta",
+   "role": "about",
+   "from": "6 Roberta Lane",
+   "crop": {
+    "src": "6.webp",
+    "x": 64,
+    "y": 1190,
+    "w": 1312,
+    "h": 540
+   },
+   "spec": "White. LEFT a ruled 'About me' label, a 2-line 36px heading ending in purple words, 5 lines, a purple 'Request a call' pill. RIGHT a photo of the coach at a microphone with a white 'Bestselling author' card (small studio photo, 2 lines) overlapping its right edge, and a tiny dot note top-right."
+  },
+  {
+   "id": "about-david-miller",
+   "role": "stats",
+   "from": "7 David Miller",
+   "crop": {
+    "src": "7.webp",
+    "x": 64,
+    "y": 1010,
+    "w": 1312,
+    "h": 470
+   },
+   "spec": "Pale periwinkle band. A tiny '• About us' label, a 3-line 26px statement with the tail in grey, and 4 small stats in a row (500+ · 10+ · 1000+ · 15+)."
+  },
+  {
+   "id": "about-james",
+   "role": "about",
+   "from": "8 James David",
+   "crop": {
+    "src": "8.webp",
+    "x": 64,
+    "y": 1960,
+    "w": 1312,
+    "h": 590
+   },
+   "spec": "White. LEFT a tall cut-out portrait on pale grey. RIGHT a ruled 'About me' label, a 3-line 32px heading with the name in coral, 2 lines, a coral 'Read my full story' pill, 2 small stats (10 years · 12 awards), a date range, and a small square portrait photo bottom-right."
+  },
+  {
+   "id": "about-emmy",
+   "role": "about",
+   "from": "10 Emmy Riker",
+   "crop": {
+    "src": "10.webp",
+    "y": 3920,
+    "h": 960
+   },
+   "spec": "Pink wash. LEFT a big portrait of the coach smiling with her chin on her hand, flush to the left edge. RIGHT a 2-line serif 'Get To / Know <Name>', 4 short paragraphs and a magenta 'More about me' button; a second cut-out portrait crouching at the bottom-right corner."
+  },
+  {
+   "id": "about-careerly",
+   "role": "about",
+   "from": "11 career.ly",
+   "crop": {
+    "src": "11.webp",
+    "x": 64,
+    "y": 900,
+    "w": 1312,
+    "h": 720
+   },
+   "spec": "White. A tiny orange-dot 'About me' label left; a 4-line 28px statement on the right with 3 words in orange italic serif. Below: an underlined 'Let's chat →' link left, a square portrait in the middle, a 5-line grey paragraph and a tiny 'Learn about me' link on the right."
+  },
+  {
+   "id": "about-eleanor",
+   "role": "about",
+   "from": "12 Eleanor Voss",
+   "crop": {
+    "src": "12.webp",
+    "y": 1150,
+    "h": 900
+   },
+   "spec": "Ivory. LEFT a portrait with a big rounded top-right corner, a gold pill badge ('Forbes top 50 coach') on its top edge and a dark quote card on its bottom-left. RIGHT a gold ruled label, a 3-line 40px serif heading (last line gold italic), 3 lines, and 3 feature rows in pale boxes with a small gold outlined icon, a bold title and one line."
+  },
+  {
+   "id": "problems-lina",
+   "role": "problems",
+   "from": "1 Lina Ralph",
+   "crop": {
+    "src": "1.webp",
+    "x": 44,
+    "y": 1000,
+    "w": 1352,
+    "h": 1000
+   },
+   "spec": "Off-white. A centred 2-line 36px italic serif heading, 2 lines. 3 white cards (the middle one taller with a soft green-gold gradient top): a tiny italic number, a rounded photo, a 2-line statement. Under them a thin italic ticker line 'You are not broken…' with a ✳ glyph."
+  },
+  {
+   "id": "problems-lina-mind",
+   "role": "problems",
+   "from": "1 Lina Ralph",
+   "crop": {
+    "src": "1.webp",
+    "x": 44,
+    "y": 1960,
+    "w": 1352,
+    "h": 1000
+   },
+   "spec": "A rounded olive band. A 3-line 32px italic white serif heading top-left. LEFT a small tab list (What you want? / What keeps happening? / The deeper pattern) with thin rules and a gradient line icon at the bottom; CENTRE a portrait photo of a sound-bowl session; RIGHT a pendulum line icon and 4 italic quoted wishes ('I want to feel calm.')."
+  },
+  {
+   "id": "problems-chirona-circle",
+   "role": "problems",
+   "from": "2 Chirona",
+   "crop": {
+    "src": "2.webp",
+    "y": 2560,
+    "h": 1300
+   },
+   "spec": "Cream fading into a hazy golden meadow photo (a woman in a flowing white dress, arms open). A tiny label + centred 36px serif 'What You May Be Carrying' + one line. 5 concern labels (serif title + 2 grey lines) sit around a thin circular arc that frames her."
+  },
+  {
+   "id": "problems-coachly",
+   "role": "problems",
+   "from": "5 Coachly",
+   "crop": {
+    "src": "5.webp",
+    "y": 1720,
+    "h": 950
+   },
+   "spec": "Off-white. LEFT a tiny ✦ label, a 2-line heading with an italic serif second line + a pink squiggle, 5 lines, a pink pill. RIGHT a staggered 2-column mosaic of pastel cards (pink, blue, butter, mint) each with a line-drawn icon, a title and 3 lines; a small doodle line at the top."
+  },
+  {
+   "id": "problems-miller",
+   "role": "problems",
+   "from": "7 David Miller",
+   "crop": {
+    "src": "7.webp",
+    "x": 64,
+    "y": 1480,
+    "w": 1312,
+    "h": 540
+   },
+   "spec": "Light grey. LEFT a 3-line 26px bold heading ('Feeling stuck, but know you're meant for more?'), 3 lines and a teal 'Download free guide' pill at the bottom. RIGHT a 2×2 grid of white cards with a teal round icon, a bold 2-line title and one grey line."
+  },
+  {
+   "id": "problems-james",
+   "role": "problems",
+   "from": "8 James David",
+   "crop": {
+    "src": "8.webp",
+    "x": 64,
+    "y": 1280,
+    "w": 1312,
+    "h": 680
+   },
+   "spec": "White. LEFT a 3-line 30px heading with the last line coral ('…Business Owner?'), a coral 'Let's find' pill and 3 check-circle bullets. CENTRE a portrait of the coach in a workshop. RIGHT 3 pain points stacked, each a small coral icon, a bold title and 2 grey lines."
+  },
+  {
+   "id": "problems-emmy",
+   "role": "problems",
+   "from": "10 Emmy Riker",
+   "crop": {
+    "src": "10.webp",
+    "y": 1010,
+    "h": 1400
+   },
+   "spec": "Pale pink. A centred serif 'This Is For You If…' and 4 lotus-shaped magenta icon badges with a 2-line caption and a small heart under each, a magenta 'Work with me' button. Then 'From Where You Are To Where You Want To Be' and a From/To comparison: a magenta gradient card with ✕ bullets, a curved arrow, and a pale lilac outlined card with ✓ bullets."
+  },
+  {
+   "id": "services-lina",
+   "role": "services",
+   "from": "1 Lina Ralph",
+   "crop": {
+    "src": "1.webp",
+    "x": 44,
+    "y": 4760,
+    "w": 1352,
+    "h": 1000
+   },
+   "spec": "Off-white. A centred italic serif 'What are you ready to change?' + 2 lines. A bento of warm session photos with a tiny number top-left and a white label at the bottom (Anxiety & overthinking, Confidence & self-belief, Stress & emotional overload, Habits…, Fears & phobias); the last tile is a soft green-gold gradient card with a title, one line and a small amber arrow button."
+  },
+  {
+   "id": "services-chirona",
+   "role": "services",
+   "from": "2 Chirona",
+   "crop": {
+    "src": "2.webp",
+    "y": 3850,
+    "h": 800
+   },
+   "spec": "Cream. A tiny label, a 2-line 32px serif heading left and a 3-line note right. 4 tall portrait-ratio cards with golden-hour photos, a 2-line serif title in white at the top and 3 lines at the bottom, fading into the cream."
+  },
+  {
+   "id": "services-david-roberts",
+   "role": "services",
+   "from": "3 David Roberts",
+   "crop": {
+    "src": "3.webp",
+    "y": 1670,
+    "h": 1000
+   },
+   "spec": "White. A 2-line 28px heading left and a 2-line note right. LEFT a tall photo of the client at a desk; RIGHT a numbered ruled list of 6 steps: a small circled number, a bold 1–2 line title and a 3-line description in a second column."
+  },
+  {
+   "id": "services-mindora",
+   "role": "services",
+   "from": "4 Mindora",
+   "crop": {
+    "src": "4.webp",
+    "y": 1900,
+    "h": 1150
+   },
+   "spec": "White. LEFT a 3-line 36px wide uppercase heading, 4 lines, an orange pill. RIGHT a wide photo card with a violet gradient bottom (small icon chip, title, 2 lines). Below, 3 photo cards with violet gradient bottoms and a small icon chip in the top-left corner (Career coaching, Confidence building, Goal planning)."
+  },
+  {
+   "id": "services-mindora-programs",
+   "role": "services",
+   "from": "4 Mindora",
+   "crop": {
+    "src": "4.webp",
+    "y": 3060,
+    "h": 1500
+   },
+   "spec": "Dark navy. A 2-line 36px wide uppercase heading, a 2-line note and an orange pill right. A wide program card: violet left half (a black '4 weeks' tag, a title, a subtitle, 4 lines, an orange pill) + a photo right half. Below, 2 photo cards with an orange duration tag and a title + 2 lines at the bottom."
+  },
+  {
+   "id": "services-coachly",
+   "role": "services",
+   "from": "5 Coachly",
+   "crop": {
+    "src": "5.webp",
+    "y": 3740,
+    "h": 1180
+   },
+   "spec": "Off-white. A tiny ✦ label and a centred 2-line heading (italic serif second line + squiggle). A stack of pastel colour tabs (blue, sage, butter, pink, mint) peeking at the top, the front one a big butter-yellow card: a line icon, a title, one line, 3 dark-check bullets and a pink pill."
+  },
+  {
+   "id": "services-roberta",
+   "role": "services",
+   "from": "6 Roberta Lane",
+   "crop": {
+    "src": "6.webp",
+    "x": 64,
+    "y": 1730,
+    "w": 1312,
+    "h": 850
+   },
+   "spec": "White. A ruled 'Our services' label, a 2-line 36px heading with purple words, a 2-line note right with grey/ink words. A carousel of tall cards running off the right edge: a date pill, a round arrow, a 2-line title, 2 lines, and a studio photo at the bottom; the first card is filled purple. A small purple 'Book a call' pill centred."
+  },
+  {
+   "id": "services-miller",
+   "role": "services",
+   "from": "7 David Miller",
+   "crop": {
+    "src": "7.webp",
+    "x": 64,
+    "y": 2020,
+    "w": 1312,
+    "h": 900
+   },
+   "spec": "Pale periwinkle. A 2-line 26px bold heading left, a 3-line grey note right. 2 wide white cards: a title, 2 grey lines and a large photo (a coaching video call, a man thinking)."
+  },
+  {
+   "id": "services-james",
+   "role": "services",
+   "from": "8 James David",
+   "crop": {
+    "src": "8.webp",
+    "x": 64,
+    "y": 2550,
+    "w": 1312,
+    "h": 800
+   },
+   "spec": "White. A 2-line 32px heading with the last word coral, 2 lines, and a black 'View benefits' + outline 'Free call' pill pair right. 3 bordered cards: a 2-line title, 3 lines of description and a photo at the bottom; round ← → below."
+  },
+  {
+   "id": "services-reynolds",
+   "role": "services",
+   "from": "9 David Reynolds",
+   "crop": {
+    "src": "9.webp",
+    "x": 80,
+    "y": 860,
+    "w": 900,
+    "h": 640
+   },
+   "spec": "Cream fading to white. A centred 2-line 28px forest-green heading. A 2×2 grid alternating rounded photos and short service texts (title + 4 lines): handshake, a bridge, a hand at a laptop, glasses on a keyboard."
+  },
+  {
+   "id": "services-reynolds-dark",
+   "role": "services",
+   "from": "9 David Reynolds",
+   "crop": {
+    "src": "9.webp",
+    "x": 80,
+    "y": 1990,
+    "w": 900,
+    "h": 560
+   },
+   "spec": "A dark photo band (hands holding a phone): a 2-line 28px white heading, 2 lines, a white 'Try this now →' pill right. A row of 4 white rounded cards with a small green icon, a 2-line title and 3 lines."
+  },
+  {
+   "id": "services-emmy",
+   "role": "services",
+   "from": "10 Emmy Riker",
+   "crop": {
+    "src": "10.webp",
+    "y": 5100,
+    "h": 900
+   },
+   "spec": "Pale pink. A centred serif 'Work With Me' with a heart divider. Two zig-zag rows: a rounded photo of a 1:1 session + a lotus icon, a serif title, 4 lines and a magenta button; then a workshop text block + a photo of a group workshop."
+  },
+  {
+   "id": "services-careerly",
+   "role": "services",
+   "from": "11 career.ly",
+   "crop": {
+    "src": "11.webp",
+    "x": 64,
+    "y": 2150,
+    "w": 1312,
+    "h": 1260
+   },
+   "spec": "White. A tiny label right, a 2-line 40px heading with 'What I' in orange italic serif, a 3-line grey note. 4 pale grey rows: an italic serif number, a 2-line service name on the left and a big right-aligned keyword (Clarity · Resume · Interview · Switch); a meeting photo pops out between the first two rows."
+  },
+  {
+   "id": "services-eleanor",
+   "role": "services",
+   "from": "12 Eleanor Voss",
+   "crop": {
+    "src": "12.webp",
+    "y": 2130,
+    "h": 900
+   },
+   "spec": "White. A gold ruled label, a 3-line 40px serif heading with the middle word gold italic, 2 lines. 3 cards: pale bordered cards with a gold serif number, a title, 4 lines and a gold 'Learn more →'; the middle card is deep espresso and slightly taller with a 'Most popular →' link."
+  },
+  {
+   "id": "process-lina",
+   "role": "process",
+   "from": "1 Lina Ralph",
+   "crop": {
+    "src": "1.webp",
+    "x": 44,
+    "y": 3000,
+    "w": 1352,
+    "h": 520
+   },
+   "spec": "Off-white. A centred 2-line italic serif heading. 3 columns: a scalloped gradient green-gold badge icon, a title and 2 grey lines."
+  },
+  {
+   "id": "process-lina-steps",
+   "role": "process",
+   "from": "1 Lina Ralph",
+   "crop": {
+    "src": "1.webp",
+    "x": 44,
+    "y": 5880,
+    "w": 1352,
+    "h": 740
+   },
+   "spec": "A soft photo backdrop (a stone bowl, crystals and incense smoke on a table) fading into off-white. A centred italic serif 'Simply a conversation.' + 3 lines. 3 frosted dark step cards with a 'Step 01' tag, a small green gradient icon, a title and one line, and a centred amber 'Book a free consultation' button with an avatar."
+  },
+  {
+   "id": "process-chirona",
+   "role": "process",
+   "from": "2 Chirona",
+   "crop": {
+    "src": "2.webp",
+    "y": 4700,
+    "h": 1000
+   },
+   "spec": "Cream. LEFT a rounded golden-hour photo of a woman meditating in a field; RIGHT a tiny label, a 2-line 32px serif 'How We Work Together' and 3 lines. A row of 4 thin-bordered cards: a small line icon, a serif title and 3 grey lines."
+  },
+  {
+   "id": "process-david-roberts",
+   "role": "process",
+   "from": "3 David Roberts",
+   "crop": {
+    "src": "3.webp",
+    "y": 3640,
+    "h": 1200
+   },
+   "spec": "White. A 2-line 28px 'How Coaching Works (Step-by-Step)' left, 2 lines right. A staircase diagram: 4 pale vertical bars of rising height, each with a beige tag on top (Discovery call · Weekly check-ins · Clarity session · Reflection & growth plan) and a small coloured icon."
+  },
+  {
+   "id": "process-coachly",
+   "role": "process",
+   "from": "5 Coachly",
+   "crop": {
+    "src": "5.webp",
+    "y": 2700,
+    "h": 1050
+   },
+   "spec": "A white rounded panel. A tiny ✦ label and a centred 2-line heading. 4 tilted pastel cards (butter, sage, lilac, pink) on a thin looping line with sparkle stars: a small number, a title, a line icon and 3 lines."
+  },
+  {
+   "id": "process-coachly-tabs",
+   "role": "process",
+   "from": "5 Coachly",
+   "crop": {
+    "src": "5.webp",
+    "y": 4950,
+    "h": 850
+   },
+   "spec": "A pale rounded card: LEFT a tiny label, a 2-line heading with an italic serif second line and squiggle, 3 lines and a pink pill; RIGHT a stack of colour tabs (01 butter, 02 blue, 03 lilac) with the 04 pink card open: a title and 2 lines."
+  },
+  {
+   "id": "process-roberta",
+   "role": "process",
+   "from": "6 Roberta Lane",
+   "crop": {
+    "src": "6.webp",
+    "x": 64,
+    "y": 2600,
+    "w": 1312,
+    "h": 820
+   },
+   "spec": "Pale grey. A 2-line 36px heading with purple first words, a purple 'Learn more' pill right. LEFT a ruled list of 4 steps with round outline arrows, the third open as a dark rounded card with a title, 3 lines and a white arrow. RIGHT a rounded photo of a podcast interview in purple light."
+  },
+  {
+   "id": "process-emmy",
+   "role": "process",
+   "from": "10 Emmy Riker",
+   "crop": {
+    "src": "10.webp",
+    "y": 2410,
+    "h": 1500
+   },
+   "spec": "A faded pink photo band. A centred serif 'How Coaching Helps' + heart. A 3×2 grid of white cards with a magenta line icon, a serif title and 2 lines. Then 'What We Do Together' and a row of 6 small white cards with an orange number chip, a 3-line bold caption and a round magenta icon on the bottom edge; a magenta button."
+  },
+  {
+   "id": "process-careerly",
+   "role": "process",
+   "from": "11 career.ly",
+   "crop": {
+    "src": "11.webp",
+    "x": 64,
+    "y": 3420,
+    "w": 1312,
+    "h": 900
+   },
+   "spec": "White. A tiny label right, a 2-line 40px heading with 'Your Next' in orange italic serif, a 2-line grey note. 3 progress tabs as thin rules (the first dark). A wide card: a photo of a man working at a laptop left, and on a pale grey panel right an italic '2/3', a tiny label, a title and 4 lines."
+  },
+  {
+   "id": "process-eleanor",
+   "role": "process",
+   "from": "12 Eleanor Voss",
+   "crop": {
+    "src": "12.webp",
+    "y": 3110,
+    "h": 900
+   },
+   "spec": "Ivory. A gold ruled label, a 2-line 40px serif heading with the second line gold italic, 2 lines. A vertical timeline of 4 steps: a round number (the first filled gold, others outlined) on a thin line, a bold serif title and one long grey line."
+  },
+  {
+   "id": "results-lina-arc",
+   "role": "results",
+   "from": "1 Lina Ralph",
+   "crop": {
+    "src": "1.webp",
+    "x": 44,
+    "y": 3560,
+    "w": 1352,
+    "h": 1100
+   },
+   "spec": "A rounded olive band. A centred 2-line italic serif heading, tiny 'After' / 'Before' labels at the sides, a fanned arc of 7 tilted session photos with a split before/after portrait in the centre, a line icon and a 2-line italic statement at the bottom."
+  },
+  {
+   "id": "results-reynolds-pricing",
+   "role": "pricing",
+   "from": "9 David Reynolds",
+   "crop": {
+    "src": "9.webp",
+    "x": 80,
+    "y": 2550,
+    "w": 900,
+    "h": 560
+   },
+   "spec": "White. A 2-line 28px forest-green heading. 2 pricing tiles: pale sky-blue and butter-yellow, each with a tiny tracked label, a bold subtitle, a big 44px price, 4–5 small bullets and a full-width forest-green 'Register now →' pill."
+  },
+  {
+   "id": "results-reynolds-books",
+   "role": "results",
+   "from": "9 David Reynolds",
+   "crop": {
+    "src": "9.webp",
+    "x": 80,
+    "y": 3110,
+    "w": 900,
+    "h": 750
+   },
+   "spec": "Cream. A 28px forest-green 'Best-Selling Books'. 3 white cards: stars, a 2-line title, 2 lines and a book cover at the bottom; a forest pill 'See all publications →'. Only real books from FACTS."
+  },
+  {
+   "id": "results-eleanor-stats",
+   "role": "stats",
+   "from": "12 Eleanor Voss",
+   "crop": {
+    "src": "12.webp",
+    "y": 4130,
+    "h": 330
+   },
+   "spec": "White. A thin-bordered rounded strip with 4 serif stats whose unit marks are gold (340+ · $2.4B · 94% · 12yr) and tiny labels."
+  },
+  {
+   "id": "results-careerly-stats",
+   "role": "stats",
+   "from": "11 career.ly",
+   "crop": {
+    "src": "11.webp",
+    "x": 64,
+    "y": 1620,
+    "w": 1312,
+    "h": 460
+   },
+   "spec": "White. A 3-line 22px statement left and a tiny orange-dot label right. 3 big light 48px stats on thin rules with small grey labels."
+  },
+  {
+   "id": "results-mindora",
+   "role": "results",
+   "from": "4 Mindora",
+   "crop": {
+    "src": "4.webp",
+    "y": 4600,
+    "h": 1150
+   },
+   "spec": "Dark navy. A centred 2-line 32px wide uppercase heading and 2 lines. A row of 3 testimonial cards: 2 dark ones with a square photo, name, role, orange stars and 3 lines; the middle one raised and violet with a wide photo on top."
+  },
+  {
+   "id": "results-james-story",
+   "role": "results",
+   "from": "8 James David",
+   "crop": {
+    "src": "8.webp",
+    "x": 64,
+    "y": 3350,
+    "w": 1312,
+    "h": 1260
+   },
+   "spec": "Pale grey. A 4-line 22px case-study statement where the first words are ink and the rest grey. LEFT a wide photo of a team meeting in a busy café; RIGHT a small avatar with a coral '60+' chip, a 4-line quote and a small portrait. Then 'Watch, Learn and Grow' + an outline 'Watch more' pill, and a wide rounded video still with a white play button."
+  },
+  {
+   "id": "testimonials-lina",
+   "role": "testimonials",
+   "from": "1 Lina Ralph",
+   "crop": {
+    "src": "1.webp",
+    "x": 44,
+    "y": 7380,
+    "w": 1352,
+    "h": 660
+   },
+   "spec": "A rounded olive band. A centred italic serif 'Don't just take <Name>'s word for it.', a small round avatar, gold stars, a 2-line quote, the name and slider dots."
+  },
+  {
+   "id": "testimonials-chirona",
+   "role": "testimonials",
+   "from": "2 Chirona",
+   "crop": {
+    "src": "2.webp",
+    "y": 5700,
+    "h": 800
+   },
+   "spec": "Cream. A tiny label + centred serif 'What You May Be Carrying' + one line. A row of pale cards cut off at the right edge: a small star rating, a rule, a 3-line quote, the name + one line and a small square avatar at the bottom-right; square ‹ › buttons (the › filled sage)."
+  },
+  {
+   "id": "testimonials-david-roberts",
+   "role": "testimonials",
+   "from": "3 David Roberts",
+   "crop": {
+    "src": "3.webp",
+    "y": 4870,
+    "h": 1700
+   },
+   "spec": "Light grey. A dark video card with a woman's portrait and a white play button beside a 20px 'Watch the story of <Client>' + 2 paragraphs + the blue CTA. Then a centred 28px 'What others say about me' and two staggered rows of white quote cards (3 lines, name, role + company, a round avatar) cut off at both edges."
+  },
+  {
+   "id": "testimonials-coachly",
+   "role": "testimonials",
+   "from": "5 Coachly",
+   "crop": {
+    "src": "5.webp",
+    "y": 5870,
+    "h": 900
+   },
+   "spec": "Off-white. A tiny ✦ label and a centred heading with an italic serif word + squiggle. LEFT a white card with pink double-quote marks, a 5-line quote, a name + role and small ← → (the → pink). RIGHT an oval portrait of a client with pink and lilac sparkle stars."
+  },
+  {
+   "id": "testimonials-roberta",
+   "role": "testimonials",
+   "from": "6 Roberta Lane",
+   "crop": {
+    "src": "6.webp",
+    "x": 64,
+    "y": 5130,
+    "w": 1312,
+    "h": 800
+   },
+   "spec": "White. A tiny label, a centred 36px heading with 'My Clients' in purple, 2 lines. 3 pale cards: a small logo mark, a big pale quote glyph, a 5-line quote, and a round avatar + name + role; round ← → below."
+  },
+  {
+   "id": "testimonials-miller",
+   "role": "testimonials",
+   "from": "7 David Miller",
+   "crop": {
+    "src": "7.webp",
+    "x": 64,
+    "y": 2960,
+    "w": 1312,
+    "h": 540
+   },
+   "spec": "White. A centred 2-line 26px bold heading and one line. 3 quote columns (3 lines, a rule, a small avatar + name + role, a grey quote glyph on the right), small round ← →."
+  },
+  {
+   "id": "testimonials-reynolds",
+   "role": "testimonials",
+   "from": "9 David Reynolds",
+   "crop": {
+    "src": "9.webp",
+    "x": 80,
+    "y": 3860,
+    "w": 900,
+    "h": 460
+   },
+   "spec": "White. A 3-line 28px forest-green heading left. LEFT 3 small grey lines; RIGHT a small round avatar, a 4-line 20px forest-green quote, the name and role, slider dots."
+  },
+  {
+   "id": "testimonials-emmy",
+   "role": "testimonials",
+   "from": "10 Emmy Riker",
+   "crop": {
+    "src": "10.webp",
+    "y": 4880,
+    "h": 260
+   },
+   "spec": "A pale lavender photo band with a big quote mark: a 3-line serif quote centred, a gold heart and a small attribution."
+  },
+  {
+   "id": "testimonials-careerly",
+   "role": "testimonials",
+   "from": "11 career.ly",
+   "crop": {
+    "src": "11.webp",
+    "x": 64,
+    "y": 4320,
+    "w": 1312,
+    "h": 750
+   },
+   "spec": "White. A tiny label right, a 2-line 40px heading with 'What' in orange italic serif, a 3-line grey note. A carousel of wide cards: a portrait on the left, a big quote glyph, 4 lines and a name + role; the next card peeks at the right."
+  },
+  {
+   "id": "testimonials-eleanor",
+   "role": "testimonials",
+   "from": "12 Eleanor Voss",
+   "crop": {
+    "src": "12.webp",
+    "y": 4460,
+    "h": 900
+   },
+   "spec": "An espresso band. A gold ruled label, a 2-line 40px white serif heading with the second line gold italic ('Real Founders. / Real Numbers.') and one grey line. 3 ivory cards: a round avatar, a 5-line italic serif quote, a bold uppercase name and a small gold role line."
+  },
+  {
+   "id": "faq-lina",
+   "role": "faq",
+   "from": "1 Lina Ralph",
+   "crop": {
+    "src": "1.webp",
+    "x": 44,
+    "y": 8050,
+    "w": 1352,
+    "h": 740
+   },
+   "spec": "Off-white. A centred italic serif 'Questions you might be holding.'. A narrow centred accordion: the first item open inside a white card with a green-gold gradient header and an amber icon; the rest white rows with a pale green chevron square."
+  },
+  {
+   "id": "faq-chirona",
+   "role": "faq",
+   "from": "2 Chirona",
+   "crop": {
+    "src": "2.webp",
+    "y": 7150,
+    "h": 820
+   },
+   "spec": "Cream. A tiny label + centred 36px serif 'Things You May Be Wondering' + one line. A narrow centred accordion of numbered questions in thin-bordered rows with '+', the second one open."
+  },
+  {
+   "id": "faq-david-roberts",
+   "role": "faq",
+   "from": "3 David Roberts",
+   "crop": {
+    "src": "3.webp",
+    "y": 2900,
+    "h": 540
+   },
+   "spec": "Light grey. A 2-line 28px 'Frequently Asked Questions' left; a ruled accordion right with blue '+' icons, the first item open."
+  },
+  {
+   "id": "faq-coachly",
+   "role": "faq",
+   "from": "5 Coachly",
+   "crop": {
+    "src": "5.webp",
+    "y": 7720,
+    "h": 780
+   },
+   "spec": "Off-white. LEFT a tiny ✦ label, a heading with an italic serif word + squiggle, and a small pale-blue 'Can't find your answer?' card with a pink pill. RIGHT butter-yellow numbered question rows with '+', the first open with a paragraph."
+  },
+  {
+   "id": "faq-miller",
+   "role": "faq",
+   "from": "7 David Miller",
+   "crop": {
+    "src": "7.webp",
+    "x": 64,
+    "y": 3500,
+    "w": 1312,
+    "h": 650
+   },
+   "spec": "Pale periwinkle. LEFT a 2-line 30px bold 'Frequently Asked Questions', one line and a teal 'Connect me' pill. RIGHT an accordion: the first open inside a white card, the rest plain rows with teal chevrons."
+  },
+  {
+   "id": "blog-mindora",
+   "role": "blog",
+   "from": "4 Mindora",
+   "crop": {
+    "src": "4.webp",
+    "y": 5740,
+    "h": 740
+   },
+   "spec": "A violet band. A 36px white wide uppercase 'Insights for a better you' + 2 lines. A large video card (the coach writing in her library, a white play button, title + 2 lines) and 2 smaller stacked video cards on the right."
+  },
+  {
+   "id": "blog-coachly",
+   "role": "blog",
+   "from": "5 Coachly",
+   "crop": {
+    "src": "5.webp",
+    "y": 9120,
+    "h": 1100
+   },
+   "spec": "Off-white. A tiny ✦ label and a centred heading with italic serif words. A stack of wide white article cards: a photo on the left, a category + date line, a bold title, 3 lines and a pink 'Read more' pill with a lilac chip."
+  },
+  {
+   "id": "blog-roberta",
+   "role": "blog",
+   "from": "6 Roberta Lane",
+   "crop": {
+    "src": "6.webp",
+    "x": 64,
+    "y": 4450,
+    "w": 1312,
+    "h": 680
+   },
+   "spec": "White. A tiny 'Our blog' label, a centred 2-line 36px heading with 'Personal Brand' in purple, 2 lines. 3 photo cards with a small date, a 2-line title and 2 lines; a purple 'See all articles' pill."
+  },
+  {
+   "id": "blog-james",
+   "role": "blog",
+   "from": "8 James David",
+   "crop": {
+    "src": "8.webp",
+    "x": 64,
+    "y": 5080,
+    "w": 1312,
+    "h": 900
+   },
+   "spec": "White. A 2-line 32px heading with the last word coral, 2 lines, a coral 'View all' pill right. A large article card (a wide photo, a 2-line title, 2 lines, 'Read more →') and 2 smaller horizontal article cards stacked on the right."
+  },
+  {
+   "id": "cta-lina",
+   "role": "cta",
+   "from": "1 Lina Ralph",
+   "crop": {
+    "src": "1.webp",
+    "x": 44,
+    "y": 8850,
+    "w": 1352,
+    "h": 720
+   },
+   "spec": "A rounded olive band with an arched session photo at the top-left and bottom-right corners, a centred gradient line icon, a 2-line italic serif heading, one line and an amber 'Book a free consultation' button with an avatar."
+  },
+  {
+   "id": "cta-chirona",
+   "role": "cta",
+   "from": "2 Chirona",
+   "crop": {
+    "src": "2.webp",
+    "y": 6450,
+    "h": 700
+   },
+   "spec": "A soft warm photo of two women talking on a sofa: a 2-line 24px serif heading and a sage 'Begin gently' pill top-left, a 'Trusted by 100K clients' avatar chip bottom-left and a frosted 'Emotional healing' card with a thumbnail bottom-right."
+  },
+  {
+   "id": "cta-coachly",
+   "role": "cta",
+   "from": "5 Coachly",
+   "crop": {
+    "src": "5.webp",
+    "y": 8480,
+    "h": 640
+   },
+   "spec": "A deep wine rounded panel with faint line-drawn flowers: a centred 2-line butter-yellow heading with an italic serif word and a pink squiggle, 2 white lines and a pink pill."
+  },
+  {
+   "id": "cta-james",
+   "role": "cta",
+   "from": "8 James David",
+   "crop": {
+    "src": "8.webp",
+    "x": 64,
+    "y": 6020,
+    "w": 1312,
+    "h": 700
+   },
+   "spec": "A peach-coral rounded banner: the coach cut out on the left, a 3-line 28px heading on the right and a black 'Follow me →' pill; faint geometric shards."
+  },
+  {
+   "id": "cta-reynolds",
+   "role": "cta",
+   "from": "9 David Reynolds",
+   "crop": {
+    "src": "9.webp",
+    "x": 80,
+    "y": 1530,
+    "w": 900,
+    "h": 460
+   },
+   "spec": "White. LEFT a butter-yellow rounded tile with a 3-line 30px forest-green 'Feeling invisible online?', 2 lines and a forest pill 'Schedule my free call now →'. RIGHT a wide photo (a hand stopping falling dominoes) with a white card 'Watch how personal branding changes everything' and a video thumbnail with a play button."
+  },
+  {
+   "id": "cta-emmy",
+   "role": "cta",
+   "from": "10 Emmy Riker",
+   "crop": {
+    "src": "10.webp",
+    "y": 6000,
+    "h": 950
+   },
+   "spec": "A lavender-field sunset photo band: a lotus icon, a centred 2-line 36px serif heading, one line and a magenta button; a white rounded freebie card overlapping the purple footer with a book/workbook mock-up on the left and on the right a script 'Free resource', a 3-line serif title, a heart, one line and a magenta 'Get the free resource' button."
+  },
+  {
+   "id": "cta-eleanor",
+   "role": "cta",
+   "from": "12 Eleanor Voss",
+   "crop": {
+    "src": "12.webp",
+    "y": 5480,
+    "h": 580
+   },
+   "spec": "Ivory. A deep espresso rounded panel: a tiny gold ruled label, a centred 2-line 40px white serif heading with the second line gold italic, 2 grey lines, a gold pill 'Book a free strategy call →' and 3 tiny ✓ notes along the bottom."
+  },
+  {
+   "id": "contact-mindora",
+   "role": "contact",
+   "from": "4 Mindora",
+   "crop": {
+    "src": "4.webp",
+    "y": 6880,
+    "h": 740
+   },
+   "spec": "Dark navy with a giant ghosted wordmark at the bottom. LEFT a violet form card 'Let's Connect' (first/last name, email, phone, message with darker violet inputs, an orange 'Send message ↗' pill). RIGHT the logo, a 2-line 32px 'Let's Start Your Transformation', 3 lines, contact info with orange icons, a small link list and round social icons."
+  },
+  {
+   "id": "footer-lina",
+   "role": "footer",
+   "from": "1 Lina Ralph",
+   "crop": {
+    "src": "1.webp",
+    "x": 44,
+    "y": 9580,
+    "w": 1352,
+    "h": 814
+   },
+   "spec": "Deep olive. The practitioner's name as a huge white italic serif wordmark with a small pendulum line icon, 'Get in touch' lines with small icons on the right; Menu · Social links · 'Stay in loop' (an email input + amber 'Subscribe') columns; a thin © row."
+  },
+  {
+   "id": "footer-chirona",
+   "role": "footer",
+   "from": "2 Chirona",
+   "crop": {
+    "src": "2.webp",
+    "y": 8480,
+    "h": 958
+   },
+   "spec": "Cream fading into a sage gradient. The coach's avatar + name + credential + 3 lines, address/contact and 2 link columns; then a white sunburst and the name in a huge cream script wordmark, with Privacy · © · Terms along the bottom."
+  },
+  {
+   "id": "footer-coachly",
+   "role": "footer",
+   "from": "5 Coachly",
+   "crop": {
+    "src": "5.webp",
+    "y": 10180,
+    "h": 1024
+   },
+   "spec": "A dark forest band with a notched top edge carrying a ticker of pastel keywords (Career advice ✦ Leadership ✦ Mindset shift) in wine and italic serif. Company · Quick link columns, a 2-line note with pink phone and email icons and an avatar row; the brand as a giant butter-yellow wordmark with small pastel tags stuck on it; a thin © row with round social icons."
+  },
+  {
+   "id": "footer-roberta",
+   "role": "footer",
+   "from": "6 Roberta Lane",
+   "crop": {
+    "src": "6.webp",
+    "x": 64,
+    "y": 5950,
+    "w": 1312,
+    "h": 646
+   },
+   "spec": "White. A row of small links + an email chip, then the coach's name as a huge 120px grey-black wordmark (surname fading to pale grey), a rule, © + privacy left, round social icons in the middle, terms right."
+  },
+  {
+   "id": "footer-miller",
+   "role": "footer",
+   "from": "7 David Miller",
+   "crop": {
+    "src": "7.webp",
+    "x": 64,
+    "y": 4200,
+    "w": 1312,
+    "h": 708
+   },
+   "spec": "A dark navy band with a warm amber glow: a huge white 'Contact Me • Contact Me' marquee, email + phone on the left, 'Ready to transform your mindset?' + a dark rounded email input with an amber round → on the right; a rule, © and round social icons."
+  },
+  {
+   "id": "footer-james",
+   "role": "footer",
+   "from": "8 James David",
+   "crop": {
+    "src": "8.webp",
+    "x": 64,
+    "y": 6720,
+    "w": 1312,
+    "h": 615
+   },
+   "spec": "White. Logo + round outline social icons left, a 'Subscribe to the newsletter' input with a coral round arrow right; a row of nav links, a rule, © and legal links, and the name as a giant pale grey wordmark cut off at the bottom."
+  },
+  {
+   "id": "footer-emmy",
+   "role": "footer",
+   "from": "10 Emmy Riker",
+   "crop": {
+    "src": "10.webp",
+    "y": 6950,
+    "h": 730
+   },
+   "spec": "Deep purple. A lotus logo with a spaced serif name, script subtitle and 3 lines; Explore · Support · Legal columns split by thin vertical rules; a 'Create a life you love.' serif block with a heart, a magenta button and round social icons; a thin © bar."
+  },
+  {
+   "id": "footer-careerly",
+   "role": "footer",
+   "from": "11 career.ly",
+   "crop": {
+    "src": "11.webp",
+    "x": 64,
+    "y": 5060,
+    "w": 1312,
+    "h": 606
+   },
+   "spec": "White. A 3-line 30px 'Let's Build Your Next Step With Clarity' with an underlined email link + ↗ on the left; a 'Subscribe newsletter' input with an orange round arrow and small social icons on the right; the wordmark + nav row and a centred ©."
+  },
+  {
+   "id": "footer-eleanor",
+   "role": "footer",
+   "from": "12 Eleanor Voss",
+   "crop": {
+    "src": "12.webp",
+    "y": 6060,
+    "h": 392
+   },
+   "spec": "Espresso. The serif italic name + 3 lines left; Navigate · Programs · Connect columns with tiny gold titles; a rule, © and an email on the right."
+  }
+ ]
+}

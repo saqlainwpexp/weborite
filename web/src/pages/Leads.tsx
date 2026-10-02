@@ -1,5 +1,5 @@
 import { useOutletContext, useSearchParams } from "react-router-dom";
-import { ArrowRight, CalendarDays, Layers, X } from "lucide-react";
+import { ArrowRight, CalendarDays, Flame, Layers, X } from "lucide-react";
 import type { LayoutCtx } from "../layout/Layout";
 import { LeadsTable } from "../components/LeadsTable";
 import { Dropdown } from "../components/Dropdown";
@@ -17,17 +17,22 @@ export default function Leads() {
   const [params, setParams] = useSearchParams();
   const vertical = params.get("vertical");
   const status = params.get("status") ?? "all";
+  const temp = params.get("temp") ?? "all";
   const date = params.get("date");
   const v = benchmarks?.find((b) => b.vertical === vertical);
 
-  const shown = (leads ?? []).filter((l) => {
-    if (vertical && l.vertical !== vertical) return false;
-    if (date && dayKey(l.createdAt) !== date) return false;
-    if (status === "ready") return l.status === "ready";
-    if (status === "active") return ["queued", "running", "paused"].includes(l.status);
-    if (status === "review") return ["needs_review", "failed"].includes(l.status);
-    return true;
-  });
+  const shown = (leads ?? [])
+    .filter((l) => {
+      if (vertical && l.vertical !== vertical) return false;
+      if (date && dayKey(l.createdAt) !== date) return false;
+      if (temp !== "all" && (l.temp ?? "") !== temp) return false;
+      if (status === "ready") return l.status === "ready";
+      if (status === "active") return ["queued", "running", "paused"].includes(l.status);
+      if (status === "review") return ["needs_review", "failed"].includes(l.status);
+      return true;
+    })
+    // When filtering by temperature, show the hottest first.
+    .sort((a, b) => (temp === "all" ? 0 : (b.score ?? 0) - (a.score ?? 0)));
 
   const set = (k: string, val: string | null) => {
     const next = new URLSearchParams(params);
@@ -52,6 +57,19 @@ export default function Leads() {
         <h1 className="page-title">{v ? v.label : "Leads"}</h1>
         <div className="actions">
           <Dropdown label="Filter by vertical" icon={<Layers />} value={vertical ?? ""} options={verticalOptions} onChange={(val) => set("vertical", val || null)} align="right" />
+          <Dropdown
+            label="Filter by score"
+            icon={<Flame />}
+            value={temp === "all" ? "" : temp}
+            options={[
+              { value: "", label: "All scores", hint: `${leads?.length ?? 0} leads`, swatch: "" },
+              { value: "hot", label: "Hot", hint: "Chase today · 70+", swatch: "#e0564f" },
+              { value: "warm", label: "Warm", hint: "Worth a nudge · 45–69", swatch: "#e0a33a" },
+              { value: "cold", label: "Cold", hint: "Low priority · under 45", swatch: "#6b7cae" },
+            ]}
+            onChange={(val) => set("temp", val || null)}
+            align="right"
+          />
           <div className="seg" role="tablist" aria-label="Filter by status">
             {FILTERS.map((f) => (
               <button key={f.key} role="tab" aria-selected={status === f.key} className={status === f.key ? "on" : ""} onClick={() => set("status", f.key === "all" ? null : f.key)}>{f.label}</button>

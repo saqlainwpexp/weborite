@@ -5,7 +5,8 @@ import { Buffer } from "node:buffer";
 import { getSettings, setSettings, sqlite as db } from "../db.ts";
 import { TERMS_VERSION } from "../../shared/legal.ts";
 import { LICENSE_API, LICENSE_PUBLIC_KEY } from "../../shared/licenseKey.ts";
-import { DEMO_CREATE_ROUTES, DEMO_LABELS, DEMO_LIMITS, DEMO_PRODUCTS, DEMO_RESULTS, type DemoKind, type DemoState } from "../../shared/demo.ts";
+import { DEMO_AUTOMATION_LEADS, DEMO_CREATE_ROUTES, DEMO_DAYS, DEMO_LABELS, DEMO_LIMITS, DEMO_PRODUCTS, DEMO_RESULTS, type DemoKind, type DemoState } from "../../shared/demo.ts";
+import { countEnrollments } from "../automations/store.ts";
 import { open, seal } from "../vault.ts";
 import { localOnly } from "../security.ts";
 
@@ -167,14 +168,55 @@ export function isDemo(): boolean {
   return Boolean(o?.demo && o.termsVersion === TERMS_VERSION);
 }
 
-function demoState(): DemoState {
-  const left = Object.fromEntries((Object.keys(DEMO_LIMITS) as DemoKind[]).map((k) => [k, Math.max(0, DEMO_LIMITS[k] - demoUsed(k))])) as Record<DemoKind, number>;
-  return { left, results: DEMO_RESULTS, products: DEMO_PRODUCTS };
+/** When the free trial ends: 7 days after the person chose the demo. Null when not a demo. */
+export function demoExpiry(): string | null {
+  const o = readOnboarding();
+  if (!o?.demo || !o.acceptedAt) return null;
+  return new Date(new Date(o.acceptedAt).getTime() + DEMO_DAYS * 86400_000).toISOString();
 }
 
-/** How many more of something this copy may create: Infinity when licensed. */
+/** Whole days left in the trial (0 on the final day, never negative). */
+export function demoDaysLeft(): number {
+  const e = demoExpiry();
+  if (!e) return 0;
+  return Math.max(0, Math.ceil((new Date(e).getTime() - Date.now()) / 86400_000));
+}
+
+/** The 7 days are up: the demo is over and everything is blocked until a key is entered. */
+export function isDemoExpired(): boolean {
+  if (!isDemo()) return false;
+  const e = demoExpiry();
+  return Boolean(e && Date.now() > new Date(e).getTime());
+}
+
+/** Businesses the automations may still enrol before the demo's shared cap. */
+export function demoAutomationLeadsLeft(): number {
+  if (!isDemo()) return Infinity;
+  if (isDemoExpired()) return 0;
+  return Math.max(0, DEMO_AUTOMATION_LEADS - countEnrollments());
+}
+
+function demoState(): DemoState {
+  const expired = isDemoExpired();
+  const left = Object.fromEntries(
+    (Object.keys(DEMO_LIMITS) as DemoKind[]).map((k) => [k, expired ? 0 : Math.max(0, DEMO_LIMITS[k] - demoUsed(k))]),
+  ) as Record<DemoKind, number>;
+  return {
+    left,
+    results: DEMO_RESULTS,
+    products: DEMO_PRODUCTS,
+    expiresAt: demoExpiry(),
+    daysLeft: demoDaysLeft(),
+    expired,
+    automationLeadsLeft: demoAutomationLeadsLeft() === Infinity ? DEMO_AUTOMATION_LEADS : demoAutomationLeadsLeft(),
+  };
+}
+
+/** How many more of something this copy may create: Infinity when licensed, 0 once the trial ends. */
 export function demoLeft(kind: DemoKind): number {
-  return isDemo() ? Math.max(0, DEMO_LIMITS[kind] - demoUsed(kind)) : Infinity;
+  if (!isDemo()) return Infinity;
+  if (isDemoExpired()) return 0;
+  return Math.max(0, DEMO_LIMITS[kind] - demoUsed(kind));
 }
 /** Record one use of a demo allowance (no-op when licensed). */
 export function useDemoAllowance(kind: DemoKind) {
@@ -352,7 +394,11 @@ export function requireLicense(allow: RegExp) {
     // The dashboard itself always loads: it shows the activation screen. Only data is gated.
     if (!/^\/(api|files)\//.test(req.path)) return next();
     if (isLicensed() || allow.test(req.path)) return next();
-    if (isDemo()) return demoGate(req, res, next);
+    if (isDemo()) {
+      // The 7 days are up: block everything (reads included) until a key is entered.
+      if (isDemoExpired()) return res.status(402).json({ error: `Your ${DEMO_DAYS}-day free trial has ended. Enter a license key to keep going.`, needsLicense: true, demoExpired: true });
+      return demoGate(req, res, next);
+    }
     res.status(402).json({ error: "This copy isn't activated.", needsLicense: true });
   };
 }

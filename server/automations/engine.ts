@@ -7,7 +7,7 @@ import { mockupFromProspect } from "../campaigns/index.ts";
 import { getProspect, listProspects, listSearches, saveProspect } from "../finder/store.ts";
 import { inboxSince } from "../golive/imap.ts";
 import { sendMail, type Security } from "../golive/smtp.ts";
-import { DemoLimitError } from "../license/index.ts";
+import { DemoLimitError, demoAutomationLeadsLeft } from "../license/index.ts";
 import { newContext } from "../pipeline/browser.ts";
 import {
   dueEnrollments, emailedRecently, enroll, getWorkflow, hasReplied, isEnrolled, lastSendAt, listWorkflows, recordReply, recordSend, runningFor, saveEnrollment, saveWorkflow,
@@ -333,6 +333,8 @@ function runTriggers(w: Workflow) {
   const c = trig.config;
   const since = w.activatedAt;
   const add = (p: Prospect) => {
+    // Demo trial: all automations together may only enrol so many businesses.
+    if (demoAutomationLeadsLeft() <= 0) return 0;
     if (enroll(w.id, p.id, p.name, trig.id)) return 1;
     return 0;
   };

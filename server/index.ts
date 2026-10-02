@@ -31,6 +31,7 @@ import { license, requireFullLicense, requireLicense, startLicenseTimers } from 
 import { assertPublicUrl, localOnly, sandboxFiles } from "./security.ts";
 import { STEPS, type BenchmarkSet, type Capture, type Diagnosis, type GateResult, type LeadDetail, type StepKey, type Usage } from "../shared/types.ts";
 import { ai } from "./claude/aiRoutes.ts";
+import { pitch } from "./pitch.ts";
 
 // Every store has created its tables by now: encrypt anything saved before encryption existed.
 encryptStoredSecrets();
@@ -220,6 +221,7 @@ app.delete("/api/brand/:kind", (req, res) => {
 });
 
 app.use("/api/ai", ai);
+app.use("/api/pitch", pitch);
 
 app.get("/api/claude/status", (_req, res) => {
   const s = getSettings();
@@ -257,17 +259,25 @@ if (existsSync(dist)) {
   app.get(/^\/(?!api|files).*/, (_req, res) => res.sendFile(join(dist, "index.html")));
 }
 
-app.listen(PORT, "127.0.0.1", () => {
-  console.log(`Dashboard API  → http://localhost:${PORT}`);
-  resumeInterrupted(listLeads());
-  resumeSearches();
-  resumeBuilds();
-  resumeWp();
-  startCareTimers();
-  startCampaignTimers();
-  startWorkflowTimers();
-  startLicenseTimers();
-});
+app
+  .listen(PORT, "127.0.0.1", () => {
+    console.log(`Dashboard API  → http://localhost:${PORT}`);
+    resumeInterrupted(listLeads());
+    resumeSearches();
+    resumeBuilds();
+    resumeWp();
+    startCareTimers();
+    startCampaignTimers();
+    startWorkflowTimers();
+    startLicenseTimers();
+  })
+  // Without this, a clash on the API port throws an unhandled error and the whole server dies, so the
+  // dashboard shows "Failed to fetch" for everything. Report it clearly and stop instead.
+  .on("error", (e: NodeJS.ErrnoException) => {
+    if (e.code === "EADDRINUSE") console.error(`\nAPI port ${PORT} is already in use — another copy of the app is running, or a previous one didn't shut down.\nClose it (or set API_PORT to a free port), then start again.\n`);
+    else console.error(`The dashboard API couldn't start: ${e.message}`);
+    process.exit(1);
+  });
 
 // ---- Webhook receiver (the only thing to expose through the tunnel) ----
 const hookApp = express();

@@ -1,0 +1,1282 @@
+{
+ "niche": "Dentists, chiropractors & physio clinics",
+ "match": "dental|dentist|dentistry|tandarts|orthodont|invisalign|implant|teeth|tooth|smile|endodont|periodont|chiropract|chiro\\b|spine|spinal|physio|physiotherap|fysio|physical.?therap|osteopath|sports.?injury|rehab|back.?pain|neck.?pain|massage.?therap|podiat|optomet|optician|clinic|kliniek|medical.?centre|medical.?center|family.?practice|gp\\b",
+ "about": "Mix-and-match sections for dental practices (general, cosmetic, orthodontic), chiropractors and physiotherapy/rehab clinics, from 12 Dribbble full-page references (1–12.webp; shot links in _sources.json). Every mockup = one base STYLE + an ordered set of SECTIONS. Crops live in sections/<id>.jpg. Real photos of the team, the treatment rooms and (consented) patients carry these pages; fall back to clean clinical stock. Ratings, patient counts, years, insurance logos and before/after results must come from FACTS.",
+ "styles": [
+  {
+   "id": "mint-dark",
+   "name": "Mint & forest dental",
+   "fits": "dental clinic family dentistry general cosmetic orthodontics modern friendly trustworthy",
+   "character": "Fresh and confident: light grey page, a dark forest (#16302a) pill nav, a rounded hero photo with green-lit clinical tones, a big bold 3-line headline with a tiny lips/tooth image inline, mint-green (#1ed18f) pill buttons with a white round arrow, a dark stats card with one mint '#1 Patient choice' tile, dark full-width service band with white numbered cards, mint team cards with the featured one raised, 2-column FAQ pills with mint arrow circles. (Ref 1 Dentiva.)",
+   "fonts": "Plus Jakarta Sans (500/600/700) for everything",
+   "cssStarter": ":root{--accent:#1ed18f;--dark:#16302a;--ink:#101a17;--body:#5b6461;--bg:#f2f3f2;--card:#ffffff;--container:1120px;--gutter:32px;--section-y:100px;--radius:16px}\nbody{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;line-height:1.6;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.dark{background:var(--dark);color:#b8c6c1}.dark h2{color:#fff}\nh1,h2,h3{font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.15}\nh1{font-size:52px}\nh2{font-size:36px;text-align:center}h2 em{font-style:normal;color:var(--accent)}\nh3{font-size:17px;font-weight:600}\n.btn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 4px 0 16px;border-radius:99px;background:var(--accent);color:#fff;font-size:12px;font-weight:600}.btn i{width:28px;height:28px;border-radius:50%;background:#fff;color:var(--dark);display:grid;place-items:center}\n.card{background:var(--card);border-radius:12px;padding:20px}\n.tile{background:var(--accent);color:#fff;border-radius:12px;padding:20px}\n.faq{display:flex;justify-content:space-between;background:#fff;border-radius:99px;padding:12px 16px}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:36px}h2{font-size:28px}}"
+  },
+  {
+   "id": "electric-blue",
+   "name": "Electric blue editorial",
+   "fits": "dental clinic modern premium cosmetic implants whitening minimal city",
+   "character": "Editorial and bold: a full-bleed close-up smile photo hero with a light italic/regular mixed headline split across the image ('Beautifully smiles · Dental treatment'), lots of white space, a floating 3D tooth render, a vivid royal-blue (#0b62f0) band with a giant scrolling list of treatments where the active one is white and underlined, split about/team layouts with photo mosaics, a giant pale wordmark behind scattered photos, a deep blue gradient FAQ + footer. (Ref 2 Dentcore.)",
+   "fonts": "Inter Tight (300/400/500), italic for accent words",
+   "cssStarter": ":root{--accent:#0b62f0;--deep:#082a73;--ink:#141414;--body:#666;--bg:#fafafa;--line:#e8e8e8;--container:1180px;--gutter:32px;--section-y:110px;--radius:6px}\nbody{font-family:'Inter Tight',sans-serif;font-size:13px;line-height:1.6;color:var(--body);background:#111}\n.page{background:var(--bg);max-width:1300px;margin:0 auto}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.blue{background:var(--accent);color:#cfe0ff}.blue h2{color:#fff}\n.deep{background:linear-gradient(180deg,var(--deep),var(--accent));color:#c9d8f7}\nh1,h2,h3{font-weight:300;color:var(--ink);letter-spacing:-.02em;line-height:1.1}\nh1{font-size:56px;color:#fff}h1 em{font-style:italic}\nh2{font-size:36px}\n.list b{display:block;font-size:40px;font-weight:300;color:rgba(255,255,255,.35)}.list b.on{color:#fff;text-decoration:underline;text-underline-offset:8px}\n.btn{display:inline-flex;align-items:center;height:28px;padding:0 14px;border-radius:99px;background:#fff;color:var(--ink);font-size:10px}.btn-dark{background:#111;color:#fff}\n.wordmark{font-size:200px;font-weight:500;color:#e6ecf7;letter-spacing:-.04em}\n@media(max-width:768px){:root{--section-y:68px;--gutter:20px}h1{font-size:36px}h2{font-size:28px}.list b{font-size:26px}}"
+  },
+  {
+   "id": "navy-lime",
+   "name": "Navy & lime smile studio",
+   "fits": "dental clinic family cosmetic orthodontist kids friendly modern bright",
+   "character": "Warm and friendly: cream canvas inside a browser frame, a lime top bar, deep navy (#0e2f5a) headings and pill buttons, a collage hero (headline with a photo tucked in, a rating card, a doctor video card), rounded photo cards with navy gradient captions and + buttons, step cards with big 'Step 02' overlays, a services list beside a photo and a lime gradient card, lime team cards with one photo card, navy footer card. (Ref 3 SmileCraft.)",
+   "fonts": "Manrope (500/600/700) for everything",
+   "cssStarter": ":root{--accent:#0e2f5a;--lime:#dff7a8;--ink:#0e2f5a;--body:#5d6573;--bg:#fffaf0;--card:#ffffff;--line:#ece6d8;--container:1120px;--gutter:32px;--section-y:100px;--radius:14px}\nbody{font-family:'Manrope',sans-serif;font-size:12px;line-height:1.6;color:var(--body);background:#e9f1f8}\n.page{background:var(--bg);max-width:1300px;margin:0 auto}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.topbar{background:var(--lime)}\nh1,h2,h3{font-weight:500;color:var(--ink);letter-spacing:-.02em;line-height:1.12}\nh1{font-size:52px}\nh2{font-size:32px}\nh3{font-size:15px;font-weight:600}\n.label{font-size:8px;font-weight:700;text-transform:uppercase;color:var(--ink)}.label::before{content:'\\2726 '}\n.btn{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 16px;border-radius:99px;background:var(--accent);color:#fff;font-size:10px;font-weight:600}\n.photo{border-radius:var(--radius);overflow:hidden;position:relative}.photo .cap{position:absolute;inset:auto 0 0 0;padding:14px;background:linear-gradient(transparent,rgba(14,47,90,.85));color:#fff}\n.lime-card{background:linear-gradient(180deg,#f3fbe2,var(--lime));border-radius:12px;padding:18px}\nfooter .card{background:var(--accent);color:#c7d3e6;border-radius:16px}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:36px}h2{font-size:26px}}"
+  },
+  {
+   "id": "teal-sky",
+   "name": "Sky teal clinic",
+   "fits": "dental clinic telehealth online consultation family general cosmetic doctors modern light",
+   "character": "Light and airy: a pale sky-blue (#cdeef7) rounded hero card with a light-weight teal headline, a close-up treatment photo with white stat chips, small colour tiles (terracotta, lilac) linking to '24/7 service' and 'Find the best doctors', a features list beside an online-consultation card with a video call mock-up, a photo mosaic of the clinic, service cards with a pink 'more services' card, a pale blue team carousel, a dark teal (#0f5a73) footer with a ghosted wordmark. (Ref 4 Denty.)",
+   "fonts": "Inter (300/400/500) for everything",
+   "cssStarter": ":root{--accent:#0f5a73;--sky:#cdeef7;--pink:#f3c8f3;--ink:#0f4e63;--body:#5d6d74;--bg:#ffffff;--soft:#eef5f7;--container:1120px;--gutter:32px;--section-y:100px;--radius:18px}\nbody{font-family:'Inter',sans-serif;font-size:12px;line-height:1.6;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.sky{background:var(--sky);border-radius:var(--radius)}\nh1,h2,h3{font-weight:300;color:var(--ink);letter-spacing:-.02em;line-height:1.15}\nh1{font-size:40px}\nh2{font-size:34px;text-align:center}\nh3{font-size:16px;font-weight:400}\n.btn{display:inline-flex;align-items:center;height:30px;padding:0 16px;border-radius:6px;background:var(--accent);color:#fff;font-size:10px}.btn-outline{background:transparent;border:1px solid var(--accent);color:var(--accent)}\n.chip{background:#fff;border-radius:10px;padding:8px 12px}.chip b{display:block;font-size:18px;font-weight:500;color:var(--ink)}\n.card{background:var(--soft);border-radius:14px;padding:12px}\n.list-row{display:flex;justify-content:space-between;background:var(--soft);border-radius:6px;padding:10px 12px;margin-bottom:8px}\nfooter{background:var(--accent);color:#bfe0ea;border-radius:16px}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:30px}h2{font-size:26px}}"
+  },
+  {
+   "id": "sunny-meadow",
+   "name": "Sunny meadow dental",
+   "fits": "dental clinic cosmetic whitening aligners friendly modern playful premium",
+   "character": "Dreamy and upbeat: a pale lime-yellow sky with a giant glossy 3D tooth standing on a grassy hill, the headline in a huge light UPPERCASE grotesk across the top, black pill buttons with a separate round icon, a bright sunshine-yellow (#f7e94f) as the accent (logo circle, gradient bands), pastel service cards (blue, butter, lilac, mint), a bento 'why us' with product renders, a hexagon-ish team grid, before/after smile cards over a meadow, a giant yellow wordmark footer. (Ref 5 Dentova.)",
+   "fonts": "Urbanist (300/400/500) for everything",
+   "cssStarter": ":root{--accent:#f7e94f;--ink:#131313;--body:#666;--bg:#ffffff;--blue:#e3f0fb;--butter:#fbf3c9;--lilac:#efe3fb;--mint:#e3f6ea;--container:1120px;--gutter:32px;--section-y:100px;--radius:10px}\nbody{font-family:'Urbanist',sans-serif;font-size:12px;line-height:1.6;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.hero{background:linear-gradient(180deg,#f3f7d6,#fbfbe9)}\n.sun{background:linear-gradient(180deg,#fff,#fdf6b4)}\nh1{font-size:80px;font-weight:300;text-transform:uppercase;color:var(--ink);letter-spacing:-.02em;line-height:1}\nh2{font-size:36px;font-weight:400;color:var(--ink);line-height:1.15}\nh3{font-size:15px;font-weight:500;text-transform:uppercase;color:var(--ink)}\n.label{display:inline-block;font-size:8px;font-weight:600;text-transform:uppercase;padding:3px 8px;border-radius:99px;border:1px solid #ddd}.label::before{content:'\\25CF ';color:#d6c400}\n.btn{display:inline-flex;align-items:center;gap:4px;height:30px;padding:0 14px;border-radius:99px;background:#111;color:#fff;font-size:10px}.btn+i{width:30px;height:30px;border-radius:50%;background:#111;display:inline-grid;place-items:center;color:#fff}\n.card{padding:18px;border-radius:0}.b{background:var(--blue)}.y{background:var(--butter)}.l{background:var(--lilac)}.m{background:var(--mint)}\n.wordmark{font-size:180px;font-weight:300;color:var(--accent);line-height:1}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:40px}h2{font-size:26px}.wordmark{font-size:80px}}"
+  },
+  {
+   "id": "teal-serif",
+   "name": "Teal & olive italic",
+   "fits": "dental clinic cosmetic general implants orthodontics modern premium trustworthy",
+   "character": "Polished: a rounded hero photo of a smiling patient in the chair with a bold white headline whose second half is an olive-lime italic serif, a light blue gradient page frame, a big about statement with 4 stats, a deep teal (#0f3b40) rounded services block with stacked photo+text cards, before/after grids, doctor cards with name on a gradient, grey testimonial band, a dark teal glass appointment band with a white form card, tabbed FAQ, a teal footer with a giant gradient wordmark. (Ref 6 Oralin.)",
+   "fonts": "Inter (400/500/600) + Instrument Serif (italic) for accent words",
+   "cssStarter": ":root{--accent:#0f3b40;--olive:#9bbb2a;--ink:#131b1c;--body:#5f6a6b;--bg:#ffffff;--soft:#f1f2f1;--container:1100px;--gutter:32px;--section-y:100px;--radius:18px}\nbody{font-family:'Inter',sans-serif;font-size:12px;line-height:1.6;color:var(--body);background:linear-gradient(90deg,#dff4f7,#9ec9f5)}\n.page{background:var(--bg);max-width:1180px;margin:0 auto}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.teal{background:var(--accent);color:#bcd0d2;border-radius:var(--radius)}.teal h2{color:#fff}\nh1,h2,h3{font-weight:500;color:var(--ink);letter-spacing:-.02em;line-height:1.15}\nh1{font-size:44px;color:#fff}\nh2{font-size:32px;text-align:center}\nh1 em,h2 em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--olive)}\n.btn{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 4px 0 14px;border-radius:99px;background:var(--accent);color:#fff;font-size:10px}.btn-white{background:#fff;color:var(--ink)}\n.stat b{display:block;font-size:40px;font-weight:500;color:var(--ink)}\n.card{background:var(--soft);border-radius:14px;padding:14px}\n.wordmark{font-size:200px;font-weight:500;background:linear-gradient(#9ec5c8,#0f3b40);-webkit-background-clip:text;color:transparent}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:30px}h2{font-size:24px}}"
+  },
+  {
+   "id": "royal-blue",
+   "name": "Royal blue family dental",
+   "fits": "dental clinic family general cosmetic restorative local trusted affordable",
+   "character": "Clear and dependable: deep royal navy (#062b7a) hero and bands, a bright azure (#2a7cf6) accent for pill buttons, active cards and CTA, a heavy rounded geometric sans for headlines ('Smile better with us'), arch/pill-shaped photo collage in the hero with blue circles, an arch-topped patient photo beside 3 icon features, 3 service cards with the middle one filled azure, a video band, doctor cards with star ratings, white review cards on navy, a big azure rounded CTA. (Ref 7 Odontic.)",
+   "fonts": "Outfit (500/600/700) for everything",
+   "cssStarter": ":root{--accent:#2a7cf6;--primary:#062b7a;--ink:#10224a;--body:#5b6478;--bg:#ffffff;--line:#e3e8f2;--container:1100px;--gutter:32px;--section-y:100px;--radius:12px}\nbody{font-family:'Outfit',sans-serif;font-size:12px;line-height:1.6;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.navy{background:var(--primary);color:#c3cfe8}.navy h1,.navy h2{color:#fff}\nh1,h2,h3{font-weight:700;color:var(--ink);letter-spacing:-.01em;line-height:1.1}\nh1{font-size:64px}\nh2{font-size:40px}\nh3{font-size:15px;font-weight:600}\n.btn{display:inline-flex;align-items:center;height:32px;padding:0 18px;border-radius:99px;background:var(--accent);color:#fff;font-size:11px}.btn-white{background:#fff;color:var(--ink)}\n.arch{border-radius:200px 200px 16px 16px;overflow:hidden}\n.card{border:1px solid var(--line);border-radius:10px;padding:20px;text-align:center}.card.on{background:var(--accent);color:#fff;border-color:var(--accent)}\n.icon{width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;margin:0 auto 10px}\n.cta{background:var(--accent);color:#fff;border-radius:16px;text-align:center;padding:48px}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:40px}h2{font-size:28px}}"
+  },
+  {
+   "id": "orange-serif",
+   "name": "Burnt orange serif",
+   "fits": "dental clinic cosmetic general boutique modern premium warm",
+   "character": "Warm and editorial: a chocolate-brown page frame, a dark full-bleed photo hero inside a rounded card with a serif headline where the key words are orange italic, blush-peach (#fdeee4) sections, a flat bright orange (#ff6a00) for buttons, one filled checkerboard card and the open FAQ row, a checkerboard of service cards with orange icons, small numbered section labels on thin rules, big stats, orange-captioned photo mosaic, a giant white serif wordmark on an orange footer panel. (Ref 8 Dentiva.)",
+   "fonts": "DM Serif Display (400, italic) for headings + DM Sans (400/500) for text",
+   "cssStarter": ":root{--accent:#ff6a00;--frame:#7a4526;--ink:#1b1b1b;--body:#666;--bg:#ffffff;--peach:#fdeee4;--line:#eee;--container:1100px;--gutter:32px;--section-y:100px;--radius:6px}\nbody{font-family:'DM Sans',sans-serif;font-size:12px;line-height:1.6;color:var(--body);background:var(--frame)}\n.page{background:var(--bg);max-width:1180px;margin:0 auto}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.peach{background:var(--peach)}\nh1,h2,h3{font-family:'DM Serif Display',serif;font-weight:400;color:var(--ink);line-height:1.1}\nh1{font-size:48px;color:#fff}\nh2{font-size:36px}\nh1 em,h2 em{font-style:italic;color:var(--accent)}\nh3{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600}\n.label-row{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:6px;font-size:8px;color:var(--accent)}\n.btn{display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 12px;border-radius:99px;background:var(--accent);color:#fff;font-size:9px}\n.card{background:var(--peach);padding:20px;text-align:center}.card.on{background:var(--accent);color:#fff}\n.faq.on{background:var(--accent);color:#fff;border-radius:4px;padding:14px}\nfooter{background:var(--accent);color:#fff}.wordmark{font-family:'DM Serif Display',serif;font-size:170px;color:#fff;line-height:1}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:32px}h2{font-size:26px}.wordmark{font-size:80px}}"
+  },
+  {
+   "id": "sage-forest",
+   "name": "Sage & forest green",
+   "fits": "dental clinic cosmetic orthodontics modern bold trendy premium young",
+   "character": "Bold and trendy: framed like a phone mock-up, a sage (#bccdc1) hero with a big 3D denture render, huge ghosted bold words behind, an italic-mix headline and small pill tags; big display headings with pill-shaped photos and 3D objects inline in the words, a rotating starburst badge, grey service grid with one photo cell, a solid forest-green (#0b5316) statement band with outline pill buttons and a ghosted outline tagline, doctor cards in pale grey rounded tiles, a black footer with a big white wordmark. (Ref 9 Luxe Dental.)",
+   "fonts": "Lexend (500/600) for everything",
+   "cssStarter": ":root{--accent:#0b5316;--sage:#bccdc1;--ink:#111111;--body:#555;--bg:#ffffff;--soft:#f2f2f2;--container:1060px;--gutter:32px;--section-y:100px;--radius:20px}\nbody{font-family:'Lexend',sans-serif;font-size:12px;line-height:1.6;color:var(--body);background:#f6f6f6}\n.page{background:var(--bg);max-width:1100px;margin:0 auto;border:6px solid #111;border-radius:36px;overflow:hidden}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.sage{background:var(--sage)}\n.forest{background:var(--accent);color:#cfe3d2}.forest h2{color:#fff}\n.soft{background:var(--soft)}\nh1,h2{font-weight:600;color:var(--ink);letter-spacing:-.01em;line-height:1.2}\nh1{font-size:44px;color:#fff}h1 em{font-style:italic;font-weight:400;color:#111}\nh2{font-size:48px}\n.inline-pill{display:inline-block;height:.85em;width:2.2em;border-radius:99px;background-size:cover;vertical-align:middle}\n.ghost{font-size:120px;font-weight:700;color:rgba(255,255,255,.18)}\n.btn{display:inline-flex;align-items:center;height:36px;padding:0 22px;border-radius:99px;background:var(--accent);color:#fff;font-size:11px}.btn-outline{background:transparent;border:1px solid rgba(255,255,255,.6)}\n.grid-cell{border:1px solid #eee;background:#fff;display:grid;place-items:center;text-align:center;height:120px}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:32px}h2{font-size:30px}}"
+  },
+  {
+   "id": "otto-pop",
+   "name": "Otto pop colour-block",
+   "fits": "dental clinic family kids teenagers friendly playful modern cosmetic",
+   "character": "Playful colour blocking: a close-up smile photo hero with a big white grotesk headline and a lime rotating badge, a rusty terracotta-brown (#9a4a24) band with a centred headline and lime (#e8ef5a) highlight words, a cream services list with huge brown 'Dental fillings' rows and small photos, a big curved cut into a periwinkle-lilac (#b3a3f5) specialists band with round portraits on coloured circles, a lilac 'Who we help' band with arched photo cards, cream reviews, a lime booking band + footer. (Ref 10 otto.)",
+   "fonts": "Familjen Grotesk or Inter (400/500) for everything",
+   "cssStarter": ":root{--accent:#e8ef5a;--rust:#9a4a24;--lilac:#b3a3f5;--lav:#ead5fb;--cream:#fdf5e4;--ink:#7a3413;--body:#6b5446;--bg:#ffffff;--container:1060px;--gutter:32px;--section-y:100px;--radius:22px}\nbody{font-family:'Familjen Grotesk',sans-serif;font-size:12px;line-height:1.6;color:var(--body);background:#efe4df}\n.page{max-width:1100px;margin:0 auto}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.rust{background:var(--rust);color:#f4dccd}.rust h2{color:#fff}.rust em{font-style:normal;color:var(--accent)}\n.cream{background:var(--cream)}.lilac{background:var(--lilac);color:#fff}.lav{background:var(--lav)}.lime{background:var(--accent)}\nh1,h2,h3{font-weight:400;color:var(--ink);letter-spacing:-.02em;line-height:1.08}\nh1{font-size:64px;color:#fff}\nh2{font-size:56px}\n.row{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #d9c6b4;padding:10px 0}.row b{font-size:38px;font-weight:400;color:var(--ink)}\n.btn{display:inline-flex;align-items:center;height:26px;padding:0 16px;border-radius:99px;background:var(--rust);color:#f6e9c4;font-size:9px}.btn-lime{background:var(--accent);color:var(--ink)}\n.round{border-radius:50%;overflow:hidden}\n.curve{border-radius:0 0 50% 50%/0 0 20% 20%}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:40px}h2{font-size:34px}.row b{font-size:24px}}"
+  },
+  {
+   "id": "physio-forest",
+   "name": "Physio deep forest",
+   "fits": "physiotherapy physio physical therapy rehab sports injury chiropractor pain management clinic",
+   "character": "Calm and athletic: a dark forest-teal (#1d2f2c) page frame with faint organic blobs, a transitional serif headline 'Heal. Strengthen. Thrive.' with mint (#7de89a) full stops, mint square buttons, an off-white body with a giant green serif '12k' stat, a mint wavy ribbon of specialties running across the page, stat tiles with a solid green (#2f7a3f) tile, a dark photo band with one service card, a 5-column why-us strip alternating slate-blue and mint tiles, a near-black testimonial band, a notched 'Ready to start your recovery?' footer tab. (Ref 11 Healers.)",
+   "fonts": "Fraunces (500/600) for headings + Inter (400/500) for text",
+   "cssStarter": ":root{--accent:#7de89a;--green:#2f7a3f;--dark:#1d2f2c;--night:#0f1514;--slate:#6f97a0;--ink:#1d2f2c;--body:#5d6663;--bg:#ecebe6;--container:1080px;--gutter:32px;--section-y:100px;--radius:2px}\nbody{font-family:'Inter',sans-serif;font-size:12px;line-height:1.6;color:var(--body);background:var(--dark)}\n.page{background:var(--bg);max-width:1100px;margin:0 auto}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.dark{background:var(--dark);color:#b9c4c0}.dark h1,.dark h2{color:#fff}\n.night{background:var(--night);color:#9aa4a0}\nh1,h2,h3{font-family:'Fraunces',serif;font-weight:500;color:var(--ink);letter-spacing:-.02em;line-height:1.1}\nh1{font-size:60px}h1 i{font-style:normal;color:var(--accent)}\nh2{font-size:34px;text-align:center}\n.giant{font-family:'Fraunces',serif;font-size:130px;color:var(--green);line-height:1}\n.ribbon{background:var(--accent);color:var(--ink);font-family:'Fraunces',serif;font-size:18px;padding:8px 0;border-radius:99px}\n.btn{display:inline-flex;align-items:center;height:28px;padding:0 14px;background:var(--accent);color:#0f2b1b;font-size:10px;font-weight:500}\n.tile{padding:18px;min-height:120px;color:#10251a}.tile.slate{background:var(--slate)}.tile.mint{background:var(--accent)}.tile.green{background:var(--green);color:#fff}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:40px}h2{font-size:26px}.giant{font-size:80px}}"
+  },
+  {
+   "id": "chiro-green",
+   "name": "Chiro green & yellow",
+   "fits": "chiropractor chiropractic spine back pain neck pain sports injury auto accident wellness physiotherapy family",
+   "character": "Energetic local clinic: a green gradient (#1c6b3f→#3f9a5c) hero with a chiropractor adjusting a patient, a heavy UPPERCASE condensed-ish sans headline, yellow (#ffd400) square buttons with a small black square bullet and monospace uppercase text, green ✓ benefit chips, a stacked-avatar reviews chip; white sections with centred uppercase headings under a tiny '★ label', a masonry of photo cards with green gradient overlays, a grey stats grid, a bordered about card beside a photo, a green 4-step curvy-arrow process, Google review cards, a contact form on grey, a green gallery grid and a green map CTA. (Ref 12 Elevate.)",
+   "fonts": "Archivo (700/800) uppercase for headings + Inter (400/500) for text + JetBrains Mono for button text",
+   "cssStarter": ":root{--accent:#ffd400;--green:#1f7a45;--green-2:#4aa36a;--ink:#133822;--body:#5c6660;--bg:#ffffff;--soft:#eef0ee;--line:#dfe6e1;--container:1100px;--gutter:32px;--section-y:100px;--radius:10px}\nbody{font-family:'Inter',sans-serif;font-size:12px;line-height:1.6;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.green{background:linear-gradient(135deg,#175e36,var(--green-2));color:#d6ebdd}.green h1,.green h2{color:#fff}\n.soft{background:var(--soft)}\nh1,h2,h3{font-family:'Archivo',sans-serif;font-weight:800;text-transform:uppercase;color:var(--ink);line-height:1.08}\nh1{font-size:46px}\nh2{font-size:30px;text-align:center}\nh3{font-size:14px;font-weight:700;text-transform:none}\n.label{font-size:9px;color:var(--ink);text-align:center}.label::before{content:'\\2605 ';color:var(--accent)}\n.btn{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 16px;border-radius:99px;background:var(--accent);color:#111;font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase}.btn::before{content:'';width:6px;height:6px;background:#111}\n.check{display:inline-flex;gap:6px;align-items:center;color:#fff;font-size:11px}.check::before{content:'\\2713';width:14px;height:14px;border-radius:50%;background:#7ed957;color:#133822;display:grid;place-items:center;font-size:9px}\n.card{border-radius:var(--radius);overflow:hidden;position:relative;color:#fff}.card .cap{position:absolute;inset:auto 0 0 0;padding:14px;background:linear-gradient(transparent,rgba(24,94,54,.95))}\n.stat{border:1px solid var(--line);padding:16px}.stat b{display:block;font-size:26px;color:var(--ink)}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:32px}h2{font-size:24px}}"
+  }
+ ],
+ "orders": [
+  [
+   "hero",
+   "stats",
+   "services",
+   "about",
+   "team",
+   "testimonials",
+   "faq",
+   "contact",
+   "footer"
+  ],
+  [
+   "hero",
+   "about",
+   "services",
+   "process",
+   "team",
+   "results",
+   "testimonials",
+   "footer"
+  ],
+  [
+   "hero",
+   "services",
+   "about",
+   "why",
+   "team",
+   "testimonials",
+   "faq",
+   "cta",
+   "footer"
+  ],
+  [
+   "hero",
+   "about",
+   "why",
+   "services",
+   "results",
+   "team",
+   "contact",
+   "footer"
+  ],
+  [
+   "hero",
+   "stats",
+   "about",
+   "services",
+   "process",
+   "testimonials",
+   "blog",
+   "cta",
+   "footer"
+  ],
+  [
+   "hero",
+   "services",
+   "team",
+   "why",
+   "testimonials",
+   "faq",
+   "contact",
+   "footer"
+  ]
+ ],
+ "sections": [
+  {
+   "id": "hero-dentiva-mint",
+   "role": "hero",
+   "from": "1 Dentiva (mint)",
+   "crop": {
+    "src": "1.webp",
+    "y": 0,
+    "h": 950
+   },
+   "spec": "Light grey. Header: mint tooth logo + wordmark, a dark pill nav with a mint 'Book appointment' pill inside. LEFT a 3-line 52px bold headline with a tiny smile/lips image at the end, 2 lines, a mint 'Book appointment' pill with a white arrow chip + 'Learn more →', 'Trusted by 20K+ patients' with avatars and stars. RIGHT a rounded photo of a dentist treating a patient (green-lit) with tiny pill tags, slide dots and a glass caption card."
+  },
+  {
+   "id": "hero-dentcore",
+   "role": "hero",
+   "from": "2 Dentcore",
+   "crop": {
+    "src": "2.webp",
+    "x": 40,
+    "y": 0,
+    "w": 1360,
+    "h": 900
+   },
+   "spec": "A full-bleed close-up photo of a smiling woman being treated (blue gloves). Tiny header (wordmark, 2 small link columns, address, a black 'Log in' pill). A split headline across the photo in 48px light type: 'Beautifully smiles' left and 'Dental treatment' right, each with one italic word; a small white 'Get started' pill and 3 lines centred below."
+  },
+  {
+   "id": "hero-smilecraft",
+   "role": "hero",
+   "from": "3 SmileCraft",
+   "crop": {
+    "src": "3.webp",
+    "x": 40,
+    "y": 0,
+    "w": 1360,
+    "h": 1000
+   },
+   "spec": "In a browser frame: a lime top bar (call centre, working hours, social). Header: logo, nav, cart icon, navy 'Book appointment →' pill. A cream collage hero: a 2-line 52px navy headline with a photo (dentist with smiling patient) tucked in the second line, a small rating card top-right (4.9 ★, 300+ satisfied clients), a 3-line intro + avatar row bottom-left, 'View our services' pill, a 2-line 'We Care About Your Peace' and a small doctor video card bottom-right."
+  },
+  {
+   "id": "hero-denty",
+   "role": "hero",
+   "from": "4 Denty",
+   "crop": {
+    "src": "4.webp",
+    "y": 0,
+    "h": 870
+   },
+   "spec": "White header (logo, small nav, search/bell/avatar icons). LEFT a pale sky-blue rounded card: a tiny '★ 5.0 (4824 reviews)' pill, a 2-line 40px light teal headline, 2 lines, a teal + outline button pair, and 2 small colour tiles (terracotta '24/7 service available', lilac 'Find the best doctors') with cut-out doctors and round arrows. RIGHT a tall rounded photo of a dentist treating a patient with 3 white stat chips (200+ · 400+ · 98%) along the bottom."
+  },
+  {
+   "id": "hero-dentova",
+   "role": "hero",
+   "from": "5 Dentova",
+   "crop": {
+    "src": "5.webp",
+    "y": 0,
+    "h": 900
+   },
+   "spec": "A pale lime sky with a giant glossy 3D tooth standing on a grassy hill. Header: logo, a white pill nav, a yellow 'Book appointment' pill + round icon. A huge light UPPERCASE 80px headline across the top ('BRIGHT TEETH SHINE') with tiny labels at both ends; LEFT an avatar row '45K+ happy patients', 3 lines, a black 'Call us now' pill + round phone icon; RIGHT a small white product card (transparent aligner) with a yellow arrow."
+  },
+  {
+   "id": "hero-oralin",
+   "role": "hero",
+   "from": "6 Oralin",
+   "crop": {
+    "src": "6.webp",
+    "x": 40,
+    "y": 0,
+    "w": 1320,
+    "h": 870
+   },
+   "spec": "A light-blue gradient frame. A rounded photo of a smiling woman in the dental chair with a floating pill nav (logo, links, a dark 'Contact us' pill with a round arrow). LEFT a 3-line 44px headline: 'Redefining' (with a tiny inline photo pill) / 'the Dental Care' / 'Experience' with the last words in olive italic serif; 2 lines; white + dark pill buttons; an avatar row '2.5K+ happy patients'."
+  },
+  {
+   "id": "hero-odontic",
+   "role": "hero",
+   "from": "7 Odontic",
+   "crop": {
+    "src": "7.webp",
+    "y": 0,
+    "h": 1000
+   },
+   "spec": "A navy top bar (address, hours). White header: blue tooth logo, nav, a phone number with a round blue icon, a blue 'Book consultation' pill. A deep navy hero: LEFT a collage of arch/pill-shaped photos (patient with a mirror, dentist with a child, dentist at work) with plain blue circles; RIGHT a 3-line 64px heavy white headline, 3 lines, a blue pill and '★★★★★ (4.8) 30K+ ratings on Google'."
+  },
+  {
+   "id": "hero-dentiva-orange",
+   "role": "hero",
+   "from": "8 Dentiva (orange)",
+   "crop": {
+    "src": "8.webp",
+    "y": 0,
+    "h": 1000
+   },
+   "spec": "On a brown frame, a rounded dark photo card: a woman in the chair being treated with warm light. Header inside: white logo, small nav, an orange 'Get started' pill with a round arrow. A tiny pill label and a 2-line 48px serif headline with 'Dental Solutions,' in orange italic; bottom-right 3 lines and an orange 'Book an appointment' pill."
+  },
+  {
+   "id": "hero-luxe",
+   "role": "hero",
+   "from": "9 Luxe Dental",
+   "crop": {
+    "src": "9.webp",
+    "y": 0,
+    "h": 1100
+   },
+   "spec": "A phone-mockup frame with a notch. A sage hero: small wordmark, a row of white pill links, an icon and a forest 'Book now' pill; huge ghosted bold words behind ('DENTAL HAPPIER BLISS'); a big 3D denture render on the right with a forest starburst badge; a 2-line headline 'Graceful Glow Dental' (italic + bold) on the left; two white pill tags at the bottom-left and a 3-line note bottom-right."
+  },
+  {
+   "id": "hero-otto",
+   "role": "hero",
+   "from": "10 otto",
+   "crop": {
+    "src": "10.webp",
+    "y": 0,
+    "h": 1350
+   },
+   "spec": "A close-up photo of a bright smile (fingertip on the lip): a white lowercase wordmark top-left, a hamburger and tiny uppercase nav top-right, a 2-line 60px white headline 'Gentle Dental Care' bottom-left, a lime rotating circular badge and 3 small lines on the right. Directly below, a rust-brown band with a centred 3-line 36px headline where 'Dental Care' is lime and a ✳ glyph, 3 lines and 'Book appointment (480) 555-0103' underlined."
+  },
+  {
+   "id": "hero-healers",
+   "role": "hero",
+   "from": "11 Healers",
+   "crop": {
+    "src": "11.webp",
+    "y": 0,
+    "h": 830
+   },
+   "spec": "A dark forest page frame with faint organic blob shapes. Header: small leaf logo + name, nav, a mint 'Book appointment' button. LEFT a 3-line 56px white serif headline 'Heal. Strengthen. Thrive.' with mint full stops, 2 lines and a mint 'Schedule your consultation' button. RIGHT a square framed photo of a physiotherapist training an older man on a gym ball."
+  },
+  {
+   "id": "hero-elevate",
+   "role": "hero",
+   "from": "12 Elevate",
+   "crop": {
+    "src": "12.webp",
+    "y": 0,
+    "h": 920
+   },
+   "spec": "A green gradient hero with a faint white spine/swoosh graphic. Header: white logo, a dark translucent pill nav, a yellow 'Book appointment' pill. LEFT a tiny '★ Helping you move better' label, a 3-line 44px heavy UPPERCASE white headline, 2 lines, 4 green ✓ benefit chips in 2 columns, a yellow 'Schedule an appointment' button, and a stacked avatar + '1K+ verified reviews' chip. RIGHT a chiropractor adjusting a smiling patient's neck on a treatment table (cut-out)."
+  },
+  {
+   "id": "stats-dentiva-mint",
+   "role": "stats",
+   "from": "1 Dentiva (mint)",
+   "crop": {
+    "src": "1.webp",
+    "y": 880,
+    "h": 360
+   },
+   "spec": "A dark forest rounded card: LEFT a mint tile ('#1 Patient choice' + 2 lines); RIGHT 3 large white stats (25K+ · 15K+ · 20Y+) with 3-line grey labels."
+  },
+  {
+   "id": "stats-oralin",
+   "role": "stats",
+   "from": "6 Oralin",
+   "crop": {
+    "src": "6.webp",
+    "x": 40,
+    "y": 870,
+    "w": 1320,
+    "h": 700
+   },
+   "spec": "White. A tiny '• Who are we' label left; a 5-line 24px statement right and a small dark 'About Oralin' pill. A row of 4 big 40px stats (12+ · 95% · 2.5K · 24/7) with tiny uppercase labels."
+  },
+  {
+   "id": "stats-dentiva-orange",
+   "role": "stats",
+   "from": "8 Dentiva (orange)",
+   "crop": {
+    "src": "8.webp",
+    "y": 1000,
+    "h": 780
+   },
+   "spec": "Blush-peach. A tiny numbered label row. A 5-line 20px statement on the right half whose last line fades, an orange pill 'About <clinic>'. A row of 4 bold stats ($14B+ · 68+ · 55+ · 140+) with 2-line labels."
+  },
+  {
+   "id": "stats-healers",
+   "role": "stats",
+   "from": "11 Healers",
+   "crop": {
+    "src": "11.webp",
+    "y": 830,
+    "h": 1250
+   },
+   "spec": "Off-white. LEFT a giant green serif '12k' + small label; RIGHT a 3-line 36px serif heading, 2 lines and a tiny link. A mint wavy ribbon of specialties (Pain management · Sports rehabilitation · Post-surgery recovery · Geriatric physiotherapy) snakes across the width. Then a centred 2-line serif heading and a row: 2 small grey stat tiles, a wide photo of a physio helping a patient walk, and a solid green 'Proven recovery plans' tile."
+  },
+  {
+   "id": "stats-elevate",
+   "role": "stats",
+   "from": "12 Elevate",
+   "crop": {
+    "src": "12.webp",
+    "y": 2120,
+    "h": 520
+   },
+   "spec": "Light grey band. LEFT a tiny '★ Facts' label, a 2-line uppercase heading and a yellow 'Get started' button. RIGHT a 2×2 grid of thin-bordered stat cells (10+ · 5K+ · 98% · 15K+) with small labels."
+  },
+  {
+   "id": "about-dentcore",
+   "role": "about",
+   "from": "2 Dentcore",
+   "crop": {
+    "src": "2.webp",
+    "x": 40,
+    "y": 2580,
+    "w": 1360,
+    "h": 900
+   },
+   "spec": "White. LEFT a tiny label, a 3-line 30px heading, 5 small grey lines and a black pill; RIGHT a tall photo of 3 smiling doctors in coats (flush right). Under the text, 2 small photos (dentist with patient, a treatment room)."
+  },
+  {
+   "id": "about-dentcore-intro",
+   "role": "about",
+   "from": "2 Dentcore",
+   "crop": {
+    "src": "2.webp",
+    "x": 40,
+    "y": 900,
+    "w": 1360,
+    "h": 900
+   },
+   "spec": "White with lots of space. A floating 3D tooth render in a pale rounded card with a tiny '100% tooth health' tag, a tiny caption and a centred 3-line 20px statement."
+  },
+  {
+   "id": "about-smilecraft",
+   "role": "about",
+   "from": "3 SmileCraft",
+   "crop": {
+    "src": "3.webp",
+    "x": 40,
+    "y": 1000,
+    "w": 1360,
+    "h": 780
+   },
+   "spec": "Cream. A tiny '✦ About us' label, a 2-line 32px navy heading left; 3 lines + a navy 'About us' pill + '653+ positive reviews' avatar chip right. 3 rounded photo cards with a navy gradient caption and a white round + button."
+  },
+  {
+   "id": "about-denty",
+   "role": "about",
+   "from": "4 Denty",
+   "crop": {
+    "src": "4.webp",
+    "y": 1480,
+    "h": 750
+   },
+   "spec": "A pale grey rounded panel: LEFT a 2-line 36px light teal heading, 4 lines and 5 teal-check bullets; RIGHT a masonry of tall rounded clinic photos in 4 staggered columns cut off at the top and bottom."
+  },
+  {
+   "id": "about-dentova",
+   "role": "about",
+   "from": "5 Dentova",
+   "crop": {
+    "src": "5.webp",
+    "y": 1000,
+    "h": 1050
+   },
+   "spec": "White. A tiny pill label left and a 2-line 30px heading right. LEFT a rounded close-up of a smiling patient with a mirror; RIGHT 3 lines, a black 'About our practice' pill + round arrow, a rule and 'Our mission' / 'Our vision' with small yellow icon squares. Below, a row of partner logos in faint circles with one filled bright yellow."
+  },
+  {
+   "id": "about-odontic",
+   "role": "about",
+   "from": "7 Odontic",
+   "crop": {
+    "src": "7.webp",
+    "y": 1000,
+    "h": 1100
+   },
+   "spec": "White. A 2-line 40px heavy navy heading left, 3 small lines right. LEFT an arch-topped photo of a patient choosing a tooth shade; RIGHT 3 features stacked, each a blue line icon, a bold title and 2 lines."
+  },
+  {
+   "id": "about-elevate",
+   "role": "about",
+   "from": "12 Elevate",
+   "crop": {
+    "src": "12.webp",
+    "y": 2650,
+    "h": 780
+   },
+   "spec": "White. LEFT a thin green-bordered card: a tiny '★' label, a 2-line uppercase heading, 5 lines, 5 green shield-check bullets and a yellow 'Learn more about us' button; RIGHT a photo of a therapist stretching a patient on a mat overlapping the card's top-right."
+  },
+  {
+   "id": "about-luxe",
+   "role": "about",
+   "from": "9 Luxe Dental",
+   "crop": {
+    "src": "9.webp",
+    "y": 1100,
+    "h": 900
+   },
+   "spec": "White with a faint oval line. A 3-line 44px display heading with images inline ('Nurturing Your [smile pill] / [braces 3D] with Precision ✦ / and Care') and a forest pill 'Book your appointment online' at the end of the last line. Under it 'Exclusive offers' + 'Ask our experts →' and 3 small grey numbered tiles with '+' (the first outlined)."
+  },
+  {
+   "id": "services-dentiva-mint",
+   "role": "services",
+   "from": "1 Dentiva (mint)",
+   "crop": {
+    "src": "1.webp",
+    "y": 1280,
+    "h": 920
+   },
+   "spec": "A dark forest band. A centred 36px white heading with 'Services' in mint, 2 lines. A 3×2 grid of white rounded cards: a '+' icon top-left, a small number top-right, a 17px title and 2 lines."
+  },
+  {
+   "id": "services-dentcore-list",
+   "role": "services",
+   "from": "2 Dentcore",
+   "crop": {
+    "src": "2.webp",
+    "x": 40,
+    "y": 1830,
+    "w": 1360,
+    "h": 760
+   },
+   "spec": "A vivid royal-blue band. LEFT a tiny label, a 2-line 26px white heading, 2 lines and a white pill. RIGHT a tall list of treatments in 40px light type fading out at top and bottom, the active one white and underlined."
+  },
+  {
+   "id": "services-smilecraft",
+   "role": "services",
+   "from": "3 SmileCraft",
+   "crop": {
+    "src": "3.webp",
+    "x": 40,
+    "y": 2690,
+    "w": 1360,
+    "h": 790
+   },
+   "spec": "White. A tiny label, a 2-line 32px navy heading left, 3 lines right. LEFT a photo of a surgery in progress; MIDDLE a navy 'Explore our services' pill and a lime gradient card with an avatar row and a 4-line note; RIGHT a numbered ruled list of 7 treatments (the 5th with an arrow)."
+  },
+  {
+   "id": "services-denty",
+   "role": "services",
+   "from": "4 Denty",
+   "crop": {
+    "src": "4.webp",
+    "y": 2250,
+    "h": 780
+   },
+   "spec": "White. A centred 2-line 34px light heading, 2 lines. 3 cards: 2 pale grey cards (title, 3 lines, a rounded photo with a teal arrow) and a pink-lilac card 'More services for your perfect smile' with a smile close-up and a dark pill."
+  },
+  {
+   "id": "services-denty-features",
+   "role": "services",
+   "from": "4 Denty",
+   "crop": {
+    "src": "4.webp",
+    "y": 870,
+    "h": 600
+   },
+   "spec": "White. LEFT a 2-line 36px 'Features & Services' and 4 pale rows with a small '>' (Expert care, Advanced technology, Affordable plans…). RIGHT a rounded grey card: a video-call mock-up of a doctor with red/grey call buttons, a 2-line 36px 'Online Consultation' and 3 rows with round arrow icons."
+  },
+  {
+   "id": "services-dentova",
+   "role": "services",
+   "from": "5 Dentova",
+   "crop": {
+    "src": "5.webp",
+    "y": 2050,
+    "h": 900
+   },
+   "spec": "White. A tiny pill label, a 30px 'Complete Care For Every Smile' and dark/yellow round ‹ › buttons. A full-width row of 4 pastel cards (pale blue, butter, lilac, mint): a line icon, a small number, an uppercase title and 3 bullet lines."
+  },
+  {
+   "id": "services-oralin",
+   "role": "services",
+   "from": "6 Oralin",
+   "crop": {
+    "src": "6.webp",
+    "x": 40,
+    "y": 1580,
+    "w": 1320,
+    "h": 2140
+   },
+   "spec": "A deep teal rounded block. A tiny pill label, a 2-line heading 'Explore the full range of / Dental Treatment' (second line olive italic serif), a white 'Explore all services' pill. A vertical stack of 4 teal cards: a rounded photo on the left, a small tooth icon, a white title, 2 lines, 4 check bullets and a white 'Book now' pill."
+  },
+  {
+   "id": "services-odontic",
+   "role": "services",
+   "from": "7 Odontic",
+   "crop": {
+    "src": "7.webp",
+    "y": 2150,
+    "h": 880
+   },
+   "spec": "White. A centred 2-line 40px heavy heading, 2 lines. 3 bordered cards: a round blue icon, a bold title and 4 lines; the middle card is filled azure with white text."
+  },
+  {
+   "id": "services-dentiva-orange",
+   "role": "services",
+   "from": "8 Dentiva (orange)",
+   "crop": {
+    "src": "8.webp",
+    "y": 1800,
+    "h": 1480
+   },
+   "spec": "White. A small numbered label row, a 2-line 36px serif heading with 'dentiva care' orange italic, an orange 'More services' pill. A checkerboard of peach cards (orange icon, title, 3 lines) with blank cells between them; one card is solid orange with white text."
+  },
+  {
+   "id": "services-luxe",
+   "role": "services",
+   "from": "9 Luxe Dental",
+   "crop": {
+    "src": "9.webp",
+    "y": 2000,
+    "h": 1100
+   },
+   "spec": "Light grey. A 2-line 44px 'Our Exceptional Services' with 2 small square arrow buttons. A 3×2 grid of white cells with a centred 2-line service name, one cell a smile close-up with a play icon; a pink rotating starburst badge on the top-right corner."
+  },
+  {
+   "id": "services-otto",
+   "role": "services",
+   "from": "10 otto",
+   "crop": {
+    "src": "10.webp",
+    "y": 1350,
+    "h": 1300
+   },
+   "spec": "Cream. A huge 56px rust heading 'Our Services ✳' running off the right edge. Rows separated by thin rules: the first open with a 40px title, 5 lines and a rounded photo; the rest a 36px rust title with a small photo on the right. A lime circle '+ See all' at the bottom, then the cream curves down into a lilac band."
+  },
+  {
+   "id": "services-healers",
+   "role": "services",
+   "from": "11 Healers",
+   "crop": {
+    "src": "11.webp",
+    "y": 2180,
+    "h": 820
+   },
+   "spec": "A dark photo band (athlete stretching, heavy overlay). A tiny mint label, a centred 2-line white serif heading, and a single light card: a title, 3 lines, 'View details >' and a photo of a shoulder with a glowing red pain spot."
+  },
+  {
+   "id": "services-elevate",
+   "role": "services",
+   "from": "12 Elevate",
+   "crop": {
+    "src": "12.webp",
+    "y": 960,
+    "h": 1120
+   },
+   "spec": "White. A tiny '★ Chiropractic services' label and a centred 2-line uppercase heading. A 3-column masonry of photo cards with green gradient overlays: a tall adjustment photo, a green wellness card with an icon, an auto-injury card, back-pain and sports-injury photo cards; each with a white title, 2 lines and 'Read more ↗'. A yellow 'View more services' pill."
+  },
+  {
+   "id": "process-smilecraft",
+   "role": "process",
+   "from": "3 SmileCraft",
+   "crop": {
+    "src": "3.webp",
+    "x": 40,
+    "y": 1880,
+    "w": 1360,
+    "h": 780
+   },
+   "spec": "Cream. A tiny label and a centred 2-line 30px navy heading. A carousel of 3 cards running off the right: a photo with a big 'Step 02' overlay and a caption, then 3 lines under it on grey."
+  },
+  {
+   "id": "process-dentova",
+   "role": "process",
+   "from": "5 Dentova",
+   "crop": {
+    "src": "5.webp",
+    "y": 2900,
+    "h": 850
+   },
+   "spec": "A butter-yellow gradient band. A tiny label + centred 30px 'Your Dental Care Journey'. A white card with a yellow step number on a dotted line, a 22px title, 2 lines and a segmented progress bar; beside it a photo of a dentist treating a patient inside a blurred frame."
+  },
+  {
+   "id": "process-elevate",
+   "role": "process",
+   "from": "12 Elevate",
+   "crop": {
+    "src": "12.webp",
+    "y": 3470,
+    "h": 800
+   },
+   "spec": "A green gradient band. A tiny label and a centred 2-line white uppercase heading. 4 steps in a zig-zag: white circles with a line icon and a yellow number chip, a bold white title and 3 lines, joined by yellow curly arrows."
+  },
+  {
+   "id": "process-dentcore",
+   "role": "process",
+   "from": "2 Dentcore",
+   "crop": {
+    "src": "2.webp",
+    "x": 40,
+    "y": 4620,
+    "w": 1360,
+    "h": 900
+   },
+   "spec": "A full-bleed photo of a nurse with a clipboard: a 3-line 30px white heading 'How we guide you through every step of your dental care journey' top-left, and a frosted glass card (tooth icon, 'Initial consultation', 3 lines) bottom-right."
+  },
+  {
+   "id": "why-dentova",
+   "role": "why",
+   "from": "5 Dentova",
+   "crop": {
+    "src": "5.webp",
+    "y": 3800,
+    "h": 850
+   },
+   "spec": "White. A tiny label + centred 30px 'What's Make Us Different?'. A bento: a pale blue 'Dental care' card with a dentist cut-out and a round badge, a lilac 'Patients type' card with a slider stat, a tall butter 'Digital technology' card with a 3D chair, a mint 'Smile scan' card with a 3D scanner, a pale 'Find best dentist' card with round avatars. A huge pale outlined 'MEET WITH OUR DENTIST' under it."
+  },
+  {
+   "id": "why-odontic-video",
+   "role": "why",
+   "from": "7 Odontic",
+   "crop": {
+    "src": "7.webp",
+    "y": 3050,
+    "h": 1270
+   },
+   "spec": "A navy band. A 2-line 40px white heading left, 3 lines right. A wide rounded video still of a patient with protective glasses being treated, a white play button; 4 blue-check benefits in a row and a blue pill under it."
+  },
+  {
+   "id": "why-healers",
+   "role": "why",
+   "from": "11 Healers",
+   "crop": {
+    "src": "11.webp",
+    "y": 3040,
+    "h": 650
+   },
+   "spec": "Off-white. A 2-line 36px serif heading left. A row of 5 square tiles alternating slate-blue and mint (a line icon + a 2-line label), one tile a photo of a physio treating a knee."
+  },
+  {
+   "id": "why-elevate",
+   "role": "why",
+   "from": "12 Elevate",
+   "crop": {
+    "src": "12.webp",
+    "y": 4270,
+    "h": 1270
+   },
+   "spec": "White. A tiny label, a centred 2-line uppercase heading. LEFT a tall rounded photo of a physio with a patient's shoulder; RIGHT a green-bordered card with 4 feature rows: the first a solid green box (white title + 2 lines), the others pale grey boxes with a dark title."
+  },
+  {
+   "id": "team-dentiva-mint",
+   "role": "team",
+   "from": "1 Dentiva (mint)",
+   "crop": {
+    "src": "1.webp",
+    "y": 2200,
+    "h": 780
+   },
+   "spec": "Light grey. A centred 36px heading with 'Team' in mint, 2 lines. A tiny pill label + 2 lines left and mint ← → circles right. A row of mint cards with a cut-out dentist, name and role; the 4th card is raised and larger with a speciality tag and a 2-line caption."
+  },
+  {
+   "id": "team-dentcore",
+   "role": "team",
+   "from": "2 Dentcore",
+   "crop": {
+    "src": "2.webp",
+    "x": 40,
+    "y": 3500,
+    "w": 1360,
+    "h": 1130
+   },
+   "spec": "White. A tiny label, a 2-line 30px heading left and 4 grey lines right. A split card: a tall photo of a smiling doctor writing on a clipboard left; name + credential, speciality and 3 lines + 'Consult now' right; ‹ › and a 01/04 counter below."
+  },
+  {
+   "id": "team-smilecraft",
+   "role": "team",
+   "from": "3 SmileCraft",
+   "crop": {
+    "src": "3.webp",
+    "x": 40,
+    "y": 3500,
+    "w": 1360,
+    "h": 760
+   },
+   "spec": "Cream. A tiny label, a 2-line 32px navy heading, a navy 'All team members' pill. A row of 4 tall cards: 3 lime cards with the name, role and 3 lines at the bottom, and one card a cut-out doctor on white with a navy gradient caption."
+  },
+  {
+   "id": "team-denty",
+   "role": "team",
+   "from": "4 Denty",
+   "crop": {
+    "src": "4.webp",
+    "y": 3000,
+    "h": 700
+   },
+   "spec": "A pale sky-blue band. A centred 34px light heading 'Meet Our Experts Doctors' + a small line. A carousel of doctor portraits on sky blue with a white name bar and a '+' button; a 'Drag' chip between cards; the active card has a teal '+'."
+  },
+  {
+   "id": "team-dentova",
+   "role": "team",
+   "from": "5 Dentova",
+   "crop": {
+    "src": "5.webp",
+    "y": 4650,
+    "h": 1500
+   },
+   "spec": "White. A huge pale outlined heading 'MEET WITH OUR DENTIST'. A staggered honeycomb-like grid of 4 portrait cards (name, role), the top one with a vertical strip of round social icons."
+  },
+  {
+   "id": "team-oralin",
+   "role": "team",
+   "from": "6 Oralin",
+   "crop": {
+    "src": "6.webp",
+    "x": 40,
+    "y": 5200,
+    "w": 1320,
+    "h": 820
+   },
+   "spec": "White. A tiny pill label and a centred 30px heading with 'Excellence' in olive italic serif. A carousel of doctor portraits on pale grey with the name and role in white over a dark gradient."
+  },
+  {
+   "id": "team-otto",
+   "role": "team",
+   "from": "10 otto",
+   "crop": {
+    "src": "10.webp",
+    "y": 2650,
+    "h": 620
+   },
+   "spec": "A periwinkle-lilac band. A 36px white 'Our Specialist' and ‹ › (the › lime). A row of round portraits on peach, lilac, yellow and blue circles with the name and role in white below."
+  },
+  {
+   "id": "team-luxe",
+   "role": "team",
+   "from": "9 Luxe Dental",
+   "crop": {
+    "src": "9.webp",
+    "y": 3880,
+    "h": 1000
+   },
+   "spec": "Light grey. A centred 2-line 40px heading. 3 doctors cut out on pale rounded tiles with name and speciality below, and a forest starburst 'Free consultation' badge on one."
+  },
+  {
+   "id": "team-odontic",
+   "role": "team",
+   "from": "7 Odontic",
+   "crop": {
+    "src": "7.webp",
+    "y": 4380,
+    "h": 800
+   },
+   "spec": "White. A centred 2-line 40px heavy heading, 2 lines. 3 doctor cards on pale blue with a star rating, a bold name, a credential line and an underlined 'View profile'."
+  },
+  {
+   "id": "results-oralin",
+   "role": "results",
+   "from": "6 Oralin",
+   "crop": {
+    "src": "6.webp",
+    "x": 40,
+    "y": 4380,
+    "w": 1320,
+    "h": 780
+   },
+   "spec": "White. A tiny pill label and a centred 2-line heading with 'Your Every Tooth' olive italic. 3 cards each with a 'Before' and an 'After' smile close-up stacked, small tags and a caption strip. Real consented cases only."
+  },
+  {
+   "id": "results-dentova",
+   "role": "results",
+   "from": "5 Dentova",
+   "crop": {
+    "src": "5.webp",
+    "y": 6250,
+    "h": 1200
+   },
+   "spec": "A pale blue-to-meadow band. A tiny label + centred 30px heading. 3 white cards: two stacked smile photos (before, after), stars, a 4-line quote and an avatar + name; round ‹ › buttons; a green grassy hill with daisies along the bottom."
+  },
+  {
+   "id": "results-dentiva-orange",
+   "role": "results",
+   "from": "8 Dentiva (orange)",
+   "crop": {
+    "src": "8.webp",
+    "y": 3280,
+    "h": 1150
+   },
+   "spec": "White. A small label row and a centred serif 'Before & After Gallery' ('Gallery' orange italic). 3 features with orange icons, bold titles and 3 lines, then a wide rounded photo of a patient being treated."
+  },
+  {
+   "id": "testimonials-dentcore",
+   "role": "testimonials",
+   "from": "2 Dentcore",
+   "crop": {
+    "src": "2.webp",
+    "x": 40,
+    "y": 5360,
+    "w": 1360,
+    "h": 1340
+   },
+   "spec": "White. A tiny label, a 2-line 26px heading left and a big '01/04' counter right. A wide split card: a name + a 4-line 18px quote + 2 small tags on the left, a photo of a smiling patient in the chair on the right; small ‹ › under it."
+  },
+  {
+   "id": "testimonials-smilecraft",
+   "role": "testimonials",
+   "from": "3 SmileCraft",
+   "crop": {
+    "src": "3.webp",
+    "x": 40,
+    "y": 4400,
+    "w": 1360,
+    "h": 1060
+   },
+   "spec": "Cream. A tiny label + centred 30px 'Satisfied Patients Feedback'. A masonry of grey quote cards (avatar, name, role, quote mark, 4 lines) mixed with portrait photo cards that carry a quote over a navy gradient."
+  },
+  {
+   "id": "testimonials-denty",
+   "role": "testimonials",
+   "from": "4 Denty",
+   "crop": {
+    "src": "4.webp",
+    "y": 3700,
+    "h": 780
+   },
+   "spec": "White. A 2-line 34px light heading left, 3 lines right, a rule. 3 quote columns: a 5-line teal quote, a rule, a small avatar + name + role and a teal quote glyph; round ‹ › (› filled teal)."
+  },
+  {
+   "id": "testimonials-oralin",
+   "role": "testimonials",
+   "from": "6 Oralin",
+   "crop": {
+    "src": "6.webp",
+    "x": 40,
+    "y": 6000,
+    "w": 1320,
+    "h": 820
+   },
+   "spec": "Light grey band. A tiny pill label and a 2-line heading ('…Are Saying' olive italic) left, stars + '4.9 (3,208 reviews)' + an avatar row right. A row of white quote cards with a pale quote glyph, 5 lines, a round avatar + name + role, cut off at the right."
+  },
+  {
+   "id": "testimonials-odontic",
+   "role": "testimonials",
+   "from": "7 Odontic",
+   "crop": {
+    "src": "7.webp",
+    "y": 5200,
+    "h": 800
+   },
+   "spec": "A navy band. A 40px white 'What client say', small dots and round ← → (→ filled blue). 3 white cards: a quote mark, 4 lines, gold stars + score, an avatar + name + role."
+  },
+  {
+   "id": "testimonials-otto",
+   "role": "testimonials",
+   "from": "10 otto",
+   "crop": {
+    "src": "10.webp",
+    "y": 4760,
+    "h": 560
+   },
+   "spec": "Cream. A 36px rust '1800+ Reviews' left, ‹ › circles right. 3 white rounded cards: a small coloured category tag, a 3-line bold rust title, 4 lines of serif body, name + stars."
+  },
+  {
+   "id": "testimonials-healers",
+   "role": "testimonials",
+   "from": "11 Healers",
+   "crop": {
+    "src": "11.webp",
+    "y": 3690,
+    "h": 690
+   },
+   "spec": "A near-black band. A tiny mint label + centred 30px white serif heading. 3 dark cards: a round avatar, name + role, a big mint quote glyph and 3 grey lines; slider dots with the active one mint."
+  },
+  {
+   "id": "testimonials-elevate",
+   "role": "testimonials",
+   "from": "12 Elevate",
+   "crop": {
+    "src": "12.webp",
+    "x": 0,
+    "y": 5460,
+    "w": 1440,
+    "h": 760
+   },
+   "spec": "Light grey. A tiny label + 2-line uppercase 'What our patients are saying' left, a white '★★★★★ 5.0 Excellent — based on 45+ reviews' card right. 3 white Google-review cards with a green left accent: G logo + stars, 5 lines, a round initial avatar + name. ← → and a yellow 'Read more reviews' pill."
+  },
+  {
+   "id": "faq-dentiva-mint",
+   "role": "faq",
+   "from": "1 Dentiva (mint)",
+   "crop": {
+    "src": "1.webp",
+    "y": 2990,
+    "h": 600
+   },
+   "spec": "Light grey. A centred 36px heading with 'Questions' in mint, 2 lines. A 2-column grid of white pill-shaped question rows each ending in a mint circle with ↗."
+  },
+  {
+   "id": "faq-dentcore",
+   "role": "faq",
+   "from": "2 Dentcore",
+   "crop": {
+    "src": "2.webp",
+    "x": 40,
+    "y": 8480,
+    "w": 1360,
+    "h": 560
+   },
+   "spec": "A deep navy-to-blue gradient band. A 2-line 26px white 'Frequently Ask Question' left; a ruled accordion of white questions with '+' right."
+  },
+  {
+   "id": "faq-oralin",
+   "role": "faq",
+   "from": "6 Oralin",
+   "crop": {
+    "src": "6.webp",
+    "x": 40,
+    "y": 7580,
+    "w": 1320,
+    "h": 900
+   },
+   "spec": "White. A centred 30px heading with 'Our Questions' olive italic, one line, a small pill tab switch (General · Customer service · Appointment). A narrow accordion of numbered pale question rows with chevrons."
+  },
+  {
+   "id": "faq-dentiva-orange",
+   "role": "faq",
+   "from": "8 Dentiva (orange)",
+   "crop": {
+    "src": "8.webp",
+    "y": 5150,
+    "h": 1000
+   },
+   "spec": "A blush-peach rounded panel. A small label row, a 2-line 36px serif heading with the second line orange italic, an orange 'View more' pill. An accordion: the first row solid orange with the answer in white, the rest plain rows with 'Q:' prefixes and small peach '+' circles."
+  },
+  {
+   "id": "blog-smilecraft",
+   "role": "blog",
+   "from": "3 SmileCraft",
+   "crop": {
+    "src": "3.webp",
+    "x": 40,
+    "y": 5460,
+    "w": 1360,
+    "h": 520
+   },
+   "spec": "Cream. A tiny label, a 2-line 30px navy heading, a navy 'Explore all insights' pill. 2 wide cards: a photo on the left, a date, a 3-line title, 4 lines and 'Read more →' on grey."
+  },
+  {
+   "id": "blog-oralin",
+   "role": "blog",
+   "from": "6 Oralin",
+   "crop": {
+    "src": "6.webp",
+    "x": 40,
+    "y": 8480,
+    "w": 1320,
+    "h": 760
+   },
+   "spec": "White. A tiny pill label, a 2-line heading (second line olive italic), a dark 'Read more post' pill. 3 photo cards with a category + date and a 2-line title."
+  },
+  {
+   "id": "blog-dentiva-orange",
+   "role": "blog",
+   "from": "8 Dentiva (orange)",
+   "crop": {
+    "src": "8.webp",
+    "y": 6250,
+    "h": 1200
+   },
+   "spec": "White. A small label row, a 2-line 36px serif heading (second line orange italic), an orange 'See more' pill. A mosaic of photos and small cards: orange cards (number + treatment + 2 lines) and peach cards alternating with photos."
+  },
+  {
+   "id": "blog-elevate",
+   "role": "blog",
+   "from": "12 Elevate",
+   "crop": {
+    "src": "12.webp",
+    "y": 8230,
+    "h": 800
+   },
+   "spec": "White. A tiny label + centred 2-line uppercase heading. 3 cards: a rounded photo, author + date line, a bold 2-line title, 2 lines and 'Read more ↗'."
+  },
+  {
+   "id": "cta-denty",
+   "role": "cta",
+   "from": "4 Denty",
+   "crop": {
+    "src": "4.webp",
+    "y": 4480,
+    "h": 560
+   },
+   "spec": "A pale sky-blue rounded panel with faint white tooth outlines: a centred 36px light 'Get In Touch With Us', 3 overlapping round doctor photos, '120k+ satisfied patients' and a teal + outline pill pair."
+  },
+  {
+   "id": "cta-odontic",
+   "role": "cta",
+   "from": "7 Odontic",
+   "crop": {
+    "src": "7.webp",
+    "y": 6000,
+    "h": 700
+   },
+   "spec": "White. A wide azure rounded card: a centred 2-line 40px heavy white heading, a white 'Book consultation now' pill and '★★★★★ (4.8) 30K+ ratings on Google'."
+  },
+  {
+   "id": "cta-dentiva-orange",
+   "role": "cta",
+   "from": "8 Dentiva (orange)",
+   "crop": {
+    "src": "8.webp",
+    "y": 7450,
+    "h": 950
+   },
+   "spec": "A small label row, then a wide photo of a patient being treated (blurred), and a centred white card overlapping it with a sharper crop of the same photo on top, a 3-line italic serif 'Reach out for personalized dental advice' and an orange pill."
+  },
+  {
+   "id": "cta-luxe",
+   "role": "cta",
+   "from": "9 Luxe Dental",
+   "crop": {
+    "src": "9.webp",
+    "y": 3110,
+    "h": 780
+   },
+   "spec": "A solid forest-green band: a right-aligned 3-line 44px white heading with '8.2K+ ★★★★★' and a round avatar group inline, 3 small lines, two outline pill buttons ('Book appointment', a phone number), and a ghosted outline tagline 'Create Your Smile' across the bottom."
+  },
+  {
+   "id": "cta-otto",
+   "role": "cta",
+   "from": "10 otto",
+   "crop": {
+    "src": "10.webp",
+    "y": 3550,
+    "h": 450
+   },
+   "spec": "A rust-brown band: a 2-line 40px heading ('Free Doctor' white, 'Consultations' lime), 4 lines and a lime pill on the left; an arch-shaped portrait of a smiling patient with a thin lime outline and a lime rotating badge on the right."
+  },
+  {
+   "id": "cta-elevate-map",
+   "role": "cta",
+   "from": "12 Elevate",
+   "crop": {
+    "src": "12.webp",
+    "y": 9050,
+    "h": 580
+   },
+   "spec": "A green rounded card: a 2-line uppercase white heading, 3 lines, 'Office' + address and a yellow button on the left; a rounded satellite map with a red pin on the right."
+  },
+  {
+   "id": "contact-dentiva-mint",
+   "role": "contact",
+   "from": "1 Dentiva (mint)",
+   "crop": {
+    "src": "1.webp",
+    "y": 3590,
+    "h": 740
+   },
+   "spec": "A dark forest band. LEFT a rounded photo of 3 masked dentists on mint wave stripes. RIGHT a 2-line 36px white heading, 2 lines and a white pill-input form (name, phone, service select, doctor select, date & time select) with a full-width mint 'Book now' pill."
+  },
+  {
+   "id": "contact-dentova",
+   "role": "contact",
+   "from": "5 Dentova",
+   "crop": {
+    "src": "5.webp",
+    "y": 7500,
+    "h": 1150
+   },
+   "spec": "A pale green-to-yellow band. A tiny label + centred 30px 'Get Dentist Appointment'. A white card: a portrait of a smiling dentist on the left, a form on the right with small icon labels (full name, phone, date & time, department select, doctors select, message), a terms checkbox and a black 'Book appointment' pill with a round arrow."
+  },
+  {
+   "id": "contact-oralin",
+   "role": "contact",
+   "from": "6 Oralin",
+   "crop": {
+    "src": "6.webp",
+    "x": 40,
+    "y": 6820,
+    "w": 1320,
+    "h": 740
+   },
+   "spec": "A dark teal glass band over a clinic photo, with a curved top edge. LEFT a tiny label, a 2-line heading ('Your Smile' olive italic) and a frosted card with location, phone and social icons. RIGHT a white form card 'Book your appointment now' (names, email, phone with country code, service select, date) and a dark 'Make an appointment' pill."
+  },
+  {
+   "id": "contact-elevate",
+   "role": "contact",
+   "from": "12 Elevate",
+   "crop": {
+    "src": "12.webp",
+    "y": 6560,
+    "h": 760
+   },
+   "spec": "White. LEFT a tiny label, a 2-line uppercase heading, 3 lines, then 'Get in touch directly' with an outlined email box and a solid green phone box. RIGHT a light grey rounded form (first/last name, email, phone, services select, message) with a yellow 'Send' button."
+  },
+  {
+   "id": "footer-dentiva-mint",
+   "role": "footer",
+   "from": "1 Dentiva (mint)",
+   "crop": {
+    "src": "1.webp",
+    "y": 4330,
+    "h": 511
+   },
+   "spec": "Light grey. A big mint logo + wordmark, 4 lines and mint round social icons; Contact us · Open hour (a day-by-day list) · Services columns; a thin rule with © and legal links."
+  },
+  {
+   "id": "footer-dentcore",
+   "role": "footer",
+   "from": "2 Dentcore",
+   "crop": {
+    "src": "2.webp",
+    "x": 40,
+    "y": 9140,
+    "w": 1360,
+    "h": 486
+   },
+   "spec": "A royal-blue gradient. The wordmark + 2 lines + a rounded email input with a black 'Get started' pill + round social icons on the left; Product · Quick links · Contact us columns; © and legal links."
+  },
+  {
+   "id": "footer-smilecraft",
+   "role": "footer",
+   "from": "3 SmileCraft",
+   "crop": {
+    "src": "3.webp",
+    "x": 40,
+    "y": 6050,
+    "w": 1360,
+    "h": 507
+   },
+   "spec": "A navy rounded card: logo + tagline + round social icons, a lighter navy box ('Professional dental care conveniently booked', phone, email), Quick links, and a newsletter input with city addresses."
+  },
+  {
+   "id": "footer-denty",
+   "role": "footer",
+   "from": "4 Denty",
+   "crop": {
+    "src": "4.webp",
+    "y": 5060,
+    "h": 577
+   },
+   "spec": "A dark teal rounded card: logo, tagline, an email input with a white 'Subscribe' button and round social icons on the left; Quick links · Solutions · Features columns; a big ghosted wordmark bottom-left and legal links bottom-right."
+  },
+  {
+   "id": "footer-dentova",
+   "role": "footer",
+   "from": "5 Dentova",
+   "crop": {
+    "src": "5.webp",
+    "y": 9150,
+    "h": 1152
+   },
+   "spec": "A butter-yellow gradient CTA ('Modern Dentistry Designed Around Your Comfort' + a black pill) fading into a white footer: a newsletter column split by a vertical rule from Pages · Utility · Time schedule columns, then a giant light yellow wordmark and a © row."
+  },
+  {
+   "id": "footer-oralin",
+   "role": "footer",
+   "from": "6 Oralin",
+   "crop": {
+    "src": "6.webp",
+    "x": 40,
+    "y": 9200,
+    "w": 1320,
+    "h": 841
+   },
+   "spec": "A deep teal rounded-top panel: lime-titled Quick links · Company · Utility pages columns, a newsletter input with a white 'Subscribe' pill, email/phone lines, office addresses, a rule with © and social icons, and a giant gradient wordmark cut off at the bottom."
+  },
+  {
+   "id": "footer-odontic",
+   "role": "footer",
+   "from": "7 Odontic",
+   "crop": {
+    "src": "7.webp",
+    "y": 6750,
+    "h": 347
+   },
+   "spec": "Navy. Logo + 4 lines + round social icons; Working days and Location columns; a thin © row with legal links."
+  },
+  {
+   "id": "footer-dentiva-orange",
+   "role": "footer",
+   "from": "8 Dentiva (orange)",
+   "crop": {
+    "src": "8.webp",
+    "y": 8420,
+    "h": 670
+   },
+   "spec": "An orange rounded panel: tiny white year, email/address and legal links in a row at the top, then the name as a giant white serif wordmark and a tiny tagline bottom-right."
+  },
+  {
+   "id": "footer-luxe",
+   "role": "footer",
+   "from": "9 Luxe Dental",
+   "crop": {
+    "src": "9.webp",
+    "y": 4860,
+    "h": 524
+   },
+   "spec": "Black. The name as a big white bold wordmark with a 3D tooth in the middle, a 3-line quote, 'Follow us' social links and a thin © row with phone and email."
+  },
+  {
+   "id": "footer-otto",
+   "role": "footer",
+   "from": "10 otto",
+   "crop": {
+    "src": "10.webp",
+    "y": 5380,
+    "h": 769
+   },
+   "spec": "A lime band: a centred 30px rust 'Book appointment today' + a rust pill, then the wordmark left and Menu · Solutions · Follow us columns, 'Free consultation' with Online / In-person pills, and a © row."
+  },
+  {
+   "id": "footer-healers",
+   "role": "footer",
+   "from": "11 Healers",
+   "crop": {
+    "src": "11.webp",
+    "y": 5050,
+    "h": 742
+   },
+   "spec": "A dark forest footer with a notched off-white tab on its top edge holding a 30px serif 'Ready to Start Your Recovery?' and a mint round badge. Logo + 3 lines + round social icons, Useful links · Utility pages · Subscribe newsletter (a dark input with a mint send icon); a rule and ©."
+  },
+  {
+   "id": "footer-elevate",
+   "role": "footer",
+   "from": "12 Elevate",
+   "crop": {
+    "src": "12.webp",
+    "y": 9650,
+    "h": 639
+   },
+   "spec": "Light grey. Logo + 4 lines + small round social icons; Quick links · Our services · contact columns with a white hours card; a thin © row with legal links."
+  }
+ ]
+}

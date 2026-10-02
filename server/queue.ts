@@ -7,6 +7,7 @@ import { captureListing } from "./pipeline/listing.ts";
 import { getProspect } from "./finder/store.ts";
 import { ensureBenchmarks, getBenchmarkSet } from "./pipeline/benchmarks.ts";
 import { generateMockup } from "./pipeline/generate.ts";
+import { scoreLead } from "./pipeline/score.ts";
 import { runGate } from "./pipeline/gate.ts";
 import { renderSideBySide } from "./pipeline/render.ts";
 import type { Capture, Diagnosis, Fact, GateResult, Lead, StepKey } from "../shared/types.ts";
@@ -91,6 +92,9 @@ async function runLead(id: string) {
     const diagnosis = readJson<Diagnosis>(id, "diagnosis.json")!;
     const vertical = readJson<{ key: string; label: string; register: string }>(id, "vertical.json")!;
     lead.vertical = vertical.key;
+    // Rank the lead now the diagnosis is in, so the Leads table can sort hot → cold.
+    Object.assign(lead, scoreLead(lead, diagnosis, lead.prospectId ? getProspect(lead.prospectId)?.fit?.score : undefined));
+    saveLead(lead);
 
     await doStep(lead, "vertical", async () => {
       const { set, created } = await ensureBenchmarks(id, leadDir(id), vertical);

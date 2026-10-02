@@ -1,0 +1,1193 @@
+{
+ "niche": "Gyms, personal trainers, boxing & bootcamps",
+ "match": "\\bgym\\b|gyms|fitness|personal.?train|\\bPT\\b|trainer|boxing|kickbox|muay.?thai|\\bmma\\b|martial.?art|jiu.?jitsu|bjj|karate|bootcamp|boot.?camp|crossfit|hyrox|strength.?(training|coach)|conditioning|workout|pilates|yoga|spin.?class|cycling.?studio|sportschool|sportschool|healthclub|health.?club|online.?coach|fitness.?coach|body.?transform",
+ "about": "Mix-and-match sections for gyms, fitness studios, boxing/MMA clubs, bootcamps and personal/online trainers, from 12 Dribbble full-page references (1–12.webp; shot links in _sources.json). Every mockup = one base STYLE + an ordered set of SECTIONS. Crops live in sections/<id>.jpg. These designs live on high-contrast athletic photography (moody gym interiors, sweat, cut-out athletes): use the lead's real trainers, members and facility photos first, then fitness stock. Membership prices, member counts, ratings and transformation numbers must come from FACTS — otherwise drop the figures or use 'From $—' placeholders only if pricing is clearly offered.",
+ "styles": [
+  {
+   "id": "coach-neon",
+   "name": "Neon online coach",
+   "fits": "personal trainer online coach coaching transformation nutrition 1:1 body recomposition men women busy professionals",
+   "character": "Personal/online coach site: a navy-black hero with a centred giant 2-line white headline over a moody shirtless-athlete photo, a vertical social icon rail on the left, stacked client avatars + '1.2k happy clients', then clean white sections with soft neon-green radial glows, a floating dark 'custom plan' card, before/after transformation cards in a carousel with neon round arrows, and neon-green pill buttons with black text. (Ref 1 FitnessCh.)",
+   "fonts": "Clash Display or Satoshi (600/700) for headings + Inter (400/500) for text",
+   "cssStarter": ":root{--accent:#39ff14;--dark:#05081a;--ink:#0b0b10;--body:#55575f;--bg:#ffffff;--line:#e7e8ec;--container:1200px;--gutter:32px;--section-y:110px;--radius:16px}\nbody{font-family:'Inter',sans-serif;font-size:15px;line-height:1.6;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.dark{background:var(--dark);color:#b9bccb}.dark h2{color:#fff}\n.glow{background:radial-gradient(40% 50% at 90% 30%,rgba(57,255,20,.18),transparent 70%)}\nh1,h2,h3{font-family:'Satoshi',sans-serif;font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.05}\nh1{font-size:88px;color:#fff;text-align:center}\nh2{font-size:48px}\nh3{font-size:20px}\n.eyebrow{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--ink)}\n.btn{display:inline-flex;align-items:center;height:44px;padding:0 24px;border-radius:99px;background:var(--accent);color:#000;font-size:13px;font-weight:700;text-transform:uppercase}\n.round{width:36px;height:36px;border-radius:50%;background:var(--accent);display:grid;place-items:center}\n.card{background:#fff;border-radius:var(--radius);box-shadow:0 20px 50px rgba(0,0,0,.08);padding:18px}\n.plan-card{background:var(--dark);color:#cfd3e0;border-radius:12px;padding:20px}.plan-card b{color:var(--accent)}\n.chip{display:inline-block;border:1px solid var(--accent);color:var(--accent);border-radius:99px;padding:4px 12px;font-style:italic;font-size:12px}\n@media(max-width:768px){:root{--section-y:68px;--gutter:20px}h1{font-size:46px}h2{font-size:32px}}"
+  },
+  {
+   "id": "power-red",
+   "name": "Power red",
+   "fits": "gym strength bodybuilding powerlifting muscle 24/7 hardcore boxing weights classic big box",
+   "character": "Classic hardcore gym: near-black page, red accent for one word in every heading and for buttons, a tall condensed uppercase face (hero words ≈150px 'BUILD YOUR BODY' across the bottom of the photo), a white ticker strip of dumbbell icons + facts under the hero, tilted/staggered photo stacks, a numbered trainer list beside a tilted portrait, dark pricing cards with the middle one outlined red, a huge white wordmark on a red-to-black gradient footer. (Ref 2 PowerFit.)",
+   "fonts": "Bebas Neue (400) for headings + Poppins (400/500) for text",
+   "cssStarter": ":root{--accent:#e10600;--bg:#0d0d0d;--surface:#161616;--ink:#ffffff;--muted:#9b9b9b;--line:rgba(255,255,255,.1);--container:1240px;--gutter:32px;--section-y:110px;--radius:6px}\nbody{background:var(--bg);color:var(--muted);font-family:'Poppins',sans-serif;font-size:14px;line-height:1.6}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\nh1,h2,h3{font-family:'Bebas Neue',sans-serif;font-weight:400;text-transform:uppercase;color:var(--ink);line-height:.92}\nh1{font-size:clamp(90px,12vw,170px)}\nh2{font-size:48px}h2 em{font-style:normal;color:var(--accent)}\nh3{font-size:24px}\n.ticker{background:#fff;color:#111;font-family:'Bebas Neue',sans-serif;font-size:22px;display:flex;gap:40px;padding:8px 0;white-space:nowrap}\n.btn{display:inline-flex;align-items:center;height:40px;padding:0 20px;border-radius:6px;background:var(--accent);color:#fff;font-size:12px;font-weight:600;text-transform:uppercase}\n.price-card{background:#0a0a0a;border:1px solid var(--line);border-radius:8px;padding:24px}.price-card.hot{border-color:var(--accent);box-shadow:0 0 40px rgba(225,6,0,.25)}\n.price{font-family:'Bebas Neue',sans-serif;font-size:56px;color:#fff}\n.tilt{transform:rotate(-4deg);border:6px solid #fff}\nfooter{background:linear-gradient(180deg,#0d0d0d,#8e0000)}\n.wordmark{font-family:'Bebas Neue',sans-serif;font-size:220px;color:#fff;line-height:.8}\n@media(max-width:768px){:root{--section-y:68px;--gutter:20px}h2{font-size:34px}.wordmark{font-size:90px}}"
+  },
+  {
+   "id": "mura-orange",
+   "name": "Bright orange club",
+   "fits": "gym club classes group training digital coaching outdoor bootcamp friendly bright modern community",
+   "character": "Bright and friendly: white page with a pale grey rounded hero panel holding a cut-out bodybuilder with a barbell, 'NO PAIN' left and 'NO GAIN' right in an ultra-wide heavy extended face, small orange pill buttons, staggered class photos with orange round ↗ badges, a 4-step icon row with dashed connectors (the active one filled black), a full orange pricing panel with outlined white cards and one solid white card. (Ref 3 MURA.)",
+   "fonts": "Syncopate (700) or Unbounded (800) for headings + Poppins (400/500) for text",
+   "cssStarter": ":root{--accent:#ff6a2b;--ink:#111111;--body:#666;--bg:#ffffff;--panel:#e8e8e8;--dark:#1d1d1d;--line:#e9e9e9;--container:1240px;--gutter:32px;--section-y:100px;--radius:22px}\nbody{font-family:'Poppins',sans-serif;font-size:13px;line-height:1.7;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\nh1,h2{font-family:'Unbounded',sans-serif;font-weight:800;text-transform:uppercase;color:var(--ink);letter-spacing:.02em;line-height:1}\nh1{font-size:64px}\nh2{font-size:40px}\n.eyebrow{font-size:14px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink);font-weight:500}\nh3{font-size:15px;font-weight:500;color:var(--ink)}\n.panel{background:var(--panel);border-radius:var(--radius)}\n.btn{display:inline-flex;align-items:center;height:30px;padding:0 16px;border-radius:99px;background:var(--accent);color:#fff;font-size:11px}\n.badge{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center}\n.step{width:120px;height:120px;border-radius:50%;border:1px solid #ddd;display:grid;place-items:center}.step.on{background:var(--dark);color:#fff}\n.orange{background:var(--accent);border-radius:var(--radius);color:#fff}\n.plan{border:1.5px solid rgba(255,255,255,.8);border-radius:14px;padding:22px}.plan.solid{background:#fff;color:var(--ink)}\nfooter{background:var(--dark);border-radius:var(--radius);color:#aaa}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:32px}h2{font-size:26px}}"
+  },
+  {
+   "id": "forest-lime",
+   "name": "Dark forest & soft lime",
+   "fits": "gym fitness club programs weight loss strength cardio challenge community members trainers modern friendly",
+   "character": "Calm dark gym: charcoal page inside a slightly darker frame, a soft mint-lime accent (#a3e98f) for small labels, outline buttons and one filled button, a moody group-training hero with a giant ghosted 'STRONGER TOGETHER' behind the headline and an outlined '30 day challenge' card, a stats row, photo program cards with lime outline 'Explore →' buttons, trainer cards on dark olive-green backgrounds, glassy green feature cards, outlined pricing cards with a white-bordered middle one. (Ref 4 FIT&FINE.)",
+   "fonts": "Jost (500/600/700) for headings + Jost (400) for text",
+   "cssStarter": ":root{--accent:#a3e98f;--bg:#1d1d1d;--frame:#141414;--surface:#262626;--olive:#2e3b2a;--ink:#ffffff;--muted:#a3a3a3;--line:rgba(255,255,255,.14);--container:1200px;--gutter:32px;--section-y:100px;--radius:4px}\nbody{background:var(--frame);color:var(--muted);font-family:'Jost',sans-serif;font-size:14px;line-height:1.6}\n.page{background:var(--bg);max-width:1300px;margin:0 auto}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\nh1,h2,h3{font-weight:600;color:var(--ink);line-height:1.2}\nh1{font-size:48px}\nh2{font-size:40px}\nh3{font-size:16px;font-weight:500}\n.label{font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}\n.btn{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 18px;border:1px solid var(--accent);color:#fff;font-size:11px;font-weight:600;text-transform:uppercase;border-radius:3px}\n.btn-fill{background:var(--accent);color:#111}\n.card{background:var(--surface);border:1px solid var(--line);border-radius:4px;overflow:hidden}\n.trainer img{background:var(--olive)}\n.glass{background:rgba(163,233,143,.14);border:1px solid rgba(163,233,143,.4);padding:20px;text-align:center}\n.stat b{display:block;font-size:26px;color:var(--accent);font-weight:600}\n.plan{border:1px solid var(--line);padding:22px}.plan.hot{border:2px solid #fff;background:#000}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:34px}h2{font-size:28px}}"
+  },
+  {
+   "id": "fire-orange",
+   "name": "Fire & smoke",
+   "fits": "gym boxing mma fight club muscle building hardcore crossfit pilates classes energetic loud",
+   "character": "Loud and cinematic: black with orange smoke and embers, a centred 3-line condensed uppercase headline alternating orange/white words over two cut-out athletes, crossing diagonal orange + grey tape strips with ✦ between exercise names, dark translucent stat cards with orange bottom borders, tall dark service tiles with the title on top, pass cards with an orange 'Buy' block, a red-smoke CTA with a cut-out fighter. (Ref 5 GYMX.)",
+   "fonts": "Oswald (500/700) for headings + Inter (400/500) for text",
+   "cssStarter": ":root{--accent:#ff5a00;--bg:#050505;--surface:#140c08;--ink:#ffffff;--muted:#a19a95;--line:rgba(255,255,255,.1);--container:1200px;--gutter:32px;--section-y:110px;--radius:8px}\nbody{background:var(--bg);color:var(--muted);font-family:'Inter',sans-serif;font-size:13px;line-height:1.65}\n.smoke{background:radial-gradient(60% 50% at 50% 100%,rgba(255,90,0,.25),transparent 70%),#050505}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\nh1,h2,h3{font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;color:var(--ink);line-height:1.02}\nh1{font-size:84px;text-align:center}h1 em{font-style:normal;color:var(--accent)}\nh2{font-size:44px}\nh3{font-size:22px;font-weight:500}\n.label{font-size:10px;font-weight:700;color:var(--accent);text-transform:uppercase}\n.tape{background:var(--accent);color:#111;font-family:'Oswald',sans-serif;font-weight:500;font-size:20px;text-transform:uppercase;transform:rotate(-3deg);padding:6px 0;white-space:nowrap}\n.tape.grey{background:#6f6f6f;transform:rotate(2deg)}\n.stat{background:rgba(40,20,10,.85);border-radius:12px;border-bottom:2px solid var(--accent);padding:14px 22px}.stat b{font-family:'Oswald',sans-serif;font-size:40px;color:#fff}\n.btn{display:inline-flex;align-items:center;height:36px;padding:0 20px;border-radius:99px;background:var(--accent);color:#fff;font-size:11px;font-weight:600;text-transform:uppercase}\n.pass{background:#0b0b0b;border:1px solid var(--line);border-radius:8px;overflow:hidden}.pass .buy{background:var(--accent);color:#fff;font-family:'Oswald',sans-serif;font-size:22px}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:44px}h2{font-size:30px}}"
+  },
+  {
+   "id": "editorial-mono",
+   "name": "Editorial black & white",
+   "fits": "boutique gym studio personal training hiit strength modern premium minimal classes app",
+   "character": "Magazine-clean: white page on a light grey frame, a HUGE ultra-condensed black headline across the full width with a cut-out athlete breaking through the letters, a rotating circular logo badge, scattered tilted polaroid photos, a big centred 32px mission statement over a faint square grid, program cards split diagonally (grey text half, photo half) with small slanted outline buttons, grey testimonial tiles, a black app-download banner with a phone mockup. (Ref 6 Pulse.)",
+   "fonts": "Anton (400) for the display + Inter Tight (400/500) for text",
+   "cssStarter": ":root{--accent:#111111;--ink:#111111;--body:#555;--bg:#ffffff;--tile:#e8e8e8;--frame:#ececec;--line:#ededed;--container:1260px;--gutter:32px;--section-y:100px;--radius:0}\nbody{font-family:'Inter Tight',sans-serif;font-size:14px;line-height:1.6;color:var(--body);background:var(--frame)}\n.page{background:var(--bg);max-width:1380px;margin:0 auto}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.grid-bg{background-image:linear-gradient(#eee 1px,transparent 1px),linear-gradient(90deg,#eee 1px,transparent 1px);background-size:80px 80px}\nh1{font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(100px,15vw,210px);line-height:.9;color:var(--ink);text-transform:uppercase}\nh2{font-size:34px;font-weight:500;color:var(--ink);text-align:center;line-height:1.2}\n.statement{font-size:40px;line-height:1.25;text-align:center;color:var(--ink);font-weight:400}\nh3{font-size:18px;font-weight:600;color:var(--ink)}\n.polaroid{border:5px solid #fff;box-shadow:0 8px 20px rgba(0,0,0,.2);transform:rotate(-6deg)}\n.badge{width:120px;height:120px;border-radius:50%;background:#444;color:#fff;display:grid;place-items:center}\n.btn{display:inline-flex;align-items:center;height:40px;padding:0 20px;background:#111;color:#fff;font-size:12px;font-weight:600}\n.slant{display:inline-block;border:1px solid #999;transform:skewX(-15deg);padding:4px 12px;font-size:10px}\n.split{background:linear-gradient(115deg,var(--tile) 55%,transparent 55%)}\n.tile{background:var(--tile);padding:24px}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:72px}.statement{font-size:24px}}"
+  },
+  {
+   "id": "volt-vault",
+   "name": "Volt performance",
+   "fits": "performance training athletes elite strength conditioning hyrox crossfit coaching premium serious",
+   "character": "Athletic brand campaign: pure black with a single electric volt-yellow (#d4ff1a), a tall condensed uppercase grotesk where a few letters in every heading are swapped for an italic script letter in volt, the brand name spread letter-by-letter across the top of the hero with a portrait in the middle, volt stat tiles in an offset grid, black-and-white athlete photo grids with one tinted volt, volt ticker strips, huge ghosted headings, a ruled programme/price table with the first row volt. (Ref 7 IronVault.)",
+   "fonts": "Anton (400) for headings + a script italic (Pinyon Script / Kaushan) for swapped letters + Inter (400/500) for text",
+   "cssStarter": ":root{--accent:#d4ff1a;--bg:#0a0a0a;--surface:#141414;--ink:#ffffff;--muted:#8a8a8a;--line:rgba(255,255,255,.1);--container:1200px;--gutter:32px;--section-y:110px;--radius:0}\nbody{background:var(--bg);color:var(--muted);font-family:'Inter',sans-serif;font-size:12px;line-height:1.55}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\nh1,h2{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;color:var(--ink);line-height:1;letter-spacing:.01em}\nh1{font-size:120px;letter-spacing:.2em}\nh2{font-size:48px}\nh2 .s{font-family:'Kaushan Script',cursive;text-transform:none;color:var(--accent);font-size:1.1em}\nh2 .dim{color:#5c5c5c}\n.ghost{font-family:'Anton',sans-serif;font-size:72px;color:#2c2c2c;text-transform:uppercase}\n.tile{background:var(--accent);color:#111;padding:18px;font-family:'Anton',sans-serif}.tile.dark{background:var(--surface);color:#fff}\n.ticker{background:var(--accent);color:#111;font-size:9px;font-weight:700;text-transform:uppercase;display:flex;gap:30px;padding:6px 0}\n.btn{display:inline-flex;align-items:center;height:26px;padding:0 12px;background:var(--accent);color:#111;font-size:9px;font-weight:700;text-transform:uppercase}\n.btn-white{background:#fff}\n.row{display:grid;grid-template-columns:60px 2fr 1fr 1fr;padding:8px 10px;border-bottom:1px solid var(--line);text-transform:uppercase;font-size:10px}.row.on{background:var(--accent);color:#111}\n.bw{filter:grayscale(1)}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:54px;letter-spacing:.08em}h2{font-size:32px}}"
+  },
+  {
+   "id": "fitpro-sun",
+   "name": "Sunny legends",
+   "fits": "gym fitness club members classes bodybuilding friendly modern community bright energetic",
+   "character": "Energetic but light: a dark photo hero with a yellow light streak, a 3-line wide heavy uppercase headline, a yellow pill button and a translucent stats bar; then pale lime-to-white and pale yellow gradient sections with thin diagonal line textures and sunburst rays, very wide heavy (Syne/Unbounded) headings, a cut-out athlete on white, lime-green pill buttons, yellow rounded photo panels behind cut-out trainers. (Ref 8 FitPro.)",
+   "fonts": "Unbounded (700/800) for headings + Inter (400/500) for text",
+   "cssStarter": ":root{--accent:#ffe100;--lime:#9eea3c;--ink:#111111;--body:#555;--bg:#ffffff;--pale-lime:#effbe3;--pale-yellow:#fffbe0;--dark:#1a1a1a;--container:1200px;--gutter:32px;--section-y:110px;--radius:14px}\nbody{font-family:'Inter',sans-serif;font-size:14px;line-height:1.65;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.lime{background:linear-gradient(135deg,var(--pale-lime),#fff 60%,var(--pale-lime))}\n.sun{background:radial-gradient(circle at 50% 0,#fff7b3,var(--pale-yellow) 60%)}\nh1,h2{font-family:'Unbounded',sans-serif;font-weight:800;color:var(--ink);line-height:1.08;letter-spacing:-.01em}\nh1{font-size:64px;color:#fff;text-transform:uppercase}\nh2{font-size:48px}\nh3{font-size:13px;font-weight:800;text-transform:uppercase;color:var(--ink)}\n.btn{display:inline-flex;align-items:center;height:40px;padding:0 22px;border-radius:99px;background:var(--accent);color:#111;font-size:13px;font-weight:700}\n.btn-lime{background:var(--lime)}\n.statbar{background:rgba(40,40,40,.7);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.12);border-radius:10px;display:grid;grid-template-columns:repeat(4,1fr)}.statbar b{font-family:'Unbounded',sans-serif;font-size:30px;color:#fff}\n.panel{background:var(--accent);border-radius:12px}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:38px}h2{font-size:30px}}"
+  },
+  {
+   "id": "lime-slant",
+   "name": "Lime slant",
+   "fits": "gym wellness health programs workouts functional training fun modern bold youth",
+   "character": "Playful sporty: white page then black, a centred 2-line condensed uppercase headline, small slanted (parallelogram) black/lime buttons and header bar, overlapping tilted photos, 3D toy-like gym objects (dumbbells, ab-wheel) as stickers, full-width tilted lime ticker bands ('MAKE LIFE HEALTHY ✷'), staggered program photo cards with a thin lime underline and →, a big lime starburst shape on the diagonal section break, a giant wordmark footer. (Ref 9 GymPro.)",
+   "fonts": "Big Shoulders Display (700/800) for headings + Poppins (400/500) for text",
+   "cssStarter": ":root{--accent:#d7ff4a;--ink:#101010;--body:#555;--bg:#ffffff;--dark:#141414;--container:1200px;--gutter:32px;--section-y:110px;--radius:0}\nbody{font-family:'Poppins',sans-serif;font-size:13px;line-height:1.7;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.dark{background:var(--dark);color:#b0b0b0}.dark h2{color:var(--accent)}\n.diag{clip-path:polygon(0 12%,100% 0,100% 100%,0 100%)}\nh1,h2,h3{font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;color:var(--ink);line-height:1.02}\nh1{font-size:76px;text-align:center}\nh2{font-size:56px}\nh3{font-size:20px;font-weight:700}\n.btn{display:inline-flex;align-items:center;height:32px;padding:0 20px;background:var(--dark);color:#fff;font-size:10px;font-weight:700;text-transform:uppercase;clip-path:polygon(8% 0,100% 0,92% 100%,0 100%)}\n.btn-lime{background:var(--accent);color:#111}\n.band{background:var(--accent);transform:rotate(-3deg);font-family:'Big Shoulders Display',sans-serif;font-weight:700;font-size:28px;text-transform:uppercase;padding:14px 0;white-space:nowrap;margin:0 -40px}\n.band span::after{content:'  \\2737  '}\n.card img{border-bottom:3px solid var(--accent)}\n.wordmark{font-family:'Archivo Black',sans-serif;font-size:180px;color:#fff;line-height:1}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:44px}h2{font-size:36px}.wordmark{font-size:72px}}"
+  },
+  {
+   "id": "sunset-studio",
+   "name": "Sunset small-group studio",
+   "fits": "semi private small group training studio functional boutique personal training local community coaches",
+   "character": "Boutique studio with warmth: every photo band carries an orange-to-purple sunset gradient overlay, a tall condensed uppercase headline in white with a letter-spaced subtitle, a teal accent (#3aa6a0) for small buttons, icons and pricing cards, a light grey section with teal round icons in a 3×2 grid, team cards with white name plates overlapping the photo bottom, a vertical numbered 'how to start' timeline with teal circles, pricing cards outlined teal with a filled teal footer, a V-notch at the top of the contact band. (Ref 10 Movement Lab.)",
+   "fonts": "Barlow Condensed (600/700) for headings + Barlow (400/500) for text",
+   "cssStarter": ":root{--accent:#3aa6a0;--grad:linear-gradient(135deg,rgba(90,40,120,.85),rgba(230,110,20,.85));--ink:#2b2b2b;--body:#666;--bg:#ffffff;--alt:#f6f6f6;--dark:#2d2d2d;--container:1200px;--gutter:32px;--section-y:100px;--radius:6px}\nbody{font-family:'Barlow',sans-serif;font-size:13px;line-height:1.7;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.sunset{background-image:var(--grad),var(--photo);background-size:cover;color:#fff}\n.alt{background:var(--alt)}\nh1,h2,h3{font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;color:var(--ink);line-height:1}\nh1{font-size:96px;color:#fff;text-align:center}\n.sub{letter-spacing:.35em;font-size:28px;color:#fff;text-align:center;text-transform:uppercase}\nh2{font-size:52px}\nh3{font-size:15px;font-weight:600}\n.icon{width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center}\n.btn{display:inline-flex;align-items:center;height:30px;padding:0 18px;border-radius:4px;background:var(--accent);color:#fff;font-size:10px;font-weight:600;text-transform:uppercase}\n.plan{border:2px solid var(--accent);border-radius:8px;text-align:center;overflow:hidden}.plan b{font-family:'Barlow Condensed',sans-serif;font-size:52px;color:var(--accent)}.plan footer{background:var(--accent);color:#fff}\n.nameplate{background:#fff;padding:8px;margin:-40px 8px 8px;position:relative;text-align:center;font-size:10px;text-transform:uppercase;letter-spacing:.12em}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:52px}h2{font-size:34px}}"
+  },
+  {
+   "id": "quiet-premium",
+   "name": "Quiet premium coaching",
+   "fits": "premium personal training coaching studio busy professionals executives recovery longevity small group corporate wellness",
+   "character": "Adult, understated premium: warm off-white page on a grey frame, black ultra-heavy extended uppercase headlines whose last line turns grey or gold italic ('COACHES WHO / ACTUALLY COACH.'), tiny orange mono section labels with a leading rule ('— SECTION 03 — COACHING'), cream cards with thin borders, black-and-white coach portraits, dark moody facility photos, a ticker 'MOVE BETTER / RECOVER FASTER / FEEL STRONG', orange pill buttons, a ghosted giant wordmark behind the final CTA. (Ref 11 Vault Fitness.)",
+   "fonts": "Archivo (800, expanded) for headings + JetBrains Mono (400) for labels + Inter (400/500) for text",
+   "cssStarter": ":root{--accent:#f15a24;--gold:#c6a664;--ink:#111111;--body:#6a6763;--bg:#f1f0ed;--card:#fbfaf6;--frame:#e9e9eb;--line:#e3e0da;--container:1180px;--gutter:32px;--section-y:120px;--radius:10px}\nbody{font-family:'Inter',sans-serif;font-size:13px;line-height:1.6;color:var(--body);background:var(--frame)}\n.page{background:var(--bg);max-width:1280px;margin:0 auto}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\nh1,h2{font-family:'Archivo',sans-serif;font-weight:800;font-stretch:125%;text-transform:uppercase;color:var(--ink);line-height:.95;letter-spacing:-.01em}\nh1{font-size:84px}\nh2{font-size:52px}\nh2 .grey{color:#7b7b7b}\nh2 .gold{color:var(--gold);font-style:italic;font-weight:600}\nh3{font-family:'Archivo',sans-serif;font-weight:800;font-size:20px;text-transform:uppercase;color:var(--ink)}\n.label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:flex;gap:10px;align-items:center}.label::before{content:'';width:24px;height:1px;background:currentColor}\n.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px}\n.btn{display:inline-flex;align-items:center;height:36px;padding:0 20px;border-radius:99px;background:var(--accent);color:#fff;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}\n.btn-outline{background:transparent;border:1px solid #444;color:#ddd}\n.ticker{font-family:'Archivo',sans-serif;font-weight:800;font-size:28px;text-transform:uppercase;color:#333;display:flex;gap:30px}.ticker i{color:var(--accent);font-style:normal}\n.bw{filter:grayscale(1)}\n@media(max-width:768px){:root{--section-y:72px;--gutter:20px}h1{font-size:44px}h2{font-size:32px}}"
+  },
+  {
+   "id": "pill-red",
+   "name": "Pill & asterisk",
+   "fits": "personal trainer coach gym boxing in person online coaching bold playful brand social",
+   "character": "Bold and playful coach brand: charcoal page, everything shaped as big pills and rounded capsules, a cream capsule hero with a tall condensed black headline, a hand-drawn underline swash and a red asterisk ✱, red circular rotating 'REGISTER NOW' stamps with a ↘ arrow, tab filters with a red hand-drawn underline, a red pill 'professional trainer' card with a round photo, dark pill rows with red round ↘ buttons, a pricing grid of dark rounded tiles, a cream pill newsletter strip. (Ref 12 GYM.)",
+   "fonts": "Anton (400) for headings + Inter (400/500) for text",
+   "cssStarter": ":root{--accent:#e2412d;--bg:#161616;--surface:#232323;--cream:#f5ece4;--ink:#ffffff;--muted:#a5a5a5;--container:1160px;--gutter:32px;--section-y:100px;--radius:60px}\nbody{background:var(--bg);color:var(--muted);font-family:'Inter',sans-serif;font-size:13px;line-height:1.6}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\nh1,h2,h3{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;color:var(--ink);line-height:1}\nh1{font-size:72px;color:#111}\nh2{font-size:48px;text-align:center}\nh3{font-size:24px}\n.capsule{background:var(--cream);border-radius:var(--radius);padding:40px;color:#111}\n.pill-row{display:flex;justify-content:space-between;align-items:center;background:var(--surface);border-radius:99px;padding:14px 14px 14px 30px}\n.pill-row.red{background:var(--accent)}\n.go{width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center}\n.stamp{width:110px;height:110px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-family:'Anton',sans-serif}\n.asterisk{color:var(--accent);font-size:60px;line-height:1}\n.btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 20px;border-radius:99px;background:#111;color:#fff;font-family:'Anton',sans-serif;font-size:14px;text-transform:uppercase}\n.btn-red{background:var(--accent)}\n.tile{background:var(--surface);border-radius:28px;padding:26px}.tile b{font-family:'Anton',sans-serif;font-size:48px;color:#fff}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px;--radius:32px}h1{font-size:40px}h2{font-size:32px}}"
+  }
+ ],
+ "orders": [
+  [
+   "hero",
+   "about",
+   "programs",
+   "trainers",
+   "pricing",
+   "testimonials",
+   "cta",
+   "footer"
+  ],
+  [
+   "hero",
+   "stats",
+   "programs",
+   "process",
+   "transformations",
+   "testimonials",
+   "contact",
+   "footer"
+  ],
+  [
+   "hero",
+   "programs",
+   "about",
+   "facility",
+   "trainers",
+   "pricing",
+   "contact",
+   "footer"
+  ],
+  [
+   "hero",
+   "about",
+   "transformations",
+   "programs",
+   "testimonials",
+   "pricing",
+   "contact",
+   "footer"
+  ],
+  [
+   "hero",
+   "stats",
+   "about",
+   "programs",
+   "trainers",
+   "testimonials",
+   "cta",
+   "footer"
+  ],
+  [
+   "hero",
+   "programs",
+   "process",
+   "pricing",
+   "trainers",
+   "facility",
+   "cta",
+   "footer"
+  ],
+  [
+   "hero",
+   "about",
+   "facility",
+   "programs",
+   "stats",
+   "testimonials",
+   "pricing",
+   "footer"
+  ]
+ ],
+ "sections": [
+  {
+   "id": "hero-fitnessch",
+   "role": "hero",
+   "from": "1 FitnessCh",
+   "crop": {
+    "src": "1.webp",
+    "y": 0,
+    "h": 1010
+   },
+   "spec": "Navy-black. Minimal header (wordmark left, 5 small links right). A centred 2-line ≈96px white headline over a moody photo of a shirtless athlete (head just under the headline). A vertical rail of 3 social icons + a line on the left. A 3-line intro at the right; bottom-left 3 stacked avatars + '1.2k Happy clients'; bottom-right a neon-green 'Book a class' pill."
+  },
+  {
+   "id": "hero-powerfit",
+   "role": "hero",
+   "from": "2 PowerFit",
+   "crop": {
+    "src": "2.webp",
+    "y": 0,
+    "h": 1030
+   },
+   "spec": "Full-bleed dark gym photo (athlete lifting a red dumbbell). Header: logo mark + wordmark, 4-link nav, red 'Contact us' button. LEFT a small uppercase subheading + 2 lines; RIGHT a glass card with a red dumbbell image and 'Join now ↗'. Across the bottom the headline in HUGE condensed white caps ('BUILD YOUR BODY', ≈150px). A white ticker strip of dumbbell icons and facts (24/7 gym access · Live trainers · 2k+ members…) runs under the hero."
+  },
+  {
+   "id": "hero-mura",
+   "role": "hero",
+   "from": "3 MURA",
+   "crop": {
+    "src": "3.webp",
+    "y": 0,
+    "h": 820
+   },
+   "spec": "White header with small links left, centred logo, dark 'Contact us' pill + orange round icon right. A pale grey rounded panel with a faint white 'M' stroke: 'NO PAIN' top-left and 'NO GAIN' top-right in ultra-wide heavy caps, a cut-out bodybuilder holding a barbell in the centre; left a 4-line intro + small orange pill; right a small video thumbnail; bottom-left a white '15 active coaches' avatar card; bottom-right 'Scroll ↓'."
+  },
+  {
+   "id": "hero-fitfine",
+   "role": "hero",
+   "from": "4 FIT&FINE",
+   "crop": {
+    "src": "4.webp",
+    "x": 72,
+    "y": 0,
+    "w": 1296,
+    "h": 1000
+   },
+   "spec": "A dark group-training photo with a giant ghosted 'STRONGER TOGETHER' behind the text. Header: logo, uppercase nav with the active item lime, lime 'Login' + outline 'Join now'. LEFT a tiny lime eyebrow, a 2-line 44px white headline, 2 lines, a filled lime + outline button. RIGHT an outlined lime card '30 day fitness challenge · 12,000+ members · Join challenge →'. A stats row below (50+ programs · 25K+ members · 4.9/5 rating) in lime."
+  },
+  {
+   "id": "hero-gymx",
+   "role": "hero",
+   "from": "5 GYMX",
+   "crop": {
+    "src": "5.webp",
+    "y": 0,
+    "h": 1080
+   },
+   "spec": "Black with orange smoke. Header: logo with an orange X, a pill nav group in the centre, orange 'Contact us' pill. A centred 3-line 80px condensed uppercase headline alternating orange and white words, two cut-out athletes back to back holding dumbbells. Two crossing diagonal tape strips (orange + grey) listing exercises with ✦ between them cut across the bottom."
+  },
+  {
+   "id": "hero-pulse",
+   "role": "hero",
+   "from": "6 Pulse",
+   "crop": {
+    "src": "6.webp",
+    "x": 33,
+    "y": 0,
+    "w": 1374,
+    "h": 1000
+   },
+   "spec": "White. Header: lowercase wordmark, small nav, black 'Get started' button. A HUGE ultra-condensed black 2-word headline across the full width with a cut-out athlete (holding two weight plates) overlapping the letters, a grey rotating circular badge with the brand monogram; 3 tilted polaroid photos bottom-left; a 3-line bold tagline bottom-right."
+  },
+  {
+   "id": "hero-ironvault",
+   "role": "hero",
+   "from": "7 IronVault",
+   "crop": {
+    "src": "7.webp",
+    "x": 134,
+    "y": 0,
+    "w": 1173,
+    "h": 890
+   },
+   "spec": "Black. The brand name spread letter-by-letter across the full width in tall condensed caps with 2 letters swapped for volt italic script letters, a portrait photo of an athlete in the centre overlapping them, 4 tiny nav words at the far left/right, a volt + white small button pair under the photo, and a volt ticker strip of training words along the bottom."
+  },
+  {
+   "id": "hero-fitpro",
+   "role": "hero",
+   "from": "8 FitPro",
+   "crop": {
+    "src": "8.webp",
+    "y": 0,
+    "h": 1010
+   },
+   "spec": "Thin top bar (phone left, social right). Dark photo of a smiling bodybuilder with a diagonal yellow light streak. Header: yellow dumbbell logo, nav, yellow 'Start now' pill. LEFT a 3-line 76px wide heavy uppercase white headline and a yellow pill 'Become a member'. A translucent glass stats bar at the bottom (200+ · 40+ · 16 · 100%) split by thin rules."
+  },
+  {
+   "id": "hero-gympro",
+   "role": "hero",
+   "from": "9 GymPro",
+   "crop": {
+    "src": "9.webp",
+    "y": 0,
+    "h": 1300
+   },
+   "spec": "White. A slanted black header bar (logo, nav, lime slanted 'Contact us'). A centred 2-line 64px condensed uppercase headline, a small black slanted 'Start today' button, a 3D ab-wheel sticker. LEFT a big '160+' with 4 lines; RIGHT two overlapping gym photos, the second tilted. A tilted full-width lime ticker band 'MAKE LIFE HEALTHY ✷' cuts across the bottom."
+  },
+  {
+   "id": "hero-movement",
+   "role": "hero",
+   "from": "10 Movement Lab",
+   "crop": {
+    "src": "10.webp",
+    "y": 0,
+    "h": 900
+   },
+   "spec": "Dark header (outlined wordmark, EN/LT switch, nav, white 'Call us'). A full-bleed studio interior photo with an orange-to-purple gradient: a centred 96px condensed white 'SEMI-PRIVATE' with letter-spaced 'TRAINING' under it and a small teal 'Register!' button; an orange pill 'Contact us' chat button floats on the right."
+  },
+  {
+   "id": "hero-vault",
+   "role": "hero",
+   "from": "11 Vault Fitness",
+   "crop": {
+    "src": "11.webp",
+    "x": 82,
+    "y": 0,
+    "w": 1276,
+    "h": 1130
+   },
+   "spec": "Inside a browser-window frame: a dark grey gradient hero with a small wordmark, tracked uppercase nav and a white 'Book consultation' pill. LEFT a tiny italic mono label, a 2-line 90px heavy extended headline ('TRAIN' solid white, 'SMARTER.' outlined), 3 lines, an orange pill + outline pill. RIGHT a dark photo of an athlete, and under it a 2×2 mini grid of numbered facts (01 Professional coaches…). A giant ghosted wordmark behind. Under the hero, a bold ticker 'MOVE BETTER / RECOVER FASTER / FEEL STRONG' with orange slashes."
+  },
+  {
+   "id": "hero-gym-pill",
+   "role": "hero",
+   "from": "12 GYM",
+   "crop": {
+    "src": "12.webp",
+    "y": 0,
+    "h": 980
+   },
+   "spec": "Charcoal page. A cream pill header (links left and right, the logo in the middle). A cream capsule: a 2-line 60px black condensed headline ('WE DON'T JUST TRAIN / WE MAKE THEM') with a black underline swash and a red asterisk, 3 lines, red stats on the right (689K happy customers · 120 online class), a black 'Book now' pill with a red smiley chip; the capsule's lower half is a rounded photo (battle ropes) with a red rotating 'REGISTER NOW ↘' stamp on the right."
+  },
+  {
+   "id": "about-powerfit-gallery",
+   "role": "about",
+   "from": "2 PowerFit",
+   "crop": {
+    "src": "2.webp",
+    "y": 1030,
+    "h": 690
+   },
+   "spec": "Black. A centred 2-line heading 'WHERE STRENGTH IS FORGED' (one word red) with 3 lines of text, flanked by a staggered fan of tall rounded gym photos on each side that shrink toward the edges."
+  },
+  {
+   "id": "about-fitfine",
+   "role": "about",
+   "from": "4 FIT&FINE",
+   "crop": {
+    "src": "4.webp",
+    "x": 72,
+    "y": 2000,
+    "w": 1296,
+    "h": 800
+   },
+   "spec": "Dark. LEFT a cut-out athlete swinging battle ropes with orange fire/energy streaks. RIGHT a lime eyebrow, a 3-line 40px white heading ('Build strength. / Build confidence. / Build yourself.'), 3 lines, 3 lime-checked benefits each with one grey line, and a lime outline 'Discover →' button."
+  },
+  {
+   "id": "about-gymx-stats",
+   "role": "about",
+   "from": "5 GYMX",
+   "crop": {
+    "src": "5.webp",
+    "y": 1080,
+    "h": 910
+   },
+   "spec": "Black smoky band. LEFT a 3-line 40px white condensed heading, 3 lines and an orange pill 'About us'. CENTRE a cut-out muscular athlete (fists up). RIGHT, overlapping him, 3 stacked dark translucent stat cards with an orange bottom border ('/// Fitness trainee · 252K')."
+  },
+  {
+   "id": "about-pulse-statement",
+   "role": "about",
+   "from": "6 Pulse",
+   "crop": {
+    "src": "6.webp",
+    "x": 33,
+    "y": 1000,
+    "w": 1374,
+    "h": 770
+   },
+   "spec": "White with a faint square grid. A centred 6-line 36px statement about the gym's mission, a small tilted photo tucked into the top-left and another into the bottom-right of the paragraph, and a round black 'Get in touch' button under it."
+  },
+  {
+   "id": "about-ironvault",
+   "role": "about",
+   "from": "7 IronVault",
+   "crop": {
+    "src": "7.webp",
+    "x": 134,
+    "y": 890,
+    "w": 1173,
+    "h": 1080
+   },
+   "spec": "Dark. 'WHO WE ARE' (script-letter swaps) top-left, tiny 'Our philosophy' labels. RIGHT an offset grid of stat tiles: volt tiles (10,000+ active members, 50+ elite trainers) and dark tiles (500K+ sessions, 12+ locations). Below it a small row of 4 volt words and a 2-line heading 'REDEFINING WHAT / TRAINING SHOULD BE.' with the second line grey, and a short indented paragraph."
+  },
+  {
+   "id": "about-fitpro",
+   "role": "about",
+   "from": "8 FitPro",
+   "crop": {
+    "src": "8.webp",
+    "y": 1010,
+    "h": 1280
+   },
+   "spec": "Pale lime-to-white gradient with thin diagonal lines. A 2-line 48px wide heavy heading top-left and a stacked avatar row '+80k' on the right. LEFT a large cut-out athlete doing kettlebell rows, then 3 lines + a lime 'About us' pill. RIGHT a small bold uppercase label, 3 lines, a 2-stat row (180+ · 20+) and a rounded photo of a trainer with a member."
+  },
+  {
+   "id": "about-gympro",
+   "role": "about",
+   "from": "9 GymPro",
+   "crop": {
+    "src": "9.webp",
+    "y": 2350,
+    "h": 1050
+   },
+   "spec": "White. A 3D squat-rack sticker at the top. LEFT two overlapping photos (a cable-machine athlete, a floor with plates) at different heights. RIGHT a 4-line 28px condensed uppercase heading, a paragraph and a lime slanted 'Read more' button."
+  },
+  {
+   "id": "about-movement-video",
+   "role": "about",
+   "from": "10 Movement Lab",
+   "crop": {
+    "src": "10.webp",
+    "y": 900,
+    "h": 540
+   },
+   "spec": "Light grey. LEFT a video still of the head coach with a round play button. RIGHT the outlined geometric wordmark, a centred 8-line uppercase italic quote in small grey text and '— Name —'."
+  },
+  {
+   "id": "about-vault",
+   "role": "about",
+   "from": "11 Vault Fitness",
+   "crop": {
+    "src": "11.webp",
+    "x": 82,
+    "y": 1130,
+    "w": 1276,
+    "h": 930
+   },
+   "spec": "Warm off-white. An orange mono label, a 3-line 52px heavy extended heading whose last line is grey ('FITNESS THAT / WORKS / BEYOND THE GYM.'). A 3×2 grid of cream cards: a tiny mono number, a bold uppercase word (Energy, Recovery, Mobility, Sleep, Strength, Performance) and 2 grey lines."
+  },
+  {
+   "id": "about-fitnessch-coach",
+   "role": "about",
+   "from": "1 FitnessCh",
+   "crop": {
+    "src": "1.webp",
+    "y": 4600,
+    "h": 700
+   },
+   "spec": "White with a soft green glow. A small rounded portrait of the coach holding a clipboard on the left, overlapping a HUGE 3-line headline ('Hi, I'm <Name> / Your Personal / Coach') and a neon 'Book a class' pill; on the right an 8-line personal intro and a bold uppercase sign-off line."
+  },
+  {
+   "id": "programs-powerfit",
+   "role": "programs",
+   "from": "2 PowerFit",
+   "crop": {
+    "src": "2.webp",
+    "y": 1720,
+    "h": 730
+   },
+   "spec": "Black. 'BODY TRANSFORMATION PROGRAMS' (one word red) left, a 3-line grey note right. 4 photo tiles in a row with the program name in condensed caps under each; the first has a white ↗."
+  },
+  {
+   "id": "programs-mura-classes",
+   "role": "programs",
+   "from": "3 MURA",
+   "crop": {
+    "src": "3.webp",
+    "y": 820,
+    "h": 830
+   },
+   "spec": "White. Small eyebrow 'CLASSES DESIGNED' and a heavy wide 'FOR YOU'. 4 rounded photos in a staggered row (alternating heights), each with a class name and an orange round ↗ badge under it."
+  },
+  {
+   "id": "programs-fitfine",
+   "role": "programs",
+   "from": "4 FIT&FINE",
+   "crop": {
+    "src": "4.webp",
+    "x": 72,
+    "y": 1000,
+    "w": 1296,
+    "h": 1000
+   },
+   "spec": "Dark. Lime eyebrow, a 2-line 40px heading, 2 lines. 3 cards: a moody photo, a lime icon + title, 2 grey lines, a full-width lime-outline 'Explore →' button. A centred outline 'View all programs' button."
+  },
+  {
+   "id": "programs-gymx-services",
+   "role": "programs",
+   "from": "5 GYMX",
+   "crop": {
+    "src": "5.webp",
+    "y": 1990,
+    "h": 1060
+   },
+   "spec": "Black smoky band. Small orange label + centred 'DISCOVER FITNESS SERVICES' with an orange sparkle and swoosh. 3 tall dark tiles with the title in white caps at the top and a dramatic photo (boxing gloves, muscular back, yoga pose). A centred orange pill 'View all services'."
+  },
+  {
+   "id": "programs-pulse",
+   "role": "programs",
+   "from": "6 Pulse",
+   "crop": {
+    "src": "6.webp",
+    "x": 33,
+    "y": 1770,
+    "w": 1374,
+    "h": 1220
+   },
+   "spec": "White. Centred 30px 'Signature Experiences' + one line. A 2×2 grid of cards split diagonally: a grey left part with the class name, 3 lines and a small slanted outline 'Reserve class →'; a photo of an athlete on the right; the right-column cards are offset lower."
+  },
+  {
+   "id": "programs-ironvault-table",
+   "role": "programs",
+   "from": "7 IronVault",
+   "crop": {
+    "src": "7.webp",
+    "x": 134,
+    "y": 7480,
+    "w": 1173,
+    "h": 780
+   },
+   "spec": "Black. 'TRAINING PROGRAMS' with script-letter swaps. A full-width ruled table: number · program name · price per month · duration; the first row is solid volt with black text."
+  },
+  {
+   "id": "programs-fitpro-classes",
+   "role": "programs",
+   "from": "8 FitPro",
+   "crop": {
+    "src": "8.webp",
+    "y": 2290,
+    "h": 889
+   },
+   "spec": "Pale yellow band with sunburst rays. A centred 2-line 48px wide heavy heading and 2 lines. 3 cards, each a cut-out trainer standing in front of a bright yellow rounded panel inside a thin white frame."
+  },
+  {
+   "id": "programs-gympro",
+   "role": "programs",
+   "from": "9 GymPro",
+   "crop": {
+    "src": "9.webp",
+    "y": 1300,
+    "h": 1050
+   },
+   "spec": "White. A 2-line 48px condensed heading top-left. 3 staggered portrait photo cards (each lower than the previous) with a thin lime bar under the photo, a white → on it, and a 2-line condensed uppercase title."
+  },
+  {
+   "id": "programs-gympro-dark",
+   "role": "programs",
+   "from": "9 GymPro",
+   "crop": {
+    "src": "9.webp",
+    "y": 3450,
+    "h": 1450
+   },
+   "spec": "Black section entering on a diagonal with a big lime starburst at the break. A 2-line 48px lime condensed 'OUR DAILY WORKOUTS'. A staggered 3-column grid of workout photo cards with lime underlines, → arrows and 2-line uppercase titles."
+  },
+  {
+   "id": "programs-vault",
+   "role": "programs",
+   "from": "11 Vault Fitness",
+   "crop": {
+    "src": "11.webp",
+    "x": 82,
+    "y": 3280,
+    "w": 1276,
+    "h": 2040
+   },
+   "spec": "Off-white. Orange mono label, a 2-line heavy heading ('PROGRAMS. / NOT CLASSES.' second line grey) and a 2-line note right. A vertical stack of wide cream cards: a tiny mono category on the far left, a 2-line bold uppercase program name + 2 lines, and a dark moody photo on the right."
+  },
+  {
+   "id": "programs-gym-pill-tabs",
+   "role": "programs",
+   "from": "12 GYM",
+   "crop": {
+    "src": "12.webp",
+    "y": 980,
+    "h": 970
+   },
+   "spec": "Charcoal. A centred 44px condensed 'FITNESS CLASS WITH US', a tab row of class types in grey condensed caps (active one white with a red hand-drawn underline). A dark rounded card: title + 4 lines + 3 round member photos on the left, a rounded photo of a boxer in the middle, a vertical dark pill with the class name and a red round ↘ on the right."
+  },
+  {
+   "id": "programs-gym-pill-rows",
+   "role": "programs",
+   "from": "12 GYM",
+   "crop": {
+    "src": "12.webp",
+    "y": 1950,
+    "h": 1050
+   },
+   "spec": "Charcoal. A big red pill card ('PROFESSIONAL TRAINER', 3 lines, a dark red asterisk and a round photo on the right), then 3 dark pill rows (condensed titles) each with a red round ↘ button at the right end."
+  },
+  {
+   "id": "process-fitnessch",
+   "role": "process",
+   "from": "1 FitnessCh",
+   "crop": {
+    "src": "1.webp",
+    "y": 1010,
+    "h": 750
+   },
+   "spec": "White. LEFT a tiny uppercase eyebrow, a 3-line 44px heading, 2 lines. RIGHT 3 steps stacked: an outline icon + bold title + 2 lines; the middle step is a floating dark rounded card with a neon icon and neon title."
+  },
+  {
+   "id": "process-mura",
+   "role": "process",
+   "from": "3 MURA",
+   "crop": {
+    "src": "3.webp",
+    "y": 2170,
+    "h": 580
+   },
+   "spec": "White. A small eyebrow 'COME TO A RESULT' and a wide heavy 'WITH US' left, a 2-line note beside it. 4 big outlined circles with line icons joined by dashed lines; the second circle is filled black."
+  },
+  {
+   "id": "process-movement",
+   "role": "process",
+   "from": "10 Movement Lab",
+   "crop": {
+    "src": "10.webp",
+    "y": 3940,
+    "h": 960
+   },
+   "spec": "Sunset-gradient photo band. LEFT a vertical timeline: teal circles with a ↓ icon connected by a thin line, each with a condensed uppercase step ('1. Registration', '2. Phone call', '3. Private session', '4. Semi-private training') and 2 lines. RIGHT a 3-line 60px white condensed 'WORKOUT WITH PASSION!'."
+  },
+  {
+   "id": "process-ironvault",
+   "role": "process",
+   "from": "7 IronVault",
+   "crop": {
+    "src": "7.webp",
+    "x": 134,
+    "y": 3120,
+    "w": 1173,
+    "h": 660
+   },
+   "spec": "Dark. A tiny 'How we train' label left, a 2-line heading 'BUILT ON STRUCTURED / PERFORMANCE.' (second line grey). A row of 4 small tiles (number chip, uppercase title, 4 lines); the second tile is volt."
+  },
+  {
+   "id": "stats-vault-results",
+   "role": "stats",
+   "from": "11 Vault Fitness",
+   "crop": {
+    "src": "11.webp",
+    "x": 82,
+    "y": 5820,
+    "w": 1276,
+    "h": 620
+   },
+   "spec": "Off-white. Orange mono label, a 3-line heavy heading with the last line in gold italic ('SMALL / IMPROVEMENTS. / MASSIVE RESULTS.'). A row of 4 cream cards with a huge bold figure (+38%, −42%, +1.2h, 94%) and a tiny grey label."
+  },
+  {
+   "id": "stats-ironvault-outcomes",
+   "role": "stats",
+   "from": "7 IronVault",
+   "crop": {
+    "src": "7.webp",
+    "x": 134,
+    "y": 5690,
+    "w": 1173,
+    "h": 900
+   },
+   "spec": "Black. 'PROVEN OUTCOMES' (script swaps) top-left, small uppercase labels and short copy at the bottom-left. RIGHT a photo of a flexing athlete with 3 volt stat tiles along its bottom edge (+12KG · ↓18% · 6+)."
+  },
+  {
+   "id": "trainers-powerfit",
+   "role": "trainers",
+   "from": "2 PowerFit",
+   "crop": {
+    "src": "2.webp",
+    "y": 2450,
+    "h": 750
+   },
+   "spec": "Black. LEFT 'EXPERT TRAINERS' (second word red) + 2 grey lines, and lower a numbered list of trainer names (/1 active in white, others grey). CENTRE a tilted portrait of the head trainer in a white frame. RIGHT a small speciality title + 2 lines, and a red 'Get in touch' button at the bottom."
+  },
+  {
+   "id": "trainers-mura",
+   "role": "trainers",
+   "from": "3 MURA",
+   "crop": {
+    "src": "3.webp",
+    "y": 1650,
+    "h": 520
+   },
+   "spec": "White. LEFT a narrow orange rounded photo (a sprinter with a play button) beside a wide grey rounded photo of two trainers with dumbbells. RIGHT a small eyebrow 'ARE YOU LOOKING FOR A MENTOR?', a heavy wide 'COACHES', 4 lines and a small orange pill."
+  },
+  {
+   "id": "trainers-fitfine",
+   "role": "trainers",
+   "from": "4 FIT&FINE",
+   "crop": {
+    "src": "4.webp",
+    "x": 72,
+    "y": 2800,
+    "w": 1296,
+    "h": 1030
+   },
+   "spec": "Dark. Lime eyebrow, a 2-line 40px heading, 2 lines. 3 trainer cards: a cut-out trainer on a dark olive-green panel, name, a lime speciality, years of experience + certifications, a lime-outline 'View profile →'. A centred filled lime 'Meet all trainers →'."
+  },
+  {
+   "id": "trainers-ironvault",
+   "role": "trainers",
+   "from": "7 IronVault",
+   "crop": {
+    "src": "7.webp",
+    "x": 134,
+    "y": 4830,
+    "w": 1173,
+    "h": 860
+   },
+   "spec": "Black. 'ELITE TRAINERS' (script swaps) top-left with volt arrows top-right. 3 photos on the right with volt name plates along their bottom edge (name + role), and a big 'MEET THE COACHES' in dim grey with volt script letters below them."
+  },
+  {
+   "id": "trainers-movement",
+   "role": "trainers",
+   "from": "10 Movement Lab",
+   "crop": {
+    "src": "10.webp",
+    "y": 3260,
+    "h": 680
+   },
+   "spec": "White. A centred 44px condensed 'OUR TEAM'. 4 portrait cards on a rust-coloured backdrop, each with a white name plate (underlined uppercase name, tracked role) overlapping the bottom; the 4th card is an empty silhouette ('Your coach could be here')."
+  },
+  {
+   "id": "trainers-vault",
+   "role": "trainers",
+   "from": "11 Vault Fitness",
+   "crop": {
+    "src": "11.webp",
+    "x": 82,
+    "y": 2060,
+    "w": 1276,
+    "h": 1220
+   },
+   "spec": "Off-white. Orange mono label, a 4-line heavy heading with the last two lines gold italic ('COACHES / WHO / ACTUALLY / COACH.'), a 3-line note right. 3 tall black-and-white portraits on black, each followed by a cream strip: tiny mono number + orange role, bold uppercase name, a grey speciality line."
+  },
+  {
+   "id": "transformations-fitnessch",
+   "role": "transformations",
+   "from": "1 FitnessCh",
+   "crop": {
+    "src": "1.webp",
+    "y": 1760,
+    "h": 1420
+   },
+   "spec": "White with a soft green glow and a faint green dumbbell graphic. A tiny eyebrow + centred 2-line 44px 'Real People. Real Transformations.' + 2 lines. A carousel: the centre white card shows before/after photos side by side with a neon outlined italic chip ('Real results – no crash diets'), the client name and a one-line result; faded side cards peek out with neon round arrows on them."
+  },
+  {
+   "id": "facility-ironvault",
+   "role": "facility",
+   "from": "7 IronVault",
+   "crop": {
+    "src": "7.webp",
+    "x": 134,
+    "y": 3780,
+    "w": 1173,
+    "h": 1050
+   },
+   "spec": "A full-width dramatic photo of a female athlete lifting, with a 2-line white heading ('DESIGNED FOR FOCUS. BUILT FOR PERFORMANCE.') at the top, a volt 4-line statement in the middle, small uppercase labels, and a row of 5 volt facility tiles along the bottom (Private training zones, Recovery & regeneration, High-end equipment…)."
+  },
+  {
+   "id": "facility-movement-gallery",
+   "role": "facility",
+   "from": "10 Movement Lab",
+   "crop": {
+    "src": "10.webp",
+    "y": 1430,
+    "h": 780
+   },
+   "spec": "A full-width strip of 4 tall studio interior photos side by side (group workout, round-mirror locker room, equipment, a close-up), all tinted with the orange-to-purple sunset gradient."
+  },
+  {
+   "id": "facility-vault",
+   "role": "facility",
+   "from": "11 Vault Fitness",
+   "crop": {
+    "src": "11.webp",
+    "x": 82,
+    "y": 7700,
+    "w": 1276,
+    "h": 1380
+   },
+   "spec": "Off-white. Orange mono label, a 3-line heavy heading (first line black, others grey: 'BUILT QUIETLY. / EQUIPPED / SERIOUSLY.'), a 3-line note right. A bento of dark moody photos: one tall rack photo left, a locker room top-right, a small kettlebell and a dark corridor bottom-right."
+  },
+  {
+   "id": "facility-ironvault-grid",
+   "role": "facility",
+   "from": "7 IronVault",
+   "crop": {
+    "src": "7.webp",
+    "x": 134,
+    "y": 1970,
+    "w": 1173,
+    "h": 1150
+   },
+   "spec": "Black. A 2-line heading 'TRUSTED BY THOSE WHO PERFORM AT THE HIGHEST LEVEL.' (first words dim grey, script swaps). An offset grid of black-and-white athlete portraits with one tinted volt, and a 4-line statement where the first line is white and the rest grey."
+  },
+  {
+   "id": "features-fitfine",
+   "role": "facility",
+   "from": "4 FIT&FINE",
+   "crop": {
+    "src": "4.webp",
+    "x": 72,
+    "y": 3830,
+    "w": 1296,
+    "h": 1050
+   },
+   "spec": "A dark gym photo band. Lime eyebrow, a 2-line 40px heading, 2 lines. 4 glassy translucent green cards in a staggered 2×2 (lime icon, title, 2 lines)."
+  },
+  {
+   "id": "features-movement",
+   "role": "facility",
+   "from": "10 Movement Lab",
+   "crop": {
+    "src": "10.webp",
+    "y": 2200,
+    "h": 1060
+   },
+   "spec": "Light grey. A centred 44px condensed heading and a 3-line italic uppercase note. A 3×2 grid of teal round icons with a small uppercase label and 3 grey lines. On the right edge a tall sunset-gradient photo strip with 'JOIN US' and a vertical column of white social icons."
+  },
+  {
+   "id": "pricing-powerfit",
+   "role": "pricing",
+   "from": "2 PowerFit",
+   "crop": {
+    "src": "2.webp",
+    "y": 3200,
+    "h": 980
+   },
+   "spec": "Black. 'CHOOSE YOUR POWER PLAN' (2 words red) + 2 lines left, a red/dark Monthly | Yearly toggle right. 3 dark cards: a big condensed '$19 /month', plan name, one line, an 'Enroll now' bar (red on the middle card, which glows red), then 'Includes:' with 5 dumbbell-icon bullets."
+  },
+  {
+   "id": "pricing-mura",
+   "role": "pricing",
+   "from": "3 MURA",
+   "crop": {
+    "src": "3.webp",
+    "y": 2750,
+    "h": 780
+   },
+   "spec": "A full orange rounded panel with a faint white 'M' stroke: a white 'Personal training ↓' select left, 'PRICING PLAN' + wide heavy 'JOIN TODAY' right. 3 cards: two outlined in white with a white circle, heavy name, price and 4 lines; the middle one solid white and raised with an orange ring icon. A small white 'Order now' pill bottom-right."
+  },
+  {
+   "id": "pricing-fitfine",
+   "role": "pricing",
+   "from": "4 FIT&FINE",
+   "crop": {
+    "src": "4.webp",
+    "x": 72,
+    "y": 5850,
+    "w": 1296,
+    "h": 1050
+   },
+   "spec": "Dark. Lime eyebrow, a centred 2-line 40px heading, 2 lines, a Monthly (lime) | Yearly (outline) toggle. 3 outlined cards (plan, big price / month, 7 check bullets, a full-width button); the middle card has a white border, a black fill and a filled lime button."
+  },
+  {
+   "id": "pricing-gymx",
+   "role": "pricing",
+   "from": "5 GYMX",
+   "crop": {
+    "src": "5.webp",
+    "y": 3050,
+    "h": 930
+   },
+   "spec": "Dark textured band. An orange label + 'MEMBERSHIP RATES' left, 2 lines right. 3 dark pass cards: a small number, the pass name in white caps, a rule, 4 '+' bullets, and a bottom bar split into the price ('14$/month') and a solid orange 'Buy' block."
+  },
+  {
+   "id": "pricing-movement",
+   "role": "pricing",
+   "from": "10 Movement Lab",
+   "crop": {
+    "src": "10.webp",
+    "y": 5620,
+    "h": 1030
+   },
+   "spec": "White. 3 pricing cards outlined in teal: '4 SESSIONS' + a big teal '€150' + 'Semi-private training', a teal 'Select' pill, then a filled teal footer with 'per week · per session · 4 weeks'. Below: a 2-line condensed 'WHY <STUDIO>?' + a small teal button left, and a 2-column list of teal-checked benefits right."
+  },
+  {
+   "id": "pricing-vault",
+   "role": "pricing",
+   "from": "11 Vault Fitness",
+   "crop": {
+    "src": "11.webp",
+    "x": 82,
+    "y": 9280,
+    "w": 1276,
+    "h": 980
+   },
+   "spec": "Off-white. Orange mono label, a 4-line heavy heading ('COACHING / TIERS. / NO / CONTRACTS.' last two grey), a 3-line note. 3 cream cards: plan name in heavy caps, a big price '/ week', 4 orange-dash bullets, an outline pill button; the middle card has an orange border, a 'Recommended' orange tab on top and a black pill button."
+  },
+  {
+   "id": "pricing-gym-pill",
+   "role": "pricing",
+   "from": "12 GYM",
+   "crop": {
+    "src": "12.webp",
+    "y": 3960,
+    "h": 1100
+   },
+   "spec": "Charcoal. LEFT a 2-line 44px 'MEMBER PRICING PLAN' with a red swash and asterisk, 2 lines; RIGHT a tall dark rounded tile '$20 Daily' with 3 check lines and a red pill 'Join now ↘'. A grid of more dark rounded tiles below with a huge condensed price + period ('$90 Weekly', '$300 Monthly', '$700 Yearly')."
+  },
+  {
+   "id": "testimonials-fitnessch",
+   "role": "testimonials",
+   "from": "1 FitnessCh",
+   "crop": {
+    "src": "1.webp",
+    "y": 3180,
+    "h": 1170
+   },
+   "spec": "A dark photo band (gym, heavy navy overlay). A neon eyebrow, a centred 40px white 'What Our Clients say', 2 lines. A big neon outlined 99 quote mark, a centred 4-line 22px quote, 5 gold stars, the name in a neon-outlined pill; neon round arrows at the far left/right and slider dots."
+  },
+  {
+   "id": "testimonials-mura",
+   "role": "testimonials",
+   "from": "3 MURA",
+   "crop": {
+    "src": "3.webp",
+    "y": 3530,
+    "h": 590
+   },
+   "spec": "White. Small eyebrow 'REVIEWS' + a wide heavy 'FROM YOU'. LEFT a cluster of 4 round client portraits of different sizes; RIGHT a row of outlined rounded review cards (a name pill, an orange // quote icon, 4 lines), cut off at the right edge, with small round arrow buttons."
+  },
+  {
+   "id": "testimonials-fitfine",
+   "role": "testimonials",
+   "from": "4 FIT&FINE",
+   "crop": {
+    "src": "4.webp",
+    "x": 72,
+    "y": 4880,
+    "w": 1296,
+    "h": 970
+   },
+   "spec": "Dark. Lime eyebrow, a 3-line 40px heading ('Real Effort. Real Progress. Real Change.'), 2 lines. A card: a square photo of a smiling member on the left, a big quote mark, a bold title, lime stars, 4 lines, name + role, small social icons, and lime square ← → buttons; the next card peeks at the edge."
+  },
+  {
+   "id": "testimonials-pulse",
+   "role": "testimonials",
+   "from": "6 Pulse",
+   "crop": {
+    "src": "6.webp",
+    "x": 33,
+    "y": 2990,
+    "w": 1374,
+    "h": 870
+   },
+   "spec": "White. A centred 2-line 34px heading. 3 tall grey tiles joined by small white diamond notches: a 4-line bold quote at the top, a small round avatar, name and 'Executive member' at the bottom."
+  },
+  {
+   "id": "testimonials-ironvault",
+   "role": "testimonials",
+   "from": "7 IronVault",
+   "crop": {
+    "src": "7.webp",
+    "x": 134,
+    "y": 6540,
+    "w": 1173,
+    "h": 900
+   },
+   "spec": "Black. A tiny 'Testimonials' label left; a 2-line heading 'TRUSTED BY THOSE WHO TAKE IT SERIOUSLY.' with script swaps and small volt arrows. 3 dark quote cards in bold uppercase small text with volt name plates at the bottom (avatar, name, 'Member · N months'); a giant dim 'WHAT OUR MEMBERS SAY' below."
+  },
+  {
+   "id": "testimonials-movement",
+   "role": "testimonials",
+   "from": "10 Movement Lab",
+   "crop": {
+    "src": "10.webp",
+    "y": 4900,
+    "h": 720
+   },
+   "spec": "White. 4 columns: a round black-and-white avatar, an underlined teal name, a centred 12-line review, a teal closing quote mark; a teal pill 'Testimonials →' on the right."
+  },
+  {
+   "id": "testimonials-vault",
+   "role": "testimonials",
+   "from": "11 Vault Fitness",
+   "crop": {
+    "src": "11.webp",
+    "x": 82,
+    "y": 6980,
+    "w": 1276,
+    "h": 720
+   },
+   "spec": "Off-white. Orange mono label, a 2-line heavy heading ('IN THEIR / OWN WORDS.' second line grey). 3 white cards: a gold quote mark, 3 lines, a small name + mono role and an orange rating at the bottom."
+  },
+  {
+   "id": "cta-powerfit",
+   "role": "cta",
+   "from": "2 PowerFit",
+   "crop": {
+    "src": "2.webp",
+    "y": 4180,
+    "h": 790
+   },
+   "spec": "A dark rounded panel with faint line-drawn muscle arms in the corners: a big white dumbbell icon, 'START YOUR FITNESS JOURNEY' in condensed caps and a stacked 'TODAY (struck) / NOW (big red) / TOMORROW (struck)', and a red 'Join the gym now' button."
+  },
+  {
+   "id": "cta-gymx",
+   "role": "cta",
+   "from": "5 GYMX",
+   "crop": {
+    "src": "5.webp",
+    "y": 3980,
+    "h": 900
+   },
+   "spec": "A full-width red-smoke photo with a cut-out bald athlete in the middle, a centred 2-line 60px white condensed 'READY TO JOIN THE <GYM> FAMILY?' over his chest, and an orange pill 'Contact us'."
+  },
+  {
+   "id": "cta-pulse-app",
+   "role": "cta",
+   "from": "6 Pulse",
+   "crop": {
+    "src": "6.webp",
+    "x": 33,
+    "y": 3860,
+    "w": 1374,
+    "h": 560
+   },
+   "spec": "A black banner: 'Download our app' 30px white, 2 lines, Google Play + App Store badges on the left; a phone mockup showing a red/black gym app poster breaks out of the banner's top edge on the right."
+  },
+  {
+   "id": "cta-gympro-video",
+   "role": "cta",
+   "from": "9 GymPro",
+   "crop": {
+    "src": "9.webp",
+    "y": 5350,
+    "h": 1350
+   },
+   "spec": "Black then white on a diagonal. A centred 2-line 48px lime condensed 'PROGRAMMED BY THE EXPERTS, FOR YOU', a wide video still of a coach with a member and a big translucent lime play button, then a tilted lime 'MAKE LIFE HEALTHY ✷' band."
+  },
+  {
+   "id": "cta-vault",
+   "role": "cta",
+   "from": "11 Vault Fitness",
+   "crop": {
+    "src": "11.webp",
+    "x": 82,
+    "y": 11100,
+    "w": 1276,
+    "h": 950
+   },
+   "spec": "Off-white. A tiny orange label, a 4-line ≈80px heavy extended headline ('YOUR STRONGEST YEARS START NOW.'), 3 lines, an orange pill 'Book consultation' + outline 'Visit <gym>'. A giant ghosted wordmark behind the bottom."
+  },
+  {
+   "id": "cta-vault-community",
+   "role": "cta",
+   "from": "11 Vault Fitness",
+   "crop": {
+    "src": "11.webp",
+    "x": 82,
+    "y": 6420,
+    "w": 1276,
+    "h": 460
+   },
+   "spec": "A wide rounded photo banner (members training, pale fog fading to white on the left): a tiny orange label, a 3-line heavy black heading ('A ROOM OF QUIET PROFESSIONALS.') and 3 lines of copy on the left."
+  },
+  {
+   "id": "contact-fitnessch",
+   "role": "contact",
+   "from": "1 FitnessCh",
+   "crop": {
+    "src": "1.webp",
+    "y": 5300,
+    "h": 1300
+   },
+   "spec": "White with a soft grey glow. LEFT a 2-line 44px 'Book Your Free Intake Call' and 2 lines. RIGHT an underline-only form with small icons (full name, email, phone, preferred date with a calendar icon, Instagram handle, your question) and a full-width neon-green 'Submit' pill."
+  },
+  {
+   "id": "contact-fitfine",
+   "role": "contact",
+   "from": "4 FIT&FINE",
+   "crop": {
+    "src": "4.webp",
+    "x": 72,
+    "y": 6900,
+    "w": 1296,
+    "h": 980
+   },
+   "spec": "Dark. Lime eyebrow, a centred 2-line 40px heading, 2 lines. LEFT a form of dark bordered inputs (name, email, phone, subject, message) with a lime 'Send message ✈' button. RIGHT 'Visit us', 'Talk to us', 'Email us', 'Opening hours' blocks with lime icons and social icons."
+  },
+  {
+   "id": "contact-movement",
+   "role": "contact",
+   "from": "10 Movement Lab",
+   "crop": {
+    "src": "10.webp",
+    "y": 6650,
+    "h": 690
+   },
+   "spec": "A sunset-gradient photo band with a white V-notch cut into its top edge. LEFT a 2-line 64px white condensed 'CREATE YOURSELF!' and a condensed subtitle. RIGHT a small form with white inputs (name, email, phone) and a teal 'Register' button."
+  },
+  {
+   "id": "contact-vault-visit",
+   "role": "contact",
+   "from": "11 Vault Fitness",
+   "crop": {
+    "src": "11.webp",
+    "x": 82,
+    "y": 10250,
+    "w": 1276,
+    "h": 850
+   },
+   "spec": "Off-white. LEFT an orange mono label, the address as a 3-line heavy heading (last line grey), then mono-labelled address, hours and contact lines. RIGHT a large rounded grey map."
+  },
+  {
+   "id": "contact-gym-pill-social",
+   "role": "contact",
+   "from": "12 GYM",
+   "crop": {
+    "src": "12.webp",
+    "y": 4950,
+    "h": 1100
+   },
+   "spec": "Charcoal. A centred 40px condensed 'FOLLOW US ON SOCIAL MEDIA' with a red swash and a red asterisk. LEFT a rounded photo of a trainer on a cable machine; RIGHT 4 condensed social network names each with a ↘ and a rule under it."
+  },
+  {
+   "id": "footer-fitnessch",
+   "role": "footer",
+   "from": "1 FitnessCh",
+   "crop": {
+    "src": "1.webp",
+    "y": 6590,
+    "h": 399
+   },
+   "spec": "Navy-black. A centred wordmark with a tracked tagline under it, a thin rule and a centred © line."
+  },
+  {
+   "id": "footer-powerfit",
+   "role": "footer",
+   "from": "2 PowerFit",
+   "crop": {
+    "src": "2.webp",
+    "y": 4960,
+    "h": 763
+   },
+   "spec": "A black-to-deep-red gradient. Logo + tagline left, 2 link columns (one underlined) right, © and a tagline line, then the brand name as a HUGE white condensed wordmark filling the width at the bottom."
+  },
+  {
+   "id": "footer-mura",
+   "role": "footer",
+   "from": "3 MURA",
+   "crop": {
+    "src": "3.webp",
+    "y": 4120,
+    "h": 355
+   },
+   "spec": "A dark rounded panel inside the page margin: orange logo + address + email left, Menu · Quick links · Operational (hours, 'New schedule?' phone) columns, round outline social icons and a white round ↑ button at the bottom."
+  },
+  {
+   "id": "footer-gymx",
+   "role": "footer",
+   "from": "5 GYMX",
+   "crop": {
+    "src": "5.webp",
+    "y": 4880,
+    "h": 475
+   },
+   "spec": "Black with faint smoke. 4 columns with bold condensed uppercase titles (Quick links · Services · Contact info · Social media) and small uppercase links; a rule; © with an orange brand word and legal links."
+  },
+  {
+   "id": "footer-pulse",
+   "role": "footer",
+   "from": "6 Pulse",
+   "crop": {
+    "src": "6.webp",
+    "x": 33,
+    "y": 4420,
+    "w": 1374,
+    "h": 602
+   },
+   "spec": "White. A newsletter column ('Stay fit, stay updated', 2 lines, an input + black 'Subscribe'), then About us · Support · Quick links columns and a 'Follow us' 2×2 grid of black square social icons; a centred © line."
+  },
+  {
+   "id": "footer-ironvault",
+   "role": "footer",
+   "from": "7 IronVault",
+   "crop": {
+    "src": "7.webp",
+    "x": 134,
+    "y": 8260,
+    "w": 1173,
+    "h": 787
+   },
+   "spec": "Black. A tiny spaced wordmark left, a huge volt 'CONTACT' with a script letter, 4 tiny link columns, then the email and phone in big white condensed caps at the bottom-left and a volt line along the bottom edge."
+  },
+  {
+   "id": "footer-gympro",
+   "role": "footer",
+   "from": "9 GymPro",
+   "crop": {
+    "src": "9.webp",
+    "y": 6800,
+    "h": 769
+   },
+   "spec": "Black. A newsletter input + lime 'Submit' + round social icons left, Company · About us · Contact us columns right, and the brand name as a giant white extended-bold wordmark across the bottom."
+  },
+  {
+   "id": "footer-gym-pill",
+   "role": "footer",
+   "from": "12 GYM",
+   "crop": {
+    "src": "12.webp",
+    "y": 6050,
+    "h": 532
+   },
+   "spec": "Charcoal. A cream pill newsletter strip: 'STAY CONNECT TO US / TO GET OUR OFFER ✱' in black condensed caps and a red rotating 'GET IN TOUCH ↘' stamp at the right end. Under it phone · email · the logo · the address in a thin row."
+  }
+ ]
+}

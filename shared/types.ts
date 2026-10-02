@@ -37,6 +37,22 @@ export interface Lead {
   /** "scratch" = the business has no website: designed from its Google Maps listing. */
   mode?: "rebuild" | "scratch";
   prospectId?: string;
+  /** Lead score 0–100 and its hot/warm/cold band, set once the diagnosis is in. */
+  score?: number;
+  temp?: LeadTemp;
+}
+
+/** How promising a lead is to win: hot = chase today, cold = low priority. */
+export type LeadTemp = "hot" | "warm" | "cold";
+
+/** Score bands. Keep in sync with scoreLead() on the server. */
+export const LEAD_TEMP = {
+  hot: { min: 70, label: "Hot" },
+  warm: { min: 45, label: "Warm" },
+  cold: { min: 0, label: "Cold" },
+} as const;
+export function leadTemp(score: number): LeadTemp {
+  return score >= LEAD_TEMP.hot.min ? "hot" : score >= LEAD_TEMP.warm.min ? "warm" : "cold";
 }
 
 export interface Issue {

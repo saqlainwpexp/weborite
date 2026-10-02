@@ -11,6 +11,7 @@ import { Dropdown } from "../components/Dropdown";
 import { workspaceEnabled } from "../../../shared/features";
 import { CLOUD_ROUTINE_PROMPT } from "../../../shared/cloudPrompt";
 import { PlanLicense } from "../components/PlanLicense";
+import { Billing } from "../components/Billing";
 import { AiProviderSettings } from "../components/AiSettings";
 import { BRAND_PRESETS, DEFAULT_BRAND, applyBrand, brandPalette, isHex } from "../lib/brand";
 
@@ -19,6 +20,7 @@ type Draft = Partial<S> & { apiKey?: string; metaPageToken?: string; metaAppSecr
 const TABS = [
   { key: "profile", label: "Profile" },
   { key: "license", label: "Plan & license" },
+  { key: "billing", label: "Billing" },
   { key: "claude", label: "AI" },
   { key: "leads", label: "Lead sources" },
   { key: "integrations", label: "Integrations" },
@@ -417,6 +419,8 @@ export default function Settings() {
         )}
 
         {tab === "license" && <PlanLicense />}
+
+        {tab === "billing" && <Billing />}
 
         {tab === "maintenance" && (
           <>

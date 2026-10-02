@@ -1,0 +1,1341 @@
+{
+ "niche": "Med spas, aesthetic clinics, cosmetic surgery & body sculpting",
+ "match": "med.?spa|medspa|medical.?spa|aesthetic|esthetic|cosmetic.?(surg|clinic|doctor|derm)|plastic.?surg|botox|filler|injector|injectable|lip.?filler|skin.?(clinic|care.?clinic)|dermatolog|laser.?(clinic|hair|skin)|body.?sculpt|body.?contour|coolsculpt|emsculpt|liposuction|lipo|tummy.?tuck|facelift|rhinoplast|breast.?(augment|lift)|hair.?(transplant|restoration|loss.?clinic)|\\bfue\\b|hydrafacial|microneedl|chemical.?peel|anti.?aging|anti.?ageing|weight.?loss.?clinic|semaglutide|glp.?1|iv.?therapy|iv.?drip|tanning|spray.?tan|nail.?salon|beauty.?salon|beauty.?clinic|lash|brow",
+ "about": "Mix-and-match sections for med spas, aesthetic/injectables clinics, cosmetic & plastic surgeons, body-sculpting, hair-restoration and skin clinics, from 12 Dribbble full-page references (1–12.webp; shot links in _sources.json). Every mockup = one base STYLE + an ordered set of SECTIONS. Crops live in sections/<id>.jpg. These designs are carried by soft, close-up skin/face photography and calm clinic interiors: use the lead's real practitioners, clinic and (consented) before/after photos first, then aesthetic stock. Medical claims, before/after results, prices, years and patient counts must come from FACTS; never invent credentials, FDA claims or medical-school affiliations — drop those blocks if not in FACTS.",
+ "styles": [
+  {
+   "id": "blush-editorial",
+   "name": "Blush editorial serif",
+   "fits": "med spa boutique weight loss glp-1 injectables skin rejuvenation warm women-owned local luxury wellness",
+   "character": "Warm and feminine: blush-cream canvas, a light high-contrast serif (Cormorant) where the second phrase of every heading is italic in dusty rose, tiny letter-spaced labels with leading rules, thin-bordered cream cards, one espresso-brown card or band for contrast, rose + espresso square buttons, generous whitespace. (Ref 1 Rustic Roots.)",
+   "fonts": "Cormorant Garamond (400/500, italic) for headings + Inter (400/500) for text",
+   "cssStarter": ":root{--accent:#c49a8c;--dark:#1b110e;--ink:#1f1714;--body:#6e625c;--bg:#fbf4ef;--cream:#fffaf6;--blush:#ecd3c9;--line:#ecdfd6;--container:1160px;--gutter:32px;--section-y:120px;--radius:4px}\nbody{font-family:'Inter',sans-serif;font-size:13px;line-height:1.7;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.dark{background:var(--dark);color:#c9bdb6}.dark h2{color:#fff}\nh1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:400;color:var(--ink);line-height:1.12}\nh1{font-size:60px}h1 em,h2 em{color:var(--accent);font-style:italic}\nh2{font-size:40px;text-align:center}\nh3{font-size:20px}\n.label{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#8d7f78;display:flex;gap:10px;align-items:center;justify-content:center}.label::before,.label::after{content:'';width:24px;height:1px;background:currentColor}\n.card{background:var(--cream);border:1px solid var(--line);border-radius:var(--radius);padding:28px}.card.dark{background:var(--dark)}\n.btn{display:inline-flex;align-items:center;height:40px;padding:0 20px;background:var(--dark);color:#fff;font-size:9px;letter-spacing:.14em;text-transform:uppercase}\n.btn-link{background:none;color:var(--ink);border-bottom:1px solid var(--ink);padding:0;height:auto}\n.stat{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--ink)}\n@media(max-width:768px){:root{--section-y:72px;--gutter:20px}h1{font-size:38px}h2{font-size:30px}}"
+  },
+  {
+   "id": "teal-clinic",
+   "name": "Considered clinic",
+   "fits": "aesthetic clinic doctor-led medical aesthetics skin clinic uk conditions treatments injectables prp considered premium",
+   "character": "Calm, doctor-led: ivory canvas, a large full-bleed rounded photo hero with a centred light serif headline and one italic word, a stacked-card treatment list beside a deep petrol-teal CTA card, peach/sand bands, a 'Start with what concerns you' two-column concern menu, bracketed tiny labels '[ OUR APPROACH ]', a giant 'Skin' word, a petrol-teal band with three ↗ link cells. (Refs 2 The Vale Clinic, 9 Aurelia.)",
+   "fonts": "Newsreader or Fraunces (300/400, italic) for headings + Inter (400/500) for text",
+   "cssStarter": ":root{--accent:#1b3c44;--ink:#1d1d1b;--body:#6b665f;--bg:#fffdf3;--sand:#f6e9df;--line:#ece6da;--container:1180px;--gutter:32px;--section-y:110px;--radius:14px}\nbody{font-family:'Inter',sans-serif;font-size:14px;line-height:1.65;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.sand{background:var(--sand)}\n.teal{background:var(--accent);color:#c9d6d7}.teal h2{color:#fff}\nh1,h2,h3{font-family:'Newsreader',serif;font-weight:300;color:var(--ink);letter-spacing:-.01em;line-height:1.12}\nh1{font-size:60px;color:#fff;text-align:center}h1 em,h2 em{font-style:italic}\nh2{font-size:44px}\nh3{font-size:22px;font-weight:400}\n.label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#8a857d}\n.btn{display:inline-flex;align-items:center;height:40px;padding:0 20px;border-radius:99px;background:#1d1d1b;color:#fff;font-size:12px}\n.btn-soft{background:rgba(255,255,255,.35);color:#fff;backdrop-filter:blur(6px)}\n.btn-outline{background:transparent;border:1px solid #cfc8bb;color:var(--ink)}\n.photo{border-radius:var(--radius);overflow:hidden}\n.concern{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);font-family:'Newsreader',serif;font-size:20px;color:#9a948a}.concern.on{color:var(--ink);border-bottom:2px solid var(--ink)}\n.giant{font-family:'Newsreader',serif;font-size:160px;font-weight:300;line-height:1;color:var(--ink)}\n@media(max-width:768px){:root{--section-y:68px;--gutter:20px}h1{font-size:36px}h2{font-size:30px}.giant{font-size:90px}}"
+  },
+  {
+   "id": "gold-medispa",
+   "name": "Honey gold medispa",
+   "fits": "med spa medispa facial fillers botox laser body contouring family local friendly bright",
+   "character": "Friendly and warm: a buttery cream canvas, honey-gold (#c9a63f) for highlighted words in every heading and for pill buttons, a smiling close-up face hero cut out on the right with a curved bottom edge, thin gold-rule stat row, tilted product/face collage, a mixed bento of treatment cards (icon + title) and photo tiles, numbered journey cards beside a video portrait, Google-review cards, a before/after slider, a dark photo CTA band. (Ref 3 Aureléa Medispa.)",
+   "fonts": "Marcellus (400) for headings + Inter (400/500/600) for text",
+   "cssStarter": ":root{--accent:#c9a63f;--ink:#1d1a14;--body:#5e5a50;--bg:#f2ede0;--cream:#faf6ec;--card:#f7f1e3;--line:#e2d9c4;--container:1160px;--gutter:32px;--section-y:100px;--radius:6px}\nbody{font-family:'Inter',sans-serif;font-size:13px;line-height:1.65;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\nh1,h2,h3{font-family:'Marcellus',serif;font-weight:400;color:var(--ink);line-height:1.15}\nh1{font-size:56px}h1 em,h2 em{font-style:normal;color:var(--accent)}\nh2{font-size:34px;text-align:center}\nh3{font-size:18px}\n.label{font-size:10px;color:var(--ink);text-align:center}.label::before{content:'• ';color:var(--accent)}\n.btn{display:inline-flex;align-items:center;height:36px;padding:0 20px;border-radius:99px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;text-transform:uppercase}\n.btn-outline{background:transparent;border:1px solid var(--accent);color:var(--accent)}\n.card{background:var(--card);border-radius:var(--radius);padding:22px;text-align:center}\n.stats{display:grid;grid-template-columns:repeat(4,1fr)}.stats>div{border-right:1px solid var(--line);padding:0 20px}.stats b{font-family:'Marcellus',serif;font-size:40px;color:var(--ink);font-weight:400}\n.curve{border-radius:0 0 50% 50%/0 0 12% 12%}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:36px}h2{font-size:26px}}"
+  },
+  {
+   "id": "hot-pink",
+   "name": "Hot pink beauty",
+   "fits": "beauty clinic permanent makeup lashes brows facials laser hair removal nail salon tanning young bold",
+   "character": "Bold and bubbly: white page inside a pale pink frame, a vivid magenta-pink gradient hero card with a smiling cut-out face sliced into vertical glass strips, a serif (Crimson / Lora) for headings, magenta pill buttons, a tilted photo with a solid magenta offset shadow, soft pink rounded panels, a magenta CTA card with a tilted photo and white checks, a magenta FAQ item open, a pink footer with a magenta bottom bar. (Ref 4 MavCare.)",
+   "fonts": "Lora (500/600) for headings + Lato (400/700) for text",
+   "cssStarter": ":root{--accent:#ff1a8c;--accent-2:#e0007a;--ink:#1e1e1e;--body:#666;--bg:#ffffff;--frame:#ffd6ea;--pale:#fff0f7;--line:#f7d8e8;--container:1140px;--gutter:32px;--section-y:96px;--radius:14px}\nbody{font-family:'Lato',sans-serif;font-size:13px;line-height:1.7;color:var(--body);background:var(--frame)}\n.page{background:var(--bg);max-width:1300px;margin:0 auto}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.hot{background:linear-gradient(120deg,var(--accent),var(--accent-2));color:#fff;border-radius:var(--radius)}\n.pale{background:var(--pale);border-radius:var(--radius)}\nh1,h2,h3{font-family:'Lora',serif;font-weight:600;color:var(--ink);line-height:1.25}\nh1{font-size:40px;color:#fff}\nh2{font-size:26px;text-align:center}\nh3{font-size:16px}\n.label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}.label::before,.label::after{content:' — '}\n.btn{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 18px;border-radius:99px;background:var(--accent);color:#fff;font-size:11px}\n.btn-white{background:#fff;color:var(--accent)}\n.offset{transform:rotate(-3deg);box-shadow:10px 10px 0 var(--accent)}\n.card{background:var(--pale);border-radius:10px;padding:16px}\n@media(max-width:768px){:root{--section-y:60px;--gutter:20px}h1{font-size:30px}h2{font-size:22px}}"
+  },
+  {
+   "id": "plum-luxe",
+   "name": "Quiet luxury plum",
+   "fits": "physician led aesthetic medicine injector filler artist luxury dallas beverly hills high end skincare shop",
+   "character": "Quiet luxury: a mauve-tinted portrait hero, a Didone/Bodoni-style serif with italic second lines ('Your best skin. / Clinically considered.'), oyster and cream bands, deep aubergine-plum cards and footer, tiny tracked uppercase labels, outline pill buttons with a round ↗ chip, provider cards with photo left and text right, a tab list beside a big plum feature card with a circular portrait inside rings, press/review tiles, a curated product shelf. (Ref 5 Highland Park.)",
+   "fonts": "Bodoni Moda (400, italic) for headings + Inter (400/500) for text",
+   "cssStarter": ":root{--accent:#2c1f28;--gold:#b08a5a;--ink:#1f1a1d;--body:#6d6468;--bg:#f7f4ef;--oyster:#e9e1db;--card:#efe8e2;--line:#e0d8d1;--container:1180px;--gutter:32px;--section-y:120px;--radius:10px}\nbody{font-family:'Inter',sans-serif;font-size:12px;line-height:1.7;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.oyster{background:var(--oyster)}\n.plum{background:var(--accent);color:#c8bcc2}.plum h2,.plum h3{color:#fff}\nh1,h2,h3{font-family:'Bodoni Moda',serif;font-weight:400;color:var(--ink);line-height:1.05;letter-spacing:-.01em}\nh1{font-size:64px;color:#fff}h1 em,h2 em{font-style:italic}\nh2{font-size:48px}\nh3{font-size:26px}\n.label{font-size:8px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}\n.btn{display:inline-flex;align-items:center;gap:10px;height:30px;padding:0 4px 0 16px;border-radius:99px;border:1px solid #bdb3ab;color:var(--ink);font-size:8px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}\n.btn i{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center}\n.card{background:var(--card);border-radius:var(--radius);overflow:hidden}\n.ring{border-radius:50%;box-shadow:0 0 0 40px rgba(255,255,255,.04),0 0 0 80px rgba(255,255,255,.03)}\n@media(max-width:768px){:root{--section-y:72px;--gutter:20px}h1{font-size:40px}h2{font-size:32px}}"
+  },
+  {
+   "id": "sage-wellness",
+   "name": "Sage & lime wellness",
+   "fits": "aesthetic wellness facials massage holistic skin spa microneedling acne treatment calm natural",
+   "character": "Soft and natural: a pale lime-yellow hero panel with a face photo overlaid with thin white 'treatment arrow' lines and small floating glass pill labels, a serif headline with an italic word, muted sage-green pill buttons, rounded-square icon cards with a lime dot, a 3×3 checker grid alternating lime tiles (icon + treatment name) and photos, a before/after split portrait, and a sage-olive footer with a big sunburst wordmark and a white booking card. (Ref 6 Lumière.)",
+   "fonts": "Crimson Pro (400, italic) for headings + Inter (400/500) for text",
+   "cssStarter": ":root{--accent:#5e7d6f;--olive:#7a8057;--lime:#f0f4c8;--ink:#1f211c;--body:#646860;--bg:#fcfdf6;--line:#e6e9dc;--container:1100px;--gutter:32px;--section-y:100px;--radius:18px}\nbody{font-family:'Inter',sans-serif;font-size:13px;line-height:1.65;color:var(--body);background:#eef0f3}\n.page{background:var(--bg);max-width:1180px;margin:0 auto}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.lime{background:var(--lime)}\nh1,h2,h3{font-family:'Crimson Pro',serif;font-weight:400;color:var(--ink);line-height:1.15}\nh1{font-size:48px}h1 em,h2 em{font-style:italic}\nh2{font-size:36px}\nh3{font-size:20px}\n.btn{display:inline-flex;align-items:center;height:32px;padding:0 16px;border-radius:99px;background:var(--accent);color:#fff;font-size:11px}\n.btn-white{background:#fff;color:var(--ink)}\n.tile{background:var(--lime);border-radius:var(--radius);display:grid;place-items:center;text-align:center;aspect-ratio:1}\n.tile h3{font-size:22px}\n.card{border:1px solid var(--line);border-radius:14px;padding:18px}\n.dot{width:24px;height:24px;border-radius:50%;background:#e2ec8a;display:grid;place-items:center}\n.glass-pill{background:rgba(255,255,255,.25);backdrop-filter:blur(6px);border-radius:99px;padding:4px 10px;color:#fff;font-size:10px}\nfooter{background:var(--olive);color:#e4e6d6}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:34px}h2{font-size:28px}}"
+  },
+  {
+   "id": "aubergine-modern",
+   "name": "Modern aubergine & peach",
+   "fits": "med spa modern approachable wellness aesthetics skin facials injectables body young brand friendly",
+   "character": "Modern and human: white page with a clean grotesk, headings in two lines where the second line is a soft mauve ('A little care. / A lot of possibility.'), a deep aubergine (#5a2e4f) and a warm peach (#eccbba) as the only colour blocks, a bento hero (headline + portrait + aubergine tile + peach tile), numbered thin-bordered square cards with ↗ corners, tiny ordered labels '02 / FIND YOUR FEEL-GOOD', an aubergine statement band with a round outline ↗, a split CTA (aubergine tile + peach tile with a sun line icon). (Ref 7 Aurélle.)",
+   "fonts": "Space Grotesk (400/500) for everything",
+   "cssStarter": ":root{--accent:#5a2e4f;--peach:#eccbba;--mauve:#a26d93;--dark:#2f2433;--ink:#1c1a1e;--body:#6c6870;--bg:#ffffff;--soft:#f2eff3;--line:#e7e3e8;--container:1160px;--gutter:32px;--section-y:100px;--radius:0}\nbody{font-family:'Space Grotesk',sans-serif;font-size:13px;line-height:1.6;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.soft{background:var(--soft)}\n.dark{background:var(--dark);color:#b9aebd}.dark h2{color:#fff}\nh1,h2,h3{font-weight:400;color:var(--ink);letter-spacing:-.02em;line-height:1.08}\nh1{font-size:64px}h1 em,h2 em{font-style:normal;color:var(--mauve)}\nh2{font-size:44px}\nh3{font-size:18px}\n.label{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:#9a949d}\n.tile{padding:24px;color:#fff;background:var(--accent)}.tile.peach{background:var(--peach);color:var(--ink)}\n.card{border:1px solid var(--line);padding:18px;position:relative}.card::after{content:'\\2197';position:absolute;top:10px;right:12px;font-size:12px}.card.on{background:var(--accent);color:#fff}\n.btn{display:inline-flex;align-items:center;gap:10px;height:32px;padding:0 14px;background:var(--dark);color:#fff;font-size:10px}\n.round{width:36px;height:36px;border-radius:50%;border:1px solid currentColor;display:grid;place-items:center}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:40px}h2{font-size:30px}}"
+  },
+  {
+   "id": "forest-yellow",
+   "name": "Forest & sunshine derm",
+   "fits": "medspa dermatology medical cosmetic dermatologist doctor md skin rejuvenation acne wrinkles board certified",
+   "character": "Clinical but warm: deep forest-green hero with a smiling face peeking through vertical glass/ribbed panels and a giant sunny-yellow 'MEDSPA' word, yellow buttons, a soft sage-mist watercolour background everywhere else, a yellow ticker band of hexagon/star glyphs between services, tilted photo strips, a big rounded sage panel with a cut-out towel portrait and floating white service cards, a 4-step dashed-line journey with a big circled '02', before/after sliders, a yellow stat card. (Ref 8 Lumina MedSpa.)",
+   "fonts": "Marcellus (400) for headings + Inter (400/500) for text",
+   "cssStarter": ":root{--accent:#ffe45c;--primary:#1f4031;--ink:#1c2a22;--body:#5a655d;--bg:#eef2e6;--mist:#dfe8d6;--panel:#a7c0a8;--line:#d7e0cf;--container:1160px;--gutter:32px;--section-y:100px;--radius:4px}\nbody{font-family:'Inter',sans-serif;font-size:12px;line-height:1.65;color:var(--body);background:radial-gradient(120% 60% at 50% 0,#f4f6ee,var(--bg))}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.forest{background:var(--primary);color:#cfe0d4}.forest h1{color:#f3f8ea}\nh1,h2,h3{font-family:'Marcellus',serif;font-weight:400;color:var(--ink);line-height:1.12}\nh1{font-size:52px}h1 em{font-style:normal;color:var(--accent)}\nh2{font-size:34px}\n.caps{text-transform:uppercase;font-size:22px;line-height:1.35}.caps .fade{color:#b3bcae}\nh3{font-size:16px}\n.giant{font-family:'Marcellus',serif;font-size:130px;color:var(--accent);line-height:.9}\n.pill-label{display:inline-block;background:#e3e8dd;font-size:9px;padding:3px 8px}\n.btn{display:inline-flex;align-items:center;height:32px;padding:0 16px;background:var(--primary);color:#fff;font-size:11px}\n.btn-yellow{background:var(--accent);color:#1c2a22}\n.ticker{background:var(--accent);border-top:1px solid #d4b93a;border-bottom:1px solid #d4b93a;font-family:'Marcellus',serif;font-size:22px;text-transform:uppercase;white-space:nowrap;padding:10px 0;color:#1c2a22}\n.panel{background:var(--panel);border-radius:24px}\n.card{background:#fff;padding:16px;box-shadow:0 6px 20px rgba(0,0,0,.05)}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:34px}.giant{font-size:64px}}"
+  },
+  {
+   "id": "mint-surgery",
+   "name": "Mint cosmetic surgery",
+   "fits": "cosmetic surgery plastic surgeon clinic hospital hair transplant body contouring breast facial procedures modern medical",
+   "character": "Modern medical: deep jade-teal (#1f6b5c) and fresh mint (#e4f8f1) with a jade-teal hero split diagonally around a surgeon-marked face cut-out, bold geometric sans headings with one outlined (stroke) word, round badge seals, a numbered services list where the open row is a dark gradient bar revealing a photo, a team list of outlined surgeon names where the active row is solid with a tilted photo, a dark jade process band with pill-shaped photos along a curve, big white leaf/flower silhouettes in corners, a dark footer with a giant ghosted wordmark. (Ref 10 Doccure.)",
+   "fonts": "Plus Jakarta Sans (500/600/700) for everything",
+   "cssStarter": ":root{--accent:#1f6b5c;--deep:#0f2b26;--mint:#e4f8f1;--ink:#15201d;--body:#5c6764;--bg:#ffffff;--line:#e2ece8;--container:1120px;--gutter:32px;--section-y:100px;--radius:16px}\nbody{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;line-height:1.65;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.mint{background:linear-gradient(180deg,#fff,var(--mint))}\n.deep{background:radial-gradient(80% 80% at 50% 0,#1d4a40,var(--deep));color:#bcd2cb}.deep h2{color:#fff}\nh1,h2,h3{font-weight:600;color:var(--ink);letter-spacing:-.01em;line-height:1.15}\nh1{font-size:40px;text-transform:uppercase}h1 .outline{color:transparent;-webkit-text-stroke:1px #6b8f86}\nh2{font-size:30px;text-align:center}\nh3{font-size:16px}\n.label{font-size:10px;font-weight:600;color:var(--ink);text-align:center}.label::before{content:'\\2192  ';color:var(--accent)}.label::after{content:'  \\2190';color:var(--accent)}\n.btn{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 4px 0 14px;border-radius:99px;background:var(--accent);color:#fff;font-size:10px}\n.row{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--line);font-size:16px;font-weight:600;color:var(--ink)}\n.row.on{background:linear-gradient(90deg,#10231f,#1f6b5c);color:#fff;padding:18px 20px}\n.outlined-name{font-size:30px;font-weight:600;color:transparent;-webkit-text-stroke:1px #b8c4c0}\n.outlined-name.on{color:var(--ink);-webkit-text-stroke:0}\n.wordmark{font-size:120px;font-weight:700;color:rgba(255,255,255,.06)}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:28px}h2{font-size:24px}}"
+  },
+  {
+   "id": "bronze-clinic",
+   "name": "Warm bronze clinic",
+   "fits": "skin clinic aesthetic clinic facial rejuvenation injectables skin therapy acne peels modern minimalist premium",
+   "character": "Tactile and modern: warm bronze-brown skin photography edge to edge (extreme close-ups of skin, hands on face), a HUGE clinic name in white grotesk across the bottom of the hero, near-white sections with centred headings where some words fade to grey ('Beauty begins with understanding your skin.'), tiny black pill buttons with a white round arrow chip, photo cards with big numeric 'sessions' figures, a thin 4-column value row, a circular 4-step diagram, a near-black footer with the giant name again. (Ref 11 Seon Clinic.)",
+   "fonts": "Inter Tight (400/500) for everything",
+   "cssStarter": ":root{--accent:#111111;--bronze:#8b6547;--ink:#151515;--grey:#a8a8a8;--body:#6a6a6a;--bg:#fafafa;--dark:#111111;--line:#e8e8e8;--container:1180px;--gutter:32px;--section-y:110px;--radius:4px}\nbody{font-family:'Inter Tight',sans-serif;font-size:13px;line-height:1.6;color:var(--body);background:#2a2520}\n.page{background:var(--bg);max-width:1300px;margin:0 auto}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\nh1,h2,h3{font-weight:400;color:var(--ink);letter-spacing:-.02em;line-height:1.15}\nh1{font-size:clamp(90px,13vw,190px);color:#fff;line-height:.9;letter-spacing:-.04em}\nh2{font-size:34px}h2 .g{color:var(--grey)}\nh3{font-size:16px;font-weight:500}\n.btn{display:inline-flex;align-items:center;gap:8px;height:24px;padding:0 3px 0 12px;border-radius:99px;background:var(--dark);color:#fff;font-size:9px}\n.btn i{width:18px;height:18px;border-radius:50%;background:#fff;color:#111;display:grid;place-items:center}\n.chip{display:inline-block;border-radius:99px;background:#fff;color:#111;font-size:9px;padding:3px 10px}\n.card{position:relative;color:#fff;overflow:hidden}.card b{position:absolute;right:16px;bottom:14px;font-size:44px;font-weight:400}\n.values{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}.values>div{padding:18px;border-left:1px solid var(--line)}\nfooter{background:var(--dark);color:#999}footer .giant{font-size:110px;color:#fff;letter-spacing:-.03em}\n@media(max-width:768px){:root{--section-y:68px;--gutter:20px}h2{font-size:26px}}"
+  },
+  {
+   "id": "becker-navy",
+   "name": "Surgeon navy classic",
+   "fits": "plastic surgery facial plastic surgeon rhinoplasty facelift master injectors multi location practice established trusted",
+   "character": "Established surgical practice: a soft powder-blue-to-cream gradient, an UPPERCASE classic serif (Cormorant SC / Libre Caslon) for headings, deep navy (#0b3f7e) rectangular buttons and round arrow buttons, a gloved-hands injection close-up hero with a curved bottom, photo cards with dark caption bars and ↗, a pale-blue press logo strip, a specialist block with a navy-backed portrait offset shadow, before/after pairs, review cards with navy quote marks, a location map with pin chips, a black footer with a thin geometric wordmark. (Ref 12 Becker Plastic Surgery.)",
+   "fonts": "Cormorant SC (500/600) for headings + Jost (400/500) for text; a thin geometric sans (Josefin Sans 100) for the wordmark",
+   "cssStarter": ":root{--accent:#0b3f7e;--ink:#1a1a1a;--body:#5d6168;--bg:#ffffff;--pale:#e7eef8;--grad:linear-gradient(90deg,#f4f1ea,#c9dbef);--line:#e2e6ec;--container:1100px;--gutter:32px;--section-y:100px;--radius:2px}\nbody{font-family:'Jost',sans-serif;font-size:13px;line-height:1.6;color:var(--body);background:var(--bg)}\n.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}\nsection{padding:var(--section-y) 0}\n.grad{background:var(--grad)}\n.pale{background:var(--pale)}\nh1,h2,h3{font-family:'Cormorant SC',serif;font-weight:500;color:var(--ink);line-height:1.1;letter-spacing:.01em}\nh1{font-size:44px}\nh2{font-size:34px}\nh3{font-size:18px}\n.btn{display:inline-flex;align-items:center;height:32px;padding:0 16px;background:var(--accent);color:#fff;font-size:11px;border-radius:var(--radius)}\n.btn-outline{background:#fff;border:1px solid var(--accent);color:var(--accent)}\n.arrow{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center}.arrow.light{background:#c9d6ea;color:var(--accent)}\n.card{position:relative}.card figcaption{background:#1c1c1c;color:#ddd;padding:10px 12px;font-size:11px}\n.offset{box-shadow:20px 20px 0 #c7d6ec}\n.quote{color:var(--accent);font-size:40px;font-family:Georgia,serif}\nfooter{background:#000;color:#aaa}.wordmark{font-family:'Josefin Sans',sans-serif;font-weight:100;font-size:110px;letter-spacing:.08em;color:#fff}\n@media(max-width:768px){:root{--section-y:64px;--gutter:20px}h1{font-size:32px}h2{font-size:26px}.wordmark{font-size:52px}}"
+  }
+ ],
+ "orders": [
+  [
+   "hero",
+   "about",
+   "treatments",
+   "results",
+   "team",
+   "testimonials",
+   "faq",
+   "cta",
+   "footer"
+  ],
+  [
+   "hero",
+   "trust",
+   "treatments",
+   "process",
+   "results",
+   "testimonials",
+   "contact",
+   "footer"
+  ],
+  [
+   "hero",
+   "about",
+   "concerns",
+   "treatments",
+   "team",
+   "testimonials",
+   "cta",
+   "footer"
+  ],
+  [
+   "hero",
+   "treatments",
+   "about",
+   "process",
+   "testimonials",
+   "faq",
+   "contact",
+   "footer"
+  ],
+  [
+   "hero",
+   "about",
+   "treatments",
+   "why",
+   "results",
+   "team",
+   "faq",
+   "footer"
+  ],
+  [
+   "hero",
+   "trust",
+   "about",
+   "treatments",
+   "team",
+   "results",
+   "testimonials",
+   "contact",
+   "footer"
+  ],
+  [
+   "hero",
+   "treatments",
+   "why",
+   "process",
+   "team",
+   "blog",
+   "cta",
+   "footer"
+  ]
+ ],
+ "sections": [
+  {
+   "id": "hero-rustic",
+   "role": "hero",
+   "from": "1 Rustic Roots",
+   "crop": {
+    "src": "1.webp",
+    "y": 0,
+    "h": 870
+   },
+   "spec": "Blush-cream. Header: fine-line logo, tiny tracked nav (active underlined rose), espresso 'Book now'. LEFT a small ruled label ('Florida · Established 2023'), a 4-line 56px serif headline with the second line italic rose, 2 lines italic serif intro, an espresso 'Schedule consultation →' button + underlined text link, and a 3-stat row in small serif (2 providers · 5 programs · 90d). RIGHT a portrait photo of a practitioner treating a client with a white 'Our promise' card overlapping its top-left and an espresso round '2023 est' badge on its bottom-right corner."
+  },
+  {
+   "id": "hero-vale",
+   "role": "hero",
+   "from": "2 The Vale Clinic",
+   "crop": {
+    "src": "2.webp",
+    "y": 0,
+    "h": 940
+   },
+   "spec": "Ivory. A tiny top bar (location left, WhatsApp · Call right). Header: small links left, a centred serif wordmark, outline 'Send enquiry' + black 'Book now' pills right. A wide rounded full-bleed photo (a woman's curls and shoulder, soft beige) with a centred 2-line 52px light serif headline (last words italic), one bold white line, and a black 'Book now' + frosted 'Explore treatments' pill pair."
+  },
+  {
+   "id": "hero-aurelea",
+   "role": "hero",
+   "from": "3 Aureléa Medispa",
+   "crop": {
+    "src": "3.webp",
+    "y": 0,
+    "h": 1000
+   },
+   "spec": "Gold top bar (social icons, address, email). Header: a spaced serif wordmark with a monogram, two gold pills ('Book an appointment', 'Call: …') and nav below. LEFT a tiny avatar row 'Trusted by 10,000+ happy clients', a 3-line 48px serif headline with 'Your Skin.' in gold, a small gold brushstroke, 2 lines, a gold + outline pill pair. RIGHT a smiling woman with hands on her face, the section ending in a soft curve with 'Trusted by <gold words> communities' centred under it."
+  },
+  {
+   "id": "hero-mavcare",
+   "role": "hero",
+   "from": "4 MavCare",
+   "crop": {
+    "src": "4.webp",
+    "y": 0,
+    "h": 800
+   },
+   "spec": "White page in a pink frame. Header: serif logo with 'Care' in magenta, small links. A rounded magenta gradient card: LEFT a small '— Beauty redefined —' label, a 3-line 36px white serif headline, 3 lines, a white pill 'Book an appointment'; RIGHT a smiling woman cut out, with the right third of the card sliced into 3 vertical frosted-glass strips over her."
+  },
+  {
+   "id": "hero-highland",
+   "role": "hero",
+   "from": "5 Highland Park",
+   "crop": {
+    "src": "5.webp",
+    "y": 0,
+    "h": 760
+   },
+   "spec": "A mauve-toned full-bleed portrait (woman touching her face). Header: monogram + stacked name, small nav, phone right. LEFT two tiny tracked labels, a 3-line 64px Didone headline ('Your best skin. / Clinically / considered.' last two italic), 2 lines, an outline pill with a round ↗. Bottom: a slide counter with ‹ › and, on the right, 3 small frosted tiles (Injectables with a thumbnail, Skin procedures, Consultations) each with a ↗."
+  },
+  {
+   "id": "hero-lumiere",
+   "role": "hero",
+   "from": "6 Lumière",
+   "crop": {
+    "src": "6.webp",
+    "x": 50,
+    "y": 0,
+    "w": 1340,
+    "h": 900
+   },
+   "spec": "A pale lime-yellow panel. Header: sunburst logo, small nav, white 'Contact us' pill. LEFT a 2-line 44px serif headline with 'Beauty' italic, 2 lines, a sage 'Book a consultation' + white 'Explore services' pill, 3 tiny ✓ benefits, and a stacked-avatar '300+ individuals who trusted' chip bottom-left. RIGHT a close-up face with thin white arrow lines drawn across the cheek and small translucent pill labels ('Hair restoration', 'Natural formula', 'Fotona micropeel')."
+  },
+  {
+   "id": "hero-aurelle",
+   "role": "hero",
+   "from": "7 Aurélle",
+   "crop": {
+    "src": "7.webp",
+    "y": 0,
+    "h": 890
+   },
+   "spec": "White. Header: lowercase wordmark + tiny tagline, small links, a dark 'Let's meet ↗' button. A bento: LEFT a tiny dot label, a 2-line 72px grotesk headline ('Your kind / of good.' with 'good' in mauve and a small sparkle), 2 lines, a round outline ↗; RIGHT a portrait photo tile + an aubergine tile with a line icon ('Skin deep. And beyond.'), and under them a peach tile ('Let's talk about you.') and a white bordered tile ('Real care. Zero pressure.'). A thin pale strip of tiny taglines separated by ✧ runs underneath."
+  },
+  {
+   "id": "hero-lumina",
+   "role": "hero",
+   "from": "8 Lumina MedSpa",
+   "crop": {
+    "src": "8.webp",
+    "y": 0,
+    "h": 880
+   },
+   "spec": "Deep forest green. A header bar with a script monogram logo, nav, a yellow 'Book free consultation' button and a menu icon. LEFT a tiny pill label, a 3-line 52px serif headline (middle line yellow, a small photo inline in the third line), a round rotating video badge + 2 lines + a yellow button. RIGHT a smiling woman with under-eye patches seen through vertical ribbed-glass panels, and a giant yellow 'MEDSPA' word across the bottom-right."
+  },
+  {
+   "id": "hero-aurelia",
+   "role": "hero",
+   "from": "9 Aurelia",
+   "crop": {
+    "src": "9.webp",
+    "x": 70,
+    "y": 0,
+    "w": 1300,
+    "h": 1060
+   },
+   "spec": "Inside a dark frame: a thin top bar, a white header (logo, dropdown nav, outline 'Send enquiry' + black 'Book now'). A near-black hero with a dramatic side-lit close-up face on the right; LEFT a 3-line 52px light serif headline ('Doctor-led / Aesthetic Clinic / in <City>'), 2 lines, a white + outline pill pair."
+  },
+  {
+   "id": "hero-doccure",
+   "role": "hero",
+   "from": "10 Doccure",
+   "crop": {
+    "src": "10.webp",
+    "y": 0,
+    "h": 740
+   },
+   "spec": "Split mint | jade-teal diagonal. Header: logo with a small crown, a pill nav, 'Book consultation' pill with arrow, icons. LEFT a 3-line 36px bold uppercase headline with one outlined word, a teal 'Search specialist' pill, and a white card with a video thumbnail and 3 stats (45k+ procedures · 12k+ surgeons · 15k+ patients). CENTRE a man in a surgical cap with dashed surgical markings, cut out. RIGHT a small white title + 3 lines, two tiny 'Body 40% / Face 80%' photo bars, a quote and an avatar row."
+  },
+  {
+   "id": "hero-seon",
+   "role": "hero",
+   "from": "11 Seon Clinic",
+   "crop": {
+    "src": "11.webp",
+    "x": 70,
+    "y": 0,
+    "w": 1300,
+    "h": 940
+   },
+   "spec": "A full-bleed warm bronze close-up (a woman's arm across her face). Header: small name left, dotted nav, a black 'Book a consultation' pill with a white chip. LEFT a 2-line 28px white headline + a tiny black pill; two small icon features in the middle-right; the clinic name as a HUGE white grotesk wordmark filling the bottom edge."
+  },
+  {
+   "id": "hero-becker",
+   "role": "hero",
+   "from": "12 Becker",
+   "crop": {
+    "src": "12.webp",
+    "y": 0,
+    "h": 900
+   },
+   "spec": "White header (thin geometric wordmark, small nav, navy 'Book appointment' + outline 'Select location'). A powder-blue-to-cream hero with a woman's face being injected by gloved hands on the right; LEFT a 3-line 40px UPPERCASE serif headline, 3 lines, a navy + outline button pair. The hero ends in a wide shallow white curve."
+  },
+  {
+   "id": "trust-aurelea-stats",
+   "role": "trust",
+   "from": "3 Aureléa Medispa",
+   "crop": {
+    "src": "3.webp",
+    "y": 950,
+    "h": 260
+   },
+   "spec": "Cream. A centred 30px serif line with 3 words in gold ('Trusted by Clients, Beauty, & Wellness Communities'), then 4 big light serif stats (15+ · 10k+ · 98% · 25+) split by thin gold vertical rules with tiny labels."
+  },
+  {
+   "id": "trust-becker-press",
+   "role": "trust",
+   "from": "12 Becker",
+   "crop": {
+    "src": "12.webp",
+    "y": 1720,
+    "h": 170
+   },
+   "spec": "A full-width pale-blue strip of 5 large coloured logos (institutions, press, social platforms). Use only real affiliations or press from FACTS."
+  },
+  {
+   "id": "trust-lumina-academic",
+   "role": "trust",
+   "from": "8 Lumina MedSpa",
+   "crop": {
+    "src": "8.webp",
+    "y": 5980,
+    "h": 160
+   },
+   "spec": "A thin sage strip: '<Credentials> & Clinical Excellence' in serif on the left and a row of 5 institution crests. Only with real credentials from FACTS."
+  },
+  {
+   "id": "trust-lumina-ticker",
+   "role": "trust",
+   "from": "8 Lumina MedSpa",
+   "crop": {
+    "src": "8.webp",
+    "y": 1920,
+    "h": 110
+   },
+   "spec": "A full-width yellow ticker band with dark thin rules above and below: uppercase serif service words separated by dark hexagon/star glyphs."
+  },
+  {
+   "id": "about-aurelea",
+   "role": "about",
+   "from": "3 Aureléa Medispa",
+   "crop": {
+    "src": "3.webp",
+    "y": 1220,
+    "h": 900
+   },
+   "spec": "Cream. A tiny '• About us' label, a centred 5-line 26px serif statement with a small avatar cluster at the end, then a fanned collage: a tall gold product card in the middle with two tilted face photos behind it. Under it a row of 4 small icon benefits ('Free from sulfates', 'Vibrant & safe', …)."
+  },
+  {
+   "id": "about-mavcare",
+   "role": "about",
+   "from": "4 MavCare",
+   "crop": {
+    "src": "4.webp",
+    "y": 860,
+    "h": 540
+   },
+   "spec": "White. LEFT a slightly tilted photo of a practitioner treating a client with a solid magenta offset block behind it. RIGHT a small magenta label, a 2-line 20px serif heading, 4 lines, a thin rule, a 2-stat row (1.4K happy patients · 10+ years) and a magenta pill 'Learn more'."
+  },
+  {
+   "id": "about-highland-promise",
+   "role": "about",
+   "from": "5 Highland Park",
+   "crop": {
+    "src": "5.webp",
+    "y": 760,
+    "h": 440
+   },
+   "spec": "Cream. A tiny gold label, a 2-line 48px Didone heading ('Quiet luxury. / Clinical authority.' second line italic) on the left; two short grey paragraphs side by side on the right and an outline 'Meet the practice' pill with a round ↗."
+  },
+  {
+   "id": "about-lumiere",
+   "role": "about",
+   "from": "6 Lumière",
+   "crop": {
+    "src": "6.webp",
+    "x": 50,
+    "y": 900,
+    "w": 1340,
+    "h": 800
+   },
+   "spec": "Near-white. A 3-line 36px serif heading with 'Discover True Beauty' italic, 3 lines, a round photo of a facial treatment on the right. A row of 3 thin-bordered rounded cards with a lime clock icon dot, a serif title and 2 lines."
+  },
+  {
+   "id": "about-aurelle-statement",
+   "role": "about",
+   "from": "7 Aurélle",
+   "crop": {
+    "src": "7.webp",
+    "y": 1900,
+    "h": 560
+   },
+   "spec": "A deep aubergine band. A tiny label, a 2-line 56px grotesk statement ('More human. / Less one-size-fits-all.' second half pale mauve), a heart outline icon top-right, a peach 'a⁺' monogram bottom-left, 2 grey lines and a round outline ↗ bottom-right."
+  },
+  {
+   "id": "about-lumina",
+   "role": "about",
+   "from": "8 Lumina MedSpa",
+   "crop": {
+    "src": "8.webp",
+    "y": 880,
+    "h": 1040
+   },
+   "spec": "Sage mist. A tiny pill label with a long rule, a 4-line uppercase serif statement where the last lines fade to pale grey, 3 stats (12+ · 98% · 2K+) with tiny labels, a dark 'Book free consultation' button, then a row of 4 slightly tilted overlapping treatment photos."
+  },
+  {
+   "id": "about-lumina-benefits",
+   "role": "about",
+   "from": "8 Lumina MedSpa",
+   "crop": {
+    "src": "8.webp",
+    "y": 2040,
+    "h": 700
+   },
+   "spec": "Sage mist. LEFT a tall photo of a practitioner treating a patient; RIGHT a smaller photo of a facial treatment. Between them a tiny pill label, a 3-line 32px serif heading, 2 lines, two circular percentage rings with labels (96% skin rejuvenation · 96% personalized care) and a dark button."
+  },
+  {
+   "id": "about-vale-clinic",
+   "role": "about",
+   "from": "2 The Vale Clinic",
+   "crop": {
+    "src": "2.webp",
+    "y": 1780,
+    "h": 820
+   },
+   "spec": "A soft peach band. A tiny label, a 2-line 44px serif 'Designed for care, / not hurry.' ('for care' italic), a wide rounded photo of a practitioner consulting a client at a desk, then 3 grey serif lines left and an outline 'Explore the clinic' pill right."
+  },
+  {
+   "id": "about-vale-approach",
+   "role": "about",
+   "from": "2 The Vale Clinic",
+   "crop": {
+    "src": "2.webp",
+    "x": 0,
+    "y": 3560,
+    "w": 1024,
+    "h": 1100
+   },
+   "spec": "Ivory. A bracketed tiny label '[ OUR APPROACH ]' and a 2-line 28px serif heading on a ruled row; 'Our method' and 'Our philosophy' mini columns; then a giant 150px serif word 'Skin' with a small brown dot + 2-line caption bottom-left, a small rounded macro photo (serum bubbles) and a tall rounded portrait (woman lying in a wildflower meadow) on the right."
+  },
+  {
+   "id": "about-seon",
+   "role": "about",
+   "from": "11 Seon Clinic",
+   "crop": {
+    "src": "11.webp",
+    "x": 70,
+    "y": 1000,
+    "w": 1300,
+    "h": 700
+   },
+   "spec": "Near-white. A centred 2-line 30px heading where 'with' and 'understanding' are grey, a tiny black pill 'About us', and a landscape close-up of hands framing a face centred below."
+  },
+  {
+   "id": "about-doccure",
+   "role": "about",
+   "from": "10 Doccure",
+   "crop": {
+    "src": "10.webp",
+    "y": 740,
+    "h": 800
+   },
+   "spec": "White with a huge vertical outlined 'ABOUT US' on the right edge. LEFT a collage of circular/quarter-round photos (surgeon with loupes, female surgeon) with a jade rotating badge and a jade '12+ experience' vertical tile. RIGHT a small label, a 2-line 24px bold heading, a large outlined year numeral, 3 lines, a mint 'Our mission | Our vision' card and a jade pill 'More about us'."
+  },
+  {
+   "id": "concerns-vale",
+   "role": "concerns",
+   "from": "2 The Vale Clinic",
+   "crop": {
+    "src": "2.webp",
+    "y": 2600,
+    "h": 960
+   },
+   "spec": "Ivory. A tiny label, a 36px serif 'Start with what concerns you', 2 lines, an outline 'View all conditions' pill right. LEFT a list of 4 concern categories in 20px serif with arrows (the active one ink with a thick underline, the rest grey); RIGHT a peach rounded panel for the active category: title, 2 lines and a long ruled list of specific concerns with → on each."
+  },
+  {
+   "id": "concerns-aurelia",
+   "role": "concerns",
+   "from": "9 Aurelia",
+   "crop": {
+    "src": "9.webp",
+    "x": 70,
+    "y": 3000,
+    "w": 1300,
+    "h": 960
+   },
+   "spec": "Sand band. A 30px serif 'Start with what concerns you', 2 lines, an outline pill. A carousel: a white rounded card with a portrait on the left half and on the right a 24px title, 2 lines, a ruled list of 5 concerns and an underlined 'View all … concerns →'; the next card's photo peeks at the right edge; small ← → below."
+  },
+  {
+   "id": "concerns-rustic-paths",
+   "role": "concerns",
+   "from": "1 Rustic Roots",
+   "crop": {
+    "src": "1.webp",
+    "y": 870,
+    "h": 800
+   },
+   "spec": "White. A tiny tracked label, a centred 2-line 34px serif heading with the second half italic rose ('Choose your path. We'll walk it with you.'), 2 italic lines. 3 thin-bordered cream cards: a tiny italic 'No. 01', a 2-line serif goal ('I want to feel confident in my body again.'), 4 lines, a rule and a tiny tracked uppercase link at the bottom."
+  },
+  {
+   "id": "treatments-vale",
+   "role": "treatments",
+   "from": "2 The Vale Clinic",
+   "crop": {
+    "src": "2.webp",
+    "y": 980,
+    "h": 820
+   },
+   "spec": "Ivory. LEFT a tiny label, a 2-line 36px serif 'Most popular treatments' and 3 lines. RIGHT a stack of overlapping white cards (01–05) each showing a thin photo strip, the last one open with a photo, the treatment name and a line; a petrol-teal rounded card overlaps the bottom: 'Looking for something more specific?', one line, a white 'All treatments' pill and an underlined 'Start from conditions' link."
+  },
+  {
+   "id": "treatments-aurelea",
+   "role": "treatments",
+   "from": "3 Aureléa Medispa",
+   "crop": {
+    "src": "3.webp",
+    "y": 2130,
+    "h": 1100
+   },
+   "spec": "Cream. A tiny label and a centred 30px serif heading with 3 gold words. A bento grid: a wide photo tile (brown skincare bottles) + 2 cream treatment cards; then 3 cream cards + a photo tile (makeup). Each card has a small outline shield icon, an 18px serif title and 3 lines. A centred gold pill 'View all services'."
+  },
+  {
+   "id": "treatments-mavcare",
+   "role": "treatments",
+   "from": "4 MavCare",
+   "crop": {
+    "src": "4.webp",
+    "y": 1420,
+    "h": 700
+   },
+   "spec": "White. A centred 22px serif 'Our Beauty Treatments' + 2 lines. A carousel of 3 pale-pink cards: a square photo, a centred title and a small magenta pill 'View treatment →'; round prev/next arrows on the card edges (the next one magenta)."
+  },
+  {
+   "id": "treatments-highland-tabs",
+   "role": "treatments",
+   "from": "5 Highland Park",
+   "crop": {
+    "src": "5.webp",
+    "y": 2240,
+    "h": 1000
+   },
+   "spec": "White. A tiny label, a 44px Didone 'Care we believe in.' ('believe in' italic), a 2-line note and an outline pill. LEFT a cream list of treatment categories with small round icons (the active one bold with a dark chip) and a small monogram note at the bottom; RIGHT a big plum card: a tiny label, 'Injectables' 30px, 3 lines, a list of 4 items with tiny monogram bullets, an outline pill, and on the right a circular portrait inside faint concentric rings with tiny labels on the rings."
+  },
+  {
+   "id": "treatments-highland-balance",
+   "role": "treatments",
+   "from": "5 Highland Park",
+   "crop": {
+    "src": "5.webp",
+    "y": 3240,
+    "h": 1500
+   },
+   "spec": "Cream. A tiny label, a 2-line 48px Didone heading (second line italic), 2 lines. A row: a wide portrait photo with a frosted caption card at the bottom, a narrower photo with a smaller caption card, and a tall plum card with a monogram, a 6-line serif statement and small ← → at the bottom."
+  },
+  {
+   "id": "treatments-lumiere",
+   "role": "treatments",
+   "from": "6 Lumière",
+   "crop": {
+    "src": "6.webp",
+    "x": 50,
+    "y": 1700,
+    "w": 1340,
+    "h": 1560
+   },
+   "spec": "Near-white. A 3-line 36px serif heading with 'Meets Innovation,' italic on the left and 4 lines on the right. A 3×3 checkerboard of rounded squares alternating pale-lime tiles (a thin line icon + 22px serif treatment name; the first tile also has 2 lines and a sage 'Learn more') and close-up face/treatment photos."
+  },
+  {
+   "id": "treatments-aurelle",
+   "role": "treatments",
+   "from": "7 Aurélle",
+   "crop": {
+    "src": "7.webp",
+    "y": 960,
+    "h": 800
+   },
+   "spec": "White. A tiny label, a 2-line 44px heading ('A little care. / A lot of possibility.' second line mauve) and a 3-line note right. A row of 4 thin-bordered square cards (tiny number, line icon, title, one line, ↗ corner); the first card is filled aubergine. Below, a wide soft-grey card: a photo of a facial on the left, a label, a 2-line title, 2 lines, an underlined link, and a big pale 'YOU FIRST.' in the corner."
+  },
+  {
+   "id": "treatments-lumina-panel",
+   "role": "treatments",
+   "from": "8 Lumina MedSpa",
+   "crop": {
+    "src": "8.webp",
+    "y": 2780,
+    "h": 1520
+   },
+   "spec": "A big rounded sage panel. A tiny pill label and a 4-line uppercase serif heading (last lines fading to white). LEFT a cut-out woman in a white towel and robe; floating over the panel, 6 white service cards in a staggered grid (a round line icon, a title, 3 lines, a dark or yellow 'Read more ↗' tag)."
+  },
+  {
+   "id": "treatments-aurelia",
+   "role": "treatments",
+   "from": "9 Aurelia",
+   "crop": {
+    "src": "9.webp",
+    "x": 70,
+    "y": 1060,
+    "w": 1300,
+    "h": 1060
+   },
+   "spec": "White. A 30px serif 'Most popular treatments', 2 lines, a black 'View all treatments' + outline 'Explore by conditions' pill. A carousel of tall portrait photos (warm skin tones) running off the right edge, each with a title, 3 lines and an outline 'Explore' + black 'Book now' pill pair; ← → below."
+  },
+  {
+   "id": "treatments-doccure",
+   "role": "treatments",
+   "from": "10 Doccure",
+   "crop": {
+    "src": "10.webp",
+    "y": 1540,
+    "h": 1100
+   },
+   "spec": "Mint gradient with a jade leaf graphic top-right and a star bottom-left. A small arrow label + centred 24px bold 'Creative Best Services'. A numbered list (01. Facial aesthetic procedures …) with a 2-line description and an outline ↗ circle on each; the second row is open as a dark-to-jade gradient bar with a jade arrow and reveals a wide photo of a body-contouring treatment beneath it. A jade pill 'View all services'."
+  },
+  {
+   "id": "treatments-seon",
+   "role": "treatments",
+   "from": "11 Seon Clinic",
+   "crop": {
+    "src": "11.webp",
+    "x": 70,
+    "y": 1740,
+    "w": 1300,
+    "h": 900
+   },
+   "spec": "Near-white. A 2-line 30px heading with 'every skin' grey on the left and a tiny black pill 'Explore our treatment' on the right. 3 tall bronze-toned photo cards: a category label and a round number chip at the top, and at the bottom a title, 2 lines and a big '2–3 ml' style figure."
+  },
+  {
+   "id": "treatments-becker",
+   "role": "treatments",
+   "from": "12 Becker",
+   "crop": {
+    "src": "12.webp",
+    "y": 900,
+    "h": 820
+   },
+   "spec": "White. A centred 2-line 30px UPPERCASE serif heading and 2 lines. 3 portrait photo cards each with a dark caption bar at the bottom (title + ↗, 2 lines)."
+  },
+  {
+   "id": "why-mavcare",
+   "role": "why",
+   "from": "4 MavCare",
+   "crop": {
+    "src": "4.webp",
+    "y": 2180,
+    "h": 640
+   },
+   "spec": "A pale-pink rounded panel. LEFT a 22px serif 'Why Choose Us?', 3 lines, a rule, a 2×2 grid of reasons (bold title + 3 lines), a magenta pill. RIGHT a photo collage (2 small + 1 wide) with a thin doodle star."
+  },
+  {
+   "id": "why-seon-values",
+   "role": "why",
+   "from": "11 Seon Clinic",
+   "crop": {
+    "src": "11.webp",
+    "x": 70,
+    "y": 2640,
+    "w": 1300,
+    "h": 580
+   },
+   "spec": "Near-white. A 2-line 30px heading ('Care designed around what makes you unique.' with 'around what makes' grey). A 4-column row divided by thin rules: a tiny icon, a title and one grey line."
+  },
+  {
+   "id": "why-doccure",
+   "role": "why",
+   "from": "10 Doccure",
+   "crop": {
+    "src": "10.webp",
+    "y": 5020,
+    "h": 580
+   },
+   "spec": "Mint gradient with a leaf graphic. A small arrow label + 24px 'What Makes Us Different'. 4 photo cards with rounded corners and a round ↗ chip (the second one filled jade), a bold title (the second in jade) and 2 grey lines."
+  },
+  {
+   "id": "why-aurelia-care",
+   "role": "why",
+   "from": "9 Aurelia",
+   "crop": {
+    "src": "9.webp",
+    "x": 70,
+    "y": 2120,
+    "w": 1300,
+    "h": 880
+   },
+   "spec": "White. A wide photo of a smiling woman on the right; a 2-line 44px light serif heading overlapping the photo's left edge, 3 lines and an outline 'Discover our approach' pill on the left."
+  },
+  {
+   "id": "process-aurelea",
+   "role": "process",
+   "from": "3 Aureléa Medispa",
+   "crop": {
+    "src": "3.webp",
+    "y": 3240,
+    "h": 1170
+   },
+   "spec": "Cream. A tiny label, a centred 30px serif heading with 'Beautiful Skin' in gold. LEFT 4 stacked cream cards: a big serif number (01–04), a title, 2 lines and a pill (the first gold, others outline 'Learn more'). RIGHT a tall rounded portrait (woman in a white sweater) with a gold play button."
+  },
+  {
+   "id": "process-lumina",
+   "role": "process",
+   "from": "8 Lumina MedSpa",
+   "crop": {
+    "src": "8.webp",
+    "y": 4300,
+    "h": 800
+   },
+   "spec": "Sage mist. A tiny pill label, a centred 2-line 34px serif heading. A dashed horizontal line with 4 steps: small round photos with a number and a label, the active step a big dark-green circle with '02' in yellow inside a dashed ring, with the step title and 2 lines under it."
+  },
+  {
+   "id": "process-doccure",
+   "role": "process",
+   "from": "10 Doccure",
+   "crop": {
+    "src": "10.webp",
+    "y": 3560,
+    "h": 740
+   },
+   "spec": "A dark jade band with big white flower silhouettes in the corners. A small label + centred 24px white heading. 4 steps along a descending diagonal: a tiny 'Step N' marker (the active one a jade pill) on a thin vertical line, a white title and a pill-shaped photo, joined by small curved arrows; the active pill has a text overlay."
+  },
+  {
+   "id": "process-seon",
+   "role": "process",
+   "from": "11 Seon Clinic",
+   "crop": {
+    "src": "11.webp",
+    "x": 70,
+    "y": 3220,
+    "w": 1300,
+    "h": 1030
+   },
+   "spec": "Near-white. A centred 3-line 30px heading with grey trailing words and a tiny black pill. A large circle divided into 4 quadrants (one filled pale grey) with 'Your skin deserves care that lasts' in the centre, 4 step labels on the circle and 4 round photos just outside it."
+  },
+  {
+   "id": "process-aurelle-newhere",
+   "role": "process",
+   "from": "7 Aurélle",
+   "crop": {
+    "src": "7.webp",
+    "y": 2460,
+    "h": 780
+   },
+   "spec": "White. LEFT a portrait photo of a calm treatment room (a bed with a striped blanket, sheer curtains) with a tiny caption tag. RIGHT a tiny label, a 2-line 30px heading ('New here? / We've got you.') and 3 ruled steps with a small round mauve icon, a tiny label, a title and one grey line."
+  },
+  {
+   "id": "process-aurelle-plan",
+   "role": "process",
+   "from": "7 Aurélle",
+   "crop": {
+    "src": "7.webp",
+    "y": 3240,
+    "h": 460
+   },
+   "spec": "White. LEFT a peach tile with a tiny label, a wave line icon and a 2-line 'Your pace. / Your possibilities.'. RIGHT a 2-line 28px heading, 2 grey lines, a row of 3 tiny labels and an underlined link with ↗."
+  },
+  {
+   "id": "results-aurelea",
+   "role": "results",
+   "from": "3 Aureléa Medispa",
+   "crop": {
+    "src": "3.webp",
+    "y": 6050,
+    "h": 750
+   },
+   "spec": "Cream. A tiny label, a centred 30px serif 'See The Difference' ('Difference' gold). A wide before/after comparison photo with a round white ‹ › handle in the middle, and 'Before' / 'After' in bold under each half."
+  },
+  {
+   "id": "results-lumiere",
+   "role": "results",
+   "from": "6 Lumière",
+   "crop": {
+    "src": "6.webp",
+    "x": 50,
+    "y": 4180,
+    "w": 1340,
+    "h": 760
+   },
+   "spec": "Near-white. LEFT a 2-line 36px serif 'Proof in Every / Transformation' (second line italic), 2 lines, a sage + white pill pair, 5 orange stars, a 3-line quote, name + role, small ‹ › buttons. RIGHT a rounded sage panel with a split before/after portrait and a round white handle."
+  },
+  {
+   "id": "results-lumina",
+   "role": "results",
+   "from": "8 Lumina MedSpa",
+   "crop": {
+    "src": "8.webp",
+    "y": 6150,
+    "h": 700
+   },
+   "spec": "Sage mist. A tiny pill label, a centred 2-line 34px serif heading. 2 before/after portraits side by side, each with a thin centre line and a dark round ↔ handle, and small white 'Before' / 'After' tags in the corners."
+  },
+  {
+   "id": "results-becker",
+   "role": "results",
+   "from": "12 Becker",
+   "crop": {
+    "src": "12.webp",
+    "y": 2640,
+    "h": 700
+   },
+   "spec": "A cream-to-powder-blue gradient band. LEFT a 30px UPPERCASE serif procedure title, a bold subtitle and 2 grey lines; RIGHT a navy '<Surgeon> →' button + outline 'View all gallery'. A carousel of before/after pairs with small 'After' / 'Before' tags and a ↔ between each pair, running off the right edge."
+  },
+  {
+   "id": "team-rustic",
+   "role": "team",
+   "from": "1 Rustic Roots",
+   "crop": {
+    "src": "1.webp",
+    "y": 4130,
+    "h": 710
+   },
+   "spec": "White. A tiny tracked label, a centred 34px serif 'Two providers. One mission.' (second half italic rose), 2 italic lines. 2 provider blocks side by side: a portrait photo on the left, a tiny rose uppercase role, the name in serif, a small role line, 5 lines of bio and an underlined rose 'Read <Name>'s story →'."
+  },
+  {
+   "id": "team-highland",
+   "role": "team",
+   "from": "5 Highland Park",
+   "crop": {
+    "src": "5.webp",
+    "y": 1300,
+    "h": 780
+   },
+   "spec": "White. A tiny label, a 2-line 44px Didone heading (second line italic), 2 grey lines and an outline 'About the practice' pill. 2 wide cards: a portrait on the left, a tiny gold role, the name in 26px serif, 3 lines and an outline 'Meet Dr. …' pill with a round ↗; the second card has a warm sand background."
+  },
+  {
+   "id": "team-lumina-director",
+   "role": "team",
+   "from": "8 Lumina MedSpa",
+   "crop": {
+    "src": "8.webp",
+    "y": 5190,
+    "h": 790
+   },
+   "spec": "Sage mist. LEFT the medical director standing in a white coat, arms crossed, cut out and fading. RIGHT a long rule leading into a 2-line 30px serif 'Meet Medical Director / Dr. <Name>, M.D', 5 lines of bio, 3 small icon credential lines and a dark 'Book free consultation' button."
+  },
+  {
+   "id": "team-aurelia",
+   "role": "team",
+   "from": "9 Aurelia",
+   "crop": {
+    "src": "9.webp",
+    "x": 70,
+    "y": 3960,
+    "w": 1300,
+    "h": 680
+   },
+   "spec": "White. LEFT a 3-line 32px serif heading ('Expert care starts with people who listen'), 3 lines and a black 'Meet the team' pill. RIGHT a rounded photo of two practitioners on a warm terracotta background."
+  },
+  {
+   "id": "team-doccure",
+   "role": "team",
+   "from": "10 Doccure",
+   "crop": {
+    "src": "10.webp",
+    "y": 2640,
+    "h": 740
+   },
+   "spec": "White. A small label + centred 24px 'Our Team Members'. A ruled list: tiny role on the left, the surgeon's name as a big 26px outlined (stroke) word, 4 small social icons on the right; the active row is a solid-text name inside a rounded outline pill with a tilted photo card popping out over it."
+  },
+  {
+   "id": "team-becker",
+   "role": "team",
+   "from": "12 Becker",
+   "crop": {
+    "src": "12.webp",
+    "y": 1890,
+    "h": 750
+   },
+   "spec": "White. LEFT a 30px UPPERCASE serif 'Meet our specialists', the doctor's name + credentials, a bold speciality line, 6 lines of bio, a small underlined 'Meet Dr. …' and navy ← → round buttons. RIGHT a portrait on a solid navy background with a pale offset rectangle behind it."
+  },
+  {
+   "id": "testimonials-rustic",
+   "role": "testimonials",
+   "from": "1 Rustic Roots",
+   "crop": {
+    "src": "1.webp",
+    "y": 3480,
+    "h": 650
+   },
+   "spec": "Blush band. A tiny tracked label, a centred 2-line 34px serif heading (second half italic rose). 3 white cards with a 4-line italic serif quote and a tiny rose tracked '— Name, city'."
+  },
+  {
+   "id": "testimonials-rustic-feature",
+   "role": "testimonials",
+   "from": "1 Rustic Roots",
+   "crop": {
+    "src": "1.webp",
+    "y": 2730,
+    "h": 750
+   },
+   "spec": "Espresso band. LEFT a tiny ruled label, a 2-line 34px serif heading with the second half italic rose, 2 short paragraphs, a 3-stat row (3 treatment options · $750+ · 90d) and an outline + underlined button pair. RIGHT a square photo of a treatment in progress."
+  },
+  {
+   "id": "testimonials-aurelea",
+   "role": "testimonials",
+   "from": "3 Aureléa Medispa",
+   "crop": {
+    "src": "3.webp",
+    "y": 5250,
+    "h": 800
+   },
+   "spec": "Cream. A tiny label, a centred 30px serif heading with 'Client Say' in gold. 3 cream cards: gold stars, a 4-line quote, then a coloured initial circle + name + 'Customer' and a Google logo at the bottom; slider dots."
+  },
+  {
+   "id": "testimonials-mavcare",
+   "role": "testimonials",
+   "from": "4 MavCare",
+   "crop": {
+    "src": "4.webp",
+    "y": 2840,
+    "h": 480
+   },
+   "spec": "White. A 22px serif 'What Our Clients Are Saying' + 2 lines left, pink/magenta round arrows right. 4 pale-pink cards: gold stars, 4 lines, a rule, a small avatar + name + treatment."
+  },
+  {
+   "id": "testimonials-highland-press",
+   "role": "testimonials",
+   "from": "5 Highland Park",
+   "crop": {
+    "src": "5.webp",
+    "y": 5380,
+    "h": 1050
+   },
+   "spec": "White. LEFT a tiny label, a 4-line 48px Didone heading ('Recognized in <City>. / Trusted by / patients.' last lines italic), 2 grey lines and a '5.0 ★★★★★' rating. RIGHT a 2×2 grid of tiles: a plum press card with a big serif quote title and an outline 'Read the feature' pill, and 3 pale review cards (small source chip, a 3-line serif quote, name, a round ↗)."
+  },
+  {
+   "id": "testimonials-lumina",
+   "role": "testimonials",
+   "from": "8 Lumina MedSpa",
+   "crop": {
+    "src": "8.webp",
+    "y": 7000,
+    "h": 700
+   },
+   "spec": "Sage mist. A tiny pill label, a 2-line 32px serif heading left, a dark button right. A row: a square photo, a white card (orange stars, a 4-line bold quote, name, a '99' mark, dark ‹ › buttons), and a yellow card with a big '95%' and a 3-line caption."
+  },
+  {
+   "id": "testimonials-aurelia",
+   "role": "testimonials",
+   "from": "9 Aurelia",
+   "crop": {
+    "src": "9.webp",
+    "x": 70,
+    "y": 5980,
+    "w": 1300,
+    "h": 520
+   },
+   "spec": "White. A 30px serif 'What our patients say' and a small pill 'Leave us a review'. A row of outlined rounded review cards (gold stars, 2 lines, a rule, 'Patient name' + a Google mark) running off the right edge, ← → below."
+  },
+  {
+   "id": "testimonials-doccure",
+   "role": "testimonials",
+   "from": "10 Doccure",
+   "crop": {
+    "src": "10.webp",
+    "y": 4300,
+    "h": 720
+   },
+   "spec": "White. A small label + centred 24px 'Our Testimonials'. LEFT a tall rounded card with a cut-out patient on a mint gradient and a jade quote badge; RIGHT gold stars '5.0', a bold title, a 3-line quote, a row of round avatars with the active one ringed, the name and procedure."
+  },
+  {
+   "id": "testimonials-becker",
+   "role": "testimonials",
+   "from": "12 Becker",
+   "crop": {
+    "src": "12.webp",
+    "y": 3380,
+    "h": 620
+   },
+   "spec": "White. A 30px UPPERCASE serif 'What our patients say' + one line left, navy ← → right. A row of outlined review cards with navy double quote marks, orange stars, a bold 2-line title, 6 lines and the name; cut off at both edges."
+  },
+  {
+   "id": "testimonials-becker-videos",
+   "role": "testimonials",
+   "from": "12 Becker",
+   "crop": {
+    "src": "12.webp",
+    "y": 4050,
+    "h": 900
+   },
+   "spec": "White. A centred 30px UPPERCASE serif 'Patient stories' + one line. A masonry of 8 dark video thumbnails of patients with navy round play buttons."
+  },
+  {
+   "id": "faq-aurelea",
+   "role": "faq",
+   "from": "3 Aureléa Medispa",
+   "crop": {
+    "src": "3.webp",
+    "y": 6800,
+    "h": 680
+   },
+   "spec": "Cream. LEFT a tiny label, a 30px serif 'Frequently Asked Question' with the last two words gold, 3 lines, a gold pill 'See common questions'. RIGHT white question rows with a gold round chevron; the last one open with 2 lines."
+  },
+  {
+   "id": "faq-mavcare",
+   "role": "faq",
+   "from": "4 MavCare",
+   "crop": {
+    "src": "4.webp",
+    "y": 4020,
+    "h": 700
+   },
+   "spec": "White. A centred 22px serif 'Frequently Asked Questions'. LEFT an accordion: the first item a solid magenta card with the answer in white, the rest pale-pink rows with '+'. RIGHT a portrait of a smiling woman with a hair towel and eye patches on a pink background."
+  },
+  {
+   "id": "faq-aurelle",
+   "role": "faq",
+   "from": "7 Aurélle",
+   "crop": {
+    "src": "7.webp",
+    "y": 3700,
+    "h": 560
+   },
+   "spec": "Soft grey band. LEFT a tiny label, a 2-line 30px 'Good questions. / Clear answers.', 2 lines, and lower a small chat icon + 'Something else on your mind?' + a link. RIGHT ruled accordion rows with '+'; the first open with 2 lines."
+  },
+  {
+   "id": "faq-lumina",
+   "role": "faq",
+   "from": "8 Lumina MedSpa",
+   "crop": {
+    "src": "8.webp",
+    "y": 8000,
+    "h": 850
+   },
+   "spec": "Sage mist. A 2-line 34px serif heading with a big dark round ↓ button to its right. LEFT a rounded photo of a treatment with pink gloves; RIGHT white bordered question rows with dark '+' circles, the last one open as a solid dark-green card with the answer in white."
+  },
+  {
+   "id": "faq-seon",
+   "role": "faq",
+   "from": "11 Seon Clinic",
+   "crop": {
+    "src": "11.webp",
+    "x": 70,
+    "y": 5220,
+    "w": 1300,
+    "h": 820
+   },
+   "spec": "White. LEFT a tall bronze close-up of fingers on lips. RIGHT a 30px 'Frequently asked questions', 2 grey lines and a ruled accordion with small '+'; the second item open."
+  },
+  {
+   "id": "blog-mavcare",
+   "role": "blog",
+   "from": "4 MavCare",
+   "crop": {
+    "src": "4.webp",
+    "y": 4760,
+    "h": 430
+   },
+   "spec": "White. A 22px serif 'Our Latest Insights' left and 2 lines right. 3 photo cards with a magenta caption bar (title, 'Discover more' underlined, date) at the bottom; pagination with round arrows."
+  },
+  {
+   "id": "blog-lumiere",
+   "role": "blog",
+   "from": "6 Lumière",
+   "crop": {
+    "src": "6.webp",
+    "x": 50,
+    "y": 3280,
+    "w": 1340,
+    "h": 900
+   },
+   "spec": "Pale lime-white. A centred 2-line 36px serif 'Beauty Insights & / Wellness Tips' (second line italic), 2 lines. A carousel of 3 close-up skin photos cut off at both edges with a serif title and 2 lines under each."
+  },
+  {
+   "id": "blog-doccure",
+   "role": "blog",
+   "from": "10 Doccure",
+   "crop": {
+    "src": "10.webp",
+    "y": 5600,
+    "h": 560
+   },
+   "spec": "White. A small label + centred 24px 'Our Recent Blogs'. 3 rounded photos with a white date tab (day + jade month) in the top-right, a category chip + author avatar + name, and a bold 2-line title."
+  },
+  {
+   "id": "cta-rustic",
+   "role": "cta",
+   "from": "1 Rustic Roots",
+   "crop": {
+    "src": "1.webp",
+    "y": 4870,
+    "h": 360
+   },
+   "spec": "A blush-rose band. A tiny tracked label left and 'Call or text' right, a 2-line 32px serif heading (second line italic) with 2 lines under it, and the phone number in 30px serif on the right above an espresso 'Schedule online →' button."
+  },
+  {
+   "id": "cta-aurelea",
+   "role": "cta",
+   "from": "3 Aureléa Medispa",
+   "crop": {
+    "src": "3.webp",
+    "y": 7470,
+    "h": 350
+   },
+   "spec": "A dark photo band (skincare bottle and a shaving brush in low light): a 30px white serif heading, 2 lines and a gold pill 'Book appointment' on the left."
+  },
+  {
+   "id": "cta-mavcare",
+   "role": "cta",
+   "from": "4 MavCare",
+   "crop": {
+    "src": "4.webp",
+    "y": 3440,
+    "h": 540
+   },
+   "spec": "A magenta gradient rounded card: LEFT a tilted photo of a practitioner at work in a white frame with a sparkle doodle; RIGHT a 2-line 22px white serif heading, 3 lines, a rule, 4 white-checked benefits in 2 columns and a white 'Schedule now' pill."
+  },
+  {
+   "id": "cta-aurelle",
+   "role": "cta",
+   "from": "7 Aurélle",
+   "crop": {
+    "src": "7.webp",
+    "y": 4280,
+    "h": 520
+   },
+   "spec": "White. LEFT a wide aubergine tile: a tiny label, a 2-line 44px 'Put yourself / on the list.' (with 'list' underlined), 2 lines and a white 'Let's make time ↗' button. RIGHT a peach tile with a big sun line icon, a 2-line uppercase 'LOOK GOOD. / FEEL LIKE YOU.' and a tiny '+' tagline."
+  },
+  {
+   "id": "cta-lumina",
+   "role": "cta",
+   "from": "8 Lumina MedSpa",
+   "crop": {
+    "src": "8.webp",
+    "y": 8850,
+    "h": 560
+   },
+   "spec": "A rounded sage-gradient card: a row of small round avatars, a 2-line 34px serif 'Ready To Refresh / Your Natural Beauty?', 2 lines and an inline email input joined to a dark 'Book free consultation' button; on the right, 3 overlapping tilted photos of treatments breaking out of the card's top edge."
+  },
+  {
+   "id": "cta-vale",
+   "role": "cta",
+   "from": "2 The Vale Clinic",
+   "crop": {
+    "src": "2.webp",
+    "y": 4660,
+    "h": 712
+   },
+   "spec": "A deep petrol-teal band. A tiny label, a 2-line 40px light serif 'A considered plan starts / with listening' (last word italic), 4 lines, and a row of 3 cells divided by thin rules ('Conditions ↗', 'Treatments ↗', 'Team ↗')."
+  },
+  {
+   "id": "cta-aurelia",
+   "role": "cta",
+   "from": "9 Aurelia",
+   "crop": {
+    "src": "9.webp",
+    "x": 70,
+    "y": 6480,
+    "w": 1300,
+    "h": 460
+   },
+   "spec": "A sand rounded card: a 3-line 32px serif heading ('Care that holds up after the first appointment'), 2 lines, a thin rule, 3 light serif stats (12 · 9,400 · 100%) with tiny labels and a black 'Book a consultation' pill; a rounded photo of a practitioner with a client on the right."
+  },
+  {
+   "id": "cta-seon",
+   "role": "cta",
+   "from": "11 Seon Clinic",
+   "crop": {
+    "src": "11.webp",
+    "x": 70,
+    "y": 6040,
+    "w": 1300,
+    "h": 740
+   },
+   "spec": "A full-bleed extreme close-up of an eye and skin in warm bronze: a 2-line 28px white heading top-left with a tiny black pill; small white treatment chips bottom-left and 2 short paragraphs bottom-right."
+  },
+  {
+   "id": "cta-seon-conversation",
+   "role": "cta",
+   "from": "11 Seon Clinic",
+   "crop": {
+    "src": "11.webp",
+    "x": 70,
+    "y": 4250,
+    "w": 1300,
+    "h": 900
+   },
+   "spec": "A full-bleed warm photo (a woman relaxing in a treatment chair beside an IV stand): a 2-line 30px white heading top-left and a cluster of small white pill chips under it."
+  },
+  {
+   "id": "contact-highland",
+   "role": "contact",
+   "from": "5 Highland Park",
+   "crop": {
+    "src": "5.webp",
+    "y": 6500,
+    "h": 470
+   },
+   "spec": "A sand panel split in two: LEFT a deep plum card with a tiny gold label, a 4-line 44px Didone 'Ready for a / more / considered / approach?' (last lines italic), 2 lines, a thin rule, phone and address in serif. RIGHT an underline-only form (first/last name, email/phone, a select 'What are you interested in', 'Tell us about your goals') and a wide plum pill 'Request a consultation' with a white dot."
+  },
+  {
+   "id": "contact-lumiere",
+   "role": "contact",
+   "from": "6 Lumière",
+   "crop": {
+    "src": "6.webp",
+    "x": 50,
+    "y": 4950,
+    "w": 1340,
+    "h": 350
+   },
+   "spec": "A photo of a facial treatment across the top, fading into the sage footer; a white rounded booking card overlaps it on the left: 'Book an Appointment' (italic word), one line, a form in 2 columns (name, email, phone, treatment type select, date with a calendar icon, time select) and a sage 'Reserve my session' pill."
+  },
+  {
+   "id": "contact-becker",
+   "role": "contact",
+   "from": "12 Becker",
+   "crop": {
+    "src": "12.webp",
+    "y": 5500,
+    "h": 900
+   },
+   "spec": "White. A centred 30px UPPERCASE serif 'Book your consultation' + 2 lines. A 2-column form with small labels (name, phone, email, area of interest, preferred location, message), 2 consent checkboxes with small print and a navy 'Submit' button."
+  },
+  {
+   "id": "contact-becker-locations",
+   "role": "contact",
+   "from": "12 Becker",
+   "crop": {
+    "src": "12.webp",
+    "y": 4990,
+    "h": 520
+   },
+   "spec": "A cream-to-powder-blue gradient band. LEFT a 2-line 30px UPPERCASE serif 'Our regional hub of expertise', 2 lines, and a grid of white location chips with a navy pin icon. RIGHT a stylised teal map with small pins. Only real locations from FACTS."
+  },
+  {
+   "id": "footer-rustic",
+   "role": "footer",
+   "from": "1 Rustic Roots",
+   "crop": {
+    "src": "1.webp",
+    "y": 5230,
+    "h": 503
+   },
+   "spec": "Espresso-black. Fine-line logo + 3 short lines + 2 social icons left; Explore · Programs · Visit columns with tiny tracked titles; a rule; © left and a small disclaimer right."
+  },
+  {
+   "id": "footer-aurelea",
+   "role": "footer",
+   "from": "3 Aureléa Medispa",
+   "crop": {
+    "src": "3.webp",
+    "y": 7820,
+    "h": 472
+   },
+   "spec": "Cream. The spaced serif wordmark + 4 lines left; Quick links · Services · Service areas (email, address, phone, round social icons) columns; a rule; © and legal links."
+  },
+  {
+   "id": "footer-mavcare",
+   "role": "footer",
+   "from": "4 MavCare",
+   "crop": {
+    "src": "4.webp",
+    "y": 5170,
+    "h": 490
+   },
+   "spec": "A pale-pink rounded panel: the logo + 3 lines, Navigation · Services · Contacts columns and an Instagram 2×4 thumbnail grid; a solid magenta bottom bar with © · Privacy · Terms · 'Follow us' round icons."
+  },
+  {
+   "id": "footer-highland",
+   "role": "footer",
+   "from": "5 Highland Park",
+   "crop": {
+    "src": "5.webp",
+    "y": 6970,
+    "h": 481
+   },
+   "spec": "Deep plum. Monogram + stacked name left, a 2-line serif tagline in the centre ('Look younger. / Not different.' second line italic), 2 small link columns right; a thin rule, ©, round social icons, city."
+  },
+  {
+   "id": "footer-lumiere",
+   "role": "footer",
+   "from": "6 Lumière",
+   "crop": {
+    "src": "6.webp",
+    "x": 50,
+    "y": 5300,
+    "w": 1340,
+    "h": 726
+   },
+   "spec": "Sage-olive. A big white sunburst + wordmark on the right, 3 lines + round social icons left, Navigations · Address · Email · Subscribe newsletter (a rounded outline input with →) columns."
+  },
+  {
+   "id": "footer-lumina",
+   "role": "footer",
+   "from": "8 Lumina MedSpa",
+   "crop": {
+    "src": "8.webp",
+    "y": 9450,
+    "h": 441
+   },
+   "spec": "White. A script monogram logo + 4 lines + coloured round social icons; Quick links · Our services · Contact info columns split by thin vertical rules; a bottom © row."
+  },
+  {
+   "id": "footer-doccure",
+   "role": "footer",
+   "from": "10 Doccure",
+   "crop": {
+    "src": "10.webp",
+    "y": 6160,
+    "h": 603
+   },
+   "spec": "Near-black jade with faint arrow patterns. LEFT a 2-line bold uppercase 'Enhance beauty, boost confidence, start today!' and a white rounded email input with a jade arrow, small social squares, ©. RIGHT Company and Contact columns, and a giant ghosted wordmark at the bottom-right."
+  },
+  {
+   "id": "footer-seon",
+   "role": "footer",
+   "from": "11 Seon Clinic",
+   "crop": {
+    "src": "11.webp",
+    "x": 70,
+    "y": 6780,
+    "w": 1300,
+    "h": 776
+   },
+   "spec": "Near-black. A 2-line 26px white heading, 2 grey lines and a small subscribe input with a round arrow on the left; Explore · Treatments · Information columns on the right; the clinic name as a giant white grotesk wordmark at the bottom-left with © and legal links along the bottom."
+  },
+  {
+   "id": "footer-becker",
+   "role": "footer",
+   "from": "12 Becker",
+   "crop": {
+    "src": "12.webp",
+    "y": 6400,
+    "h": 894
+   },
+   "spec": "Black. A thin geometric wordmark + 3 lines + navy round social icons left; Quick links and location columns (city, phone, 'Ask for reviews') right; then the brand name as a huge thin geometric wordmark with a long rule and a spaced subtitle, and tiny legal text."
+  }
+ ]
+}
