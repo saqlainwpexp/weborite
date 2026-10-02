@@ -12,8 +12,20 @@ function TempPill({ temp, score }: { temp?: Lead["temp"]; score?: number }) {
   return <span className={`temp-pill ${temp}`} title={typeof score === "number" ? `Lead score ${score}/100` : undefined}>{TEMP_LABEL[temp]}</span>;
 }
 
-export function LeadsTable({ leads, benchmarks, compact = false }: { leads: Lead[]; benchmarks: BenchmarkSet[]; compact?: boolean }) {
+export function LeadsTable({
+  leads, benchmarks, compact = false, selectable = false, selected, onToggle, onToggleAll,
+}: {
+  leads: Lead[];
+  benchmarks: BenchmarkSet[];
+  compact?: boolean;
+  selectable?: boolean;
+  selected?: Set<string>;
+  onToggle?: (id: string, on: boolean) => void;
+  onToggleAll?: (on: boolean) => void;
+}) {
   const nav = useNavigate();
+  const picks = selectable ? leads.filter((l) => selected?.has(l.id)).length : 0;
+  const allOn = selectable && leads.length > 0 && picks === leads.length;
   if (!leads.length) {
     return (
       <div className="empty">
@@ -27,6 +39,11 @@ export function LeadsTable({ leads, benchmarks, compact = false }: { leads: Lead
       <table className="table">
         <thead>
           <tr>
+            {selectable && (
+              <th className="col-check">
+                <input type="checkbox" aria-label="Select all" checked={allOn} ref={(el) => { if (el) el.indeterminate = picks > 0 && !allOn; }} onChange={(e) => onToggleAll?.(e.target.checked)} />
+              </th>
+            )}
             <th>Lead</th>
             {!compact && <th className="hide-sm">Source</th>}
             <th className="hide-sm">Score</th>
@@ -40,8 +57,14 @@ export function LeadsTable({ leads, benchmarks, compact = false }: { leads: Lead
           {leads.map((l) => {
             const v = benchmarks.find((b) => b.vertical === l.vertical);
             const done = l.steps.find((s) => s.key === "capture")?.status === "done";
+            const on = selected?.has(l.id) ?? false;
             return (
-              <tr key={l.id} className="row" onClick={() => nav(`/leads/${l.id}`)}>
+              <tr key={l.id} className={`row${on ? " picked" : ""}`} onClick={() => nav(`/leads/${l.id}`)}>
+                {selectable && (
+                  <td className="col-check" onClick={(e) => { e.stopPropagation(); onToggle?.(l.id, !on); }}>
+                    <input type="checkbox" aria-label={`Select ${l.business || host(l.url)}`} checked={on} readOnly tabIndex={0} onKeyDown={(e) => { if (e.key === " ") { e.preventDefault(); onToggle?.(l.id, !on); } }} />
+                  </td>
+                )}
                 <td>
                   <div className="lead-cell">
                     <span className="thumb" style={done ? { backgroundImage: `url(${fileUrl(l.id, "desktop-fold.jpg")})` } : undefined} />

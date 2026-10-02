@@ -48,6 +48,14 @@ interface Onboarding {
   company: string;
   phone: string;
   country: string;
+  role: string; // "What you do"
+  companyDescription: string;
+  // Personalization, used to tailor mockups and outreach to this agency.
+  niche: string;
+  writingStyle: string; // past chat/email references that show their voice
+  caseStudies: string; // previous work
+  designContext: string; // previous designs, mission and goals
+  personalizationNotes: string; // anything else
   marketing: boolean; // opted in to product news (never pre-ticked)
   demo?: boolean; // chose "Try the demo" instead of entering a key
   termsVersion: string;
@@ -328,6 +336,27 @@ license.post("/activate", async (req, res) => {
  * store the owner's details and their acceptance of the current terms and privacy policy. The details also
  * fill in Settings → Profile.
  */
+/** Email the new customer's onboarding details to Weborite (info@weborite.com), via the license site.
+ *  Fire-and-forget: any failure (offline, server down) is swallowed so setup always completes. */
+async function notifyOnboarding(data: Onboarding): Promise<void> {
+  try {
+    await fetch(`${API}/onboard`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        firstName: data.firstName, lastName: data.lastName, email: data.email, phone: data.phone,
+        company: data.company, country: data.country, role: data.role, companyDescription: data.companyDescription,
+        niche: data.niche, writingStyle: data.writingStyle, caseStudies: data.caseStudies,
+        designContext: data.designContext, personalizationNotes: data.personalizationNotes,
+        marketing: data.marketing, demo: Boolean(data.demo),
+      }),
+      signal: AbortSignal.timeout(15000),
+    });
+  } catch {
+    /* customer offline or mail endpoint unavailable — not fatal to onboarding */
+  }
+}
+
 license.post("/onboard", async (req, res) => {
   const b = req.body ?? {};
   const str = (v: unknown, max = 120) => String(v ?? "").trim().slice(0, max);
@@ -338,6 +367,13 @@ license.post("/onboard", async (req, res) => {
     company: str(b.company, 120),
     phone: str(b.phone, 40),
     country: str(b.country, 60),
+    role: str(b.role, 120),
+    companyDescription: str(b.companyDescription, 1000),
+    niche: str(b.niche, 500),
+    writingStyle: str(b.writingStyle, 4000),
+    caseStudies: str(b.caseStudies, 4000),
+    designContext: str(b.designContext, 4000),
+    personalizationNotes: str(b.personalizationNotes, 4000),
     marketing: b.marketing === true,
     demo: b.demo === true && !isLicensed(),
     termsVersion: TERMS_VERSION,
@@ -351,7 +387,8 @@ license.post("/onboard", async (req, res) => {
     if (!r.ok) return res.status(400).json({ error: r.error, field: "key" });
   }
   db.prepare("INSERT INTO onboarding (id, data) VALUES (1, ?) ON CONFLICT(id) DO UPDATE SET data = excluded.data").run(JSON.stringify(data));
-  // Pre-fill the profile, without overwriting anything the user already set there.
+  // Pre-fill the profile, without overwriting anything the user already set there. The personalization
+  // fields feed the mockup and outreach prompts (see agencyProfileBlock).
   const cur = getSettings();
   setSettings({
     ...(!cur.firstName && { firstName: data.firstName }),
@@ -359,7 +396,17 @@ license.post("/onboard", async (req, res) => {
     ...(!cur.userEmail && { userEmail: data.email }),
     ...(!cur.userPhone && data.phone && { userPhone: data.phone }),
     ...((!cur.studioName || cur.studioName === "Studio") && data.company && { studioName: data.company }),
+    ...(!cur.role && data.role && { role: data.role }),
+    ...(!cur.companyDescription && data.companyDescription && { companyDescription: data.companyDescription }),
+    ...(!cur.niche && data.niche && { niche: data.niche }),
+    ...(!cur.writingStyle && data.writingStyle && { writingStyle: data.writingStyle }),
+    ...(!cur.caseStudies && data.caseStudies && { caseStudies: data.caseStudies }),
+    ...(!cur.designContext && data.designContext && { designContext: data.designContext }),
+    ...(!cur.personalizationNotes && data.personalizationNotes && { personalizationNotes: data.personalizationNotes }),
   });
+  // Send the details to Weborite (info@weborite.com) so they can welcome and support the new customer.
+  // Best effort: never block or fail onboarding if the customer is offline or the mail server is down.
+  void notifyOnboarding(data);
   res.json(publicState());
 });
 

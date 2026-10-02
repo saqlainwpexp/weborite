@@ -36,7 +36,12 @@ export function Activation({ status, onActivated }: { status: LicenseStatus; onA
   const [step, setStep] = useState<"key" | "details">(needsKey ? "key" : "details");
   const [key, setKey] = useState("");
   const [demo, setDemo] = useState(false);
-  const [form, setForm] = useState({ firstName: "", lastName: "", email: "", company: "", phone: "", country: "", marketing: false, acceptTerms: false });
+  const [form, setForm] = useState({
+    firstName: "", lastName: "", email: "", company: "", phone: "", country: "",
+    role: "", companyDescription: "",
+    niche: "", writingStyle: "", caseStudies: "", designContext: "", personalizationNotes: "",
+    marketing: false, acceptTerms: false,
+  });
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<{ text: string; field?: string } | null>(null);
   const steps = (needsKey ? 1 : 0) + (needsDetails ? 1 : 0);
@@ -86,8 +91,8 @@ export function Activation({ status, onActivated }: { status: LicenseStatus; onA
     }
   }
 
-  const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) =>
-    setForm({ ...form, [k]: e.target.type === "checkbox" ? e.target.checked : e.target.value });
+  const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setForm({ ...form, [k]: e.target instanceof HTMLInputElement && e.target.type === "checkbox" ? e.target.checked : e.target.value });
   const detailsReady = form.firstName.trim() && form.lastName.trim() && form.email.trim() && form.acceptTerms;
 
   if (step === "key") {
@@ -186,9 +191,14 @@ export function Activation({ status, onActivated }: { status: LicenseStatus; onA
           <label className="onb-field"><span>Email</span>
             <input className="input" type="email" autoComplete="email" value={form.email} onChange={set("email")} required aria-invalid={err?.field === "email" || undefined} />
           </label>
-          <label className="onb-field"><span>Agency or company name <em>optional</em></span>
-            <input className="input" autoComplete="organization" value={form.company} onChange={set("company")} />
-          </label>
+          <div className="onb-row">
+            <label className="onb-field"><span>Company name <em>optional</em></span>
+              <input className="input" autoComplete="organization" value={form.company} onChange={set("company")} />
+            </label>
+            <label className="onb-field"><span>What you do <em>optional</em></span>
+              <input className="input" placeholder="e.g. Web designer, agency owner" value={form.role} onChange={set("role")} />
+            </label>
+          </div>
           <div className="onb-row">
             <label className="onb-field"><span>Phone <em>optional</em></span>
               <input className="input" type="tel" autoComplete="tel" value={form.phone} onChange={set("phone")} />
@@ -197,6 +207,31 @@ export function Activation({ status, onActivated }: { status: LicenseStatus; onA
               <input className="input" autoComplete="country-name" value={form.country} onChange={set("country")} />
             </label>
           </div>
+          <label className="onb-field"><span>Company description <em>optional</em></span>
+            <textarea className="input" rows={2} placeholder="A sentence or two about your business and who you serve" value={form.companyDescription} onChange={set("companyDescription")} />
+          </label>
+
+          <fieldset className="onb-personalize">
+            <legend>Personalization <em>optional</em></legend>
+            <p className="onb-personalize-note">
+              The more you share, the more the mockups and outreach emails sound like you. You can edit all of this later in Settings → Profile.
+            </p>
+            <label className="onb-field"><span>Your niche</span>
+              <textarea className="input" rows={2} placeholder="The clients and industries you focus on (e.g. dentists, trades, hospitality)" value={form.niche} onChange={set("niche")} />
+            </label>
+            <label className="onb-field"><span>Your writing style</span>
+              <textarea className="input" rows={3} placeholder="Paste a few lines from past client chats or outreach emails so we can match your voice" value={form.writingStyle} onChange={set("writingStyle")} />
+            </label>
+            <label className="onb-field"><span>Previous work &amp; case studies</span>
+              <textarea className="input" rows={3} placeholder="Projects or results you're proud of, and anything you like to point clients to" value={form.caseStudies} onChange={set("caseStudies")} />
+            </label>
+            <label className="onb-field"><span>Your designs, mission &amp; goals</span>
+              <textarea className="input" rows={3} placeholder="The look you go for, what your agency stands for, and what you're aiming to achieve" value={form.designContext} onChange={set("designContext")} />
+            </label>
+            <label className="onb-field"><span>Anything else</span>
+              <textarea className="input" rows={2} placeholder="Other context that helps us tailor the work to you" value={form.personalizationNotes} onChange={set("personalizationNotes")} />
+            </label>
+          </fieldset>
 
           <label className={`onb-check${err?.field === "terms" ? " bad" : ""}`}>
             <input type="checkbox" checked={form.acceptTerms} onChange={set("acceptTerms")} required />

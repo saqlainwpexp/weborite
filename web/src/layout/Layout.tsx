@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { NavLink, Outlet, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import {
   ArrowRight, Bell, CalendarDays, Check, ChevronDown, Home, Layers, MapPinned, MoreHorizontal, PanelLeftClose, PanelLeftOpen, UserCog,
-  Banknote, Blocks, ChartColumn, ClipboardCheck, Contact, Crown, FilePlus2, MessagesSquare, Gauge, ListChecks, PanelsTopLeft, Plus, Radar, Search, Server, Settings as SettingsIcon, Sparkles, UserPlus, Users, Workflow, Wrench,
+  Banknote, Blocks, ChartColumn, ClipboardCheck, Contact, Crown, FilePlus2, Megaphone, MessagesSquare, Gauge, ListChecks, PanelsTopLeft, Plus, Radar, Search, Server, Settings as SettingsIcon, Sparkles, UserPlus, Users, Workflow, Wrench,
 } from "lucide-react";
-import type { BenchmarkSet, Build, BuildStats, CommsService, EventItem, FinderSearch, FinderStats, Lead, Prospect, SeoSite, Settings, Usage, WpConversion } from "../../../shared/types";
+import type { BenchmarkSet, Build, BuildStats, CommsService, EventItem, FinderSearch, FinderStats, Lead, MetaLead, Prospect, SeoSite, Settings, Usage, WpConversion } from "../../../shared/types";
 import { api, host, timeAgo, usePoll } from "../lib/api";
 import { workspaceEnabled } from "../../../shared/features";
 import { DemoBanner, LimitWatcher } from "../components/Demo";
@@ -29,6 +29,7 @@ export interface LayoutCtx {
   prospects: Prospect[] | null;
   searches: FinderSearch[] | null;
   finderStats: FinderStats | null;
+  metaLeads: MetaLead[] | null;
   builds: Build[] | null;
   buildStats: BuildStats | null;
   conversions: WpConversion[] | null;
@@ -134,6 +135,7 @@ export default function Layout() {
   const prospects = usePoll<Prospect[]>(isFinder ? "/api/finder/prospects" : null, 4000);
   const searches = usePoll<FinderSearch[]>(isFinder ? "/api/finder/searches" : null, 3000);
   const finderStats = usePoll<FinderStats>(isFinder ? "/api/finder/stats" : null, 4000);
+  const metaLeads = usePoll<MetaLead[]>(isFinder ? "/api/meta/leads" : null, 4000);
   const builds = usePoll<Build[]>(isBuilds || isWp ? "/api/builds" : null, 3000);
   const conversions = usePoll<WpConversion[]>(isWp || isSeo ? "/api/wp" : null, 3000);
   const seoSites = usePoll<SeoSite[]>(isSeo ? "/api/seo" : null, 3000);
@@ -172,7 +174,7 @@ export default function Layout() {
   const wsRef = useClickAway(() => popover === "workspace" && close());
 
   const reloadAll = () => {
-    for (const p of [leads, events, usage, benchmarks, settings, prospects, searches, finderStats, builds, buildStats, conversions, seoSites, careSites, commsServices]) void p.reload();
+    for (const p of [leads, events, usage, benchmarks, settings, prospects, searches, finderStats, metaLeads, builds, buildStats, conversions, seoSites, careSites, commsServices]) void p.reload();
   };
 
   const ctx: LayoutCtx = {
@@ -184,6 +186,7 @@ export default function Layout() {
     prospects: prospects.data,
     searches: searches.data,
     finderStats: finderStats.data,
+    metaLeads: metaLeads.data,
     builds: builds.data,
     buildStats: buildStats.data,
     conversions: conversions.data,
@@ -505,6 +508,7 @@ export default function Layout() {
               <NavLink to="/finder" end className="nav-item" title="Dashboard"><Home /><span className="label">Dashboard</span></NavLink>
               <NavLink to="/finder/leads" className="nav-item" title="Leads"><Users /><span className="label">Leads</span><span className="count">{prospects.data?.length ?? ""}</span></NavLink>
               <NavLink to="/finder/searches" className="nav-item" title="Searches"><Radar /><span className="label">Searches</span></NavLink>
+              <NavLink to="/finder/meta" className="nav-item" title="Meta leads"><Megaphone /><span className="label">Meta leads</span><span className="count">{metaLeads.data?.length ?? ""}</span></NavLink>
               <NavLink to="/settings" className="nav-item" title="Settings"><SettingsIcon /><span className="label">Settings</span></NavLink>
 
               <div className="side-divider" />

@@ -12,6 +12,8 @@ db.exec(`
   CREATE TABLE IF NOT EXISTS wf_sends (at TEXT NOT NULL, workflow_id TEXT NOT NULL, prospect_id TEXT NOT NULL, email TEXT NOT NULL);
   CREATE TABLE IF NOT EXISTS wf_replies (email TEXT NOT NULL, prospect_id TEXT NOT NULL, at TEXT NOT NULL, subject TEXT NOT NULL, PRIMARY KEY (email, prospect_id));
 `);
+// Added later: how the reply reads (positive / negative / neutral), so workflows can branch on it.
+try { db.exec("ALTER TABLE wf_replies ADD COLUMN sentiment TEXT NOT NULL DEFAULT ''"); } catch { /* column already exists */ }
 
 const id = () => randomUUID().slice(0, 8);
 const now = () => new Date().toISOString();
@@ -89,8 +91,11 @@ export const emailedRecently = (email: string, exceptWorkflow: string) =>
 export const sendsSince = (since: string) =>
   db.prepare("SELECT email, prospect_id AS prospectId, MIN(at) AS at FROM wf_sends WHERE at > ? GROUP BY email, prospect_id").all(since) as { email: string; prospectId: string; at: string }[];
 export const hasReplied = (prospectId: string) => Boolean(db.prepare("SELECT 1 FROM wf_replies WHERE prospect_id = ?").get(prospectId));
-export function recordReply(email: string, prospectId: string, at: string, subject: string) {
-  return db.prepare("INSERT OR IGNORE INTO wf_replies (email, prospect_id, at, subject) VALUES (?, ?, ?, ?)").run(email, prospectId, at, subject.slice(0, 200)).changes > 0;
+/** How the business's reply read: "positive" | "negative" | "neutral" | "" (no reply). */
+export const replySentiment = (prospectId: string): string =>
+  (db.prepare("SELECT sentiment FROM wf_replies WHERE prospect_id = ? ORDER BY at DESC LIMIT 1").get(prospectId) as { sentiment: string } | undefined)?.sentiment ?? "";
+export function recordReply(email: string, prospectId: string, at: string, subject: string, sentiment = "") {
+  return db.prepare("INSERT OR IGNORE INTO wf_replies (email, prospect_id, at, subject, sentiment) VALUES (?, ?, ?, ?, ?)").run(email, prospectId, at, subject.slice(0, 200), sentiment).changes > 0;
 }
 export const replyCount = (workflowId: string) =>
   (db.prepare("SELECT COUNT(DISTINCT r.prospect_id) AS n FROM wf_replies r JOIN wf_sends s ON s.prospect_id = r.prospect_id WHERE s.workflow_id = ?").get(workflowId) as { n: number }).n;

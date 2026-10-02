@@ -4,6 +4,7 @@ import { addEvent, createLead, findDuplicate, getSettings, normalizeUrl } from "
 import { enqueue } from "./queue.ts";
 import { DemoLimitError, demoLeft, demoLimitMessage, useDemoAllowance } from "./license/index.ts";
 import { assertPublicUrl, secretMatches } from "./security.ts";
+import { createMetaLead, metaLeadFromFields, saveMetaLead } from "./finder/metaStore.ts";
 import type { Lead, LeadSource } from "../shared/types.ts";
 
 const pick = (fields: Record<string, string>, re: RegExp) => Object.entries(fields).find(([k, v]) => re.test(k) && v.trim())?.[1]?.trim() ?? "";
@@ -125,16 +126,23 @@ hooks.post("/meta", async (req, res) => {
       const r = await fetch(`https://graph.facebook.com/v21.0/${encodeURIComponent(lid)}?fields=field_data,created_time`, {
         headers: { Authorization: `Bearer ${s.metaPageToken}` },
       });
-      const data = (await r.json()) as { field_data?: { name: string; values: string[] }[]; error?: { message: string } };
+      const data = (await r.json()) as { field_data?: { name: string; values: string[] }[]; created_time?: string; error?: { message: string } };
       if (!r.ok || !data.field_data) throw new Error(data.error?.message ?? `Graph API ${r.status}`);
       const fields = Object.fromEntries(data.field_data.map((f) => [f.name, f.values.join(", ")]));
+      // Always capture the ad lead in the Meta Leads workspace, website or not.
+      const { lead: metaLead } = createMetaLead(metaLeadFromFields(fields, "facebook", { submittedAt: data.created_time, meta: { leadgenId: lid } }));
+      // When the form includes a website, also kick off a Mockup and link the two.
       const input = leadFromFields(fields, "meta");
-      if (!input) {
-        addEvent({ leadId: null, kind: "info", title: "Meta lead skipped", detail: "The lead form has no website URL answer" });
-        continue;
-      }
+      if (!input) continue;
       if (!(await publicOrSkip(input.url, "Meta"))) continue;
-      intakeLead(input);
+      try {
+        const { lead } = intakeLead(input);
+        metaLead.mockupLeadId = lead.id;
+        saveMetaLead(metaLead);
+      } catch (e) {
+        if (!(e instanceof DemoLimitError)) throw e;
+        addEvent({ leadId: null, kind: "info", title: "Meta lead saved, mockup not started", detail: e.message });
+      }
     } catch (e) {
       addEvent({ leadId: null, kind: "failed", title: "Meta lead fetch failed", detail: (e as Error).message.slice(0, 140) });
     }

@@ -112,13 +112,21 @@ function literals(body: string) {
 const header = (h: string, name: string) => new RegExp(`^${name}:\\s*(.*)$`, "im").exec(h.replace(/\r?\n[ \t]+/g, " "))?.[1]?.trim() ?? "";
 const IMAP_MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-export interface InboxMessage { from: string; subject: string; date: string; autoReply: boolean }
+export interface InboxMessage { from: string; subject: string; date: string; autoReply: boolean; text?: string }
+
+/** Strip quoted-printable soft breaks and =XX escapes enough to read plain words for sentiment. */
+function readable(s: string) {
+  return s.replace(/=\r?\n/g, "").replace(/=([0-9A-F]{2})/gi, (_m, h) => String.fromCharCode(parseInt(h, 16)))
+    .replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+}
 
 /**
- * Who has written to this mailbox since a date (INBOX only, newest `max`). Only headers are read and nothing is
- * marked as read. Auto-replies (out of office, bounces) are flagged so they don't count as a real reply.
+ * Who has written to this mailbox since a date (INBOX only, newest `max`). Nothing is marked as read
+ * (BODY.PEEK). Auto-replies (out of office, bounces) are flagged so they don't count as a real reply.
+ * With `withText`, also fetches the first ~2 KB of each body (still peeked) so a reply can be read for
+ * sentiment; each message then yields two literals (headers, then text).
  */
-export async function inboxSince(cfg: ImapConfig, since: Date, max = 1000): Promise<InboxMessage[]> {
+export async function inboxSince(cfg: ImapConfig, since: Date, max = 1000, withText = false): Promise<InboxMessage[]> {
   const im = await login(cfg);
   try {
     await im.cmd("EXAMINE INBOX"); // read-only: never changes flags
@@ -126,16 +134,20 @@ export async function inboxSince(cfg: ImapConfig, since: Date, max = 1000): Prom
     const found = await im.cmd(`UID SEARCH SINCE ${d}`);
     const uids = (/^\* SEARCH ?(.*)$/m.exec(found)?.[1] ?? "").trim().split(/\s+/).filter(Boolean).slice(-max);
     const out: InboxMessage[] = [];
+    const fields = "BODY.PEEK[HEADER.FIELDS (FROM SUBJECT DATE AUTO-SUBMITTED X-AUTOREPLY X-AUTORESPOND PRECEDENCE RETURN-PATH)]";
     for (let i = 0; i < uids.length; i += 200) {
-      const body = await im.cmd(`UID FETCH ${uids.slice(i, i + 200).join(",")} (BODY.PEEK[HEADER.FIELDS (FROM SUBJECT DATE AUTO-SUBMITTED X-AUTOREPLY X-AUTORESPOND PRECEDENCE RETURN-PATH)])`);
-      for (const h of literals(body)) {
+      const body = await im.cmd(`UID FETCH ${uids.slice(i, i + 200).join(",")} (${withText ? `${fields} BODY.PEEK[TEXT]<0.2048>` : fields})`);
+      const lits = literals(body);
+      const step = withText ? 2 : 1;
+      for (let j = 0; j + step <= lits.length; j += step) {
+        const h = lits[j];
         const from = (/<([^>]+)>/.exec(header(h, "From"))?.[1] ?? header(h, "From")).trim().toLowerCase();
         if (!from.includes("@")) continue;
         const subject = header(h, "Subject");
         const autoReply = /auto-(replied|generated)/i.test(header(h, "Auto-Submitted")) || Boolean(header(h, "X-Autoreply") || header(h, "X-Autorespond"))
           || /^(auto|bulk|junk)/i.test(header(h, "Precedence")) || header(h, "Return-Path") === "<>" || /^(mailer-daemon|postmaster)@/i.test(from)
           || /^(out of (the )?office|automatic reply|auto(matic)?[- ]reply|autoreply|undeliverable|delivery status notification|mail delivery failed)/i.test(subject);
-        out.push({ from, subject, date: header(h, "Date"), autoReply });
+        out.push({ from, subject, date: header(h, "Date"), autoReply, text: withText ? readable(lits[j + 1] ?? "").slice(0, 1200) : undefined });
       }
     }
     return out;

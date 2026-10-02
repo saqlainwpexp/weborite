@@ -37,6 +37,7 @@ const FIELDS: { value: string; label: string; type: "bool" | "number" | "text" }
   { value: "has_whatsapp", label: "Is on WhatsApp", type: "bool" },
   { value: "mockup_ready", label: "Mockup is ready", type: "bool" },
   { value: "replied", label: "Has replied", type: "bool" },
+  { value: "reply_sentiment", label: "Reply sentiment", type: "text" },
   { value: "fit_score", label: "Fit score", type: "number" },
   { value: "rating", label: "Google rating", type: "number" },
   { value: "reviews", label: "Number of reviews", type: "number" },
@@ -53,6 +54,7 @@ const ACTIONS: { value: string; label: string; hint: string }[] = [
   { value: "add_label", label: "Add label", hint: "Tag the business, e.g. “call”, “emailed”, “hot”" },
   { value: "remove_label", label: "Remove label", hint: "" },
   { value: "notify", label: "Notify me", hint: "Shows in your activity feed" },
+  { value: "mark_dead", label: "Mark as dead", hint: "Labels the business “dead” and ends it here" },
   { value: "stop", label: "Stop the workflow", hint: "This business leaves the workflow here" },
 ];
 const VARS = ["business", "city", "category", "website", "rating", "reviews", "top_issue", "fit_summary", "my_name", "my_company", "my_phone", "my_email"];
@@ -67,7 +69,9 @@ function describe(n: WfNode): { title: string; sub: string } {
     case "email":
       return { title: String(c.subject || "Send email"), sub: c.subject ? `To the business${c.attachMockup ? " · mockup attached" : ""}` : "Click to write the email" };
     case "wait":
-      return c.mode === "mockup" ? { title: "Wait for the mockup", sub: `Up to ${c.timeoutHours || 6} hours` } : { title: `Wait ${c.amount || 1} ${c.unit || "minutes"}`, sub: "Then continue to the next step" };
+      return c.mode === "mockup" ? { title: "Wait for the mockup", sub: `Up to ${c.timeoutHours || 6} hours` }
+        : c.mode === "reply" ? { title: "Wait for a reply", sub: `Up to ${c.amount || 2} ${c.unit || "days"}` }
+        : { title: `Wait ${c.amount || 1} ${c.unit || "minutes"}`, sub: "Then continue to the next step" };
     case "condition": {
       const f = FIELDS.find((x) => x.value === c.field);
       const op = f && OPS[f.type].find((o) => o.value === c.op);
@@ -158,8 +162,8 @@ export default function Workflows() {
           {data && <p className="muted wf-sent">{data.outreach.sent24h} of {data.outreach.cap} emails sent in the last 24 hours</p>}
           {data && (data.outreach.replies.on ? (
             <p className={`wf-sent ${data.outreach.replies.error ? "bad" : "muted"}`}>
-              {data.outreach.replies.error ? `Couldn't read replies: ${data.outreach.replies.error}` : `Stops on reply · inbox checked ${data.outreach.replies.at ? timeAgo(data.outreach.replies.at) : "soon"}`}
-              {" "}<button type="button" className="wf-link" onClick={async () => { try { const r = await api<{ found: number }>("/api/automations/replies/check", { method: "POST" }); alert(r.found ? `${r.found} new ${r.found === 1 ? "reply" : "replies"}: those businesses were stopped.` : "No new replies."); } catch (e) { alert((e as Error).message); } void reload(); }}>Check now</button>
+              {data.outreach.replies.error ? `Couldn't read replies: ${data.outreach.replies.error}` : `Tracks replies · inbox checked ${data.outreach.replies.at ? timeAgo(data.outreach.replies.at) : "soon"}`}
+              {" "}<button type="button" className="wf-link" onClick={async () => { try { const r = await api<{ found: number }>("/api/automations/replies/check", { method: "POST" }); alert(r.found ? `${r.found} new ${r.found === 1 ? "reply" : "replies"} found.` : "No new replies."); } catch (e) { alert((e as Error).message); } void reload(); }}>Check now</button>
             </p>
           ) : <p className="muted wf-sent"><Link to="/settings/integrations">Add the replies inbox</Link> to stop following up when someone replies.</p>)}
         </aside>
@@ -187,7 +191,7 @@ function NewWorkflow({ onClose, onCreated }: { onClose: () => void; onCreated: (
     setBusy(true);
     setErr("");
     try {
-      const name = f.name || (f.template === "starter" && f.niche ? `${f.niche}${f.location ? ` in ${f.location}` : ""}` : "New workflow");
+      const name = f.name || ((f.template === "starter" || f.template === "followup") && f.niche ? `${f.niche}${f.location ? ` in ${f.location}` : ""}` : "New workflow");
       const w = await api<WorkflowSummary>("/api/automations", { method: "POST", json: { ...f, name } });
       onCreated(w.id);
     } catch (e) {
@@ -201,14 +205,14 @@ function NewWorkflow({ onClose, onCreated }: { onClose: () => void; onCreated: (
       <div className="modal wf-new" onClick={(e) => e.stopPropagation()} role="dialog" aria-label="New workflow">
         <div className="card-head"><h3 className="card-title">New workflow</h3><button type="button" className="icon-btn" aria-label="Close" onClick={onClose}><X /></button></div>
         <div className="wf-templates">
-          {[["starter", "Find, mockup, email, follow up", "Search a niche in a location, create a mockup for each business, email it, follow up after 3 days"], ["blank", "Start from scratch", "Just the trigger: add your own steps"]].map(([v, t, h]) => (
+          {[["starter", "Find, mockup, email, follow up", "Search a niche in a location, create a mockup for each business, email it, follow up after 3 days"], ["followup", "Find, mockup, email, track replies", "Like the starter, but tracks replies: a positive reply pings you to start a build; otherwise one follow-up, then marks the business dead"], ["blank", "Start from scratch", "Just the trigger: add your own steps"]].map(([v, t, h]) => (
             <label key={v} className={`wf-template${f.template === v ? " on" : ""}`}>
               <input type="radio" name="tpl" checked={f.template === v} onChange={() => setF({ ...f, template: v })} />
               <b>{t}</b><small className="muted">{h}</small>
             </label>
           ))}
         </div>
-        {f.template === "starter" && (
+        {(f.template === "starter" || f.template === "followup") && (
           <div className="wf-form-row">
             <label className="wf-field"><span>Niche</span><input className="input" autoFocus value={f.niche} onChange={(e) => setF({ ...f, niche: e.target.value })} placeholder="e.g. dentists" /></label>
             <label className="wf-field"><span>Location</span><input className="input" value={f.location} onChange={(e) => setF({ ...f, location: e.target.value })} placeholder="e.g. Manchester" /></label>
@@ -620,19 +624,23 @@ function Panel({ node, workflowId, onChange, onClose, onDelete }: { node: WfNode
               <select className="input" value={String(c.mode ?? "time")} onChange={(e) => set("mode", e.target.value)}>
                 <option value="time">For a set time</option>
                 <option value="mockup">Until the mockup is ready</option>
+                <option value="reply">Until they reply</option>
               </select>
             </label>
-            {(c.mode ?? "time") === "time" ? (
-              <div className="wf-form-row">
-                <label className="wf-field"><span>Amount</span><input className="input" type="number" min={1} value={Number(c.amount ?? 1)} onChange={(e) => set("amount", Number(e.target.value))} /></label>
-                <label className="wf-field"><span>Unit</span>
-                  <select className="input" value={String(c.unit ?? "minutes")} onChange={(e) => set("unit", e.target.value)}>
-                    <option value="minutes">Minutes</option><option value="hours">Hours</option><option value="days">Days</option>
-                  </select>
-                </label>
-              </div>
-            ) : (
+            {(c.mode ?? "time") === "mockup" ? (
               <label className="wf-field"><span>Give up after (hours)</span><input className="input" type="number" min={1} value={Number(c.timeoutHours ?? 6)} onChange={(e) => set("timeoutHours", Number(e.target.value))} /></label>
+            ) : (
+              <>
+                <div className="wf-form-row">
+                  <label className="wf-field"><span>{(c.mode ?? "time") === "reply" ? "Wait up to" : "Amount"}</span><input className="input" type="number" min={1} value={Number(c.amount ?? ((c.mode ?? "time") === "reply" ? 2 : 1))} onChange={(e) => set("amount", Number(e.target.value))} /></label>
+                  <label className="wf-field"><span>Unit</span>
+                    <select className="input" value={String(c.unit ?? ((c.mode ?? "time") === "reply" ? "days" : "minutes"))} onChange={(e) => set("unit", e.target.value)}>
+                      <option value="minutes">Minutes</option><option value="hours">Hours</option><option value="days">Days</option>
+                    </select>
+                  </label>
+                </div>
+                {(c.mode ?? "time") === "reply" && <p className="muted wf-hint">Continues the moment they reply, or after this long if they don't. Follow a reply with a “Reply sentiment” condition to branch on it.</p>}
+              </>
             )}
           </>
         )}
@@ -649,7 +657,8 @@ function Panel({ node, workflowId, onChange, onClose, onDelete }: { node: WfNode
                 {OPS[field.type].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
               </select>
             </label>
-            {field.type !== "bool" && <label className="wf-field"><span>Value</span><input className="input" type={field.type === "number" ? "number" : "text"} value={String(c.value ?? "")} onChange={(e) => set("value", field.type === "number" ? Number(e.target.value) : e.target.value)} /></label>}
+            {field.type !== "bool" && <label className="wf-field"><span>Value</span><input className="input" type={field.type === "number" ? "number" : "text"} value={String(c.value ?? "")} onChange={(e) => set("value", field.type === "number" ? Number(e.target.value) : e.target.value)} placeholder={field.value === "reply_sentiment" ? "positive" : undefined} /></label>}
+            {field.value === "reply_sentiment" && <p className="muted wf-hint">Values: <b>positive</b>, <b>negative</b> or <b>neutral</b>. Put this after a “Wait until they reply” step.</p>}
             <p className="muted wf-hint">Drag from the <b>yes</b> dot to the step for businesses that match, and from <b>no</b> to the step for the rest. An unlinked branch ends the workflow for that business.</p>
           </>
         )}

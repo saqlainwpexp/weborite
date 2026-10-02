@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getBenchmarkSet } from "./pipeline/benchmarks.ts";
-import { getLead, getSettings, leadDir, readJson } from "./db.ts";
+import { agencyProfileBlock, getLead, getSettings, leadDir, readJson } from "./db.ts";
 import { extractJson, runClaude } from "./claude/runner.ts";
 import type { Capture, Diagnosis, GateResult } from "../shared/types.ts";
 
@@ -17,7 +17,7 @@ import type { Capture, Diagnosis, GateResult } from "../shared/types.ts";
 
 const SEVERITY_ORDER = { high: 0, medium: 1, low: 2 } as const;
 
-function leadFacts(id: string) {
+export function leadFacts(id: string) {
   const lead = getLead(id);
   if (!lead) return null;
   const diagnosis = readJson<Diagnosis>(id, "diagnosis.json");
@@ -55,6 +55,8 @@ function leadFacts(id: string) {
     vertical: benchmarks ? { label: benchmarks.label, whatTheBuyerJudges: benchmarks.register } : null,
     currency: s.currency || "USD",
     senderEmail: s.agencyAdminEmail || "",
+    // Set once the mockup is published live (Hostinger). When present, the email links it directly.
+    liveMockupUrl: lead.publish?.url ?? "",
   };
 }
 
@@ -96,34 +98,43 @@ RULES:
 - A "Why nobody finds you on Google" paragraph ONLY if there are structure/SEO issues or a low SEO/Lighthouse score; use the real findings.
 - "What it's worth." — one short ROI paragraph. If you don't have real figures (prices, booking values, order values) from the form entries, write the money parts as [bracketed placeholders] for the sender to fill in — do NOT fabricate revenue.
 - "Price." — if no price is given in the data, write it as [your price]. Mention first year's hosting and that you handle the technical move so nothing breaks.
-- Where the mockup link goes, write the literal text [mockup link] on its own line — the sender pastes the real link.
+- The mockup link: if "liveMockupUrl" is a real URL, put it on its own line as the call to view the new homepage. If it is empty, write the literal text [mockup link] on its own line for the sender to paste.
 - Close softly: reply "go ahead", ask anything, "not now", or offer a quick call.
 - British-to-neutral, plain, human. No hype, no em-dashes, no "unlock/elevate/seamless". Short sentences. Do not use markdown headers or bold; this is a plain email. 200-380 words.
 - If the business has no current website (hasWebsite is false), reframe: they are invisible on Google and rely on a listing; the mockup is their first real site. Skip "your current site loads slowly" type lines.
 
 Return ONLY a JSON object in a \`\`\`json fenced block: {"subject": "...", "body": "..."}. The body uses real newlines (\\n). No commentary outside the JSON.`;
 
+export interface Pitch { subject: string; body: string; email: string }
+
+/** Draft the closing/outreach email for a lead. Throws "Lead not found" when the lead is gone. */
+export async function makePitch(id: string): Promise<Pitch> {
+  const facts = leadFacts(id);
+  if (!facts) throw new Error("Lead not found");
+  const r = await runClaude({
+    leadId: id,
+    task: "agent",
+    system: SYSTEM,
+    prompt:
+      `Write the closing email for this lead. Here are the facts you may use (JSON). ` +
+      `Use only what is here; mark anything missing as a [placeholder].\n\n` +
+      JSON.stringify(facts, null, 1) +
+      agencyProfileBlock("writing"),
+    cwd: leadDir(id),
+  });
+  const out = extractJson<{ subject?: string; body?: string }>(r.text);
+  const body = String(out.body ?? "").trim();
+  if (!body) throw new Error("The AI did not return an email body");
+  return { subject: String(out.subject ?? `A new homepage for ${facts.business}`).trim(), body, email: facts.email };
+}
+
 export const pitch = Router();
 
 pitch.post("/:id", async (req, res) => {
-  const facts = leadFacts(req.params.id);
-  if (!facts) return res.sendStatus(404);
   try {
-    const r = await runClaude({
-      leadId: req.params.id,
-      task: "agent",
-      system: SYSTEM,
-      prompt:
-        `Write the closing email for this lead. Here are the facts you may use (JSON). ` +
-        `Use only what is here; mark anything missing as a [placeholder].\n\n` +
-        JSON.stringify(facts, null, 1),
-      cwd: leadDir(req.params.id),
-    });
-    const out = extractJson<{ subject?: string; body?: string }>(r.text);
-    const body = String(out.body ?? "").trim();
-    if (!body) throw new Error("The AI did not return an email body");
-    res.json({ subject: String(out.subject ?? `A new homepage for ${facts.business}`).trim(), body, email: facts.email });
+    res.json(await makePitch(req.params.id));
   } catch (e) {
-    res.status(502).json({ error: (e as Error).message || "Couldn't draft the email" });
+    const msg = (e as Error).message || "Couldn't draft the email";
+    res.status(msg === "Lead not found" ? 404 : 502).json({ error: msg });
   }
 });

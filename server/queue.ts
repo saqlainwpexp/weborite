@@ -1,4 +1,7 @@
-import { addEvent, getLead, readJson, saveLead, writeJson, leadDir } from "./db.ts";
+import { addEvent, getLead, getSettings, readJson, saveLead, writeJson, leadDir } from "./db.ts";
+import { makePitch } from "./pitch.ts";
+import { makePlaybook } from "./playbook.ts";
+import { hostingReady, publishMockup } from "./publish/hostinger.ts";
 import { ClaudeUnavailableError } from "./claude/runner.ts";
 import { Pool, parallel } from "./pool.ts";
 import { captureSite, type CaptureOutput } from "./pipeline/capture.ts";
@@ -105,7 +108,12 @@ async function runLead(id: string) {
     const input = { capture: cap.capture, diagnosis, facts: cap.facts, benchmarks, business: lead.business, scratch };
 
     await doStep(lead, "generate", async () => {
-      await generateMockup(id, input);
+      // A change request typed on the detail page edits the current mockup, then is cleared so it
+      // doesn't reapply on later runs.
+      const changes = lead.reviseRequest;
+      await generateMockup(id, input, changes ? { changes } : undefined);
+      if (changes) { lead.reviseRequest = undefined; saveLead(lead); }
+      return changes ? "Applied your change request" : undefined;
     });
 
     let gate: GateResult | null = null;
@@ -135,6 +143,10 @@ async function runLead(id: string) {
       title: passed ? "Mockup ready" : "Mockup needs review",
       detail: passed ? `${label} passed every check` : `${label}: some quality checks failed`,
     });
+    saveLead(lead);
+    // After the quality check: draft the outreach email and the "how to win" playbook, and publish
+    // the mockup live if auto-publish is on. All best-effort — a failure here never fails the lead.
+    await afterGate(id, label);
   } catch (e) {
     if (e instanceof ClaudeUnavailableError) {
       lead.status = "paused";
@@ -149,6 +161,30 @@ async function runLead(id: string) {
     }
   }
   saveLead(lead);
+}
+
+/**
+ * Once a mockup is built and gated, prepare everything the owner needs to act on it: a drafted
+ * outreach email and a "how to win / close this lead" playbook (both cached to the lead folder so
+ * the detail page shows them at once), and — when enabled — the mockup published live. Each piece is
+ * independent and best-effort: one failing (e.g. no AI, no hosting set up) never blocks the others
+ * or the lead itself.
+ */
+async function afterGate(id: string, label: string) {
+  const settings = getSettings();
+  await Promise.allSettled([
+    makePitch(id).then((p) => writeJson(id, "outreach.json", p)).catch((e) => console.error(`[afterGate ${id}] outreach`, (e as Error).message)),
+    makePlaybook(id).then((p) => writeJson(id, "playbook.json", p)).catch((e) => console.error(`[afterGate ${id}] playbook`, (e as Error).message)),
+    (async () => {
+      if (!settings.autoPublishOnReady || !hostingReady()) return;
+      try {
+        const { url } = await publishMockup(id);
+        addEvent({ leadId: id, kind: "info", title: "Mockup published", detail: `${label} is live at ${url}` });
+      } catch (e) {
+        addEvent({ leadId: id, kind: "info", title: "Publish failed", detail: `${label}: ${(e as Error).message.slice(0, 140)}` });
+      }
+    })(),
+  ]);
 }
 
 function scheduleResume(id: string) {

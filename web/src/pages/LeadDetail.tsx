@@ -2,8 +2,8 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import {
   AlertTriangle, ArrowRight, ArrowUpRight, Blocks, Check, CheckCircle2, ChevronDown, Clock, Copy, Download, ExternalLink,
-  FileOutput, Image as ImageIcon, Info, Layers, Loader2, Mail, MessageCircle, Monitor, RefreshCw, Smartphone, Sparkles, StickyNote,
-  Trash2, Users, X, XCircle,
+  FileOutput, Globe, Image as ImageIcon, Info, Layers, Loader2, Mail, MessageCircle, Monitor, RefreshCw, Smartphone, Sparkles, Star, StickyNote,
+  Target, Trash2, Users, Wand2, X, XCircle,
 } from "lucide-react";
 import { STEPS, type LeadDetail as Detail, type StepKey } from "../../../shared/types";
 import { workspaceEnabled } from "../../../shared/features";
@@ -49,16 +49,72 @@ export default function LeadDetail() {
   const [rerunOpen, setRerunOpen] = useState(false);
   const [bust, setBust] = useState(0);
 
-  // "How do I win this lead?" — draft the closing email.
+  // Rating + feedback on the generated mockup.
+  const [rating, setRating] = useState<number | undefined>(undefined);
+  const [feedback, setFeedback] = useState("");
+  const [savedNote, setSavedNote] = useState(false);
+  const fbInit = useRef(false);
+
+  // "Request changes" prompt box.
+  const [reviseOpen, setReviseOpen] = useState(false);
+  const [reviseText, setReviseText] = useState("");
+  const [reviseBusy, setReviseBusy] = useState(false);
+  const [reviseErr, setReviseErr] = useState<string | null>(null);
+
+  // Outreach email — drafted after the gate, regenerated on demand.
   const [pitchOpen, setPitchOpen] = useState(false);
   const [pitch, setPitch] = useState<{ subject: string; body: string } | null>(null);
   const [pitchBusy, setPitchBusy] = useState(false);
   const [pitchErr, setPitchErr] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
+  // "How to win / close this lead" — the strategy playbook (separate from the email).
+  const [playOpen, setPlayOpen] = useState(false);
+  const [play, setPlay] = useState<Detail["playbook"]>(null);
+  const [playBusy, setPlayBusy] = useState(false);
+  const [playErr, setPlayErr] = useState<string | null>(null);
+
+  // Publish live (Hostinger).
+  const [pubBusy, setPubBusy] = useState(false);
+  const [pubErr, setPubErr] = useState<string | null>(null);
+
   // Refresh the mockup iframe when a new version lands.
   const genDone = lead?.steps.find((s) => s.key === "generate")?.finishedAt;
   useEffect(() => setBust(Date.now()), [genDone]);
+
+  // Seed the rating/feedback controls once from the loaded lead.
+  useEffect(() => {
+    if (fbInit.current || !lead) return;
+    fbInit.current = true;
+    setRating(lead.rating);
+    setFeedback(lead.feedback ?? "");
+  }, [lead]);
+
+  async function saveFeedback(next: { rating?: number; feedback?: string }) {
+    try {
+      await api(`/api/leads/${id}/feedback`, { method: "POST", json: next });
+      setSavedNote(true);
+      setTimeout(() => setSavedNote(false), 1500);
+    } catch { /* a transient save failure is non-fatal; the next change retries */ }
+  }
+
+  async function submitRevise() {
+    const text = reviseText.trim();
+    if (!text) return;
+    setReviseBusy(true);
+    setReviseErr(null);
+    try {
+      await api(`/api/leads/${id}/revise`, { method: "POST", json: { text } });
+      setReviseOpen(false);
+      setReviseText("");
+      void reload();
+      reloadAll();
+    } catch (e) {
+      setReviseErr((e as Error).message);
+    } finally {
+      setReviseBusy(false);
+    }
+  }
 
   if (error && !lead) return <div className="banner err"><XCircle />{error}</div>;
   if (!lead) return <p className="muted">Loading…</p>;
@@ -83,9 +139,11 @@ export default function LeadDetail() {
 
   async function winLead(regenerate = false) {
     setPitchOpen(true);
-    setPitchBusy(true);
     setPitchErr(null);
     setCopied(false);
+    // Show the draft cached after the gate straight away; only call the AI on first draft or regenerate.
+    if (!regenerate && (pitch || lead!.outreach)) { setPitch(pitch ?? lead!.outreach); setPitchBusy(false); return; }
+    setPitchBusy(true);
     if (regenerate) setPitch(null);
     try {
       const r = await api<{ subject: string; body: string }>(`/api/pitch/${lead!.id}`, { method: "POST", json: {} });
@@ -94,6 +152,36 @@ export default function LeadDetail() {
       setPitchErr((e as Error).message);
     } finally {
       setPitchBusy(false);
+    }
+  }
+
+  async function openPlaybook(regenerate = false) {
+    setPlayOpen(true);
+    setPlayErr(null);
+    if (!regenerate && (play || lead!.playbook)) { setPlay(play ?? lead!.playbook); setPlayBusy(false); return; }
+    setPlayBusy(true);
+    if (regenerate) setPlay(null);
+    try {
+      const r = await api<Detail["playbook"]>(`/api/playbook/${lead!.id}`, { method: "POST", json: {} });
+      setPlay(r);
+    } catch (e) {
+      setPlayErr((e as Error).message);
+    } finally {
+      setPlayBusy(false);
+    }
+  }
+
+  async function publish(unpublish = false) {
+    setPubBusy(true);
+    setPubErr(null);
+    try {
+      await api(`/api/leads/${lead!.id}/publish`, { method: unpublish ? "DELETE" : "POST", json: {} });
+      void reload();
+      reloadAll();
+    } catch (e) {
+      setPubErr((e as Error).message);
+    } finally {
+      setPubBusy(false);
     }
   }
 
@@ -361,9 +449,70 @@ export default function LeadDetail() {
             </div>
           </div>
 
-          <button className="btn btn-accent win-lead" onClick={() => winLead()}>
-            <Sparkles />How do I win this lead?
-          </button>
+          <div className="win-actions">
+            <button className="btn btn-accent" onClick={() => openPlaybook()}><Target />How to win this lead</button>
+            <button className="btn btn-white" onClick={() => winLead()}><Mail />Outreach email</button>
+          </div>
+
+          {lead.hasMockup && (
+            <div className="card publish-card">
+              <div className="card-head">
+                <h3 className="card-title"><Globe size={18} /> Live mockup</h3>
+                {lead.publish && <span className="dot-live" title="Published" />}
+              </div>
+              {lead.publish ? (
+                <>
+                  <a className="live-url" href={lead.publish.url} target="_blank" rel="noreferrer">{lead.publish.url}<ArrowUpRight size={14} /></a>
+                  <p className="card-sub" style={{ margin: 0 }}>Published {timeAgo(lead.publish.at)}. This link is used in the outreach email.</p>
+                  <div style={{ display: "flex", gap: 10 }}>
+                    <button className="btn btn-white btn-sm" onClick={() => void publish(false)} disabled={pubBusy}>{pubBusy ? <Loader2 className="spin" /> : <RefreshCw />}Update</button>
+                    <button className="btn btn-white btn-sm danger" onClick={() => void publish(true)} disabled={pubBusy}><Trash2 />Unpublish</button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="card-sub" style={{ margin: 0 }}>
+                    {lead.publishReady ? "Publish this mockup to your Hostinger subdomain so you can send a real link." : "Add your Hostinger SFTP details in Settings → Integrations to publish mockups live."}
+                  </p>
+                  <button className="btn btn-ink btn-sm" style={{ width: "100%", justifyContent: "center" }} onClick={() => void publish(false)} disabled={pubBusy || !lead.publishReady}>
+                    {pubBusy ? <Loader2 className="spin" /> : <Globe />}Publish live
+                  </button>
+                </>
+              )}
+              {pubErr && <div className="banner err" style={{ margin: 0 }}><XCircle />{pubErr}</div>}
+            </div>
+          )}
+
+          {lead.hasMockup && (
+            <div className="card rate-card">
+              <div className="card-head">
+                <h3 className="card-title"><Star size={18} /> Rate this mockup</h3>
+                {savedNote && <span className="muted" style={{ fontSize: 12 }}><Check size={13} /> Saved</span>}
+              </div>
+              <div className="rate-scale" role="radiogroup" aria-label="Rating out of 10">
+                {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
+                  <button
+                    key={n}
+                    role="radio"
+                    aria-checked={rating === n}
+                    className={`rate-dot${rating !== undefined && n <= rating ? " on" : ""}`}
+                    onClick={() => { setRating(n); void saveFeedback({ rating: n }); }}
+                  >{n}</button>
+                ))}
+              </div>
+              <textarea
+                className="input"
+                rows={3}
+                placeholder="What works, what doesn't? This feedback is saved and used to improve future mockups."
+                value={feedback}
+                onChange={(e) => setFeedback(e.target.value)}
+                onBlur={() => { if (feedback !== (lead.feedback ?? "")) void saveFeedback({ feedback }); }}
+              />
+              <button className="btn btn-ink btn-sm" style={{ width: "100%", justifyContent: "center" }} onClick={() => { setReviseErr(null); setReviseOpen(true); }} disabled={busy}>
+                <Wand2 />Request changes
+              </button>
+            </div>
+          )}
 
           <div className="card">
             <h3 className="card-title">Form entries <ArrowUpRight size={22} strokeWidth={1.6} /></h3>
@@ -405,7 +554,7 @@ export default function LeadDetail() {
           <div className="modal pitch-modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-label="Closing email">
             <div className="card-head">
               <div>
-                <h3 className="card-title" style={{ fontSize: 24 }}>How to win {name}</h3>
+                <h3 className="card-title" style={{ fontSize: 24 }}>Outreach email for {name}</h3>
                 <p className="card-sub" style={{ margin: "2px 0 0" }}>A closing email built from this lead's form answers, the issues found, and the new mockup. Edit anything before you send.</p>
               </div>
               <button type="button" className="icon-btn" aria-label="Close" onClick={() => setPitchOpen(false)}><X /></button>
@@ -442,6 +591,64 @@ export default function LeadDetail() {
                 </button>
                 <a className="btn btn-ink" href={mailtoHref} style={!pitch ? { pointerEvents: "none", opacity: .5 } : undefined}><Mail />Open in email</a>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {reviseOpen && (
+        <div className="backdrop" onClick={() => !reviseBusy && setReviseOpen(false)}>
+          <div className="modal" style={{ maxWidth: 520 }} onClick={(e) => e.stopPropagation()} role="dialog" aria-label="Request changes">
+            <div className="card-head">
+              <div>
+                <h3 className="card-title" style={{ fontSize: 22 }}>Request changes to {name}</h3>
+                <p className="card-sub" style={{ margin: "2px 0 0" }}>Describe what to change. The mockup is regenerated with your request applied, then re-checked.</p>
+              </div>
+              <button type="button" className="icon-btn" aria-label="Close" onClick={() => setReviseOpen(false)} disabled={reviseBusy}><X /></button>
+            </div>
+            <textarea
+              className="input"
+              rows={6}
+              autoFocus
+              placeholder="e.g. Make the hero headline bigger, move the testimonials above the services, and use a warmer background."
+              value={reviseText}
+              onChange={(e) => setReviseText(e.target.value)}
+            />
+            {reviseErr && <div className="banner err" style={{ margin: 0 }}><XCircle /><div>{reviseErr}</div></div>}
+            <div className="foot" style={{ justifyContent: "flex-end", gap: 12 }}>
+              <button type="button" className="btn btn-white" onClick={() => setReviseOpen(false)} disabled={reviseBusy}>Cancel</button>
+              <button type="button" className="btn btn-ink" onClick={() => void submitRevise()} disabled={reviseBusy || !reviseText.trim()}>
+                {reviseBusy ? <Loader2 className="spin" /> : <Wand2 />}Apply changes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {playOpen && (
+        <div className="backdrop" onClick={() => setPlayOpen(false)}>
+          <div className="modal pitch-modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-label="How to win this lead">
+            <div className="card-head">
+              <div>
+                <h3 className="card-title" style={{ fontSize: 24 }}>How to win {name}</h3>
+                <p className="card-sub" style={{ margin: "2px 0 0" }}>A strategy brief for you — the angle, their pain points, likely objections, pricing and the next step. This is not the email.</p>
+              </div>
+              <button type="button" className="icon-btn" aria-label="Close" onClick={() => setPlayOpen(false)}><X /></button>
+            </div>
+
+            {playBusy && !play && <div className="pitch-loading"><Loader2 className="spin" /><span>Working out the play…</span></div>}
+            {playErr && !playBusy && <div className="banner err" style={{ margin: 0 }}><XCircle /><div>{playErr}</div></div>}
+
+            {play && (
+              <div className="playbook">
+                <p className="playbook-text">{play.text.replace(/\*\*/g, "").replace(/^#+\s*/gm, "")}</p>
+              </div>
+            )}
+
+            <div className="foot" style={{ justifyContent: "flex-end" }}>
+              <button type="button" className="btn btn-white" onClick={() => void openPlaybook(true)} disabled={playBusy}>
+                {playBusy ? <Loader2 className="spin" /> : <RefreshCw />}Regenerate
+              </button>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { basename, join } from "node:path";
-import { leadDir } from "../db.ts";
+import { agencyProfileBlock, leadDir, listFeedbackNotes, readJson, writeJson } from "../db.ts";
 import { extractHtml, runClaude } from "../claude/runner.ts";
 import { pickDesignSystem } from "./designLibrary.ts";
 import { assetSheet, stockPhotos, trimPadding } from "./assets.ts";
@@ -60,8 +60,14 @@ export function buildFactsBlock(facts: Fact[]) {
 export async function generateMockup(
   leadId: string,
   input: { capture: Capture; diagnosis: Diagnosis; facts: Fact[]; benchmarks: BenchmarkSet | null; business: string; scratch?: boolean },
-  retry?: { failures: GateCheck[] },
+  opts?: { failures?: GateCheck[]; changes?: string },
 ) {
+  // A sameness failure means the layout was a near-clone of another lead's — that can only be fixed
+  // by a DIFFERENT design, so we re-pick rather than amend. Other gate retries and human change
+  // requests edit the EXISTING mockup (same recipe) instead of starting over.
+  const sameness = Boolean(opts?.failures?.some((f) => /^Distinct from other mockups/.test(f.name)));
+  const amend = Boolean((opts?.failures?.length && !sameness) || opts?.changes);
+  const prevPick = readJson<{ niche?: string; style?: string; system?: string }>(leadId, "design.json") ?? null;
   const dir = leadDir(leadId);
   const outDir = join(dir, "mockup");
   mkdirSync(outDir, { recursive: true });
@@ -92,8 +98,35 @@ export async function generateMockup(
   // designs), so no two leads — and no two regenerations of one lead — share a layout. A gate retry
   // keeps the recipe it is fixing. Other niches fall back to the closest single design system.
   const niche = pickNiche(verticalText);
-  const recipe = niche ? ((retry ? currentRecipe(leadId, niche) : null) ?? newRecipe(leadId, niche, verticalText)) : null;
-  const ds = recipe ? null : pickDesignSystem(benchmarks ? { label: benchmarks.label, register: benchmarks.register, key: benchmarks.vertical } : null, leadId);
+  // On a sameness retry, force a fresh mix (newRecipe already stays far from this lead's and others'
+  // recipes); otherwise keep the current recipe for an amend, or make a new one.
+  const recipe = niche ? ((amend ? currentRecipe(leadId, niche) : null) ?? newRecipe(leadId, niche, verticalText)) : null;
+  // No niche library: pick a measured/clean system. A sameness retry rotates to a different one and
+  // avoids the template we just used.
+  const dsSeed = sameness ? `${leadId}:redo:${prevPick?.system ?? ""}` : leadId;
+  const ds = recipe ? null : pickDesignSystem(
+    benchmarks ? { label: benchmarks.label, register: benchmarks.register, key: benchmarks.vertical } : null,
+    dsSeed,
+    sameness && prevPick?.system ? [prevPick.system] : [],
+  );
+  // Remember what was chosen so a later sameness retry can avoid it.
+  writeJson(leadId, "design.json", recipe ? { niche: recipe.niche, style: recipe.style.id } : { system: ds?.slug });
+
+  // Learned preferences: corrections the owner gave on earlier mockups, so they don't have to be
+  // repeated. Favour notes from the same vertical, then fill with recent ones from any vertical.
+  const learned = (() => {
+    const notes = listFeedbackNotes();
+    if (!notes.length) return "";
+    const vkey = benchmarks?.vertical ?? null;
+    const mine = vkey ? notes.filter((n) => n.vertical === vkey) : [];
+    const pick = [...mine].reverse().slice(0, 6);
+    for (const n of [...notes].reverse()) { if (pick.length >= 8) break; if (!pick.includes(n)) pick.push(n); }
+    const lines = pick.map((n) => `- ${n.text.replace(/\s+/g, " ").trim().slice(0, 240)}`).join("\n");
+    return `
+
+LEARNED PREFERENCES — the agency gave this feedback on earlier mockups. Honour every point that could apply here, so the same corrections never have to be made again:
+${lines}`;
+  })();
 
   const images = [join(dir, "desktop-fold.jpg"), join(dir, "mobile.jpg")].filter(existsSync);
   if (sheet) images.push(sheet);
@@ -152,6 +185,9 @@ ${scratch ? "A screenshot of their Google Maps listing is attached for reference
 
 Return one complete, self-contained HTML document (inline <style>, and inline <script> only if it's needed for the nav) in a single \`\`\`html block. Put nothing else in the reply.`;
 
+  prompt += learned;
+  prompt += agencyProfileBlock("design");
+
   if (recipe) {
     const withImg = recipe.sections.filter((x) => x.image && existsSync(x.image));
     prompt += `
@@ -206,18 +242,28 @@ ${JSON.stringify(ds.json, null, 1)}
 After applying all of this, produce the full HTML document following every rule above, in a single \`\`\`html block with nothing else.`;
   }
 
-  if (retry) {
+  if (amend) {
     const prev = readFileSync(join(outDir, "index.html"), "utf8");
-    prompt += `
+    if (opts?.changes) {
+      prompt += `
+
+REQUESTED CHANGES — the client reviewed the previous mockup and asked for exactly this. Apply it faithfully and change nothing else that isn't needed to make it work:
+${opts.changes}`;
+    }
+    if (opts?.failures?.length) {
+      prompt += `
 
 YOUR PREVIOUS ATTEMPT FAILED THESE AUTOMATED CHECKS:
-${retry.failures.map((f) => `- ${f.name}: ${f.detail}`).join("\n")}
+${opts.failures.map((f) => `- ${f.name}: ${f.detail}`).join("\n")}
+Fix every failure.`;
+    }
+    prompt += `
 
 Previous HTML:
 \`\`\`html
 ${prev}
 \`\`\`
-Fix every failure and return the full corrected document.`;
+Return the full corrected document.`;
   }
 
   const res = await runClaude({ leadId, task: "generate", cwd: dir, images, heavy: true, system: SYSTEM, prompt });

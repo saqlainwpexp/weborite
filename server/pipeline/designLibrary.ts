@@ -96,12 +96,19 @@ function hash(s: string): number {
  * matches, fall back to the most versatile clean system rather than an arbitrary (possibly wrong) one.
  * Deterministic and cheap; returns null only when the library is empty.
  */
-export function pickDesignSystem(vertical: { label?: string; register?: string; key?: string } | null, seed = ""): DesignSystem | null {
-  const systems = listDesignSystems();
-  if (!systems.length) return null;
+export function pickDesignSystem(
+  vertical: { label?: string; register?: string; key?: string } | null,
+  seed = "",
+  avoid: string[] = [],
+): DesignSystem | null {
+  const all = listDesignSystems();
+  if (!all.length) return null;
+  // Skip systems we've been told to avoid (e.g. a sameness retry re-picking a different template),
+  // unless avoiding would leave nothing to choose from.
+  const systems = avoid.length ? (all.filter((s) => !avoid.includes(s.slug)).length ? all.filter((s) => !avoid.includes(s.slug)) : all) : all;
   const need = new Set([...words(vertical?.label ?? ""), ...words(vertical?.register ?? ""), ...words(vertical?.key ?? "")]);
 
-  const rotate = (pool: DesignSystem[]) => pool.sort((a, b) => a.slug.localeCompare(b.slug))[hash(seed) % pool.length];
+  const rotate = (pool: DesignSystem[]) => pool.slice().sort((a, b) => a.slug.localeCompare(b.slug))[hash(seed) % pool.length];
   if (need.size) {
     const scored = systems.map((s) => ({ s, sc: score(s, need) })).filter((x) => x.sc >= 1);
     if (scored.length) {
@@ -115,11 +122,15 @@ export function pickDesignSystem(vertical: { label?: string; register?: string; 
     }
   }
 
-  // No niche overlap: choose the most broadly-applicable clean system.
-  let fallback = systems[0];
-  let fbScore = -1;
-  for (const s of systems) { const sc = score(s, VERSATILE); if (sc > fbScore) { fbScore = sc; fallback = s; } }
-  return fallback;
+  // No niche overlap: rotate across the broadly-applicable systems (ranked by versatility) rather
+  // than always returning the single most-versatile one — otherwise every unmatched lead gets the
+  // same template, which is exactly the "all mockups look the same" problem. Prefer measured systems.
+  const ranked = systems
+    .map((s) => ({ s, sc: score(s, VERSATILE) + (s.measured ? 0.5 : 0) }))
+    .sort((a, b) => b.sc - a.sc);
+  const keep = Math.max(3, Math.ceil(ranked.length / 2));
+  const pool = ranked.slice(0, Math.min(ranked.length, keep)).map((x) => x.s);
+  return rotate(pool);
 }
 
 /** A compact catalog line per system, for prompts or a picker UI. */

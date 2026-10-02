@@ -11,8 +11,14 @@ Stack: Electron shell (`electron/main.mjs`), an Express + TypeScript server (`se
 Workspaces (switcher in `web/src/layout/Layout.tsx`, flags in `shared/features.ts`):
 
 - **Mockups** (`server/queue.ts`, `server/pipeline/*`): capture → diagnose → benchmark set per vertical → AI generates the homepage → quality gate → side-by-side render.
-- **Automations** (`server/automations/*`, `web/src/pages/automations/Workflows.tsx`): a visual workflow builder, plus the older "Quick campaigns" (`server/campaigns`).
-- **Lead Finder** (`server/finder/*`): Google Maps scraping, then enrichment (emails, WhatsApp) and a fit score.
+  - **List tools** (`web/src/pages/Leads.tsx`, `LeadsTable.tsx`): bulk select / edit / delete / export — routes `POST|PATCH /api/leads/bulk` and `POST /api/leads/export`.
+  - **Rating + feedback + revise** (`web/src/pages/LeadDetail.tsx`): rate /10 + feedback (`POST /api/leads/:id/feedback`), and "Request changes" (`POST /api/leads/:id/revise`) which re-runs from `generate` with `reviseRequest`. `generateMockup` takes `opts:{failures?,changes?}`; a change/retry amends the current mockup, a **sameness** gate failure re-picks a different design (writes `design.json`, avoids the last pick).
+  - **Learned feedback**: every rating comment / change request is stored globally (`DATA/feedback-notes.json`, `addFeedbackNote`/`listFeedbackNotes`) and injected into future generate prompts as "LEARNED PREFERENCES" so corrections don't repeat.
+  - **Design variety**: `pickDesignSystem` now rotates across measured systems for unmatched verticals (was always the single most-versatile → the "all look the same" bug). Niche libraries still use the `recipe.ts` mixer. New design sets: see `design-library/README.md`.
+  - **Playbook + outreach draft** (after the gate, cached to the lead folder): `server/playbook.ts` (`POST /api/playbook/:id`, plain-text brief) is separate from the outreach email `server/pitch.ts` (`POST /api/pitch/:id`). Both shown on the detail page (`outreach`/`playbook` in `/api/leads/:id`).
+  - **Publish live (Hostinger SFTP)** `server/publish/hostinger.ts`: `POST|DELETE /api/leads/:id/publish`, uploads `mockup/`+`assets/` to a subdomain folder, stores `lead.publish.url`. Creds in Settings → Integrations (`hostingSftp*`, `hostingBasePath`, `hostingPublicBaseUrl`, `autoPublishOnReady`; password sealed). The live URL feeds the outreach email/playbook and the automations `{{mockup_url}}`.
+- **Automations** (`server/automations/*`, `web/src/pages/automations/Workflows.tsx`): a visual workflow builder, plus the older "Quick campaigns" (`server/campaigns`). Reply tracking now **branches** instead of only stopping: `wf_replies.sentiment` (heuristic `classifyReply`, from subject + a peeked body snippet via `inboxSince(..., withText)`), a `reply_sentiment` condition field, a wait mode **"reply"** (continue on reply or after N days), a `mark_dead` action, and a `{{mockup_url}}` variable. A workflow that reacts to replies (`branchesOnReply`) keeps running on reply; others stop as before. New **"followup"** template (`routes.ts`): mockup → email → wait for reply → positive ⇒ notify "move to full build?" / negative ⇒ one follow-up → wait → mark dead.
+- **Lead Finder** (`server/finder/*`): Google Maps scraping, then enrichment (emails, WhatsApp) and a fit score. Also has a **Meta leads** tab (`web/src/pages/finder/MetaLeads.tsx`, `MetaLeadDetail.tsx`): a separate `MetaLead` model/table (`server/finder/metaStore.ts`, routes `server/finder/metaRoutes.ts` at `/api/meta`) for ad-form leads, distinct from the Google Maps `Prospect`. Captures Facebook/Instagram Lead Ads (the existing Meta webhook in `server/intake.ts` now stores every lead here, website or not, and links a Mockup when the form has a URL), plus manual add and CSV import (header-mapped, de-duped on email/leadgen id). Status pipeline new→contacted→qualified→won→lost; a lead with a website can be handed to Mockups. **Next change (not built): the live Facebook Lead Ads API/token setup UI.**
 - **Builds**: full sites from approved mockups.
 - **WordPress** (`server/wp/*`): Elementor conversion and the Studio Connector plugin.
 - **Launch & SEO** (`server/seo/*` plus `server/golive/*`): QA, performance, on-page SEO and a Go-live tab.
@@ -31,6 +37,7 @@ Workspaces (switcher in `web/src/layout/Layout.tsx`, flags in `shared/features.t
 
 ## Build, protection and release
 
+- **Dependency note:** Hostinger publishing uses `ssh2-sftp-client` (prod dep; `@types/...` dev). It's bundled `external` (esbuild `packages: "external"`), so run `npm install` after merging this branch before `npm run dist`.
 - `scripts/build-server.mjs` bundles the server with esbuild into `app-dist/server.mjs`.
   - For customer builds it minifies and then runs **javascript-obfuscator** (string array, base64).
   - **Critical:** functions passed to Playwright (`page.evaluate`, `$$eval`, `$eval`, `waitForFunction`, `addInitScript`…) run inside the web page. `keepBrowserCodePlain()` parses the bundle with acorn and wraps those functions, inline or passed by name, in `/* javascript-obfuscator:disable/enable */` comments.
@@ -49,6 +56,8 @@ Workspaces (switcher in `web/src/layout/Layout.tsx`, flags in `shared/features.t
 - `site/` is the static website for studio.weborite.com, hosted on Hostinger.
   - It uses clean URLs via `.htaccess`, with a buy page, a demo page and legal pages.
   - `site/license/` is a PHP license server (SQLite, Ed25519-signed responses; the app verifies them with the public key). Lemon Squeezy wasn't usable because it requires Stripe, which doesn't work in Pakistan.
+- **Onboarding** (`web/src/pages/Activation.tsx`, `POST /api/license/onboard`): collects name, email, phone, company, "what you do", a company description, and a **personalization** block (niche, writing-style references, case studies, design context + mission/goals, free notes). These persist to Settings (`role`, `companyDescription`, `niche`, `writingStyle`, `caseStudies`, `designContext`, `personalizationNotes` in `shared/types.ts`), are editable in **Settings → Profile** ("Business & personalization"), and feed AI prompts via `agencyProfileBlock(focus)` in `server/db.ts` (injected in `server/pipeline/generate.ts` and `server/pitch.ts`). On submit the details are also emailed to **info@weborite.com**: the app POSTs best-effort to `${LICENSE_API}/onboard` → `site/license/onboard.php` (added to `site/license/.htaccess`), which `mail()`s `ONBOARDING_EMAIL`. Best-effort, so being offline never blocks setup. **Deploy note:** upload the new `site/license/onboard.php` and the updated `.htaccess` to Hostinger for the email to work.
+- Settings no longer has a **Billing** tab (removed at the owner's request). `web/src/components/Billing.tsx` is now unused but kept in the tree; `/settings/billing` redirects to Profile.
 - `server/license/index.ts` covers activation, periodic validation and grace periods.
   - Demo limits are in `shared/demo.ts`. `useDemoAllowance`/`demoLeft` enforce them; `intakeLead` enforces the mockup limit.
   - A 402 response makes the UI open the upgrade window.
@@ -108,7 +117,6 @@ Workspaces (switcher in `web/src/layout/Layout.tsx`, flags in `shared/features.t
 
 ## Open items
 
-- The owner still needs to add the `LICENSE_PUBLIC_KEY` repo secret, or build locally.
 - Never tested against real services:
   - signed-in Codex or Gemini CLI, and valid OpenAI or Gemini keys
   - a real Gmail IMAP inbox or real SMTP sending

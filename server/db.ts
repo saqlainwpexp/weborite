@@ -2,7 +2,7 @@ import { DatabaseSync } from "node:sqlite";
 import { mkdirSync, existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { randomUUID } from "node:crypto";
-import { STEPS, type EventItem, type Lead, type Settings } from "../shared/types.ts";
+import { STEPS, type EventItem, type FeedbackNote, type Lead, type Settings } from "../shared/types.ts";
 import { initVault, isSealed, open, seal } from "./vault.ts";
 
 // The desktop app passes its own folders; from the project folder these default to ./ and ./data.
@@ -98,6 +98,21 @@ export function writeJson(id: string, file: string, data: unknown) {
   writeFileSync(join(leadDir(id), file), JSON.stringify(data, null, 2));
 }
 
+// ---- learned feedback (global, cross-lead) ----
+const FEEDBACK_FILE = join(DATA, "feedback-notes.json");
+export function listFeedbackNotes(): FeedbackNote[] {
+  try { return existsSync(FEEDBACK_FILE) ? (JSON.parse(readFileSync(FEEDBACK_FILE, "utf8")) as FeedbackNote[]) : []; } catch { return []; }
+}
+export function addFeedbackNote(n: Omit<FeedbackNote, "at">) {
+  const text = n.text.trim();
+  if (!text) return;
+  const all = listFeedbackNotes();
+  // Don't store the same note twice (e.g. re-saving unchanged feedback).
+  if (all.some((x) => x.text === text && x.leadId === n.leadId && x.kind === n.kind)) return;
+  all.push({ ...n, text, at: new Date().toISOString() });
+  writeFileSync(FEEDBACK_FILE, JSON.stringify(all.slice(-300), null, 1));
+}
+
 // ---- events ----
 export function addEvent(e: Omit<EventItem, "id" | "at">) {
   db.prepare("INSERT INTO events (at, lead_id, kind, title, detail) VALUES (?, ?, ?, ?, ?)").run(
@@ -128,10 +143,10 @@ export function usageToday() {
 }
 
 // ---- settings ----
-type StoredSettings = Settings & { apiKey: string; metaPageToken: string; metaAppSecret: string; psiKey: string; gtmetrixKey: string; cloudTriggerToken: string; githubToken: string; qaImapPassword: string; outreachSmtpPassword: string; openaiKey: string; geminiKey: string; openrouterKey: string; compatibleKey: string };
+type StoredSettings = Settings & { apiKey: string; metaPageToken: string; metaAppSecret: string; psiKey: string; gtmetrixKey: string; cloudTriggerToken: string; githubToken: string; qaImapPassword: string; outreachSmtpPassword: string; openaiKey: string; geminiKey: string; openrouterKey: string; compatibleKey: string; hostingSftpPassword: string };
 
 /** Settings that are stored encrypted (see vault.ts). */
-const SECRET_KEYS = new Set(["apiKey", "metaPageToken", "metaAppSecret", "psiKey", "gtmetrixKey", "cloudTriggerToken", "githubToken", "qaImapPassword", "outreachSmtpPassword", "openaiKey", "geminiKey", "openrouterKey", "compatibleKey"]);
+const SECRET_KEYS = new Set(["apiKey", "metaPageToken", "metaAppSecret", "psiKey", "gtmetrixKey", "cloudTriggerToken", "githubToken", "qaImapPassword", "outreachSmtpPassword", "openaiKey", "geminiKey", "openrouterKey", "compatibleKey", "hostingSftpPassword"]);
 
 const DEFAULTS: StoredSettings = {
   mode: "session",
@@ -186,6 +201,13 @@ const DEFAULTS: StoredSettings = {
   userName: "",
   userEmail: "",
   userPhone: "",
+  role: "",
+  companyDescription: "",
+  niche: "",
+  writingStyle: "",
+  caseStudies: "",
+  designContext: "",
+  personalizationNotes: "",
   logoFile: "",
   psiKey: "",
   psiKeySet: false,
@@ -216,6 +238,14 @@ const DEFAULTS: StoredSettings = {
   careAutoStage: true,
   careDiffThreshold: 1,
   careKeepStaging: false,
+  hostingSftpHost: "",
+  hostingSftpPort: 22,
+  hostingSftpUser: "",
+  hostingSftpPassword: "",
+  hostingSftpPasswordSet: false,
+  hostingBasePath: "",
+  hostingPublicBaseUrl: "",
+  autoPublishOnReady: false,
   currency: "USD",
 };
 
@@ -233,6 +263,7 @@ export function getSettings(): StoredSettings {
   s.githubTokenSet = Boolean(s.githubToken);
   s.qaImapPasswordSet = Boolean(s.qaImapPassword);
   s.outreachSmtpPasswordSet = Boolean(s.outreachSmtpPassword);
+  s.hostingSftpPasswordSet = Boolean(s.hostingSftpPassword);
   s.openaiKeySet = Boolean(s.openaiKey);
   s.geminiKeySet = Boolean(s.geminiKey);
   s.openrouterKeySet = Boolean(s.openrouterKey);
@@ -248,7 +279,7 @@ export function getSettings(): StoredSettings {
 }
 
 export function publicSettings(): Settings {
-  const { apiKey: _k, metaPageToken: _t, metaAppSecret: _s, psiKey: _p, gtmetrixKey: _g, cloudTriggerToken: _c, githubToken: _h, qaImapPassword: _ip, outreachSmtpPassword: _op, openaiKey: _ok, geminiKey: _gk, openrouterKey: _rk, compatibleKey: _ck, ...rest } = getSettings();
+  const { apiKey: _k, metaPageToken: _t, metaAppSecret: _s, psiKey: _p, gtmetrixKey: _g, cloudTriggerToken: _c, githubToken: _h, qaImapPassword: _ip, outreachSmtpPassword: _op, openaiKey: _ok, geminiKey: _gk, openrouterKey: _rk, compatibleKey: _ck, hostingSftpPassword: _hp, ...rest } = getSettings();
   return rest;
 }
 
@@ -258,6 +289,33 @@ export function setSettings(patch: Partial<StoredSettings>) {
     if (k.endsWith("Set") || k === "userName" || v === undefined) continue;
     stmt.run(k, JSON.stringify(SECRET_KEYS.has(k) && typeof v === "string" ? seal(v) : v));
   }
+}
+
+/**
+ * The agency's own profile, formatted for an AI prompt: who they are, their niche, voice, past work and goals.
+ * Collected at onboarding and editable in Settings → Profile. Returns "" when nothing useful is set, so callers
+ * can append it unconditionally. `focus` keeps the block relevant: "design" for mockups, "writing" for outreach.
+ */
+export function agencyProfileBlock(focus: "design" | "writing" = "design"): string {
+  const s = getSettings();
+  const clip = (v: string, max = 600) => String(v ?? "").replace(/\s+/g, " ").trim().slice(0, max);
+  const rows: [string, string][] = [
+    ["Agency / company", clip([s.studioName === "Studio" ? "" : s.studioName, s.role].filter(Boolean).join(" — "), 160)],
+    ["About the business", clip(s.companyDescription)],
+    ["Niche / ideal clients", clip(s.niche)],
+    ["Past work & results", clip(s.caseStudies)],
+    ["Design background, mission & goals", clip(s.designContext)],
+  ];
+  if (focus === "writing") {
+    rows.push(["How the agency writes (voice, examples)", clip(s.writingStyle, 1200)]);
+  }
+  rows.push(["Other personalization notes", clip(s.personalizationNotes)]);
+  const lines = rows.filter(([, v]) => v).map(([k, v]) => `- ${k}: ${v}`);
+  if (!lines.length) return "";
+  const intro = focus === "writing"
+    ? "ABOUT THE AGENCY SENDING THIS — match their voice and draw on their real background. Never invent results or clients not listed here:"
+    : "ABOUT THE AGENCY BEHIND THIS MOCKUP — reflect their taste, niche and goals where it helps the design:";
+  return `\n\n${intro}\n${lines.join("\n")}`;
 }
 
 

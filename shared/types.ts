@@ -40,6 +40,13 @@ export interface Lead {
   /** Lead score 0–100 and its hot/warm/cold band, set once the diagnosis is in. */
   score?: number;
   temp?: LeadTemp;
+  /** Human rating of the generated mockup, 0–10, and free-text feedback. */
+  rating?: number;
+  feedback?: string;
+  /** A change request typed on the detail page: the next generate pass edits the mockup to apply it, then clears it. */
+  reviseRequest?: string;
+  /** Where this mockup is published live (Hostinger over SFTP). */
+  publish?: { url: string; path: string; at: string };
 }
 
 /** How promising a lead is to win: hot = chase today, cold = low priority. */
@@ -53,6 +60,19 @@ export const LEAD_TEMP = {
 } as const;
 export function leadTemp(score: number): LeadTemp {
   return score >= LEAD_TEMP.hot.min ? "hot" : score >= LEAD_TEMP.warm.min ? "warm" : "cold";
+}
+
+/**
+ * A correction the owner gave on a mockup (a rating comment or a change request). Kept globally so
+ * the same note doesn't have to be repeated on future mockups — the generator feeds the relevant
+ * ones back in as "learned preferences".
+ */
+export interface FeedbackNote {
+  at: string;
+  leadId: string;
+  vertical: string | null;
+  kind: "feedback" | "change";
+  text: string;
 }
 
 export interface Issue {
@@ -179,6 +199,15 @@ export interface Settings {
   userName: string; // derived: first + last
   userEmail: string;
   userPhone: string;
+  role: string; // "What you do" — the owner's role / line of work
+  companyDescription: string; // a short description of the agency/business
+  /** Personalization profile: fed into mockup and outreach prompts so output sounds like the agency.
+   *  Collected at onboarding and editable in Settings → Profile. */
+  niche: string; // the clients/verticals they focus on
+  writingStyle: string; // notes + pasted examples of past chats/emails that show their voice
+  caseStudies: string; // previous work / results they can point to
+  designContext: string; // their past designs, mission and goals
+  personalizationNotes: string; // anything else that helps personalize the work
   logoFile: string; // file name under data/brand, "" when unset
   /** Launch & SEO */
   psiKeySet: boolean;
@@ -210,9 +239,22 @@ export interface Settings {
   careAutoStage: boolean; // also clone to staging and test updates automatically
   careDiffThreshold: number; // % of pixels allowed to change before a page needs review
   careKeepStaging: boolean; // keep the staging copy after the live update
+  /** Hosting: publish approved mockups live over SFTP (Hostinger subdomain) so outreach can link a real URL */
+  hostingSftpHost: string;
+  hostingSftpPort: number;
+  hostingSftpUser: string;
+  hostingSftpPasswordSet: boolean;
+  hostingBasePath: string;      // server folder the subdomain serves, e.g. /home/u123/domains/mockups.weborite.com/public_html
+  hostingPublicBaseUrl: string; // e.g. https://mockups.studio.weborite.com
+  autoPublishOnReady: boolean;  // publish automatically when a mockup passes the gate
   /** Super admin */
   currency: string; // ISO code for revenue, e.g. USD
 }
+
+/** The drafted outreach email for a lead (pitch.ts). */
+export interface OutreachEmail { subject: string; body: string; email: string }
+/** The "how to win / close this lead" playbook (playbook.ts): a plain-text brief with labelled sections. */
+export interface LeadPlaybook { text: string }
 
 export interface LeadDetail extends Lead {
   capture: Capture | null;
@@ -221,6 +263,11 @@ export interface LeadDetail extends Lead {
   benchmarks: BenchmarkSet | null;
   hasMockup: boolean;
   hasSideBySide: boolean;
+  /** Cached after the gate; regenerate via /api/pitch and /api/playbook. */
+  outreach: OutreachEmail | null;
+  playbook: LeadPlaybook | null;
+  /** Whether Hostinger SFTP is configured, so the UI can enable "Publish live". */
+  publishReady: boolean;
 }
 
 export interface Usage {
@@ -353,6 +400,62 @@ export interface FinderStats {
   withWebsite: number;
   searches: number;
   running: number;
+}
+
+/* ---------- Meta / ad leads (Lead Finder → Meta Leads) ---------- */
+
+/**
+ * Where an ad lead came from.
+ * - "facebook": Facebook/Instagram Lead Ads, pulled by the Meta webhook (server/intake.ts).
+ * - "csv": uploaded from a Meta Ads / Lead Center export (or any ad platform).
+ * - "manual": typed in by hand.
+ */
+export type MetaLeadSource = "facebook" | "csv" | "manual";
+
+/** Pipeline stage for an ad lead you're working. */
+export type MetaLeadStatus = "new" | "contacted" | "qualified" | "won" | "lost";
+
+export const META_LEAD_STATUS: { key: MetaLeadStatus; label: string }[] = [
+  { key: "new", label: "New" },
+  { key: "contacted", label: "Contacted" },
+  { key: "qualified", label: "Qualified" },
+  { key: "won", label: "Won" },
+  { key: "lost", label: "Lost" },
+];
+
+/** A single person who filled in a lead-ad form (not a scraped business). */
+export interface MetaLead {
+  id: string;
+  source: MetaLeadSource;
+  createdAt: string;
+  /** When the form was submitted on the platform, when known (may precede createdAt). */
+  submittedAt?: string;
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  /** Campaign / ad / form names, when the platform or CSV provides them. */
+  campaign: string;
+  adName: string;
+  formName: string;
+  /** "facebook", "instagram" or free text from a CSV. */
+  platform: string;
+  /** Any extra form questions → the answers given. */
+  fields: Record<string, string>;
+  status: MetaLeadStatus;
+  labels: string[];
+  notes: string;
+  /** Set once this lead has been handed to the Mockups workspace. */
+  mockupLeadId?: string;
+  /** Platform identifiers, kept for the Facebook Lead Ads sync and de-duplication. */
+  meta?: { leadgenId?: string; pageId?: string; formId?: string; adId?: string };
+}
+
+export interface MetaLeadStats {
+  total: number;
+  byStatus: Record<MetaLeadStatus, number>;
+  withEmail: number;
+  withPhone: number;
 }
 
 /* ---------- Builds workspace ---------- */

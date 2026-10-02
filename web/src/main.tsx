@@ -13,6 +13,8 @@ import FinderDashboard from "./pages/finder/FinderDashboard";
 import FinderLeads from "./pages/finder/FinderLeads";
 import FinderLeadDetail from "./pages/finder/FinderLeadDetail";
 import FinderSearches from "./pages/finder/FinderSearches";
+import MetaLeads from "./pages/finder/MetaLeads";
+import MetaLeadDetail from "./pages/finder/MetaLeadDetail";
 import BuildsDashboard from "./pages/builds/BuildsDashboard";
 import BuildsList from "./pages/builds/BuildsList";
 import BuildForm from "./pages/builds/BuildForm";
@@ -72,6 +74,8 @@ const DASHBOARD = (
           {workspaceEnabled("finder") && <Route path="finder/leads" element={<FinderLeads />} />}
           {workspaceEnabled("finder") && <Route path="finder/leads/:id" element={<FinderLeadDetail />} />}
           {workspaceEnabled("finder") && <Route path="finder/searches" element={<FinderSearches />} />}
+          {workspaceEnabled("finder") && <Route path="finder/meta" element={<MetaLeads />} />}
+          {workspaceEnabled("finder") && <Route path="finder/meta/:id" element={<MetaLeadDetail />} />}
           {workspaceEnabled("builds") && <Route path="builds" element={<BuildsDashboard />} />}
           {workspaceEnabled("builds") && <Route path="builds/all" element={<BuildsList />} />}
           {workspaceEnabled("builds") && <Route path="builds/new" element={<BuildForm />} />}

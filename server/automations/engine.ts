@@ -10,7 +10,7 @@ import { sendMail, type Security } from "../golive/smtp.ts";
 import { DemoLimitError, demoAutomationLeadsLeft } from "../license/index.ts";
 import { newContext } from "../pipeline/browser.ts";
 import {
-  dueEnrollments, emailedRecently, enroll, getWorkflow, hasReplied, isEnrolled, lastSendAt, listWorkflows, recordReply, recordSend, runningFor, saveEnrollment, saveWorkflow,
+  dueEnrollments, emailedRecently, enroll, getWorkflow, hasReplied, isEnrolled, lastSendAt, listWorkflows, recordReply, recordSend, replySentiment, runningFor, saveEnrollment, saveWorkflow,
   sendsSince, sentLast24h,
 } from "./store.ts";
 
@@ -55,12 +55,26 @@ export function city(address: string) {
 
 export function vars(p: Prospect): Record<string, string> {
   const s = getSettings() as unknown as Record<string, string>;
+  // The live mockup link, once the mockup has been published (Lead Finder → Mockups → publish).
+  const mockupUrl = p.mockupLeadId ? (getLead(p.mockupLeadId)?.publish?.url ?? "") : "";
   return {
     business: p.name, category: p.category, city: city(p.address), address: p.address, website: p.website, phone: p.phone,
     rating: p.rating != null ? String(p.rating) : "", reviews: p.reviews != null ? String(p.reviews) : "",
     fit_summary: p.fit?.summary ?? "", top_issue: p.fit?.reasons?.find((r) => r.points > 0)?.text ?? "",
+    mockup_url: mockupUrl,
     my_name: s.userName ?? "", my_company: s.studioName ?? "", my_phone: s.userPhone ?? "", my_email: String(outreach().fromEmail || s.userEmail || ""),
   };
+}
+
+// Light, free, deterministic reply classification from the subject and first part of the body. Good
+// enough to branch a follow-up on; the owner always gets the reply to read for themselves.
+const POS = /\b(interested|keen|yes please|go ahead|sounds good|looks good|love it|like it|let'?s (do|go|chat|talk)|book|call me|give me a call|how much|what(?:'?s| is) the (price|cost)|when can|happy to|great work|impressed|move forward|next step|sign\s?up)\b/i;
+const NEG = /\b(not interested|no thanks|no thank you|unsubscribe|remove me|stop emailing|already have|we'?re (good|sorted|set)|don'?t (need|want)|not (looking|right now|at this time)|no need|please stop|do not contact)\b/i;
+export function classifyReply(subject: string, text = ""): "positive" | "negative" | "neutral" {
+  const s = `${subject}\n${text}`;
+  if (NEG.test(s)) return "negative";
+  if (POS.test(s)) return "positive";
+  return "neutral";
 }
 
 export const render = (tpl: string, v: Record<string, string>) => tpl.replace(/\{\{\s*(\w+)\s*\}\}/g, (_m, k: string) => v[k] ?? "").replace(/[ \t]+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
@@ -95,6 +109,7 @@ export const FIELDS: Record<string, (p: Prospect) => string | number | boolean> 
   fit_score: (p) => p.fit?.score ?? 0,
   mockup_ready: (p) => ["ready", "needs_review"].includes(getLead(p.mockupLeadId ?? "")?.status ?? ""),
   replied: (p) => hasReplied(p.id),
+  reply_sentiment: (p) => replySentiment(p.id),
   has_label: (p) => (p.labels ?? []).join(","),
   category: (p) => p.category,
 };
@@ -143,7 +158,7 @@ export function describeNode(n: WfNode): string {
   switch (n.kind) {
     case "trigger": return c.event === "label" ? `Label “${c.label}” added` : c.event === "mockup_ready" ? "Mockup ready" : `New search${c.niche ? `: ${c.niche}${c.location ? ` in ${c.location}` : ""}` : ""}`;
     case "email": return `Email: ${c.subject || "(no subject)"}`;
-    case "wait": return c.mode === "mockup" ? "Wait for the mockup" : `Wait ${c.amount || 1} ${c.unit || "minutes"}`;
+    case "wait": return c.mode === "mockup" ? "Wait for the mockup" : c.mode === "reply" ? `Wait for a reply (up to ${c.amount || 2} ${c.unit || "days"})` : `Wait ${c.amount || 1} ${c.unit || "minutes"}`;
     case "condition": return `If ${c.field} ${c.op}${c.value !== undefined && c.value !== "" ? ` ${c.value}` : ""}`;
     case "action": return String(c.type).replace(/_/g, " ") + (c.label ? ` “${c.label}”` : "");
   }
@@ -200,6 +215,20 @@ async function step(e: WfEnrollment, w: Workflow, ctx: Ctx) {
         e.wakeAt = new Date(Date.now() + 60e3).toISOString();
         return;
       }
+      if (c.mode === "reply") {
+        // Wait for the business to write back, or up to the timeout (default 2 days), whichever first.
+        // checkReplies wakes this enrollment the moment a reply lands (see below).
+        const timeout = c.amount ? waitMs(c) : 2 * 86400e3;
+        const replied = hasReplied(p.id);
+        if (replied || Date.now() - since >= timeout) {
+          log(node.id, replied, replied ? `Reply received (${replySentiment(p.id) || "neutral"})` : `No reply after ${c.amount || 2} ${c.unit || "days"}`);
+          go(next(w, node.id));
+          continue;
+        }
+        e.status = "waiting";
+        e.wakeAt = new Date(since + timeout).toISOString();
+        return;
+      }
       if (Date.now() - since >= waitMs(c)) {
         log(node.id, true, `Waited ${c.amount || 1} ${c.unit || "minutes"}`);
         go(next(w, node.id));
@@ -222,6 +251,13 @@ async function step(e: WfEnrollment, w: Workflow, ctx: Ctx) {
       if (type === "stop") {
         e.status = "stopped";
         log(node.id, true, "Stopped here");
+        return;
+      }
+      if (type === "mark_dead") {
+        addLabel(p, "dead");
+        addEvent({ leadId: p.mockupLeadId ?? null, kind: "info", title: `${p.name} marked dead`, detail: `${w.name}: no positive response` });
+        e.status = "done";
+        log(node.id, true, "Marked dead — no positive response");
         return;
       }
       if (type === "create_mockup") {
@@ -256,7 +292,9 @@ async function step(e: WfEnrollment, w: Workflow, ctx: Ctx) {
         go(next(w, node.id));
       };
       if (!to) { skip("no email address found for this business"); continue; }
-      if (hasReplied(p.id)) {
+      // A simple workflow stops as soon as they reply. A reply-branching one (follow-ups) is meant to
+      // keep emailing after a reply, so its own conditions decide what happens — don't auto-stop here.
+      if (hasReplied(p.id) && !branchesOnReply(w)) {
         e.status = "replied";
         log(node.id, true, "Not emailed: they already replied");
         return;
@@ -360,11 +398,17 @@ function runTriggers(w: Workflow) {
   if (n) addEvent({ leadId: null, kind: "info", title: `${w.name}: ${n} businesses enrolled`, detail: describeNode(trig) });
 }
 
-/* ---------- replies: stop a business's workflows when it writes back ---------- */
+/* ---------- replies: branch (or stop) a business's workflows when it writes back ---------- */
 
 // Free mail domains: a reply from someone else at gmail.com isn't the business replying.
 const FREE_MAIL = /^(gmail|googlemail|yahoo|ymail|hotmail|outlook|live|msn|icloud|me|mac|aol|proton|protonmail|gmx|mail|yandex|zoho)\./i;
 const domainOf = (email: string) => email.split("@")[1]?.toLowerCase() ?? "";
+
+/** A workflow that reacts to replies (waits for one, or branches on the sentiment) keeps running when
+ * a reply lands; one that doesn't is simply stopped, as before. */
+function branchesOnReply(w: Workflow): boolean {
+  return w.nodes.some((n) => (n.kind === "wait" && n.config.mode === "reply") || (n.kind === "condition" && ["reply_sentiment", "replied"].includes(String(n.config.field))));
+}
 
 export const replyState: { at: string; error: string; found: number } = { at: "", error: "", found: 0 };
 
@@ -377,28 +421,49 @@ export async function checkReplies() {
   const oldest = new Date(sends.reduce((a, s) => (s.at < a ? s.at : a), sends[0].at));
   let found = 0;
   try {
-    const mail = await inboxSince(box, oldest);
+    const mail = await inboxSince(box, oldest, 1000, true);
     for (const m of mail) {
       if (m.autoReply) continue;
       const received = m.date ? new Date(m.date) : new Date();
+      const sentiment = classifyReply(m.subject, m.text);
       for (const s of sends) {
         const same = m.from === s.email.toLowerCase();
         const sameBusiness = !same && domainOf(m.from) === domainOf(s.email) && !FREE_MAIL.test(domainOf(s.email));
         if (!same && !sameBusiness) continue;
         // Only mail that arrived after we first wrote to them counts (a day's slack for odd Date headers).
         if (!isNaN(received.getTime()) && received.getTime() < new Date(s.at).getTime() - 86400e3) continue;
-        if (!recordReply(s.email.toLowerCase(), s.prospectId, received.toISOString(), m.subject)) continue;
+        if (!recordReply(s.email.toLowerCase(), s.prospectId, received.toISOString(), m.subject, sentiment)) continue;
         found++;
         const p = getProspect(s.prospectId);
+        // A workflow that reacts to replies continues (its wait-for-reply / sentiment branch takes over);
+        // one that doesn't is stopped, as before.
         const stopped: string[] = [];
+        const continued: string[] = [];
         for (const e of runningFor(s.prospectId)) {
-          e.status = "replied";
-          e.log.push({ at: new Date().toISOString(), nodeId: e.nodeId ?? "", ok: true, text: `Replied (${m.from}${m.subject ? `: “${m.subject.slice(0, 80)}”` : ""}): stopped` });
+          const w = getWorkflow(e.workflowId);
+          if (w && branchesOnReply(w)) {
+            e.status = "active";
+            e.wakeAt = new Date().toISOString();
+            e.log.push({ at: new Date().toISOString(), nodeId: e.nodeId ?? "", ok: true, text: `Replied ${sentiment} (${m.from}${m.subject ? `: “${m.subject.slice(0, 80)}”` : ""}): continuing` });
+            continued.push(w.name);
+          } else {
+            e.status = "replied";
+            e.log.push({ at: new Date().toISOString(), nodeId: e.nodeId ?? "", ok: true, text: `Replied (${m.from}${m.subject ? `: “${m.subject.slice(0, 80)}”` : ""}): stopped` });
+            stopped.push(w?.name ?? "");
+          }
           saveEnrollment(e);
-          stopped.push(getWorkflow(e.workflowId)?.name ?? "");
         }
-        if (p) addLabel(p, "replied");
-        addEvent({ leadId: p?.mockupLeadId ?? null, kind: "info", title: `${p?.name ?? s.email} replied`, detail: `${m.from}${m.subject ? `: ${m.subject}` : ""}${stopped.length ? ` · stopped in ${stopped.filter(Boolean).join(", ")}` : ""}` });
+        if (p) {
+          addLabel(p, "replied");
+          if (sentiment !== "neutral") addLabel(p, `replied-${sentiment}`);
+        }
+        const name = p?.name ?? s.email;
+        addEvent({
+          leadId: p?.mockupLeadId ?? null,
+          kind: "info",
+          title: sentiment === "positive" ? `${name} replied — positive. Move to full build?` : sentiment === "negative" ? `${name} replied — not interested` : `${name} replied`,
+          detail: `${m.from}${m.subject ? `: ${m.subject}` : ""}${continued.length ? ` · continuing in ${continued.filter(Boolean).join(", ")}` : stopped.length ? ` · stopped in ${stopped.filter(Boolean).join(", ")}` : ""}`,
+        });
       }
     }
     replyState.error = "";

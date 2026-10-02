@@ -5,13 +5,14 @@ import { exec } from "node:child_process";
 // @ts-expect-error archiver v8 ships without type declarations
 import { ZipArchive } from "archiver";
 import {
-  API_PORT, BRAND_DIR, BUILDS_DIR, LEADS_DIR, ROOT, deleteLeadRow, encryptStoredSecrets, getLead, getSettings, leadDir, listEvents, listLeads,
+  API_PORT, BRAND_DIR, BUILDS_DIR, LEADS_DIR, ROOT, addFeedbackNote, deleteLeadRow, encryptStoredSecrets, getLead, getSettings, leadDir, listEvents, listLeads,
   normalizeUrl, publicSettings, readJson, saveLead, setSettings, usageToday,
 } from "./db.ts";
 import { enqueue, queueState, resumeInterrupted } from "./queue.ts";
 import { hooks, intakeLead } from "./intake.ts";
 import { getBenchmarkSet, listBenchmarkSets, saveBenchmarkSet } from "./pipeline/benchmarks.ts";
 import { finder } from "./finder/routes.ts";
+import { meta as metaLeads } from "./finder/metaRoutes.ts";
 import { resumeSearches } from "./finder/queue.ts";
 import { builds } from "./builds/routes.ts";
 import { resumeBuilds } from "./builds/queue.ts";
@@ -29,9 +30,11 @@ import { automations } from "./automations/routes.ts";
 import { startWorkflowTimers } from "./automations/engine.ts";
 import { license, requireFullLicense, requireLicense, startLicenseTimers } from "./license/index.ts";
 import { assertPublicUrl, localOnly, sandboxFiles } from "./security.ts";
-import { STEPS, type BenchmarkSet, type Capture, type Diagnosis, type GateResult, type LeadDetail, type StepKey, type Usage } from "../shared/types.ts";
+import { STEPS, type BenchmarkSet, type Capture, type Diagnosis, type GateResult, type LeadDetail, type LeadPlaybook, type OutreachEmail, type StepKey, type Usage } from "../shared/types.ts";
 import { ai } from "./claude/aiRoutes.ts";
 import { pitch } from "./pitch.ts";
+import { playbook } from "./playbook.ts";
+import { hostingReady, publishMockup, unpublishMockup } from "./publish/hostinger.ts";
 
 // Every store has created its tables by now: encrypt anything saved before encryption existed.
 encryptStoredSecrets();
@@ -67,6 +70,9 @@ app.get("/api/leads/:id", (req, res) => {
     benchmarks: lead.vertical ? getBenchmarkSet(lead.vertical) : null,
     hasMockup: existsSync(join(leadDir(lead.id), "mockup", "index.html")),
     hasSideBySide: existsSync(join(leadDir(lead.id), "side-by-side.png")),
+    outreach: readJson<OutreachEmail>(lead.id, "outreach.json"),
+    playbook: readJson<LeadPlaybook>(lead.id, "playbook.json"),
+    publishReady: hostingReady(),
   };
   res.json(detail);
 });
@@ -123,7 +129,121 @@ app.get("/api/leads/:id/export", (req, res) => {
   void zip.finalize();
 });
 
+// A unique, filesystem-safe folder name for a lead inside a combined export / on the live host.
+function leadSlug(lead: { url: string; business?: string; id: string }) {
+  const base = (() => { try { return new URL(lead.url).hostname.replace(/^www\./, ""); } catch { return lead.business || "lead"; } })();
+  return `${base.toLowerCase().replace(/[^a-z0-9.-]+/g, "-").replace(/^-+|-+$/g, "") || "lead"}-${lead.id.slice(0, 6)}`;
+}
+
+// ---- Bulk actions on the Leads table ----
+app.post("/api/leads/bulk", (req, res) => {
+  const { ids, action } = (req.body ?? {}) as { ids?: unknown; action?: string };
+  const list = Array.isArray(ids) ? ids.map(String) : [];
+  if (!list.length || action !== "delete") return res.status(400).json({ error: "Pass ids and a supported action" });
+  let done = 0;
+  for (const id of list) {
+    if (!getLead(id)) continue;
+    deleteLeadRow(id);
+    rmSync(leadDir(id), { recursive: true, force: true });
+    done++;
+  }
+  res.json({ ok: true, deleted: done });
+});
+
+app.patch("/api/leads/bulk", (req, res) => {
+  const { ids, patch } = (req.body ?? {}) as { ids?: unknown; patch?: Record<string, unknown> };
+  const list = Array.isArray(ids) ? ids.map(String) : [];
+  const allowed = ["business", "email", "phone"] as const;
+  const clean: Partial<Record<(typeof allowed)[number], string>> = {};
+  for (const k of allowed) if (typeof patch?.[k] === "string" && (patch[k] as string).trim()) clean[k] = (patch[k] as string).trim();
+  if (!list.length || !Object.keys(clean).length) return res.status(400).json({ error: "Pass ids and at least one field to change" });
+  let done = 0;
+  for (const id of list) {
+    const lead = getLead(id);
+    if (!lead) continue;
+    Object.assign(lead, clean);
+    saveLead(lead);
+    done++;
+  }
+  res.json({ ok: true, updated: done });
+});
+
+app.post("/api/leads/export", (req, res) => {
+  const list = Array.isArray(req.body?.ids) ? (req.body.ids as unknown[]).map(String) : [];
+  const leads = list.map((id) => getLead(id)).filter((l): l is NonNullable<typeof l> => Boolean(l && existsSync(join(leadDir(l.id), "mockup", "index.html"))));
+  if (!leads.length) return res.status(404).json({ error: "None of the selected leads have a generated mockup" });
+  res.attachment(`mockups-${new Date().toISOString().slice(0, 10)}.zip`);
+  const zip = new ZipArchive({ zlib: { level: 6 } });
+  zip.pipe(res);
+  for (const lead of leads) {
+    const dir = leadDir(lead.id);
+    const folder = leadSlug(lead);
+    zip.directory(join(dir, "mockup"), `${folder}/mockup`);
+    if (existsSync(join(dir, "assets"))) zip.directory(join(dir, "assets"), `${folder}/assets`);
+    if (existsSync(join(dir, "side-by-side.png"))) zip.file(join(dir, "side-by-side.png"), { name: `${folder}/side-by-side.png` });
+  }
+  void zip.finalize();
+});
+
+// ---- Rating / feedback / change requests on one mockup ----
+app.post("/api/leads/:id/feedback", (req, res) => {
+  const lead = getLead(req.params.id);
+  if (!lead) return res.sendStatus(404);
+  const { rating, feedback } = (req.body ?? {}) as { rating?: unknown; feedback?: unknown };
+  if (rating !== undefined && rating !== null) {
+    const n = Number(rating);
+    if (!Number.isNaN(n)) lead.rating = Math.max(0, Math.min(10, Math.round(n)));
+  }
+  if (typeof feedback === "string") {
+    lead.feedback = feedback.slice(0, 2000);
+    // Remember the comment so future mockups honour it without being told again.
+    if (lead.feedback.trim()) addFeedbackNote({ leadId: lead.id, vertical: lead.vertical ?? null, kind: "feedback", text: lead.feedback });
+  }
+  saveLead(lead);
+  res.json({ ok: true, rating: lead.rating, feedback: lead.feedback });
+});
+
+app.post("/api/leads/:id/revise", (req, res) => {
+  const lead = getLead(req.params.id);
+  if (!lead) return res.sendStatus(404);
+  const text = String((req.body ?? {}).text ?? "").trim();
+  if (!text) return res.status(400).json({ error: "Describe the change you want" });
+  if (!existsSync(join(leadDir(lead.id), "mockup", "index.html"))) return res.status(400).json({ error: "There's no mockup to revise yet" });
+  lead.reviseRequest = text.slice(0, 2000);
+  // A change request is also a lasting preference: carry it to future mockups.
+  addFeedbackNote({ leadId: lead.id, vertical: lead.vertical ?? null, kind: "change", text: lead.reviseRequest });
+  // Re-run from the generate step so the change is applied, then re-gated and re-rendered.
+  const idx = STEPS.findIndex((s) => s.key === "generate");
+  lead.steps.forEach((s, i) => { if (i >= idx) Object.assign(s, { status: "pending", note: undefined, startedAt: undefined, finishedAt: undefined }); });
+  saveLead(lead);
+  enqueue(lead.id);
+  res.json({ ok: true });
+});
+
+// ---- Publish a mockup live (Hostinger over SFTP) ----
+app.get("/api/leads/:id/publish", (_req, res) => res.json({ ready: hostingReady() }));
+
+app.post("/api/leads/:id/publish", async (req, res) => {
+  if (!getLead(req.params.id)) return res.sendStatus(404);
+  try {
+    res.json(await publishMockup(req.params.id));
+  } catch (e) {
+    res.status(502).json({ error: (e as Error).message || "Couldn't publish the mockup" });
+  }
+});
+
+app.delete("/api/leads/:id/publish", async (req, res) => {
+  if (!getLead(req.params.id)) return res.sendStatus(404);
+  try {
+    await unpublishMockup(req.params.id);
+    res.json({ ok: true });
+  } catch (e) {
+    res.status(502).json({ error: (e as Error).message || "Couldn't unpublish the mockup" });
+  }
+});
+
 app.use("/api/finder", finder);
+app.use("/api/meta", metaLeads);
 app.use("/api/builds", builds);
 app.use("/api/wp", wp);
 app.use("/api/seo", seo);
@@ -152,6 +272,7 @@ app.put("/api/settings", (req, res) => {
     "psiKey", "gtmetrixKey", "qaEmail", "agencyAdminEmail", "qaImapHost", "qaImapUser", "qaImapPassword",
     "outreachFromName", "outreachFromEmail", "outreachSmtpHost", "outreachSmtpUser", "outreachSmtpPassword", "outreachFooter", "outreachImapHost",
     "openaiKey", "geminiKey", "openrouterKey", "compatibleKey", "compatibleBaseUrl", "codexPath", "geminiPath", "customCommand",
+    "hostingSftpHost", "hostingSftpUser", "hostingSftpPassword", "hostingBasePath", "hostingPublicBaseUrl",
   ];
   if (typeof req.body?.currency === "string" && !/^[A-Z]{3}$/.test(req.body.currency)) return res.status(400).json({ error: "Currency must be a 3-letter code like USD" });
   if (typeof req.body?.currency === "string") allowed.push("currency");
@@ -186,6 +307,8 @@ app.put("/api/settings", (req, res) => {
   if (body.careDiffThreshold !== undefined) extra.careDiffThreshold = Math.max(0.1, Math.min(20, Number(body.careDiffThreshold) || 1));
   if (typeof body.careAutoStage === "boolean") extra.careAutoStage = body.careAutoStage;
   if (typeof body.careKeepStaging === "boolean") extra.careKeepStaging = body.careKeepStaging;
+  if (body.hostingSftpPort !== undefined) extra.hostingSftpPort = Math.max(1, Math.min(65535, Math.round(Number(body.hostingSftpPort)) || 22));
+  if (typeof body.autoPublishOnReady === "boolean") extra.autoPublishOnReady = body.autoPublishOnReady;
   if ("brandColor" in patch && !/^#[0-9a-f]{6}$/i.test(patch.brandColor as string)) return res.status(400).json({ error: "Brand colour must be a 6-digit hex like #a36566" });
   // The Claude path is run through the shell on Windows, so it must be a plain path.
   if ("claudePath" in patch && (!String(patch.claudePath).trim() || /[&|<>^%!"`$;\r\n]/.test(String(patch.claudePath)))) return res.status(400).json({ error: "The Claude Code path must be a plain file path or command name" });
@@ -222,6 +345,7 @@ app.delete("/api/brand/:kind", (req, res) => {
 
 app.use("/api/ai", ai);
 app.use("/api/pitch", pitch);
+app.use("/api/playbook", playbook);
 
 app.get("/api/claude/status", (_req, res) => {
   const s = getSettings();

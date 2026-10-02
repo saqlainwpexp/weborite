@@ -13,6 +13,7 @@ const PRODUCT_NAME = 'Weborite Studio';
 const MAX_FAILURES_PER_HOUR = 20;
 const MAX_ORDERS_PER_HOUR = 5;          // per IP, against spam
 const NOTIFY_EMAIL = 'hello@weborite.com'; // new orders are emailed here
+const ONBOARDING_EMAIL = 'info@weborite.com'; // new-customer onboarding details are emailed here
 const PLAN_PRICES = ['monthly' => '$49 per month', 'yearly' => '$490 per year'];
 const PAYMENT_METHODS = ['bank' => 'Bank transfer', 'payoneer' => 'Payoneer', 'wise' => 'Wise'];
 

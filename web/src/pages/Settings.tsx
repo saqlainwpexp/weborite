@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { NavLink, Navigate, useOutletContext, useParams } from "react-router-dom";
 import {
-  AtSign, Building2, CheckCircle2, Copy, Cpu, FileText, Globe, Hash, ImageIcon, KeyRound, Link2, Megaphone, Palette, Phone, RotateCcw,
+  AtSign, Briefcase, Building2, CheckCircle2, Copy, Cpu, FileText, Globe, Hash, ImageIcon, KeyRound, Link2, Megaphone, Palette, Phone, RotateCcw,
   CalendarClock, Cloud, Gauge, Mail, ShieldCheck, SlidersHorizontal, Wrench, Sparkles, Terminal, Trash2, Upload, User, UserRound, XCircle,
 } from "lucide-react";
 import type { Settings as S } from "../../../shared/types";
@@ -11,16 +11,14 @@ import { Dropdown } from "../components/Dropdown";
 import { workspaceEnabled } from "../../../shared/features";
 import { CLOUD_ROUTINE_PROMPT } from "../../../shared/cloudPrompt";
 import { PlanLicense } from "../components/PlanLicense";
-import { Billing } from "../components/Billing";
 import { AiProviderSettings } from "../components/AiSettings";
 import { BRAND_PRESETS, DEFAULT_BRAND, applyBrand, brandPalette, isHex } from "../lib/brand";
 
-type Draft = Partial<S> & { apiKey?: string; metaPageToken?: string; metaAppSecret?: string; psiKey?: string; gtmetrixKey?: string; cloudTriggerToken?: string; githubToken?: string; qaImapPassword?: string; outreachSmtpPassword?: string };
+type Draft = Partial<S> & { apiKey?: string; metaPageToken?: string; metaAppSecret?: string; psiKey?: string; gtmetrixKey?: string; cloudTriggerToken?: string; githubToken?: string; qaImapPassword?: string; outreachSmtpPassword?: string; hostingSftpPassword?: string };
 
 const TABS = [
   { key: "profile", label: "Profile" },
   { key: "license", label: "Plan & license" },
-  { key: "billing", label: "Billing" },
   { key: "claude", label: "AI" },
   { key: "leads", label: "Lead sources" },
   { key: "integrations", label: "Integrations" },
@@ -312,6 +310,39 @@ export default function Settings() {
                 <Field label="Phone number" icon={<Phone />} htmlFor="p-phone">
                   <input id="p-phone" className="input" type="tel" placeholder="Enter your phone number" value={v("userPhone")} onChange={set("userPhone")} autoComplete="tel" />
                 </Field>
+                <Field label="What you do" icon={<Briefcase />} htmlFor="p-role">
+                  <input id="p-role" className="input" placeholder="e.g. Web designer, agency owner" value={v("role")} onChange={set("role")} />
+                </Field>
+              </div>
+            </Section>
+
+            <Section icon={<Sparkles />} title="Business & personalization">
+              <p className="muted" style={{ fontSize: 14, marginBottom: 14 }}>
+                Used to tailor the mockups and outreach emails to you. The more you add, the more the work sounds like your agency.
+              </p>
+              <div className="set-field">
+                <label htmlFor="p-company-desc">Company description</label>
+                <textarea id="p-company-desc" className="input" rows={2} placeholder="A sentence or two about your business and who you serve" value={v("companyDescription")} onChange={(e) => setDraft({ ...draft, companyDescription: e.target.value })} />
+              </div>
+              <div className="set-field">
+                <label htmlFor="p-niche">Your niche</label>
+                <textarea id="p-niche" className="input" rows={2} placeholder="The clients and industries you focus on" value={v("niche")} onChange={(e) => setDraft({ ...draft, niche: e.target.value })} />
+              </div>
+              <div className="set-field">
+                <label htmlFor="p-writing">Your writing style</label>
+                <textarea id="p-writing" className="input" rows={4} placeholder="Paste a few lines from past client chats or outreach emails so we can match your voice" value={v("writingStyle")} onChange={(e) => setDraft({ ...draft, writingStyle: e.target.value })} />
+              </div>
+              <div className="set-field">
+                <label htmlFor="p-cases">Previous work & case studies</label>
+                <textarea id="p-cases" className="input" rows={4} placeholder="Projects or results you're proud of, and anything you point clients to" value={v("caseStudies")} onChange={(e) => setDraft({ ...draft, caseStudies: e.target.value })} />
+              </div>
+              <div className="set-field">
+                <label htmlFor="p-design">Your designs, mission & goals</label>
+                <textarea id="p-design" className="input" rows={4} placeholder="The look you go for, what your agency stands for, and what you're aiming to achieve" value={v("designContext")} onChange={(e) => setDraft({ ...draft, designContext: e.target.value })} />
+              </div>
+              <div className="set-field">
+                <label htmlFor="p-notes">Anything else</label>
+                <textarea id="p-notes" className="input" rows={2} placeholder="Other context that helps us tailor the work to you" value={v("personalizationNotes")} onChange={(e) => setDraft({ ...draft, personalizationNotes: e.target.value })} />
               </div>
             </Section>
           </>
@@ -420,8 +451,6 @@ export default function Settings() {
 
         {tab === "license" && <PlanLicense />}
 
-        {tab === "billing" && <Billing />}
-
         {tab === "maintenance" && (
           <>
             <Section icon={<CalendarClock />} title="Monthly check">
@@ -519,6 +548,33 @@ export default function Settings() {
                 </Field>
               </div>
               <OutreachTest path="/api/automations/replies/test" label="Test the replies inbox" />
+            </Section>
+            <Section icon={<Globe />} title="Hosting (publish mockups live)">
+              <p className="muted" style={{ fontSize: 14, marginBottom: 14 }}>Publish approved mockups to a subdomain on your Hostinger account over SFTP, so the outreach email can link a real, live page. Create a subdomain (e.g. mockups.studio.weborite.com) and an FTP/SFTP user in hPanel, then enter the details here. Each mockup gets its own folder.</p>
+              <div className="set-grid">
+                <Field label="SFTP server" icon={<Globe />} htmlFor="h-host" hint="From hPanel → Files → FTP Accounts. Often the same host as your site.">
+                  <input id="h-host" className="input mono" placeholder="123.45.67.89 or ftp.your-domain.com" value={v("hostingSftpHost")} onChange={set("hostingSftpHost")} />
+                </Field>
+                <Field label="Port" icon={<Hash />} htmlFor="h-port" hint="SFTP is usually 22 on Hostinger.">
+                  <input id="h-port" className="input" type="number" min={1} max={65535} value={String(v("hostingSftpPort") || 22)} onChange={(e) => setDraft({ ...draft, hostingSftpPort: Number(e.target.value) })} />
+                </Field>
+                <Field label="Username" icon={<User />} htmlFor="h-user">
+                  <input id="h-user" className="input" placeholder="u123456789.mockups" value={v("hostingSftpUser")} onChange={set("hostingSftpUser")} autoComplete="off" />
+                </Field>
+                <Field label="Password" icon={<KeyRound />} htmlFor="h-pass">
+                  <input id="h-pass" className="input mono" type="password" placeholder={settings.hostingSftpPasswordSet ? "•••••••• saved" : "SFTP account password"} value={draft.hostingSftpPassword ?? ""} onChange={set("hostingSftpPassword")} autoComplete="new-password" />
+                </Field>
+                <Field label="Folder on the server" icon={<FileText />} htmlFor="h-path" hint="The directory the subdomain serves, from hPanel. No trailing slash.">
+                  <input id="h-path" className="input mono" placeholder="/home/u123456789/domains/mockups.studio.weborite.com/public_html" value={v("hostingBasePath")} onChange={set("hostingBasePath")} />
+                </Field>
+                <Field label="Public URL" icon={<Globe />} htmlFor="h-url" hint="Where that folder is reachable on the web.">
+                  <input id="h-url" className="input mono" placeholder="https://mockups.studio.weborite.com" value={v("hostingPublicBaseUrl")} onChange={set("hostingPublicBaseUrl")} />
+                </Field>
+              </div>
+              <label className="chk" style={{ marginTop: 14 }}>
+                <input type="checkbox" checked={Boolean(v("autoPublishOnReady"))} onChange={(e) => setDraft({ ...draft, autoPublishOnReady: e.target.checked })} />
+                Publish automatically when a mockup passes the quality check
+              </label>
             </Section>
             <Section icon={<Mail />} title="QA inbox (email delivery test)">
               <p className="muted" style={{ fontSize: 14, marginBottom: 14 }}>An outside mailbox (Gmail, Outlook) on a different server from your client sites. The delivery test sends mail through the client's site to this address and reads the headers here, so SPF and DKIM face a real check. For Gmail, turn on IMAP and use an app password.</p>

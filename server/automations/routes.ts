@@ -42,6 +42,52 @@ function starter(w: Workflow, niche: string, location: string) {
   ];
 }
 
+/**
+ * The follow-up flow: like the starter, but tracks replies. After the mockup email it waits up to 2
+ * days for a reply; a positive reply pings you to move to a full build, otherwise it sends one
+ * follow-up, waits another 2 days, and marks the business dead if nothing positive comes back.
+ * Publishing a mockup live (Mockups → Publish) fills {{mockup_url}} in these emails.
+ */
+function followup(w: Workflow, niche: string, location: string) {
+  const n = (id: string, kind: WfNode["kind"], x: number, y: number, config: WfNode["config"]): WfNode => ({ id, kind, x, y, config });
+  const sign = "\n\nBest,\n{{my_name}}\n{{my_company}} · {{my_phone}}";
+  const link = "\n\nSee the new homepage here: {{mockup_url}}";
+  w.nodes = [
+    n("trigger", "trigger", 60, 60, { event: "search", niche, location, max: 20, anySearch: false }),
+    n("mockup", "action", 60, 200, { type: "create_mockup" }),
+    n("waitmock", "wait", 60, 330, { mode: "mockup", timeoutHours: 6 }),
+    n("hasemail", "condition", 60, 460, { field: "has_email", op: "is_true" }),
+    n("label", "action", 320, 600, { type: "add_label", label: "call" }),
+    n("email1", "email", -200, 600, {
+      subject: "A new website idea for {{business}}",
+      body: `Hi {{business}} team,\n\nI was looking at businesses in {{city}} and put together a quick redesign of your website to show what's possible.${link}\n\n{{top_issue}}\n\nIf you'd like the full version, just reply to this email.${sign}`,
+      attachMockup: true,
+    }),
+    n("waitr1", "wait", -200, 740, { mode: "reply", amount: 2, unit: "days" }),
+    n("sent1", "condition", -200, 880, { field: "reply_sentiment", op: "contains", value: "positive" }),
+    n("notify1", "action", -440, 1010, { type: "notify", text: "Positive reply from {{business}} — move to full build? {{mockup_url}}" }),
+    n("stop1", "action", -440, 1140, { type: "stop" }),
+    n("email2", "email", 40, 1010, {
+      subject: "Re: A new website idea for {{business}}",
+      body: `Hi again,\n\nJust checking you saw the redesign I made for {{business}}. Happy to send the full version or answer any questions.${link}${sign}`,
+      attachMockup: false,
+    }),
+    n("waitr2", "wait", 40, 1140, { mode: "reply", amount: 2, unit: "days" }),
+    n("sent2", "condition", 40, 1270, { field: "reply_sentiment", op: "contains", value: "positive" }),
+    n("notify2", "action", -200, 1400, { type: "notify", text: "Positive reply from {{business}} — move to full build? {{mockup_url}}" }),
+    n("dead", "action", 280, 1400, { type: "mark_dead" }),
+  ];
+  w.edges = [
+    { from: "trigger", to: "mockup" }, { from: "mockup", to: "waitmock" }, { from: "waitmock", to: "hasemail" },
+    { from: "hasemail", to: "email1", branch: "yes" }, { from: "hasemail", to: "label", branch: "no" },
+    { from: "email1", to: "waitr1" }, { from: "waitr1", to: "sent1" },
+    { from: "sent1", to: "notify1", branch: "yes" }, { from: "sent1", to: "email2", branch: "no" },
+    { from: "notify1", to: "stop1" },
+    { from: "email2", to: "waitr2" }, { from: "waitr2", to: "sent2" },
+    { from: "sent2", to: "notify2", branch: "yes" }, { from: "sent2", to: "dead", branch: "no" },
+  ];
+}
+
 /** Keeps the graph sane: known node kinds, one trigger, edges between existing nodes, one exit per branch. */
 function cleanGraph(nodes: unknown, edges: unknown): { nodes: WfNode[]; edges: WfEdge[] } | string {
   if (!Array.isArray(nodes) || !Array.isArray(edges)) return "Send nodes and edges";
@@ -98,8 +144,13 @@ automations.get("/", (_req, res) => {
 
 automations.post("/", (req, res) => {
   const w = createWorkflow(String(req.body?.name ?? "").trim().slice(0, 80));
+  const niche = String(req.body?.niche ?? "").slice(0, 80);
+  const location = String(req.body?.location ?? "").slice(0, 80);
   if (req.body?.template === "starter") {
-    starter(w, String(req.body?.niche ?? "").slice(0, 80), String(req.body?.location ?? "").slice(0, 80));
+    starter(w, niche, location);
+    saveWorkflow(w);
+  } else if (req.body?.template === "followup") {
+    followup(w, niche, location);
     saveWorkflow(w);
   }
   res.json(summarize(w));
