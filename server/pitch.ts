@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { getBenchmarkSet } from "./pipeline/benchmarks.ts";
 import { agencyProfileBlock, getLead, getSettings, leadDir, readJson } from "./db.ts";
-import { extractJson, runClaude } from "./claude/runner.ts";
+import { extractFenced, extractJson, runClaude } from "./claude/runner.ts";
 import type { Capture, Diagnosis, GateResult } from "../shared/types.ts";
 
 /**
@@ -107,6 +107,29 @@ Return ONLY a JSON object in a \`\`\`json fenced block: {"subject": "...", "body
 
 export interface Pitch { subject: string; body: string; email: string }
 
+/**
+ * Pull {subject, body} out of a model reply. Prefers the JSON we asked for, but many providers
+ * ignore that and just write the email as plain text — often a leading "Subject: ..." line (as seen
+ * from "Subject:"/"Re:"/"Subj:") and then the body. Rather than crash on those, parse the plain form:
+ * strip a fenced wrapper, lift a leading subject line if present, and treat the rest as the body.
+ */
+function parseEmail(text: string): { subject?: string; body?: string } {
+  try {
+    return extractJson<{ subject?: string; body?: string }>(text);
+  } catch {
+    // Fall through to plain-text parsing below.
+  }
+  let rest = extractFenced(text, "").trim(); // drop a ```...``` wrapper if the model added one
+  let subject: string | undefined;
+  const m = rest.match(/^\s*(?:subject|subj|re)\s*:\s*(.+?)(?:\r?\n|$)/i);
+  if (m) {
+    subject = m[1].trim();
+    rest = rest.slice(m[0].length);
+  }
+  const body = rest.replace(/^(?:\r?\n)+/, "").trim();
+  return { subject, body: body || undefined };
+}
+
 /** Draft the closing/outreach email for a lead. Throws "Lead not found" when the lead is gone. */
 export async function makePitch(id: string): Promise<Pitch> {
   const facts = leadFacts(id);
@@ -122,7 +145,7 @@ export async function makePitch(id: string): Promise<Pitch> {
       agencyProfileBlock("writing"),
     cwd: leadDir(id),
   });
-  const out = extractJson<{ subject?: string; body?: string }>(r.text);
+  const out = parseEmail(r.text);
   const body = String(out.body ?? "").trim();
   if (!body) throw new Error("The AI did not return an email body");
   return { subject: String(out.subject ?? `A new homepage for ${facts.business}`).trim(), body, email: facts.email };
