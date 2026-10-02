@@ -12,6 +12,8 @@ import { cpSync, createWriteStream, existsSync, mkdirSync, readdirSync, readFile
 import { createServer } from "node:net";
 import { join } from "node:path";
 import { PNG } from "pngjs";
+import electronUpdater from "electron-updater";
+const { autoUpdater } = electronUpdater;
 
 const HERE = import.meta.dirname;
 const ROOT = join(HERE, "..");
@@ -496,6 +498,58 @@ ipcMain.on("channel:notify", (e, { nid, title, body }) => {
   n.show();
 });
 
+/* ---------- auto-update (electron-updater, generic feed on studio.weborite.com) ---------- */
+
+// Customer builds update themselves; the owner build and runs from source never do (nothing to update,
+// and the owner build must not be overwritten by the customer feed).
+function buildType() {
+  try { return JSON.parse(readFileSync(join(HERE, "build-info.json"), "utf8")).build || "customer"; } catch { return "customer"; }
+}
+let updatesEnabled = false;
+// Last known state, so the dashboard can ask on mount even if it missed the live event during reload.
+let updateStatus = { state: "idle" };
+
+function setUpdateStatus(s) {
+  updateStatus = s;
+  win?.webContents.send("updates:status", s);
+}
+
+function setupUpdates() {
+  updatesEnabled = app.isPackaged && buildType() !== "owner";
+  if (!updatesEnabled) return;
+  autoUpdater.autoDownload = false; // the user clicks Download from the dashboard
+  autoUpdater.autoInstallOnAppQuit = true; // a downloaded-but-not-installed update applies on next quit
+  autoUpdater.on("checking-for-update", () => setUpdateStatus({ state: "checking" }));
+  autoUpdater.on("update-available", (info) => setUpdateStatus({ state: "available", version: info?.version }));
+  autoUpdater.on("update-not-available", () => setUpdateStatus({ state: "none" }));
+  autoUpdater.on("download-progress", (p) => setUpdateStatus({ state: "downloading", percent: Math.round(p?.percent ?? 0), version: updateStatus.version }));
+  autoUpdater.on("update-downloaded", (info) => setUpdateStatus({ state: "downloaded", version: info?.version }));
+  autoUpdater.on("error", (err) => setUpdateStatus({ state: "error", message: String(err?.message || err).slice(0, 300) }));
+  // A quiet check at startup, then every 6 hours. autoDownload is off, so this only surfaces a prompt.
+  const check = () => autoUpdater.checkForUpdates().catch(() => {});
+  setTimeout(check, 8000);
+  setInterval(check, 6 * 60 * 60 * 1000);
+}
+
+ipcMain.handle("updates:state", () => ({ version: app.getVersion(), supported: updatesEnabled, status: updateStatus }));
+ipcMain.handle("updates:check", async () => {
+  if (!updatesEnabled) return { available: false, supported: false };
+  const r = await autoUpdater.checkForUpdates().catch((e) => { setUpdateStatus({ state: "error", message: String(e?.message || e).slice(0, 300) }); return null; });
+  const version = r?.updateInfo?.version;
+  return { available: Boolean(version && version !== app.getVersion()), version };
+});
+ipcMain.handle("updates:download", async () => {
+  if (!updatesEnabled) return { ok: false };
+  await autoUpdater.downloadUpdate().catch((e) => setUpdateStatus({ state: "error", message: String(e?.message || e).slice(0, 300) }));
+  return { ok: true };
+});
+ipcMain.handle("updates:install", () => {
+  if (!updatesEnabled) return { ok: false };
+  quitting = true; // let the window actually close instead of hiding to the tray
+  setImmediate(() => autoUpdater.quitAndInstall());
+  return { ok: true };
+});
+
 /* ---------- lifecycle ---------- */
 
 app.on("second-instance", showWindow);
@@ -523,4 +577,5 @@ app.whenReady().then(async () => {
   }
   await win.loadURL(base);
   await syncChannels();
+  setupUpdates();
 });

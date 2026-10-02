@@ -13,6 +13,22 @@ export type ChannelState = {
 export type Bounds = { x: number; y: number; width: number; height: number };
 export type ChannelAction = "reload" | "back" | "forward" | "home" | "devtools" | "signout" | "zoom-in" | "zoom-out" | "zoom-reset";
 
+/** Live auto-update status pushed from the desktop shell. */
+export type UpdateStatus =
+  | { state: "idle" | "checking" | "none" }
+  | { state: "available"; version?: string }
+  | { state: "downloading"; percent?: number; version?: string }
+  | { state: "downloaded"; version?: string }
+  | { state: "error"; message?: string };
+
+export interface UpdatesApi {
+  state: () => Promise<{ version: string; supported: boolean; status: UpdateStatus }>;
+  check: () => Promise<{ available: boolean; version?: string; supported?: boolean }>;
+  download: () => Promise<{ ok: boolean }>;
+  install: () => Promise<{ ok: boolean }>;
+  onStatus: (cb: (s: UpdateStatus) => void) => () => void;
+}
+
 interface DesktopApi {
   desktop: true;
   comms: {
@@ -28,6 +44,7 @@ interface DesktopApi {
   zoom: { get: () => Promise<number>; set: (z: number) => Promise<number>; onChange: (cb: (z: number) => void) => () => void };
   openExternal: (url: string) => void;
   cacheBrand?: (b: { studioName?: string; brandColor?: string }) => void;
+  updates?: UpdatesApi;
 }
 
 export const desktop = (window as unknown as { studioDesktop?: DesktopApi }).studioDesktop;

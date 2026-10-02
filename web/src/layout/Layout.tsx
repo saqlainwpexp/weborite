@@ -8,6 +8,7 @@ import type { BenchmarkSet, Build, BuildStats, CommsService, EventItem, FinderSe
 import { api, host, timeAgo, usePoll } from "../lib/api";
 import { workspaceEnabled } from "../../../shared/features";
 import { DemoBanner, LimitWatcher } from "../components/Demo";
+import { UpdateBanner } from "../components/UpdateBanner";
 import { AddLeadModal, EventIcon, Logo, StatusPill } from "../components/ui";
 import { NewSearchModal } from "../components/finder";
 import { Calendar, dayKey, parseDayKey } from "../components/Calendar";
@@ -552,6 +553,7 @@ export default function Layout() {
         </aside>
 
         <main className="content">
+          <UpdateBanner />
           <DemoBanner />
           <LimitWatcher />
           <Outlet context={ctx} />

@@ -1,7 +1,8 @@
-import { existsSync, readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import SftpClient from "ssh2-sftp-client";
-import { getLead, getSettings, leadDir, saveLead } from "../db.ts";
+import { DATA, getLead, getSettings, leadDir, saveLead } from "../db.ts";
 import type { Lead } from "../../shared/types.ts";
 
 /**
@@ -28,6 +29,33 @@ export function hostingConfig(): HostingConfig {
 
 export const hostingReady = (c = hostingConfig()) => Boolean(c.host && c.user && c.password && c.basePath && c.publicBaseUrl);
 
+/**
+ * Host-key verification (trust-on-first-use). ssh2 accepts any server key by default, which would let a
+ * man-in-the-middle capture the SFTP password. We pin the key fingerprint we saw first for this host:port
+ * and refuse to connect (so the password is never sent) if it ever changes.
+ */
+const KNOWN_HOSTS = join(DATA, "sftp-known-hosts.json");
+const readKnownHosts = (): Record<string, string> => { try { return JSON.parse(readFileSync(KNOWN_HOSTS, "utf8")); } catch { return {}; } };
+
+function hostVerifier(host: string, port: number) {
+  return (key: Buffer): boolean => {
+    const fp = createHash("sha256").update(key).digest("base64");
+    const id = `${host.toLowerCase()}:${port}`;
+    const known = readKnownHosts();
+    if (!known[id]) {
+      known[id] = fp; // first connection: remember this server's key
+      try { writeFileSync(KNOWN_HOSTS, JSON.stringify(known, null, 1), { mode: 0o600 }); } catch { /* best effort */ }
+      return true;
+    }
+    return known[id] === fp;
+  };
+}
+
+/** Shared connect options, including the host-key pin. */
+function connectOpts(cfg: HostingConfig) {
+  return { host: cfg.host, port: cfg.port, username: cfg.user, password: cfg.password, readyTimeout: 20000, hostVerifier: hostVerifier(cfg.host, cfg.port) };
+}
+
 /** A filesystem- and URL-safe folder name for this lead's live mockup. */
 export function leadSlug(lead: Pick<Lead, "id" | "url" | "business">): string {
   const base = (() => { try { return new URL(lead.url).hostname.replace(/^www\./, ""); } catch { return lead.business || "mockup"; } })();
@@ -51,7 +79,7 @@ export async function publishMockup(leadId: string): Promise<{ url: string; path
 
   const sftp = new SftpClient();
   try {
-    await sftp.connect({ host: cfg.host, port: cfg.port, username: cfg.user, password: cfg.password, readyTimeout: 20000 });
+    await sftp.connect(connectOpts(cfg));
     await sftp.mkdir(remoteDir, true);
     // Replace the page so re-publishing a revised mockup overwrites the old one.
     await sftp.put(Buffer.from(html, "utf8"), `${remoteDir}/index.html`);
@@ -75,7 +103,7 @@ export async function unpublishMockup(leadId: string): Promise<void> {
   if (lead.publish?.path && hostingReady(cfg)) {
     const sftp = new SftpClient();
     try {
-      await sftp.connect({ host: cfg.host, port: cfg.port, username: cfg.user, password: cfg.password, readyTimeout: 20000 });
+      await sftp.connect(connectOpts(cfg));
       await sftp.rmdir(lead.publish.path, true).catch(() => {});
     } finally {
       await sftp.end().catch(() => {});

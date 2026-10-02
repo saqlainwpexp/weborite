@@ -7,6 +7,7 @@ import {
 import type { Settings as S } from "../../../shared/types";
 import type { LayoutCtx } from "../layout/Layout";
 import { api } from "../lib/api";
+import { desktop, type UpdateStatus } from "../lib/desktop";
 import { Dropdown } from "../components/Dropdown";
 import { workspaceEnabled } from "../../../shared/features";
 import { CLOUD_ROUTINE_PROMPT } from "../../../shared/cloudPrompt";
@@ -46,6 +47,51 @@ function Field({ label, icon, hint, children, htmlFor }: { label: string; icon?:
       </div>
       {hint && <span className="hint">{hint}</span>}
     </div>
+  );
+}
+
+/** Settings → Plan & license: current app version and a manual update check (desktop app only). */
+function UpdatesSection() {
+  const updates = desktop?.updates;
+  const [version, setVersion] = useState("");
+  const [supported, setSupported] = useState(false);
+  const [status, setStatus] = useState<UpdateStatus>({ state: "idle" });
+  const [busy, setBusy] = useState(false);
+  useEffect(() => {
+    if (!updates) return;
+    void updates.state().then((r) => { setVersion(r.version); setSupported(r.supported); setStatus(r.status); });
+    return updates.onStatus(setStatus);
+  }, [updates]);
+  if (!updates) return null;
+
+  const check = async () => { setBusy(true); try { await updates.check(); } finally { setBusy(false); } };
+  const note =
+    status.state === "available" ? "A new version is available — use the banner at the top to download it." :
+    status.state === "downloading" ? `Downloading… ${"percent" in status ? status.percent ?? 0 : 0}%` :
+    status.state === "downloaded" ? "Update downloaded — restart from the banner to install." :
+    status.state === "none" ? "You're on the latest version." :
+    status.state === "error" ? `Last check failed: ${"message" in status ? status.message : ""}` : "";
+
+  return (
+    <Section icon={<RotateCcw />} title="App updates">
+      <Field label="Current version">
+        <div className="code"><span>v{version || "—"}</span></div>
+      </Field>
+      <div className="set-field">
+        <label>Check for updates</label>
+        {supported ? (
+          <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+            <button type="button" className="btn btn-white" disabled={busy || status.state === "downloading"} onClick={() => void check()}>
+              <RotateCcw size={15} />{busy || status.state === "checking" ? "Checking…" : "Check now"}
+            </button>
+            {note && <span className="hint" style={{ margin: 0 }}>{note}</span>}
+          </div>
+        ) : (
+          <span className="hint" style={{ margin: 0 }}>This build is updated outside the app. The installed desktop app updates itself automatically from studio.weborite.com.</span>
+        )}
+        {supported && <span className="hint">New versions download and install from inside the app — your leads, mockups and settings are kept.</span>}
+      </div>
+    </Section>
   );
 }
 
@@ -449,7 +495,7 @@ export default function Settings() {
           </AiProviderSettings>
         )}
 
-        {tab === "license" && <PlanLicense />}
+        {tab === "license" && <><PlanLicense /><UpdatesSection /></>}
 
         {tab === "maintenance" && (
           <>

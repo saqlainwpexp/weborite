@@ -70,6 +70,19 @@ jobs:
           body_path: .github/release-notes/${{ steps.v.outputs.tag }}.md
           files: release/*.exe
 
+      - name: Publish the auto-update files (Hostinger)
+        # electron-updater reads https://studio.weborite.com/updates/latest.yml and downloads the
+        # installer + .blockmap from the same folder. Needs the UPDATE_SFTP_* repo secrets; the script
+        # skips (without failing the release) when they aren't set.
+        if: github.event_name == 'push'
+        env:
+          UPDATE_SFTP_HOST: ${{ secrets.UPDATE_SFTP_HOST }}
+          UPDATE_SFTP_USER: ${{ secrets.UPDATE_SFTP_USER }}
+          UPDATE_SFTP_PASS: ${{ secrets.UPDATE_SFTP_PASS }}
+          UPDATE_SFTP_PATH: ${{ secrets.UPDATE_SFTP_PATH }}
+          UPDATE_SFTP_PORT: ${{ secrets.UPDATE_SFTP_PORT }}
+        run: node scripts/upload-updates.mjs
+
       - name: Keep the installer on the run page (manual runs)
         if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v4

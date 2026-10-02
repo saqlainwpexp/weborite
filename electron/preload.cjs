@@ -29,4 +29,11 @@ contextBridge.exposeInMainWorld("studioDesktop", {
   },
   openExternal: (url) => ipcRenderer.send("open-external", url),
   cacheBrand: (b) => ipcRenderer.send("brand:cache", b),
+  updates: {
+    state: () => ipcRenderer.invoke("updates:state"),
+    check: () => ipcRenderer.invoke("updates:check"),
+    download: () => ipcRenderer.invoke("updates:download"),
+    install: () => ipcRenderer.invoke("updates:install"),
+    onStatus: listen("updates:status"),
+  },
 });

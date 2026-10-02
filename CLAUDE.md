@@ -37,7 +37,7 @@ Workspaces (switcher in `web/src/layout/Layout.tsx`, flags in `shared/features.t
 
 ## Build, protection and release
 
-- **Dependency note:** Hostinger publishing uses `ssh2-sftp-client` (prod dep; `@types/...` dev). It's bundled `external` (esbuild `packages: "external"`), so run `npm install` after merging this branch before `npm run dist`.
+- **Dependency note:** Hostinger publishing uses `ssh2-sftp-client` (prod dep; `@types/...` dev). It's bundled `external` (esbuild `packages: "external"`), so run `npm install` after merging this branch before `npm run dist`. Auto-update adds `electron-updater` (prod dep, used only in `electron/main.mjs`, not the server bundle) — `npm install` after merging.
 - `scripts/build-server.mjs` bundles the server with esbuild into `app-dist/server.mjs`.
   - For customer builds it minifies and then runs **javascript-obfuscator** (string array, base64).
   - **Critical:** functions passed to Playwright (`page.evaluate`, `$$eval`, `$eval`, `waitForFunction`, `addInitScript`…) run inside the web page. `keepBrowserCodePlain()` parses the bundle with acorn and wraps those functions, inline or passed by name, in `/* javascript-obfuscator:disable/enable */` comments.
@@ -49,6 +49,11 @@ Workspaces (switcher in `web/src/layout/Layout.tsx`, flags in `shared/features.t
   - It needs the repo secret **`LICENSE_PUBLIC_KEY`**, which is **not set yet**, so runs fail at "Check the license key secret". After the owner adds it, "Re-run jobs" works.
   - This environment can't push tags, which is why the workflow is triggered by the notes file instead.
   - To release: bump `version` in package.json and package-lock.json (the root fields only), then add the notes file.
+- **Auto-update (electron-updater):** customer builds update themselves from a generic feed at **https://studio.weborite.com/updates/** (set in `build.publish`, package.json). `npm run dist` writes `release/latest.yml` + `.exe` + `.exe.blockmap`; the release workflow runs `scripts/upload-updates.mjs` to SFTP them into Hostinger's `updates/` folder.
+  - **New repo secrets** the upload step needs (Settings → Secrets and variables → Actions): `UPDATE_SFTP_HOST`, `UPDATE_SFTP_USER`, `UPDATE_SFTP_PASS`, `UPDATE_SFTP_PATH` (absolute path to the web-served `updates` folder, e.g. `…/public_html/updates`), optional `UPDATE_SFTP_PORT`. If unset, the step skips without failing the release.
+  - **Deploy note:** create the public `updates/` folder on Hostinger and make sure the site's clean-URL `.htaccess` doesn't rewrite `/updates/*.yml|.exe|.blockmap`.
+  - The desktop shell wires it in `electron/main.mjs` (`autoDownload` off; `updates:check`/`download`/`install` IPC → preload `studioDesktop.updates` → `web/src/components/UpdateBanner.tsx` banner + Settings → Plan & license "App updates"). Owner builds and runs from source never auto-update (gated via `build` in `electron/build-info.json`).
+  - Unsigned, so integrity is the SHA-512 in `latest.yml` over HTTPS (not an Authenticode signature) and SmartScreen still warns. **First rollout:** existing installs have no updater, so users install the first updater-enabled version once by hand; updates after that are in-app.
 - Current version: **0.3.0**. The repo `saqlainwpexp/weborite` is private.
 
 ## Licensing and website
@@ -122,5 +127,12 @@ Workspaces (switcher in `web/src/layout/Layout.tsx`, flags in `shared/features.t
   - a real Gmail IMAP inbox or real SMTP sending
   - live Google Maps scraping in the fixed customer build
 - Reply tracking reads INBOX only (not spam). Opens and clicks aren't tracked.
-- The installer isn't code-signed, so SmartScreen warns.
+- The installer isn't code-signed, so SmartScreen warns (both the first install and each auto-update). Adding an OV/EV cert later also lets electron-updater verify the publisher — drop it into the release workflow's build step; no code change needed.
 - Not built: mockup protection / watermarked previews (a LinkedIn question is still unanswered). Revoke the old test license key E832F624-… as the owner planned.
+- Auto-update untested against the live Hostinger feed (needs the `UPDATE_SFTP_*` secrets set and the first updater-enabled build installed by hand). Confirm `release/latest.yml` is produced by `npm run dist` on the first release.
+
+## Security review (AFINE desktop checklist) — done 2026-10-02
+
+- Audited against the AFINE desktop checklist. Strong already: DPAPI-wrapped AES-GCM vault (`server/vault.ts`), loopback-only API with anti-rebind/anti-CSRF/traversal guards (`server/security.ts` `localOnly`), parameterized SQL, untrusted data to CLIs on stdin (never interpolated), SSRF guards on scraping, Ed25519 licence with nonce binding, Electron contextIsolation/sandbox/no-nodeIntegration.
+- Fixed this session: (1) Meta webhook now **fails closed** when no app secret is set (`server/intake.ts`); (2) SFTP publish **verifies the host key** (trust-on-first-use, pinned in `DATA/sftp-known-hosts.json`) so the Hostinger password can't be MITM'd (`server/publish/hostinger.ts`); (3) `codexPath`/`geminiPath` validated against shell metacharacters like `claudePath` (`server/index.ts`); (4) brand assets served with a bare `sandbox` CSP so an uploaded SVG can't run script (`server/index.ts`).
+- Lower priority / by design, not changed: `runAsNode` fuse stays on (needed for the Playwright install; env-var/inspect fuses are off); `customCommand` runs via shell by design (user-set, CSRF-protected).

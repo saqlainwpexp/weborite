@@ -116,7 +116,9 @@ function validMetaSignature(req: Request, secret: string) {
 
 hooks.post("/meta", async (req, res) => {
   const s = getSettings();
-  if (s.metaAppSecret && !validMetaSignature(req, s.metaAppSecret)) return res.sendStatus(403);
+  // Fail closed: Meta always signs real webhooks, so an unsigned (or unverifiable) POST is rejected.
+  // Without an app secret configured we can't verify anyone, so we refuse rather than trust the payload.
+  if (!s.metaAppSecret || !validMetaSignature(req, s.metaAppSecret)) return res.sendStatus(403);
   res.sendStatus(200); // Meta retries on slow responses; acknowledge first.
   const leadIds: string[] = [];
   for (const entry of req.body?.entry ?? []) for (const ch of entry.changes ?? []) if (ch.field === "leadgen" && ch.value?.leadgen_id) leadIds.push(ch.value.leadgen_id);

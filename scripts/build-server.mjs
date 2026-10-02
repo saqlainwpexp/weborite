@@ -133,6 +133,7 @@ function keepBrowserCodePlain(code) {
   return outCode;
 }
 
-// The installed app imports this folder's data on its first launch.
-writeFileSync(join(root, "electron", "build-info.json"), JSON.stringify({ projectData: join(root, "data"), builtAt: new Date().toISOString() }, null, 1));
+// The installed app imports this folder's data on its first launch. `build` lets the desktop shell tell
+// a customer build (auto-updates on) from an owner build (auto-updates off — never overwrite it).
+writeFileSync(join(root, "electron", "build-info.json"), JSON.stringify({ projectData: join(root, "data"), build: owner ? "owner" : "customer", builtAt: new Date().toISOString() }, null, 1));
 console.log(`app-dist/server.mjs built (${owner ? "OWNER build: license check skipped, don't share it" : "customer build"})`);

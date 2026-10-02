@@ -310,8 +310,11 @@ app.put("/api/settings", (req, res) => {
   if (body.hostingSftpPort !== undefined) extra.hostingSftpPort = Math.max(1, Math.min(65535, Math.round(Number(body.hostingSftpPort)) || 22));
   if (typeof body.autoPublishOnReady === "boolean") extra.autoPublishOnReady = body.autoPublishOnReady;
   if ("brandColor" in patch && !/^#[0-9a-f]{6}$/i.test(patch.brandColor as string)) return res.status(400).json({ error: "Brand colour must be a 6-digit hex like #a36566" });
-  // The Claude path is run through the shell on Windows, so it must be a plain path.
-  if ("claudePath" in patch && (!String(patch.claudePath).trim() || /[&|<>^%!"`$;\r\n]/.test(String(patch.claudePath)))) return res.status(400).json({ error: "The Claude Code path must be a plain file path or command name" });
+  // CLI paths are run through the shell on Windows (and interpolated into the sign-in terminal command),
+  // so they must be plain paths — no shell metacharacters. Empty is allowed (falls back to the default name).
+  for (const k of ["claudePath", "codexPath", "geminiPath"] as const) {
+    if (k in patch && /[&|<>^%!"`$;\r\n]/.test(String(patch[k]))) return res.status(400).json({ error: "CLI paths must be a plain file path or command name" });
+  }
   for (const k of ["elementorSecret", "metaVerifyToken"] as const) {
     if (k in patch && !/^[\w-]{12,128}$/.test(String(patch[k]))) return res.status(400).json({ error: "Webhook secrets need at least 12 letters or numbers" });
   }
@@ -371,6 +374,9 @@ app.put("/api/benchmarks/:key", (req, res) => {
 // Lead files: screenshots, assets, mockups. Mockups load their assets via ../assets/.
 app.use("/files", sandboxFiles);
 app.use("/files/leads", express.static(LEADS_DIR, { fallthrough: false }));
+// Brand assets are only ever shown as images. Override the permissive mockup CSP with a bare `sandbox`
+// (no allow-scripts) so an uploaded SVG can't run script if opened directly as a page.
+app.use("/files/brand", (_req, res, next) => { res.set("Content-Security-Policy", "sandbox"); next(); });
 app.use("/files/brand", express.static(BRAND_DIR, { fallthrough: false }));
 app.use("/files/builds", express.static(BUILDS_DIR, { fallthrough: false }));
 app.use("/files/wp", express.static(WP_DIR, { fallthrough: false, index: false }));
