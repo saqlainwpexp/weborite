@@ -39,6 +39,20 @@ const BYPASS = BUILD === "owner" || (BUILD === "source" && (process.env.STUDIO_L
 
 db.exec(`CREATE TABLE IF NOT EXISTS license (id INTEGER PRIMARY KEY CHECK (id = 1), data TEXT NOT NULL);`);
 db.exec(`CREATE TABLE IF NOT EXISTS onboarding (id INTEGER PRIMARY KEY CHECK (id = 1), data TEXT NOT NULL);`);
+db.exec(`CREATE TABLE IF NOT EXISTS app_meta (k TEXT PRIMARY KEY, v TEXT NOT NULL);`);
+
+/** This app's version, passed in by the Electron shell (electron/main.mjs). Empty when run from source. */
+const APP_VERSION = process.env.STUDIO_VERSION || "";
+
+/** A stable, anonymous id for this install, made once and kept. Lets the license site tell trial installs
+ *  apart and track "last seen" without any personal data. */
+function installId(): string {
+  const row = db.prepare("SELECT v FROM app_meta WHERE k = 'installId'").get() as { v: string } | undefined;
+  if (row?.v) return row.v;
+  const id = randomUUID();
+  db.prepare("INSERT INTO app_meta (k, v) VALUES ('installId', ?) ON CONFLICT(k) DO UPDATE SET v = excluded.v").run(id);
+  return id;
+}
 
 /** Who set up this copy, and when they accepted which version of the terms and privacy policy. */
 interface Onboarding {
@@ -312,11 +326,36 @@ async function deactivate(): Promise<void> {
   clear();
 }
 
+/** Demo installs have no licence to validate, so they check in here instead: a tiny, anonymous heartbeat
+ *  that lets the admin page show who is on the free trial and when they were last active. Best-effort. */
+async function pingTrial(): Promise<void> {
+  if (!isDemo()) return;
+  const o = readOnboarding();
+  try {
+    await fetch(`${API}/ping`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        installId: installId(), version: APP_VERSION,
+        name: o ? `${o.firstName} ${o.lastName}`.trim() : "", email: o?.email ?? "",
+        phone: o?.phone ?? "", company: o?.company ?? "", country: o?.country ?? "", role: o?.role ?? "",
+      }),
+      signal: AbortSignal.timeout(15000),
+    });
+  } catch {
+    /* offline or endpoint unavailable — never matters to the running app */
+  }
+}
+
 let timer: NodeJS.Timeout | null = null;
 export function startLicenseTimers() {
   if (timer || BYPASS) return;
   void revalidate();
-  timer = setInterval(() => void revalidate(), 12 * 3600_000);
+  void pingTrial();
+  timer = setInterval(() => {
+    void revalidate();
+    void pingTrial();
+  }, 12 * 3600_000);
 }
 
 /* ---------- routes ---------- */
@@ -344,6 +383,7 @@ async function notifyOnboarding(data: Onboarding): Promise<void> {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        installId: installId(), version: APP_VERSION,
         firstName: data.firstName, lastName: data.lastName, email: data.email, phone: data.phone,
         company: data.company, country: data.country, role: data.role, companyDescription: data.companyDescription,
         niche: data.niche, writingStyle: data.writingStyle, caseStudies: data.caseStudies,

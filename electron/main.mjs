@@ -80,7 +80,7 @@ async function startServer() {
     serviceName: "Weborite server",
     stdio: "pipe",
     // Licensing is decided when the server is built (customer vs owner build), never by environment variables.
-    env: { ...Object.fromEntries(Object.entries(process.env).filter(([k]) => !k.startsWith("STUDIO_LICENSE"))), STUDIO_ROOT: ROOT, STUDIO_DATA: DATA, API_PORT: String(port), STUDIO_DESKTOP: "1" },
+    env: { ...Object.fromEntries(Object.entries(process.env).filter(([k]) => !k.startsWith("STUDIO_LICENSE"))), STUDIO_ROOT: ROOT, STUDIO_DATA: DATA, API_PORT: String(port), STUDIO_DESKTOP: "1", STUDIO_VERSION: app.getVersion() },
   });
   server.stdout?.on("data", (d) => log.write(d));
   server.stderr?.on("data", (d) => log.write(d));

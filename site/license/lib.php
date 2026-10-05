@@ -74,6 +74,21 @@ function db(): PDO {
         );
         CREATE TABLE IF NOT EXISTS failures (ip TEXT NOT NULL, at INTEGER NOT NULL);
         CREATE INDEX IF NOT EXISTS failures_ip ON failures (ip, at);
+        CREATE TABLE IF NOT EXISTS trials (
+            install_id TEXT PRIMARY KEY,
+            name TEXT NOT NULL DEFAULT '',
+            email TEXT NOT NULL DEFAULT '',
+            phone TEXT NOT NULL DEFAULT '',
+            company TEXT NOT NULL DEFAULT '',
+            country TEXT NOT NULL DEFAULT '',
+            role TEXT NOT NULL DEFAULT '',
+            version TEXT NOT NULL DEFAULT '',
+            demo INTEGER NOT NULL DEFAULT 1,
+            seen_count INTEGER NOT NULL DEFAULT 1,
+            created_at TEXT NOT NULL,
+            last_seen_at TEXT NOT NULL
+        );
+        CREATE INDEX IF NOT EXISTS trials_seen ON trials (last_seen_at);
     SQL);
     return $pdo;
 }
@@ -132,6 +147,42 @@ function activation_count(int $licenseId): int {
     $st = db()->prepare('SELECT COUNT(*) FROM instances WHERE license_id = ?');
     $st->execute([$licenseId]);
     return (int)$st->fetchColumn();
+}
+
+/**
+ * Record or refresh a free-trial / unlicensed install, so the admin page can see who is using the app
+ * before they buy. Keyed by the stable install id the app sends (falls back to a hash of the email for
+ * older apps that don't send one). A bare ping (id only) just bumps last_seen and the visit count;
+ * onboarding fills in the name, email and other details. Details are never wiped by a later blank ping.
+ */
+function record_trial(array $d): void {
+    $id = mb_substr(trim((string)($d['install_id'] ?? '')), 0, 80);
+    $email = mb_substr(strtolower(trim((string)($d['email'] ?? ''))), 0, 200);
+    if ($id === '') {
+        if ($email === '') return; // nothing stable to key on
+        $id = 'email:' . sha1($email);
+    }
+    $f = fn(string $k, int $max = 120) => mb_substr(trim((string)($d[$k] ?? '')), 0, $max);
+    db()->prepare(
+        'INSERT INTO trials (install_id, name, email, phone, company, country, role, version, demo, seen_count, created_at, last_seen_at)
+         VALUES (:id, :name, :email, :phone, :company, :country, :role, :version, :demo, 1, :created, :seen)
+         ON CONFLICT(install_id) DO UPDATE SET
+            name    = CASE WHEN excluded.name    <> "" THEN excluded.name    ELSE trials.name    END,
+            email   = CASE WHEN excluded.email   <> "" THEN excluded.email   ELSE trials.email   END,
+            phone   = CASE WHEN excluded.phone   <> "" THEN excluded.phone   ELSE trials.phone   END,
+            company = CASE WHEN excluded.company <> "" THEN excluded.company ELSE trials.company END,
+            country = CASE WHEN excluded.country <> "" THEN excluded.country ELSE trials.country END,
+            role    = CASE WHEN excluded.role    <> "" THEN excluded.role    ELSE trials.role    END,
+            version = CASE WHEN excluded.version <> "" THEN excluded.version ELSE trials.version END,
+            demo       = excluded.demo,
+            seen_count = trials.seen_count + 1,
+            last_seen_at = excluded.last_seen_at'
+    )->execute([
+        'id' => $id, 'name' => $f('name', 120), 'email' => $email,
+        'phone' => $f('phone', 40), 'company' => $f('company', 120), 'country' => $f('country', 60),
+        'role' => $f('role', 120), 'version' => $f('version', 40),
+        'demo' => !empty($d['demo']) ? 1 : 0, 'created' => now(), 'seen' => now(),
+    ]);
 }
 
 function client_ip(): string { return (string)($_SERVER['REMOTE_ADDR'] ?? ''); }

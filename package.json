@@ -1,7 +1,7 @@
 {
   "name": "mockup-studio",
   "private": true,
-  "version": "0.3.0",
+  "version": "0.4.0",
   "type": "module",
   "scripts": {
     "dev": "concurrently -k -n api,web -c gray,magenta \"npm:dev:api\" \"npm:dev:web\"",
@@ -60,6 +60,7 @@
     "appId": "com.weborite.studio",
     "productName": "Weborite Studio",
     "copyright": "Weborite Solutions",
+    "artifactName": "Weborite-Studio-Setup.${ext}",
     "publish": [
       {
         "provider": "generic",

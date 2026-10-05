@@ -4,7 +4,9 @@
  * welcome and support the new customer. The app posts this best-effort (it never blocks setup on the result),
  * so this endpoint just validates lightly, rate-limits, sends the mail and answers ok.
  *
- * Nothing is stored here: the full profile lives on the customer's own computer. We only pass the details on.
+ * The full personalization profile is NOT stored here (it lives on the customer's own computer). We only keep a
+ * small trial record (name, email, company, last seen) so the admin page can see who is using the free trial
+ * before they buy; demo installs also keep this fresh via ping.php.
  */
 
 declare(strict_types=1);
@@ -69,6 +71,19 @@ $lines = [
     'Other personalization notes:',
     ($f('personalizationNotes', 4000) ?: '-'),
 ];
+
+// Keep a lightweight record so the admin page lists trial / unlicensed installs, not just paid licences.
+record_trial([
+    'install_id' => $f('installId', 80),
+    'name' => $name,
+    'email' => $email,
+    'phone' => $f('phone', 40),
+    'company' => $f('company', 120),
+    'country' => $f('country', 60),
+    'role' => $f('role', 120),
+    'version' => $f('version', 40),
+    'demo' => !empty($in['demo']),
+]);
 
 $host = $_SERVER['HTTP_HOST'] ?? 'studio.weborite.com';
 $headers = "From: Weborite Studio <no-reply@$host>\r\nContent-Type: text/plain; charset=utf-8\r\nReply-To: $email";

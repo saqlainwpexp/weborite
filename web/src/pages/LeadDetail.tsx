@@ -12,6 +12,15 @@ import { api, duration, fileUrl, host, shortDate, timeAgo, usePoll } from "../li
 import { EventIcon, StatusPill, StepIcon } from "../components/ui";
 
 type View = "desktop" | "mobile";
+type Tab = "overview" | "redesign" | "seo" | "competitors" | "close";
+
+const TABS: { key: Tab; label: string; icon: React.ReactNode }[] = [
+  { key: "overview", label: "Overview", icon: <Layers /> },
+  { key: "redesign", label: "Redesign", icon: <Wand2 /> },
+  { key: "seo", label: "SEO audit", icon: <Globe /> },
+  { key: "competitors", label: "Competitors", icon: <Users /> },
+  { key: "close", label: "How to close", icon: <Target /> },
+];
 
 function useWidth<T extends HTMLElement>() {
   const ref = useRef<T>(null);
@@ -44,6 +53,7 @@ export default function LeadDetail() {
   const { events, reloadAll } = useOutletContext<LayoutCtx>();
   const { data: lead, error, reload } = usePoll<Detail>(`/api/leads/${id}`, 3000);
   const [view, setView] = useState<View>("desktop");
+  const [tab, setTab] = useState<Tab>("overview");
   const [live, setLive] = useState(false);
   const scratch = lead?.mode === "scratch";
   const [rerunOpen, setRerunOpen] = useState(false);
@@ -68,8 +78,7 @@ export default function LeadDetail() {
   const [pitchErr, setPitchErr] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
-  // "How to win / close this lead" — the strategy playbook (separate from the email).
-  const [playOpen, setPlayOpen] = useState(false);
+  // "How to close this lead" — the strategy playbook (shown in its own tab, separate from the email).
   const [play, setPlay] = useState<Detail["playbook"]>(null);
   const [playBusy, setPlayBusy] = useState(false);
   const [playErr, setPlayErr] = useState<string | null>(null);
@@ -156,7 +165,6 @@ export default function LeadDetail() {
   }
 
   async function openPlaybook(regenerate = false) {
-    setPlayOpen(true);
     setPlayErr(null);
     if (!regenerate && (play || lead!.playbook)) { setPlay(play ?? lead!.playbook); setPlayBusy(false); return; }
     setPlayBusy(true);
@@ -253,8 +261,22 @@ export default function LeadDetail() {
         </div>
       )}
 
+      <nav className="tabs" aria-label="Lead sections" style={{ marginTop: 4 }}>
+        {TABS.map((t) => (
+          <button
+            key={t.key}
+            type="button"
+            role="tab"
+            aria-selected={tab === t.key}
+            className={`tab tab-btn${tab === t.key ? " on" : ""}`}
+            onClick={() => { setTab(t.key); if (t.key === "close") void openPlaybook(); }}
+          >{t.icon}{t.label}</button>
+        ))}
+      </nav>
+
       <div className="grid-main">
         <div className="stack">
+          {tab === "overview" && (
           <div className="two">
             {/* Recent task */}
             <div className="card task-card">
@@ -306,7 +328,16 @@ export default function LeadDetail() {
               </div>
             </div>
           </div>
+          )}
 
+          {tab === "overview" && (
+            <div className="bottom-actions">
+              <a className="btn btn-outline" href={lead.url} target="_blank" rel="noreferrer">{scratch ? "Open Google listing" : "Open current site"}</a>
+              <a className="btn btn-accent" href={fileUrl(lead.id, "mockup/index.html")} target="_blank" rel="noreferrer" style={!lead.hasMockup ? { pointerEvents: "none", opacity: .5 } : undefined}>Open mockup full screen</a>
+            </div>
+          )}
+
+          {tab === "redesign" && (<>
           <div className="review-head">
             <h2 className="section-title">Mockup review</h2>
             <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
@@ -389,33 +420,14 @@ export default function LeadDetail() {
                     )}
                   </div>
                 )}
-                {lead.diagnosis?.lighthouse && (
-                  <div className="scores">
-                    {([["Performance", "performance"], ["Accessibility", "accessibility"], ["Best practices", "bestPractices"], ["SEO", "seo"]] as const).map(([l, k]) => {
-                      const v = lead.diagnosis!.lighthouse![k];
-                      return <div key={k} className="score"><b className={v >= 90 ? "ok" : v >= 50 ? "warn" : "bad"}>{v}</b><span>{l} (current site)</span></div>;
-                    })}
-                  </div>
-                )}
-                <div className="guides">
-                  <div className="guide">
-                    <h5>{scratch ? "Why they need a site" : "Issues found on the current site"}</h5>
-                    <ul>
-                      {(lead.diagnosis?.issues ?? []).map((i, n) => (
-                        <li key={n}><span className={`sev ${i.severity}`} /><div>{i.title}<small>{i.detail}</small></div></li>
-                      ))}
-                      {!lead.diagnosis && <li><Info className="muted" /><div className="muted">Diagnosis is still running.</div></li>}
-                    </ul>
-                  </div>
-                  <div className="guide">
-                    <h5>Quality gate{lead.gate ? ` · attempt ${lead.gate.attempt}` : ""}</h5>
-                    <ul>
-                      {(lead.gate?.checks ?? []).map((c) => (
-                        <li key={c.name}>{c.pass ? <CheckCircle2 className="ok" /> : <XCircle className="bad" />}<div>{c.name}<small>{c.detail}</small></div></li>
-                      ))}
-                      {!lead.gate && <li><Info className="muted" /><div className="muted">Checks run after the mockup is generated.</div></li>}
-                    </ul>
-                  </div>
+                <div className="guide">
+                  <h5>Quality gate{lead.gate ? ` · attempt ${lead.gate.attempt}` : ""}</h5>
+                  <ul>
+                    {(lead.gate?.checks ?? []).map((c) => (
+                      <li key={c.name}>{c.pass ? <CheckCircle2 className="ok" /> : <XCircle className="bad" />}<div>{c.name}<small>{c.detail}</small></div></li>
+                    ))}
+                    {!lead.gate && <li><Info className="muted" /><div className="muted">Checks run after the mockup is generated.</div></li>}
+                  </ul>
                 </div>
               </div>
             )}
@@ -425,6 +437,82 @@ export default function LeadDetail() {
               <a className="btn btn-accent" href={fileUrl(lead.id, "mockup/index.html")} target="_blank" rel="noreferrer" style={!lead.hasMockup ? { pointerEvents: "none", opacity: .5 } : undefined}>Open mockup full screen</a>
             </div>
           </div>
+          </>)}
+
+          {tab === "seo" && (
+            <div className="card card-lg stack" style={{ gap: 24 }}>
+              <div>
+                <h2 className="section-title">SEO audit</h2>
+                <p className="card-sub" style={{ margin: "4px 0 0" }}>Lighthouse scores and the issues found on {scratch ? "their Google listing" : host(lead.url)}.</p>
+              </div>
+              {lead.diagnosis?.lighthouse && (
+                <div className="scores">
+                  {([["Performance", "performance"], ["Accessibility", "accessibility"], ["Best practices", "bestPractices"], ["SEO", "seo"]] as const).map(([l, k]) => {
+                    const v = lead.diagnosis!.lighthouse![k];
+                    return <div key={k} className="score"><b className={v >= 90 ? "ok" : v >= 50 ? "warn" : "bad"}>{v}</b><span>{l} (current site)</span></div>;
+                  })}
+                </div>
+              )}
+              <div className="guide">
+                <h5>{scratch ? "Why they need a site" : "Issues found on the current site"}</h5>
+                <ul>
+                  {(lead.diagnosis?.issues ?? []).map((i, n) => (
+                    <li key={n}><span className={`sev ${i.severity}`} /><div>{i.title}<small>{i.detail}</small></div></li>
+                  ))}
+                  {!lead.diagnosis && <li><Info className="muted" /><div className="muted">Diagnosis is still running.</div></li>}
+                  {lead.diagnosis && !lead.diagnosis.issues.length && <li><CheckCircle2 className="ok" /><div className="muted">No issues flagged.</div></li>}
+                </ul>
+              </div>
+            </div>
+          )}
+
+          {tab === "competitors" && (
+            <div className="card card-lg stack" style={{ gap: 20 }}>
+              <div>
+                <h2 className="section-title">Competitors</h2>
+                <p className="card-sub" style={{ margin: "4px 0 0" }}>
+                  {lead.benchmarks ? `Benchmark set for ${lead.benchmarks.label} — the sites buyers compare against. ${lead.benchmarks.register}` : "Benchmarks are picked once the lead is classified."}
+                </p>
+              </div>
+              {lead.benchmarks ? (
+                <ul className="ref-list">
+                  {lead.benchmarks.sites.map((s) => (
+                    <li key={s.url}>
+                      <a href={s.url} target="_blank" rel="noreferrer" title={s.why}>
+                        <span className="ref-name">{s.name}</span>
+                        <span className="ref-host">{host(s.url)} · {s.why}</span>
+                        <ArrowUpRight />
+                      </a>
+                    </li>
+                  ))}
+                  {!lead.benchmarks.sites.length && <li className="muted" style={{ padding: 10 }}>No benchmark sites recorded.</li>}
+                </ul>
+              ) : (
+                <Empty icon={<Users />} text="No benchmarks yet. They're chosen when the lead is classified into a vertical." />
+              )}
+            </div>
+          )}
+
+          {tab === "close" && (
+            <div className="card card-lg stack" style={{ gap: 18 }}>
+              <div className="card-head">
+                <div>
+                  <h2 className="section-title">How to close {name}</h2>
+                  <p className="card-sub" style={{ margin: "4px 0 0" }}>A strategy brief — the angle, their pain points, likely objections, pricing and the next step. This is not the email.</p>
+                </div>
+                <button type="button" className="btn btn-white btn-sm" onClick={() => void openPlaybook(true)} disabled={playBusy}>
+                  {playBusy ? <Loader2 className="spin" /> : <RefreshCw />}Regenerate
+                </button>
+              </div>
+              {playBusy && !play && <div className="pitch-loading"><Loader2 className="spin" /><span>Working out the play…</span></div>}
+              {playErr && !playBusy && <div className="banner err" style={{ margin: 0 }}><XCircle /><div>{playErr}</div></div>}
+              {play && <div className="playbook"><p className="playbook-text">{play.text.replace(/\*\*/g, "").replace(/^#+\s*/gm, "")}</p></div>}
+              <div className="bottom-actions">
+                <button className="btn btn-outline" onClick={() => winLead()}><Mail />Outreach email</button>
+                <a className="btn btn-accent" href={fileUrl(lead.id, "mockup/index.html")} target="_blank" rel="noreferrer" style={!lead.hasMockup ? { pointerEvents: "none", opacity: .5 } : undefined}>Open mockup full screen</a>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Right column */}
@@ -450,7 +538,7 @@ export default function LeadDetail() {
           </div>
 
           <div className="win-actions">
-            <button className="btn btn-accent" onClick={() => openPlaybook()}><Target />How to win this lead</button>
+            <button className="btn btn-accent" onClick={() => { setTab("close"); void openPlaybook(); }}><Target />How to close this lead</button>
             <button className="btn btn-white" onClick={() => winLead()}><Mail />Outreach email</button>
           </div>
 
@@ -625,34 +713,6 @@ export default function LeadDetail() {
         </div>
       )}
 
-      {playOpen && (
-        <div className="backdrop" onClick={() => setPlayOpen(false)}>
-          <div className="modal pitch-modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-label="How to win this lead">
-            <div className="card-head">
-              <div>
-                <h3 className="card-title" style={{ fontSize: 24 }}>How to win {name}</h3>
-                <p className="card-sub" style={{ margin: "2px 0 0" }}>A strategy brief for you — the angle, their pain points, likely objections, pricing and the next step. This is not the email.</p>
-              </div>
-              <button type="button" className="icon-btn" aria-label="Close" onClick={() => setPlayOpen(false)}><X /></button>
-            </div>
-
-            {playBusy && !play && <div className="pitch-loading"><Loader2 className="spin" /><span>Working out the play…</span></div>}
-            {playErr && !playBusy && <div className="banner err" style={{ margin: 0 }}><XCircle /><div>{playErr}</div></div>}
-
-            {play && (
-              <div className="playbook">
-                <p className="playbook-text">{play.text.replace(/\*\*/g, "").replace(/^#+\s*/gm, "")}</p>
-              </div>
-            )}
-
-            <div className="foot" style={{ justifyContent: "flex-end" }}>
-              <button type="button" className="btn btn-white" onClick={() => void openPlaybook(true)} disabled={playBusy}>
-                {playBusy ? <Loader2 className="spin" /> : <RefreshCw />}Regenerate
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }

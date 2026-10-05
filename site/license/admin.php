@@ -155,6 +155,15 @@ $st->execute($args);
 $rows = $st->fetchAll();
 $counts = db()->query("SELECT COUNT(*) AS total, SUM(disabled = 0 AND (expires_at IS NULL OR expires_at > strftime('%Y-%m-%dT%H:%M:%SZ','now'))) AS active FROM licenses")->fetch();
 
+// Free-trial / unlicensed installs: who is using the app before they buy. "converted" = their email now has a paid licence.
+$tsql = 'SELECT t.*, (SELECT COUNT(*) FROM licenses l WHERE l.email <> "" AND lower(l.email) = lower(t.email)) AS converted FROM trials t';
+$targs = [];
+if ($q !== '') { $tsql .= ' WHERE t.name LIKE ? OR t.email LIKE ? OR t.company LIKE ?'; $targs = array_fill(0, 3, "%$q%"); }
+$tst = db()->prepare($tsql . ' ORDER BY t.last_seen_at DESC LIMIT 500');
+$tst->execute($targs);
+$trials = $tst->fetchAll();
+$trialActive = (int)db()->query("SELECT COUNT(*) FROM trials WHERE last_seen_at > strftime('%Y-%m-%dT%H:%M:%SZ','now','-14 days')")->fetchColumn();
+
 page_head('Licenses');
 ?>
 <header class="top">
@@ -263,6 +272,35 @@ page_head('Licenses');
 </section>
 
 <section class="card">
+  <div class="top">
+    <h2>Free-trial installs <span class="muted"><?= $trialActive ?> active in the last 14 days · <?= count($trials) ?> total</span></h2>
+    <span class="muted">People using the app on the free trial (before buying a licence).</span>
+  </div>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Person</th><th>Company</th><th>Version</th><th>Started</th><th>Last seen</th><th>Status</th></tr></thead>
+    <tbody>
+    <?php foreach ($trials as $t):
+      $recent = strtotime($t['last_seen_at']) > time() - 14 * 86400;
+      if ((int)$t['converted'] > 0) { $cls = 'active'; $label = 'bought'; }
+      elseif ($recent) { $cls = 'warn'; $label = 'trialing'; }
+      else { $cls = 'disabled'; $label = 'quiet'; }
+    ?>
+      <tr>
+        <td><b><?= h($t['name'] ?: '—') ?></b><?php if ($t['email'] !== '') echo '<br><span class="muted">' . h($t['email']) . '</span>'; ?><?php if ($t['country'] !== '') echo '<br><span class="muted">' . h($t['country']) . '</span>'; ?></td>
+        <td><?= h($t['company'] ?: '—') ?><?php if ((int)$t['seen_count'] > 1) echo '<br><span class="muted">' . (int)$t['seen_count'] . ' visits</span>'; ?></td>
+        <td><?= $t['version'] !== '' ? h($t['version']) : '<span class="muted">—</span>' ?></td>
+        <td><?= h(gmdate('j M Y', strtotime($t['created_at']))) ?></td>
+        <td><?= h(gmdate('j M Y', strtotime($t['last_seen_at']))) ?></td>
+        <td><span class="pill <?= $cls ?>"><?= $label ?></span></td>
+      </tr>
+    <?php endforeach; if (!$trials) echo '<tr><td colspan="6" class="muted">No trial installs yet. They appear here once someone finishes onboarding in the app.</td></tr>'; ?>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section class="card">
   <h2>App public key</h2>
   <p class="muted">The app only trusts answers signed by this server. Paste this into <code>shared/licenseKey.ts</code> in the app, then build the installer.</p>
   <div class="keyrow"><code id="pk"><?= h(public_key_b64()) ?></code><button class="btn ghost" type="button" data-copy="pk">Copy</button></div>
@@ -305,7 +343,7 @@ function page_head(string $title): void { ?>
   code { font: 13px Consolas, "Cascadia Mono", monospace; }
   .acts { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
   .pill { display: inline-block; font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 99px; }
-  .pill.active { background: #e3f1e8; color: var(--good); } .pill.expired { background: #f7ecd9; color: var(--warn); } .pill.disabled { background: #f6e1e1; color: var(--bad); }
+  .pill.active { background: #e3f1e8; color: var(--good); } .pill.expired, .pill.warn { background: #f7ecd9; color: var(--warn); } .pill.disabled { background: #f6e1e1; color: var(--bad); }
   .err { color: var(--bad); margin: 0; } .ok { color: var(--good); margin: 0; }
   .new { border: 2px solid var(--rose); display: grid; gap: 14px; }
   .new h2 { margin: 0; }
