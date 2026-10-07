@@ -15,9 +15,10 @@ import { finder } from "./finder/routes.ts";
 import { meta as metaLeads } from "./finder/metaRoutes.ts";
 import { resumeSearches } from "./finder/queue.ts";
 import { builds } from "./builds/routes.ts";
+import { listBuilds } from "./builds/store.ts";
 import { resumeBuilds } from "./builds/queue.ts";
 import { resumeWp, wp } from "./wp/routes.ts";
-import { WP_DIR } from "./wp/store.ts";
+import { WP_DIR, listConversions } from "./wp/store.ts";
 import { seo } from "./seo/routes.ts";
 import { golive } from "./golive/routes.ts";
 import { SEO_DIR } from "./seo/store.ts";
@@ -62,6 +63,9 @@ app.get("/api/leads", (_req, res) => res.json(listLeads()));
 app.get("/api/leads/:id", (req, res) => {
   const lead = getLead(req.params.id);
   if (!lead) return res.sendStatus(404);
+  // The build and WordPress conversion made from this lead, so the UI can show "advance to next step".
+  const build = listBuilds().find((b) => b.leadId === lead.id) ?? null;
+  const conversion = build ? listConversions().find((c) => c.buildId === build.id) ?? null : null;
   const detail: LeadDetail = {
     ...lead,
     capture: readJson<Capture>(lead.id, "capture.json"),
@@ -73,8 +77,21 @@ app.get("/api/leads/:id", (req, res) => {
     outreach: readJson<OutreachEmail>(lead.id, "outreach.json"),
     playbook: readJson<LeadPlaybook>(lead.id, "playbook.json"),
     publishReady: hostingReady(),
+    pipeline: {
+      build: build ? { id: build.id, status: build.status } : null,
+      conversion: conversion ? { id: conversion.id, status: conversion.status } : null,
+    },
   };
   res.json(detail);
+});
+
+/** Save free-text CRM notes on a lead. */
+app.post("/api/leads/:id/notes", (req, res) => {
+  const lead = getLead(req.params.id);
+  if (!lead) return res.sendStatus(404);
+  lead.notes = String((req.body ?? {}).notes ?? "").slice(0, 8000);
+  saveLead(lead);
+  res.json({ ok: true, notes: lead.notes });
 });
 
 app.post("/api/leads", async (req, res) => {

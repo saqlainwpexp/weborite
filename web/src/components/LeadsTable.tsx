@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, StickyNote } from "lucide-react";
 import type { BenchmarkSet, Lead } from "../../../shared/types";
 import { fileUrl, host, timeAgo } from "../lib/api";
 import { StatusPill } from "./ui";
@@ -69,7 +69,10 @@ export function LeadsTable({
                   <div className="lead-cell">
                     <span className="thumb" style={done ? { backgroundImage: `url(${fileUrl(l.id, "desktop-fold.jpg")})` } : undefined} />
                     <div style={{ minWidth: 0 }}>
-                      <b>{l.business || host(l.url)}</b>
+                      <b style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                        {l.business || host(l.url)}
+                        {l.notes?.trim() && <StickyNote size={13} className="muted" aria-label="Has notes" />}
+                      </b>
                       <span>{host(l.url)}{l.name ? ` · ${l.name}` : ""}</span>
                     </div>
                   </div>

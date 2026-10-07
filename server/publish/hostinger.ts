@@ -18,12 +18,17 @@ import type { Lead } from "../../shared/types.ts";
 
 export interface HostingConfig { host: string; port: number; user: string; password: string; basePath: string; publicBaseUrl: string }
 
+/** Prepend https:// to a non-empty host/URL that has no scheme (leaves "" and http(s):// URLs as-is). */
+const absUrl = (u: string) => (!u || /^https?:\/\//i.test(u) ? u : `https://${u}`);
+
 export function hostingConfig(): HostingConfig {
   const s = getSettings();
   return {
     host: s.hostingSftpHost.trim(), port: s.hostingSftpPort || 22, user: s.hostingSftpUser.trim(),
     password: s.hostingSftpPassword, basePath: s.hostingBasePath.trim().replace(/\/+$/, ""),
-    publicBaseUrl: s.hostingPublicBaseUrl.trim().replace(/\/+$/, ""),
+    // Force an absolute https:// URL: a scheme-less value (e.g. "site.hostingersite.com") is treated
+    // as a RELATIVE link in the app and opens the dashboard instead of the live mockup in the browser.
+    publicBaseUrl: absUrl(s.hostingPublicBaseUrl.trim().replace(/\/+$/, "")),
   };
 }
 

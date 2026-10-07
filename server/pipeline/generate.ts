@@ -5,6 +5,7 @@ import { extractHtml, runClaude } from "../claude/runner.ts";
 import { pickDesignSystem } from "./designLibrary.ts";
 import { assetSheet, stockPhotos, trimPadding } from "./assets.ts";
 import { currentRecipe, newRecipe, pickNiche } from "./recipe.ts";
+import { nextMocFor, resolveMoc } from "./mocs.ts";
 import type { BenchmarkSet, Capture, Diagnosis, Fact, GateCheck } from "../../shared/types.ts";
 
 export const SYSTEM = `You are a senior web designer and front-end engineer. You rebuild small-business homepages so they compete visually with the best sites in their category, and you write clean, semantic, responsive HTML and CSS by hand.
@@ -67,7 +68,7 @@ export async function generateMockup(
   // requests edit the EXISTING mockup (same recipe) instead of starting over.
   const sameness = Boolean(opts?.failures?.some((f) => /^Distinct from other mockups/.test(f.name)));
   const amend = Boolean((opts?.failures?.length && !sameness) || opts?.changes);
-  const prevPick = readJson<{ niche?: string; style?: string; system?: string }>(leadId, "design.json") ?? null;
+  const prevPick = readJson<{ niche?: string; style?: string; system?: string; mocNiche?: string; moc?: string }>(leadId, "design.json") ?? null;
   const dir = leadDir(leadId);
   const outDir = join(dir, "mockup");
   mkdirSync(outDir, { recursive: true });
@@ -94,23 +95,30 @@ export async function generateMockup(
   const verticalText = [benchmarks?.label, benchmarks?.vertical, benchmarks?.register, capture.title, capture.description].filter(Boolean).join(" ");
   const stock = await stockPhotos(leadId, verticalText);
 
+  // MOC QUEUE (preferred): show the model ONE finished reference design and have it clone that exact
+  // layout, re-skinned for this lead — the fix for "every niche gets the same template". On an amend
+  // or a (non-sameness) gate retry we keep the same moc so edits refine that design; a fresh run or a
+  // sameness re-pick advances to the next moc in the niche's pool (recycling once all are used). When
+  // a niche has no mocs uploaded yet, moc is null and we fall back to the recipe / design-system path.
+  const moc = amend ? resolveMoc(prevPick?.mocNiche ?? "", prevPick?.moc ?? "") : nextMocFor(verticalText);
+
   // Niches with a section library get a unique RECIPE (base style + sections mixed from different
   // designs), so no two leads — and no two regenerations of one lead — share a layout. A gate retry
   // keeps the recipe it is fixing. Other niches fall back to the closest single design system.
-  const niche = pickNiche(verticalText);
+  const niche = moc ? null : pickNiche(verticalText);
   // On a sameness retry, force a fresh mix (newRecipe already stays far from this lead's and others'
   // recipes); otherwise keep the current recipe for an amend, or make a new one.
   const recipe = niche ? ((amend ? currentRecipe(leadId, niche) : null) ?? newRecipe(leadId, niche, verticalText)) : null;
-  // No niche library: pick a measured/clean system. A sameness retry rotates to a different one and
-  // avoids the template we just used.
+  // No moc and no niche library: pick a measured/clean system. A sameness retry rotates to a different
+  // one and avoids the template we just used.
   const dsSeed = sameness ? `${leadId}:redo:${prevPick?.system ?? ""}` : leadId;
-  const ds = recipe ? null : pickDesignSystem(
+  const ds = (moc || recipe) ? null : pickDesignSystem(
     benchmarks ? { label: benchmarks.label, register: benchmarks.register, key: benchmarks.vertical } : null,
     dsSeed,
     sameness && prevPick?.system ? [prevPick.system] : [],
   );
-  // Remember what was chosen so a later sameness retry can avoid it.
-  writeJson(leadId, "design.json", recipe ? { niche: recipe.niche, style: recipe.style.id } : { system: ds?.slug });
+  // Remember what was chosen so a later amend can reuse it / a sameness retry can avoid it.
+  writeJson(leadId, "design.json", moc ? { mocNiche: moc.niche, moc: moc.file } : recipe ? { niche: recipe.niche, style: recipe.style.id } : { system: ds?.slug });
 
   // Learned preferences: corrections the owner gave on earlier mockups, so they don't have to be
   // repeated. Favour notes from the same vertical, then fill with recent ones from any vertical.
@@ -130,9 +138,11 @@ ${lines}`;
 
   const images = [join(dir, "desktop-fold.jpg"), join(dir, "mobile.jpg")].filter(existsSync);
   if (sheet) images.push(sheet);
-  // A recipe brings one cropped reference per section; a measured system brings the template's
-  // page top to bottom (first three slices: header, hero and the core sections).
-  const refs = recipe
+  // A moc brings the one finished design to clone; a recipe brings one cropped reference per section;
+  // a measured system brings the template's page top to bottom (first three slices).
+  const refs = moc
+    ? [moc.path].filter(existsSync)
+    : recipe
     ? recipe.sections.map((s) => s.image).filter((p): p is string => Boolean(p && existsSync(p)))
     : ds ? (ds.referenceImages.length ? ds.referenceImages.slice(0, 3) : ds.referenceImage ? [ds.referenceImage] : []).filter(existsSync) : [];
   images.push(...refs);
@@ -188,7 +198,24 @@ Return one complete, self-contained HTML document (inline <style>, and inline <s
   prompt += learned;
   prompt += agencyProfileBlock("design");
 
-  if (recipe) {
+  if (moc) {
+    prompt += `
+
+DESIGN TO CLONE — the LAST attached image is a finished, professionally designed homepage. Rebuild THIS EXACT design for the business. The output must read as the SAME design re-skinned for this lead, not a page merely "inspired by" it. Match it closely:
+- The whole page structure top to bottom: the header/nav treatment, the hero composition, and every section in the SAME order, with the same count and arrangement of blocks.
+- The visual system: type hierarchy and scale, spacing rhythm, grid column counts, card/button/input/nav shapes and radii, image aspect ratios, and how sections are separated or overlap.
+- Placeholder/grey tiles in the reference are photo slots — fill each with the lead's own photo (or a stock photo per IMAGE RULES) whose subject fits that slot, never with a grey box.
+
+Change ONLY these, and nothing else that isn't required to make it work:
+1. COLOURS — put THIS LEAD'S locked brand colours wherever the reference uses its accent/brand colour; derive tints and shades of the brand hue for secondary tones; keep the reference's neutrals (white, off-white, greys, near-black).
+2. CONTENT — use only this lead's real logo, photos, words and FACTS. Never copy the reference's text, business name, numbers, prices, logos or images.
+3. FONTS — choose Google Fonts that match the reference's typographic character (serif vs sans, weight, letter-spacing, case). The exact families need not match, but the FEEL must.
+4. Drop a section only when the business has no real content for it (no team photos → no team section; no real numbers → no stats; no menu → no menu). Don't invent content and don't add sections the reference doesn't have.
+
+The rules at the top still win: brand colours and logo locked, no invented facts, WCAG AA contrast, and it must work at 375px (collapse multi-column grids to one column, keep the mobile nav opening and closing).
+
+After applying all of this, produce the full HTML document following every rule above, in a single \`\`\`html block with nothing else.`;
+  } else if (recipe) {
     const withImg = recipe.sections.filter((x) => x.image && existsSync(x.image));
     prompt += `
 

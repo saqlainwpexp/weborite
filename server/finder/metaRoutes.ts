@@ -3,13 +3,14 @@ import { getLead } from "../db.ts";
 import { intakeLead, leadFromFields } from "../intake.ts";
 import { DemoLimitError } from "../license/index.ts";
 import {
-  createMetaLead, deleteMetaLead, getMetaLead, importMetaCsv, listMetaLeads, metaLeadStats, saveMetaLead,
+  createMetaLead, deleteMetaLead, getMetaLead, importMetaCsv, listMetaLeads, logMetaActivity, metaLeadStats, saveMetaLead,
 } from "./metaStore.ts";
-import { META_LEAD_STATUS, type MetaLead, type MetaLeadStatus } from "../../shared/types.ts";
+import { META_ACTIVITY, META_LEAD_STATUS, type MetaActivityKind, type MetaLead, type MetaLeadStatus } from "../../shared/types.ts";
 
 export const meta = Router();
 
 const STATUSES = new Set(META_LEAD_STATUS.map((s) => s.key));
+const ACTIVITY_KINDS = new Set(META_ACTIVITY.map((a) => a.key));
 
 meta.get("/stats", (_req, res) => res.json(metaLeadStats()));
 
@@ -31,9 +32,11 @@ meta.post("/leads", (req, res) => {
   const { lead, duplicate } = createMetaLead({
     source: "manual", name, email, phone,
     company: String(b.company ?? "").trim(),
+    website: String(b.website ?? "").trim(),
     campaign: String(b.campaign ?? "").trim(),
     platform: String(b.platform ?? "").trim(),
     notes: String(b.notes ?? "").trim(),
+    labels: Array.isArray(b.labels) ? b.labels.map(String) : undefined,
     fields: b.fields && typeof b.fields === "object" ? b.fields : {},
   });
   res.json({ ...lead, duplicate });
@@ -53,13 +56,45 @@ meta.patch("/leads/:id", (req, res) => {
   const b = req.body ?? {};
   if (b.status !== undefined) {
     if (!STATUSES.has(b.status)) return res.status(400).json({ error: "Unknown status" });
+    if (b.status !== l.status) {
+      const label = META_LEAD_STATUS.find((s) => s.key === b.status)?.label ?? b.status;
+      logMetaActivity(l, { kind: "status", text: `Moved to ${label}` });
+    }
     l.status = b.status as MetaLeadStatus;
   }
   if (Array.isArray(b.labels)) l.labels = b.labels.map(String);
   if (b.notes !== undefined) l.notes = String(b.notes);
-  for (const k of ["name", "email", "phone", "company", "campaign", "platform"] as const) {
+  if (b.followUpAt !== undefined) l.followUpAt = b.followUpAt ? String(b.followUpAt) : undefined;
+  for (const k of ["name", "email", "phone", "company", "website", "campaign", "platform"] as const) {
     if (b[k] !== undefined) l[k] = String(b[k]);
   }
+  saveMetaLead(l);
+  res.json(l);
+});
+
+/** Append a pipeline timeline entry (log a contact, schedule a follow-up, mark the mockup sent…). */
+meta.post("/leads/:id/activity", (req, res) => {
+  const l = getMetaLead(req.params.id);
+  if (!l) return res.sendStatus(404);
+  const b = req.body ?? {};
+  const kind = String(b.kind ?? "") as MetaActivityKind;
+  if (!ACTIVITY_KINDS.has(kind)) return res.status(400).json({ error: "Unknown activity kind" });
+  const text = b.text !== undefined ? String(b.text).trim() : undefined;
+  const dueAt = b.dueAt ? String(b.dueAt) : undefined;
+  if (kind === "note" && !text) return res.status(400).json({ error: "Write a note first." });
+  logMetaActivity(l, { kind, text: text || undefined, dueAt });
+  // Logging a contact nudges a still-new lead forward so the board stays honest.
+  if (kind === "contacted" && l.status === "new") l.status = "contacted";
+  saveMetaLead(l);
+  res.json(l);
+});
+
+/** Clear a scheduled follow-up (mark it handled). */
+meta.post("/leads/:id/activity/clear-followup", (req, res) => {
+  const l = getMetaLead(req.params.id);
+  if (!l) return res.sendStatus(404);
+  if (l.followUpAt) logMetaActivity(l, { kind: "follow_up", text: "Follow-up completed" });
+  l.followUpAt = undefined;
   saveMetaLead(l);
   res.json(l);
 });
@@ -89,11 +124,13 @@ meta.post("/leads/:id/mockup", (req, res) => {
   if (l.email) fields.Email = l.email;
   if (l.phone) fields.Phone = l.phone;
   if (l.company) fields.Business = l.company;
+  if (l.website) fields.Website = l.website;
   const input = leadFromFields(fields, "meta");
-  if (!input) return res.status(400).json({ error: "This lead's form has no website to rebuild. Add a website first, or design one from scratch in Mockups." });
+  if (!input) return res.status(400).json({ error: "This lead has no website to rebuild. Add a website first, or design one from scratch in Mockups." });
   try {
-    const { lead, duplicate } = intakeLead(input);
+    const { lead, duplicate } = intakeLead({ ...input, labels: l.labels });
     l.mockupLeadId = lead.id;
+    if (!duplicate) logMetaActivity(l, { kind: "mockup_created", text: "Mockup started in the Mockups workspace" });
     saveMetaLead(l);
     res.json({ leadId: lead.id, duplicate });
   } catch (e) {
@@ -111,9 +148,9 @@ const csvCell = (v: unknown) => {
 meta.get("/export.csv", (req, res) => {
   const ids = typeof req.query.ids === "string" && req.query.ids ? new Set(req.query.ids.split(",")) : null;
   const rows = listMetaLeads().filter((l: MetaLead) => !ids || ids.has(l.id));
-  const head = ["Name", "Email", "Phone", "Company", "Status", "Source", "Platform", "Campaign", "Ad", "Form", "Submitted", "Labels", "Notes"];
+  const head = ["Name", "Email", "Phone", "Company", "Website", "Status", "Source", "Platform", "Campaign", "Ad", "Form", "Submitted", "Follow-up", "Labels", "Notes"];
   const lines = rows.map((l) =>
-    [l.name, l.email, l.phone, l.company, l.status, l.source, l.platform, l.campaign, l.adName, l.formName, l.submittedAt ?? l.createdAt, l.labels.join(" "), l.notes]
+    [l.name, l.email, l.phone, l.company, l.website, l.status, l.source, l.platform, l.campaign, l.adName, l.formName, l.submittedAt ?? l.createdAt, l.followUpAt ?? "", l.labels.join(" "), l.notes]
       .map(csvCell).join(","),
   );
   res.attachment(`meta-leads-${new Date().toISOString().slice(0, 10)}.csv`);

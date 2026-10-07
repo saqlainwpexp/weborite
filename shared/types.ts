@@ -47,6 +47,8 @@ export interface Lead {
   reviseRequest?: string;
   /** Where this mockup is published live (Hostinger over SFTP). */
   publish?: { url: string; path: string; at: string };
+  /** Free-text CRM notes (who's been contacted, follow-ups, what was sent…). */
+  notes?: string;
 }
 
 /** How promising a lead is to win: hot = chase today, cold = low priority. */
@@ -268,6 +270,11 @@ export interface LeadDetail extends Lead {
   playbook: LeadPlaybook | null;
   /** Whether Hostinger SFTP is configured, so the UI can enable "Publish live". */
   publishReady: boolean;
+  /** Downstream delivery pipeline: the build and WordPress conversion made from this lead, if any. */
+  pipeline: {
+    build: { id: string; status: BuildStatus } | null;
+    conversion: { id: string; status: WpStatus } | null;
+  };
 }
 
 export interface Usage {
@@ -423,6 +430,40 @@ export const META_LEAD_STATUS: { key: MetaLeadStatus; label: string }[] = [
   { key: "lost", label: "Lost" },
 ];
 
+/** The default tag every lead in the Meta workspace carries, and the manual high-value tag. */
+export const META_TAG = "Meta ads";
+export const PREMIUM_TAG = "Premium";
+
+/** Kinds of pipeline events logged against a Meta lead. */
+export type MetaActivityKind =
+  | "note"          // a free-text note the owner typed
+  | "contacted"     // reached out (email / call / DM)
+  | "follow_up"     // a follow-up was scheduled (dueAt) or done
+  | "mockup_created"// the mockup was started in the Mockups workspace
+  | "mockup_sent"   // the mockup/preview was sent to the client
+  | "proposal_sent" // a quote / proposal was sent
+  | "status";       // the pipeline status was changed
+
+export const META_ACTIVITY: { key: MetaActivityKind; label: string }[] = [
+  { key: "contacted", label: "Logged contact" },
+  { key: "follow_up", label: "Follow-up" },
+  { key: "mockup_created", label: "Mockup started" },
+  { key: "mockup_sent", label: "Mockup sent" },
+  { key: "proposal_sent", label: "Proposal sent" },
+  { key: "note", label: "Note" },
+  { key: "status", label: "Status changed" },
+];
+
+/** One timestamped entry in a lead's pipeline timeline. */
+export interface MetaActivity {
+  at: string;
+  kind: MetaActivityKind;
+  /** Free-text detail, or the note body. */
+  text?: string;
+  /** For `follow_up`: when the next touch is due. */
+  dueAt?: string;
+}
+
 /** A single person who filled in a lead-ad form (not a scraped business). */
 export interface MetaLead {
   id: string;
@@ -434,6 +475,8 @@ export interface MetaLead {
   email: string;
   phone: string;
   company: string;
+  /** The business's current website, if any — needed to turn the lead into a mockup. */
+  website: string;
   /** Campaign / ad / form names, when the platform or CSV provides them. */
   campaign: string;
   adName: string;
@@ -445,6 +488,10 @@ export interface MetaLead {
   status: MetaLeadStatus;
   labels: string[];
   notes: string;
+  /** Timestamped pipeline timeline: contacted, follow-ups, mockup sent, etc. */
+  activity: MetaActivity[];
+  /** When the next follow-up is due, when one is scheduled (surfaced on the list). */
+  followUpAt?: string;
   /** Set once this lead has been handed to the Mockups workspace. */
   mockupLeadId?: string;
   /** Platform identifiers, kept for the Facebook Lead Ads sync and de-duplication. */

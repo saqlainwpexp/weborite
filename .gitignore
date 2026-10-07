@@ -25,6 +25,13 @@ design-library/**/*.webp
 # ...except the reference crops mockups are built from: they must ship with every copy of the repo.
 !design-library/**/sections/*.jpg
 !design-library/**/reference-*.jpg
+# ...and the moc queue's reference designs (design-library/<niche>/mocs/): these ARE the designs the
+# generator clones, so they must ship with the repo and the packaged app.
+!design-library/**/mocs/*.png
+!design-library/**/mocs/*.jpg
+!design-library/**/mocs/*.jpeg
+!design-library/**/mocs/*.webp
+!design-library/**/mocs/*.avif
 design-library/**/_thumbs/**
 design-library/**/_raw.json
 design-library/_progress.log

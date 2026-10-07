@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { sqlite as db } from "../db.ts";
-import type { MetaLead, MetaLeadSource, MetaLeadStats, MetaLeadStatus } from "../../shared/types.ts";
-import { META_LEAD_STATUS } from "../../shared/types.ts";
+import type { MetaActivity, MetaLead, MetaLeadSource, MetaLeadStats, MetaLeadStatus } from "../../shared/types.ts";
+import { META_LEAD_STATUS, META_TAG } from "../../shared/types.ts";
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS meta_leads (
@@ -16,6 +16,11 @@ const newId = () => randomUUID().slice(0, 8);
 /** Fields a caller may supply; the rest are filled with sensible blanks. */
 export type MetaLeadInput = Partial<Omit<MetaLead, "id" | "createdAt">> & { source: MetaLeadSource };
 
+/** Every lead in this workspace is a Meta/ad lead, so it always carries the "Meta ads" tag. */
+function withMetaTag(labels: string[] = []): string[] {
+  return labels.some((l) => l.toLowerCase() === META_TAG.toLowerCase()) ? labels : [META_TAG, ...labels];
+}
+
 function fill(input: MetaLeadInput): Omit<MetaLead, "id" | "createdAt"> {
   return {
     source: input.source,
@@ -24,17 +29,27 @@ function fill(input: MetaLeadInput): Omit<MetaLead, "id" | "createdAt"> {
     email: (input.email ?? "").trim(),
     phone: (input.phone ?? "").trim(),
     company: (input.company ?? "").trim(),
+    website: (input.website ?? "").trim(),
     campaign: (input.campaign ?? "").trim(),
     adName: (input.adName ?? "").trim(),
     formName: (input.formName ?? "").trim(),
     platform: (input.platform ?? "").trim(),
     fields: input.fields ?? {},
     status: input.status ?? "new",
-    labels: input.labels ?? [],
+    labels: withMetaTag(input.labels),
     notes: input.notes ?? "",
+    activity: input.activity ?? [],
+    followUpAt: input.followUpAt,
     mockupLeadId: input.mockupLeadId,
     meta: input.meta,
   };
+}
+
+/** Append a pipeline timeline entry (and keep followUpAt in sync for follow-ups). Caller saves. */
+export function logMetaActivity(lead: MetaLead, entry: Omit<MetaActivity, "at"> & { at?: string }) {
+  const at = entry.at ?? new Date().toISOString();
+  lead.activity = [{ ...entry, at }, ...(lead.activity ?? [])];
+  if (entry.kind === "follow_up") lead.followUpAt = entry.dueAt || undefined;
 }
 
 /**
@@ -62,13 +77,21 @@ export function saveMetaLead(lead: MetaLead) {
   db.prepare("UPDATE meta_leads SET status = ?, data = ? WHERE id = ?").run(lead.status, JSON.stringify(lead), lead.id);
 }
 
+/** Backfill fields added after a lead was first stored, so older rows stay valid. */
+function hydrate(lead: MetaLead): MetaLead {
+  lead.website = lead.website ?? "";
+  lead.activity = lead.activity ?? [];
+  lead.labels = withMetaTag(lead.labels ?? []);
+  return lead;
+}
+
 export function getMetaLead(id: string): MetaLead | null {
   const r = db.prepare("SELECT data FROM meta_leads WHERE id = ?").get(id) as { data: string } | undefined;
-  return r ? JSON.parse(r.data) : null;
+  return r ? hydrate(JSON.parse(r.data)) : null;
 }
 
 export function listMetaLeads(): MetaLead[] {
-  return (db.prepare("SELECT data FROM meta_leads ORDER BY created_at DESC").all() as { data: string }[]).map((r) => JSON.parse(r.data));
+  return (db.prepare("SELECT data FROM meta_leads ORDER BY created_at DESC").all() as { data: string }[]).map((r) => hydrate(JSON.parse(r.data)));
 }
 
 export function deleteMetaLead(id: string) {
@@ -99,6 +122,7 @@ const ALIASES: Record<string, keyof MetaLead | "firstName" | "lastName"> = {
   email: "email", emailaddress: "email", workemail: "email", mail: "email",
   phone: "phone", phonenumber: "phone", mobile: "phone", mobilenumber: "phone", whatsapp: "phone", whatsappnumber: "phone",
   company: "company", companyname: "company", business: "company", businessname: "company", organization: "company", organisation: "company",
+  website: "website", websiteurl: "website", url: "website", site: "website", web: "website", domain: "website", webpage: "website",
   campaign: "campaign", campaignname: "campaign",
   ad: "adName", adname: "adName",
   form: "formName", formname: "formName",

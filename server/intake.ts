@@ -37,7 +37,7 @@ export function leadFromFields(fields: Record<string, string>, source: LeadSourc
   };
 }
 
-export function intakeLead(input: NonNullable<ReturnType<typeof leadFromFields>> & { mode?: Lead["mode"]; prospectId?: string }): { lead: Lead; duplicate: boolean } {
+export function intakeLead(input: NonNullable<ReturnType<typeof leadFromFields>> & { mode?: Lead["mode"]; prospectId?: string; labels?: string[] }): { lead: Lead; duplicate: boolean } {
   const dup = findDuplicate(input.url, input.email);
   if (dup) return { lead: dup, duplicate: true };
   if (demoLeft("mockups") <= 0) throw new DemoLimitError(demoLimitMessage("mockups"));

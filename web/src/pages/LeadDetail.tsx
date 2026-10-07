@@ -2,14 +2,15 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import {
   AlertTriangle, ArrowRight, ArrowUpRight, Blocks, Check, CheckCircle2, ChevronDown, Clock, Copy, Download, ExternalLink,
-  FileOutput, Globe, Image as ImageIcon, Info, Layers, Loader2, Mail, MessageCircle, Monitor, RefreshCw, Smartphone, Sparkles, Star, StickyNote,
-  Target, Trash2, Users, Wand2, X, XCircle,
+  FileOutput, Globe, Image as ImageIcon, Info, Layers, Loader2, Mail, MessageCircle, Monitor, PanelsTopLeft, RefreshCw, Rocket, Smartphone, Sparkles, Star, StickyNote,
+  Target, Trash2, Users, Wand2, Wrench, X, XCircle,
 } from "lucide-react";
 import { STEPS, type LeadDetail as Detail, type StepKey } from "../../../shared/types";
 import { workspaceEnabled } from "../../../shared/features";
 import type { LayoutCtx } from "../layout/Layout";
 import { api, duration, fileUrl, host, shortDate, timeAgo, usePoll } from "../lib/api";
 import { EventIcon, StatusPill, StepIcon } from "../components/ui";
+import { DEFAULT_PAGES } from "../components/builds";
 
 type View = "desktop" | "mobile";
 type Tab = "overview" | "redesign" | "seo" | "competitors" | "close";
@@ -87,17 +88,51 @@ export default function LeadDetail() {
   const [pubBusy, setPubBusy] = useState(false);
   const [pubErr, setPubErr] = useState<string | null>(null);
 
+  // CRM notes + one-click pipeline advance.
+  const [notes, setNotes] = useState("");
+  const [savedNotes, setSavedNotes] = useState("");
+  const [notesSaved, setNotesSaved] = useState(false);
+  const [advBusy, setAdvBusy] = useState(false);
+
   // Refresh the mockup iframe when a new version lands.
   const genDone = lead?.steps.find((s) => s.key === "generate")?.finishedAt;
   useEffect(() => setBust(Date.now()), [genDone]);
 
-  // Seed the rating/feedback controls once from the loaded lead.
+  // Seed the rating/feedback/notes controls once from the loaded lead.
   useEffect(() => {
     if (fbInit.current || !lead) return;
     fbInit.current = true;
     setRating(lead.rating);
     setFeedback(lead.feedback ?? "");
+    setNotes(lead.notes ?? "");
+    setSavedNotes(lead.notes ?? "");
   }, [lead]);
+
+  async function saveNotes() {
+    try {
+      await api(`/api/leads/${id}/notes`, { method: "POST", json: { notes } });
+      setSavedNotes(notes);
+      setNotesSaved(true);
+      setTimeout(() => setNotesSaved(false), 1500);
+      reloadAll();
+    } catch (e) {
+      alert((e as Error).message);
+    }
+  }
+
+  // One-click: turn the approved mockup into a full website build and open it.
+  async function startBuild() {
+    setAdvBusy(true);
+    try {
+      const b = await api<{ id: string }>("/api/builds", { method: "POST", json: { leadId: lead!.id, pages: DEFAULT_PAGES, start: true } });
+      reloadAll();
+      nav(`/builds/${b.id}`);
+    } catch (e) {
+      alert((e as Error).message);
+    } finally {
+      setAdvBusy(false);
+    }
+  }
 
   async function saveFeedback(next: { rating?: number; feedback?: string }) {
     try {
@@ -138,6 +173,25 @@ export default function LeadDetail() {
   const swatches = brand ? [brand.primary, brand.secondary, brand.accent, brand.text].filter(Boolean) as string[] : [];
   const leadEvents = (events ?? []).filter((e) => e.leadId === lead.id || e.kind === "lead").slice(0, 3);
   const busy = lead.status === "running" || lead.status === "queued";
+
+  // Delivery pipeline (Mockup → Build → WordPress → Launch → Maintenance) for the one-click advance card.
+  const pipe = lead.pipeline ?? { build: null, conversion: null };
+  const buildReady = pipe.build?.status === "ready" || pipe.build?.status === "needs_review";
+  const convDone = pipe.conversion?.status === "done";
+  const stageList = [
+    { key: "mockup", label: "Mockup", done: lead.hasMockup, started: busy || lead.hasMockup },
+    { key: "build", label: "Website build", done: buildReady, started: !!pipe.build },
+    { key: "wordpress", label: "WordPress", done: convDone, started: !!pipe.conversion },
+    { key: "launch", label: "Launch & SEO", done: false, started: false },
+    { key: "care", label: "Maintenance", done: false, started: false },
+  ];
+  const nextStep: { label: string; icon: React.ReactNode; onClick?: () => void; to?: string; disabled?: boolean } =
+    !lead.hasMockup ? { label: busy ? "Mockup in progress…" : "Finish the mockup first", icon: <Sparkles />, disabled: true }
+    : !pipe.build ? { label: "Build full website", icon: <Blocks />, onClick: () => void startBuild() }
+    : !buildReady ? { label: "Open build in progress", icon: <Blocks />, to: `/builds/${pipe.build.id}` }
+    : !pipe.conversion ? { label: "Convert to WordPress", icon: <PanelsTopLeft />, to: `/wp/new?build=${pipe.build.id}` }
+    : !convDone ? { label: "Open WordPress conversion", icon: <PanelsTopLeft />, to: `/wp/${pipe.conversion.id}` }
+    : { label: "Launch & SEO", icon: <Rocket />, to: "/seo" };
 
   async function run(from?: StepKey) {
     setRerunOpen(false);
@@ -542,6 +596,61 @@ export default function LeadDetail() {
             <button className="btn btn-white" onClick={() => winLead()}><Mail />Outreach email</button>
           </div>
 
+          {workspaceEnabled("builds") && (
+            <div className="card">
+              <h3 className="card-title"><Rocket size={18} /> Delivery pipeline</h3>
+              <p className="card-sub" style={{ margin: "2px 0 12px" }}>Move this lead to the next stage with one click.</p>
+              <div className="steps">
+                {stageList.map((s, i) => {
+                  const prevDone = i === 0 || stageList[i - 1].done;
+                  const state = s.done ? "done" : s.started ? "running" : prevDone ? "next" : "pending";
+                  return (
+                    <div key={s.key} className={`step${state === "running" ? " running" : ""}`}>
+                      <div><b>{s.label}</b><span>{state === "done" ? "Done" : state === "running" ? "In progress" : state === "next" ? "Up next" : "Not started"}</span></div>
+                      <span className="ico">
+                        {s.done ? <CheckCircle2 className="ok" /> : s.started ? <Loader2 className="spin" /> : <span className="dot" style={{ opacity: state === "next" ? 1 : .3 }} />}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+              <div style={{ marginTop: 14 }}>
+                {nextStep.to ? (
+                  <Link className="btn btn-ink btn-sm" style={{ width: "100%", justifyContent: "center" }} to={nextStep.to}>{nextStep.icon}{nextStep.label}<ArrowRight /></Link>
+                ) : (
+                  <button className="btn btn-ink btn-sm" style={{ width: "100%", justifyContent: "center" }} onClick={nextStep.onClick} disabled={nextStep.disabled || advBusy}>
+                    {advBusy ? <Loader2 className="spin" /> : nextStep.icon}{nextStep.label}{!nextStep.disabled && <ArrowRight />}
+                  </button>
+                )}
+              </div>
+              {(pipe.build || pipe.conversion) && (
+                <div className="notif-foot" style={{ marginTop: 10 }}>
+                  <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+                    {pipe.build && <Link className="link-btn" to={`/builds/${pipe.build.id}`}><Blocks size={14} />Open build</Link>}
+                    {pipe.conversion && <Link className="link-btn" to={`/wp/${pipe.conversion.id}`}><PanelsTopLeft size={14} />Open WordPress</Link>}
+                    {buildReady && <Link className="link-btn" to="/care"><Wrench size={14} />Maintenance</Link>}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          <div className="card">
+            <div className="card-head">
+              <h3 className="card-title"><StickyNote size={18} /> Notes</h3>
+              {notesSaved && <span className="muted" style={{ fontSize: 12 }}><Check size={13} /> Saved</span>}
+            </div>
+            <p className="card-sub" style={{ margin: "2px 0 8px" }}>Track where this lead stands — contacted, follow-ups, what you've sent.</p>
+            <textarea
+              className="input"
+              rows={4}
+              placeholder="e.g. Called 7 Oct, sent the mockup link, follow up Friday…"
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+            />
+            <button className="btn btn-ink btn-sm" style={{ width: "100%", justifyContent: "center", marginTop: 10 }} disabled={notes === savedNotes} onClick={() => void saveNotes()}>Save notes</button>
+          </div>
+
           {lead.hasMockup && (
             <div className="card publish-card">
               <div className="card-head">
@@ -550,7 +659,7 @@ export default function LeadDetail() {
               </div>
               {lead.publish ? (
                 <>
-                  <a className="live-url" href={lead.publish.url} target="_blank" rel="noreferrer">{lead.publish.url}<ArrowUpRight size={14} /></a>
+                  <a className="live-url" href={/^https?:\/\//i.test(lead.publish.url) ? lead.publish.url : `https://${lead.publish.url}`} target="_blank" rel="noreferrer">{lead.publish.url}<ArrowUpRight size={14} /></a>
                   <p className="card-sub" style={{ margin: 0 }}>Published {timeAgo(lead.publish.at)}. This link is used in the outreach email.</p>
                   <div style={{ display: "flex", gap: 10 }}>
                     <button className="btn btn-white btn-sm" onClick={() => void publish(false)} disabled={pubBusy}>{pubBusy ? <Loader2 className="spin" /> : <RefreshCw />}Update</button>
@@ -615,7 +724,7 @@ export default function LeadDetail() {
 
           <div className="card">
             <div className="card-head">
-              <h3 className="card-title">Pipeline</h3>
+              <h3 className="card-title">Mockup steps</h3>
               <button className="btn btn-chip btn-xs" onClick={() => run("capture")} disabled={busy}><RefreshCw size={14} />Restart</button>
             </div>
             <div className="steps">

@@ -1,9 +1,9 @@
 import { useOutletContext, useNavigate, useSearchParams } from "react-router-dom";
 import { useMemo, useRef, useState } from "react";
-import { ArrowRight, Download, Mail, Megaphone, Phone, Search, Trash2, Upload, UserPlus } from "lucide-react";
+import { ArrowRight, BellRing, Download, Mail, Megaphone, Phone, Search, Trash2, Upload, UserPlus } from "lucide-react";
 import type { MetaLead, MetaLeadStatus } from "../../../../shared/types";
-import { META_LEAD_STATUS } from "../../../../shared/types";
-import { api, timeAgo } from "../../lib/api";
+import { META_LEAD_STATUS, PREMIUM_TAG } from "../../../../shared/types";
+import { api, shortDate, timeAgo } from "../../lib/api";
 import type { LayoutCtx } from "../../layout/Layout";
 import { Modal } from "../../components/ui";
 
@@ -17,8 +17,15 @@ export function MetaStatusPill({ status }: { status: MetaLeadStatus }) {
   return <span className="status" style={{ background: "var(--accent-softer)", color: "var(--text)" }}><span className="dot" style={{ background: STATUS_DOT[status] }} />{label}</span>;
 }
 
+/** Where a lead sits against its scheduled follow-up: overdue, upcoming, or none set. */
+export function followUpState(l: Pick<MetaLead, "followUpAt">): "none" | "due" | "upcoming" {
+  if (!l.followUpAt) return "none";
+  return new Date(l.followUpAt).getTime() <= Date.now() ? "due" : "upcoming";
+}
+
 function AddMetaLeadModal({ onClose, onDone }: { onClose: () => void; onDone: (id: string) => void }) {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", company: "", campaign: "", platform: "", notes: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", company: "", website: "", campaign: "", platform: "", notes: "" });
+  const [premium, setPremium] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setForm({ ...form, [k]: e.target.value });
@@ -28,7 +35,7 @@ function AddMetaLeadModal({ onClose, onDone }: { onClose: () => void; onDone: (i
     setBusy(true);
     setError(null);
     try {
-      const r = await api<MetaLead>("/api/meta/leads", { method: "POST", json: form });
+      const r = await api<MetaLead>("/api/meta/leads", { method: "POST", json: { ...form, labels: premium ? [PREMIUM_TAG] : [] } });
       onDone(r.id);
     } catch (err) {
       setError((err as Error).message);
@@ -47,12 +54,20 @@ function AddMetaLeadModal({ onClose, onDone }: { onClose: () => void; onDone: (i
           <div className="input-group"><label htmlFor="m-email">Email</label><input id="m-email" type="email" className="input" value={form.email} onChange={set("email")} /></div>
           <div className="input-group"><label htmlFor="m-phone">Phone</label><input id="m-phone" className="input" value={form.phone} onChange={set("phone")} /></div>
         </div>
+        <div className="input-group">
+          <label htmlFor="m-website">Website</label>
+          <input id="m-website" className="input" value={form.website} onChange={set("website")} placeholder="acmebakery.com — needed to turn this lead into a mockup" />
+        </div>
         <div className="form-row">
           <div className="input-group"><label htmlFor="m-campaign">Campaign</label><input id="m-campaign" className="input" value={form.campaign} onChange={set("campaign")} placeholder="e.g. Spring promo" /></div>
           <div className="input-group"><label htmlFor="m-platform">Platform</label><input id="m-platform" className="input" value={form.platform} onChange={set("platform")} placeholder="facebook, instagram…" /></div>
         </div>
         <div className="input-group"><label htmlFor="m-notes">Notes</label><textarea id="m-notes" className="input" rows={3} value={form.notes} onChange={set("notes")} /></div>
-        <span className="hint">Give at least a name, email or phone.</span>
+        <label style={{ display: "inline-flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
+          <input type="checkbox" checked={premium} onChange={(e) => setPremium(e.target.checked)} />
+          <span>Mark as <b>Premium</b> (high-value lead)</span>
+        </label>
+        <span className="hint">Tagged <b>Meta ads</b> automatically. Give at least a name, email or phone; add a website to enable the mockup.</span>
         {error && <p className="error-text">{error}</p>}
         <div style={{ display: "flex", justifyContent: "flex-end", gap: 12 }}>
           <button type="button" className="btn btn-chip" onClick={onClose}>Cancel</button>
@@ -123,6 +138,7 @@ export default function MetaLeads() {
   const [params, setParams] = useSearchParams();
   const status = params.get("status") ?? "all";
   const q = params.get("q") ?? "";
+  const dueOnly = params.get("due") === "1";
   const [adding, setAdding] = useState(false);
   const [importing, setImporting] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
@@ -136,9 +152,11 @@ export default function MetaLeads() {
   const needle = q.trim().toLowerCase();
   const shown = (metaLeads ?? []).filter((l) => {
     if (status !== "all" && l.status !== status) return false;
-    if (needle && ![l.name, l.email, l.phone, l.company, l.campaign, l.platform].join(" ").toLowerCase().includes(needle)) return false;
+    if (dueOnly && followUpState(l) !== "due") return false;
+    if (needle && ![l.name, l.email, l.phone, l.company, l.website, l.campaign, l.platform, ...(l.labels ?? [])].join(" ").toLowerCase().includes(needle)) return false;
     return true;
   });
+  const dueCount = (metaLeads ?? []).filter((l) => followUpState(l) === "due").length;
 
   const [picked, setPicked] = useState<Set<string>>(new Set());
   const allIds = useMemo(() => new Set((metaLeads ?? []).map((l) => l.id)), [metaLeads]);
@@ -199,8 +217,17 @@ export default function MetaLeads() {
         </div>
         <div className="input-icon filter-search">
           <Search />
-          <input className="input" placeholder="Filter by name, email, phone, campaign…" value={q} onChange={(e) => set("q", e.target.value || null)} aria-label="Filter leads" />
+          <input className="input" placeholder="Filter by name, email, phone, campaign, tag…" value={q} onChange={(e) => set("q", e.target.value || null)} aria-label="Filter leads" />
         </div>
+        <button
+          type="button"
+          className={`btn btn-sm ${dueOnly ? "btn-ink" : "btn-white"}`}
+          aria-pressed={dueOnly}
+          onClick={() => set("due", dueOnly ? null : "1")}
+          title="Leads with a follow-up due now"
+        >
+          <BellRing />Follow-ups due{dueCount ? ` (${dueCount})` : ""}
+        </button>
         <span className="muted" style={{ marginLeft: "auto" }}>{shown.length.toLocaleString("en-US")} lead{shown.length === 1 ? "" : "s"}</span>
       </div>
 
@@ -235,6 +262,7 @@ export default function MetaLeads() {
                   <th className="hide-sm">Contact</th>
                   <th className="hide-sm">Source</th>
                   <th>Status</th>
+                  <th className="hide-sm">Follow-up</th>
                   <th className="hide-sm">Received</th>
                   <th aria-label="Open" />
                 </tr>
@@ -251,7 +279,10 @@ export default function MetaLeads() {
                         <div className="lead-cell">
                           <span className="biz-mark" aria-hidden="true">{(l.name || l.email || "?").replace(/[^A-Za-z0-9]/g, "").slice(0, 1).toUpperCase() || "•"}</span>
                           <div style={{ minWidth: 0 }}>
-                            <b>{l.name || l.email || l.phone || "Unnamed lead"}</b>
+                            <b style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                              {l.name || l.email || l.phone || "Unnamed lead"}
+                              {(l.labels ?? []).includes(PREMIUM_TAG) && <span className="status" style={{ background: "var(--accent-softer)", color: "var(--text)", fontSize: 11 }}>Premium</span>}
+                            </b>
                             <span>{l.company || l.campaign || "Lead ad"}</span>
                           </div>
                         </div>
@@ -265,6 +296,15 @@ export default function MetaLeads() {
                       </td>
                       <td className="hide-sm"><span className="muted">{SOURCE_LABEL[l.source]}</span></td>
                       <td><MetaStatusPill status={l.status} /></td>
+                      <td className="hide-sm nowrap">
+                        {l.followUpAt ? (
+                          <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 13, color: followUpState(l) === "due" ? "var(--danger, #c0392b)" : "var(--text)", fontWeight: followUpState(l) === "due" ? 600 : 400 }}>
+                            <BellRing size={13} />{followUpState(l) === "due" ? "Due " : ""}{shortDate(l.followUpAt)}
+                          </span>
+                        ) : (
+                          <span className="muted">—</span>
+                        )}
+                      </td>
                       <td className="hide-sm nowrap muted">{timeAgo(l.submittedAt ?? l.createdAt)}</td>
                       <td style={{ textAlign: "right" }}><span className="btn btn-sm btn-icon btn-chip" aria-hidden="true"><ArrowRight /></span></td>
                     </tr>
