@@ -15,6 +15,10 @@
     "desktop": "vite build && node scripts/build-server.mjs --owner && electron .",
     "dist": "vite build && node scripts/build-server.mjs && electron-builder --win",
     "dist:owner": "vite build && node scripts/build-server.mjs --owner && electron-builder --win -c.directories.output=release-owner",
+    "dist:linux": "vite build && node scripts/build-server.mjs && electron-builder --linux",
+    "dist:owner:linux": "vite build && node scripts/build-server.mjs --owner && electron-builder --linux -c.directories.output=release-owner",
+    "dist:mac": "vite build && node scripts/build-server.mjs && electron-builder --mac",
+    "dist:owner:mac": "vite build && node scripts/build-server.mjs --owner && electron-builder --mac -c.directories.output=release-owner",
     "icon": "tsx scripts/make-icon.mjs"
   },
   "dependencies": {
@@ -38,7 +42,7 @@
     "@types/react-dom": "^19.3.0",
     "@types/ssh2-sftp-client": "^9.0.6",
     "@vitejs/plugin-react": "^6.1.1",
-    "concurrently": "^10.0.5",
+    "concurrently": "^9.2.4",
     "electron": "^44.4.4",
     "electron-builder": "^26.15.3",
     "esbuild": "^0.28.2",
@@ -130,6 +134,40 @@
       "createStartMenuShortcut": true,
       "shortcutName": "Weborite Studio",
       "runAfterFinish": true
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": ["x64"]
+        },
+        {
+          "target": "deb",
+          "arch": ["x64"]
+        }
+      ],
+      "artifactName": "Weborite-Studio-${version}.${ext}",
+      "icon": "build/icon.png",
+      "executableName": "weborite-studio",
+      "category": "Office",
+      "synopsis": "Mockups, builds, WordPress, SEO and maintenance for web agencies",
+      "maintainer": "Weborite Solutions <hello@weborite.com>"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["arm64", "x64"]
+        },
+        {
+          "target": "zip",
+          "arch": ["arm64", "x64"]
+        }
+      ],
+      "artifactName": "Weborite-Studio-${version}-${arch}.${ext}",
+      "icon": "build/icon.png",
+      "category": "public.app-category.productivity",
+      "identity": null
     }
   }
 }

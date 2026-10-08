@@ -39,3 +39,6 @@ design-library/_progress.log
 # Cloud worker checkout of the jobs branch
 .cloud-jobs/
 out/
+
+# Local one-time license admin reset tool (contains a token; never commit)
+site/license/reset-admin.php
