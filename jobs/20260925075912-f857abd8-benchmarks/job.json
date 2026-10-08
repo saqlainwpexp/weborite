@@ -1,0 +1,8 @@
+{
+  "system": "You research real, currently live websites. You never invent a site, a brand or a URL. You verify each one with web search before listing it.",
+  "prompt": "Build a benchmark set of best-in-class homepages for this business vertical.\n\nVertical: Builder\nCompetitive register (what the buyer is evaluating): The buyer is planning a new home, extension or commercial build and is judging whether this local building contractor looks established, capable and trustworthy enough for a large project, compared with other regional builders and construction firms rather than national housebuilders.\n\nFind 5–8 real, named businesses whose homepages are excellent examples for this register: strong hero, clear offer, trust signals, modern typography, and a good mobile layout. Include a mix of well-known leaders and smaller independent businesses of a similar size to a local business. Search the web to confirm each site exists and is live. Only include sites you confirmed.\n\nFor each one, write a single \"why\" line naming the specific homepage pattern worth learning from.\n\nReturn only JSON:\n```json\n{\"sites\": [{\"name\": \"...\", \"url\": \"https://...\", \"why\": \"...\"}]}\n```",
+  "images": [],
+  "web": true,
+  "model": "claude-sonnet-5",
+  "task": "benchmarks"
+}

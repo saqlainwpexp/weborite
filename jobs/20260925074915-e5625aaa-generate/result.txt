@@ -1,0 +1,591 @@
+```html
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Med Assist 24/7 | Medical Assistance That Always Gets You Home</title>
+<meta name="description" content="A membership-based medical assistance programme providing coordinated clinical support to help you return home safely after illness or injury while travelling. Membership programme, not insurance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="../assets/1945590bfa.png">
+<style>
+:root{--primary:#24338d;--accent:#3f4fb0;--ink:#0a1440;--body:#5a5a5a;--surface:#ffffff;--surface-alt:#ebeff5;--footer:#141d57;--radius-btn:8px;--radius-card:20px;--radius-img:10px;--container:1280px;--gutter:32px;--section-y:100px;
+  --line:#dfe5ee;--soft:#dfe3f7;--card-light:#e9eef5}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Manrope',sans-serif;font-size:16px;line-height:1.81;color:var(--body);background:var(--surface);overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+p{margin:0}
+.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}
+.container>*{min-width:0}
+section{padding:var(--section-y) 0}
+.eyebrow{display:inline-block;font-size:14px;font-weight:700;line-height:2.07;padding:2px 15px;border-radius:30px;background:var(--surface-alt);color:var(--ink);margin-bottom:16px}
+.alt .eyebrow{background:#fff}
+.on-dark .eyebrow{background:rgba(255,255,255,.1);color:#fff}
+h1,h2,h3,h4{font-family:'Manrope',sans-serif;margin:0;overflow-wrap:break-word}
+h1,.display{font-size:64px;font-weight:600;line-height:1.1;letter-spacing:-3px;color:#fff}
+h2{font-size:42px;font-weight:600;line-height:1.1;letter-spacing:-1.25px;color:var(--ink);margin:0 0 20px}
+.on-dark h2{color:#fff}
+h3{font-size:24px;font-weight:600;line-height:1.4;color:var(--ink)}
+h4{font-size:20px;font-weight:700;line-height:1.3;color:var(--ink);margin:0 0 10px}
+.lead{font-size:18px;line-height:1.78;letter-spacing:-.2px;color:var(--body);max-width:600px;margin:0 auto}
+.head-c{text-align:center;margin-bottom:50px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:5px 25px;border-radius:var(--radius-btn);font-size:15px;font-weight:700;background:var(--primary);color:#fff;text-decoration:none;border:0;cursor:pointer;font-family:inherit;transition:background .2s}
+.btn:hover{background:var(--ink)}
+.btn-accent{background:var(--accent)}
+.btn-accent:hover{background:var(--primary)}
+.btn-ghost{background:rgba(255,255,255,.1);color:#fff}
+.btn-ghost:hover{background:rgba(255,255,255,.2)}
+.btn-white{background:#fff;color:var(--primary)}
+.btn-white:hover{background:var(--surface-alt)}
+.btn-lg{min-height:52px;padding:8px 30px}
+.card{border-radius:var(--radius-card);overflow:hidden;background:var(--surface-alt)}
+.card-body{padding:40px}
+.skip{position:absolute;left:-999px;top:0;background:#fff;color:var(--primary);padding:10px 16px;z-index:100}
+.skip:focus{left:12px;top:12px}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.ico{width:22px;height:22px;flex:none}
+
+/* top bar + header (over hero, not fixed) */
+.topbar{background:var(--primary);color:#fff;font-size:14px;position:relative;z-index:3}
+.topbar .container{display:flex;justify-content:space-between;align-items:center;min-height:40px;gap:18px}
+.topbar a{color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.topbar .tb-left{display:flex;gap:26px;flex-wrap:wrap}
+.topbar .tb-left svg{width:15px;height:15px}
+.site-header{position:absolute;left:0;right:0;top:40px;z-index:3}
+.site-header .container{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:80px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff}
+.brand img{width:58px;height:58px;border-radius:50%;background:#fff;object-fit:contain}
+.brand span{font-size:18px;font-weight:700;letter-spacing:-.4px;line-height:1.1}
+.brand small{display:block;font-size:12px;font-weight:500;opacity:.85;letter-spacing:0}
+.nav{display:flex;gap:32px}
+.nav a{color:#fff;text-decoration:none;font-size:15px;font-weight:600;padding:10px 0}
+.nav a:hover{opacity:.8}
+.head-cta{display:flex;align-items:center;gap:12px}
+.burger{display:none;width:48px;height:48px;border-radius:var(--radius-btn);border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.1);color:#fff;cursor:pointer;place-items:center}
+.burger svg{width:24px;height:24px}
+
+/* hero */
+.hero{position:relative;min-height:900px;padding:0;display:flex;flex-direction:column;color:#fff;background:#0a1440;isolation:isolate;overflow:hidden}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,20,64,.5) 0%,rgba(10,20,64,.42) 45%,rgba(10,20,64,.82) 100%);z-index:-1}
+.hero-main{flex:1;display:flex;align-items:center;padding:150px 0 40px}
+.hero-main .container{text-align:center;width:100%}
+.hero h1{max-width:880px;margin:0 auto}
+.hero-sub{font-size:24px;font-weight:600;line-height:1.4;margin:22px auto 10px;max-width:700px}
+.hero-offer{font-size:17px;color:var(--soft);margin:0 auto 34px;max-width:640px}
+.hero-offer b{color:#fff}
+.hero-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:14px}
+.hero-actions .sos{display:inline-flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:600;min-height:52px;padding:0 10px}
+.hero-actions .sos svg{width:20px;height:20px}
+.hero-feats{border-top:1px solid rgba(255,255,255,.18)}
+.hero-feats .container{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;padding-top:36px;padding-bottom:44px}
+.hf{display:flex;gap:20px;align-items:flex-start}
+.hf .circle{width:80px;height:80px;border-radius:50%;background:var(--accent);display:grid;place-items:center;flex:none}
+.hf .circle svg{width:34px;height:34px}
+.hf h4{color:#fff;margin:8px 0 4px}
+.hf p{color:var(--soft);font-size:15px;line-height:1.6}
+
+/* about split */
+.about{padding:100px 0}
+.about .container{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:80px;align-items:center}
+.about img{width:100%;aspect-ratio:576/447;object-fit:cover;border-radius:var(--radius-card)}
+.about p{margin-bottom:16px}
+.about .btn{margin-top:14px}
+.values{font-weight:700;color:var(--primary);font-size:15px;margin-top:6px}
+
+/* services */
+.services{padding:0 0 100px}
+.svc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.svc{border-radius:var(--radius-card);overflow:hidden;display:flex;flex-direction:column}
+.svc-media{position:relative}
+.svc-media img{width:100%;height:250px;object-fit:cover}
+.svc-media .tile{position:absolute;left:30px;bottom:-35px;width:70px;height:70px;border-radius:var(--radius-img);background:#fff;color:var(--primary);display:grid;place-items:center;box-shadow:0 10px 30px rgba(10,20,64,.12)}
+.svc-media .tile svg{width:32px;height:32px}
+.svc .card-body{padding:60px 40px 40px;display:flex;flex-direction:column;flex:1}
+.svc p{margin-bottom:24px}
+.svc .btn{margin-top:auto;align-self:flex-start;background:var(--card-light);color:var(--primary)}
+.svc-pale{background:var(--surface-alt)}
+.svc-accent{background:var(--accent)}
+.svc-primary{background:var(--primary)}
+.svc-accent h4,.svc-primary h4{color:#fff}
+.svc-accent p,.svc-primary p{color:var(--soft)}
+.svc-accent .btn,.svc-primary .btn{background:rgba(255,255,255,.12);color:#fff}
+.svc-accent .btn:hover,.svc-primary .btn:hover{background:rgba(255,255,255,.22)}
+.svc-more{margin-top:40px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;list-style:none;padding:0}
+.svc-more li{background:var(--surface-alt);color:var(--ink);font-size:14px;font-weight:600;border-radius:30px;padding:6px 16px}
+
+/* why */
+.why{background:var(--surface-alt)}
+.why-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.why-item{display:flex;gap:20px;align-items:flex-start;background:#fff;border-radius:var(--radius-card);padding:30px}
+.why-item .sq{width:64px;height:64px;border-radius:var(--radius-img);background:var(--primary);color:#fff;display:grid;place-items:center;flex:none}
+.why-item:nth-child(n+4) .sq{background:var(--accent)}
+.why-item .sq svg{width:28px;height:28px}
+.why-item p{font-size:15px;line-height:1.7}
+
+/* banner: not insurance */
+.banner{padding:100px 0 0}
+.banner-box{position:relative;border-radius:var(--radius-card);overflow:hidden;color:#fff;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:50px;align-items:center;padding:70px 60px;background:var(--ink)}
+.banner-box img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.banner-box::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,20,64,.92) 0%,rgba(10,20,64,.78) 55%,rgba(10,20,64,.55) 100%);z-index:1}
+.banner-box>*:not(img){position:relative;z-index:2}
+.banner-box .quote{font-size:30px;font-weight:600;line-height:1.3;letter-spacing:-.8px;margin:6px 0 20px}
+.banner-box .copy{color:var(--soft);margin-bottom:28px;max-width:520px}
+.compare{background:#fff;border-radius:var(--radius-card);padding:30px;color:var(--body)}
+.compare h4{font-size:17px;margin-bottom:12px}
+.compare ul{list-style:none;padding:0;margin:0 0 18px;display:grid;gap:8px}
+.compare li{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.55}
+.compare li svg{width:18px;height:18px;flex:none;margin-top:3px}
+.compare .no li{color:#555}
+.compare .no svg{color:#8a8a8a}
+.compare .yes{background:var(--surface-alt);border-radius:var(--radius-img);padding:18px 18px 4px;margin:0}
+.compare .yes li{color:var(--ink);font-weight:600}
+.compare .yes svg{color:var(--primary)}
+
+/* how it works */
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;list-style:none;padding:0;margin:0}
+.step{background:var(--accent);color:#fff;border-radius:12px;padding:30px;position:relative}
+.step:not(:last-child)::after{content:'';position:absolute;right:-19px;top:50%;width:14px;height:14px;border-top:2px solid var(--accent);border-right:2px solid var(--accent);transform:translateY(-50%) rotate(45deg)}
+.step .chip{display:inline-block;font-size:13px;font-weight:700;padding:2px 12px;border-radius:30px;background:rgba(255,255,255,.12);margin-bottom:14px}
+.step h4{color:#fff}
+.step p{color:var(--soft);font-size:15px;line-height:1.7}
+.how-cta{text-align:center;margin-top:44px}
+
+/* plans (stats collage slot) */
+.plans{padding-top:0}
+.plans .container{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:70px;align-items:center}
+.plans .note{font-size:14px;margin-top:18px;padding-left:14px;border-left:3px solid var(--accent)}
+.plans .actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+.plans .more{margin-top:24px;display:grid;gap:6px;font-size:15px}
+.plans .more b{color:var(--ink)}
+.tiles{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+.plan{border-radius:var(--radius-img);padding:28px;display:flex;flex-direction:column;min-height:250px}
+.plan .tag{align-self:flex-start;font-size:12px;font-weight:700;padding:1px 10px;border-radius:30px;margin-bottom:10px}
+.plan .name{font-size:18px;font-weight:700;margin-bottom:4px}
+.plan .who{font-size:14px;line-height:1.55;margin-bottom:auto}
+.plan .price{font-size:56px;font-weight:600;letter-spacing:-2px;line-height:1;margin-top:18px}
+.plan .price small{font-size:18px;font-weight:600;letter-spacing:0}
+.plan-pale{background:var(--surface-alt);color:var(--body)}
+.plan-pale .name,.plan-pale .price{color:var(--ink)}
+.plan-pale .tag{background:#fff;color:var(--primary)}
+.plan-deep{background:var(--primary);color:var(--soft)}
+.plan-deep .name,.plan-deep .price{color:#fff}
+.plan-deep .tag{background:rgba(255,255,255,.14);color:#fff}
+.tiles .t2,.tiles .t4{transform:translateY(30px)}
+
+/* testimonial */
+.testi .card{max-width:820px;margin:0 auto;text-align:center;padding:50px 50px 44px;position:relative}
+.testi .avatar{width:80px;height:80px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;margin:0 auto 22px;box-shadow:0 0 0 6px #fff}
+.testi .avatar svg{width:34px;height:34px}
+.testi .qmark{position:absolute;left:36px;top:26px;width:44px;height:44px;color:var(--accent)}
+.testi blockquote{margin:0;font-size:18px;line-height:1.78;color:var(--ink)}
+.testi .who{margin-top:20px;font-weight:700;color:var(--ink)}
+.testi .who span{display:block;font-weight:500;font-size:14px;color:var(--body)}
+.dots{display:flex;justify-content:center;gap:8px;margin-top:26px}
+.dots span{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.dots span:first-child{background:var(--primary);width:26px;border-radius:6px}
+
+/* faq */
+.faq{background:var(--surface-alt)}
+.faq-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:50px;align-items:start}
+.help-card{background:var(--primary);color:var(--soft);border-radius:var(--radius-card);padding:40px}
+.help-card .sq{width:70px;height:70px;border-radius:var(--radius-img);background:rgba(255,255,255,.12);display:grid;place-items:center;color:#fff;margin-bottom:22px}
+.help-card .sq svg{width:32px;height:32px}
+.help-card h3{color:#fff;margin-bottom:10px}
+.help-card a{color:#fff;text-decoration:none;display:flex;align-items:center;gap:10px;min-height:44px;font-weight:600}
+.help-card .links{margin-top:20px;display:grid;gap:4px}
+.acc{background:#fff;border-radius:var(--radius-card);padding:10px 30px}
+.acc details{border-bottom:1px solid var(--line)}
+.acc details:last-child{border-bottom:0}
+.acc summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 0;font-size:16px;font-weight:600;color:var(--ink);min-height:44px}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary::after{content:'';width:10px;height:10px;border-right:2px solid var(--primary);border-bottom:2px solid var(--primary);transform:rotate(45deg);flex:none;transition:transform .2s}
+.acc details[open] summary::after{transform:rotate(-135deg)}
+.acc details p{padding:0 0 20px;font-size:15px;line-height:1.75}
+
+/* emergency banner */
+.sos-band{padding:100px 0}
+.sos-box{background:var(--primary);border-radius:var(--radius-card);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);overflow:hidden;color:#fff}
+.sos-left{background:var(--accent);padding:50px;display:flex;flex-direction:column;justify-content:center;gap:16px}
+.sos-left .sq{width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.14);display:grid;place-items:center}
+.sos-left .sq svg{width:36px;height:36px}
+.sos-left h3{color:#fff;font-size:26px;line-height:1.3;letter-spacing:-.5px}
+.sos-left p{color:var(--soft)}
+.sos-right{padding:50px;display:flex;flex-direction:column;justify-content:center}
+.sos-right .num{display:inline-flex;align-items:center;gap:14px;font-size:42px;font-weight:600;letter-spacing:-1.25px;line-height:1.15;color:#fff;text-decoration:none;margin:4px 0 14px}
+.sos-right .num svg{width:36px;height:36px;flex:none}
+.sos-right p{color:var(--soft)}
+.sos-right .wa{color:#fff;font-weight:600;text-decoration:none;display:inline-flex;min-height:44px;align-items:center}
+
+/* footer */
+.strip{background:var(--primary);color:#fff;padding:40px 0}
+.strip .container{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.strip .stmt{display:flex;align-items:center;gap:16px;font-size:26px;font-weight:600;letter-spacing:-.6px;line-height:1.25}
+.strip .stmt svg{width:36px;height:36px;flex:none;color:var(--soft)}
+.footer{background:var(--footer);color:#c7cdf0;padding:80px 0 0}
+.footer .grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.5fr;gap:44px;padding-bottom:60px}
+.footer h4{color:#fff;font-size:17px;margin-bottom:14px}
+.footer ul{list-style:none;padding:0;margin:0;display:grid;gap:2px}
+.footer a{color:#c7cdf0;text-decoration:none;display:inline-flex;align-items:center;min-height:36px}
+.footer a:hover{color:#fff}
+.footer .fbrand img{width:72px;height:72px;border-radius:50%;background:#fff;margin-bottom:16px}
+.footer .fbrand p{font-size:15px;line-height:1.7}
+.footer .big{font-size:30px;font-weight:600;letter-spacing:-1px;color:#fff;min-height:44px;line-height:1.2}
+.footer .small{font-size:14px;margin-top:8px}
+.footer .bottom{border-top:1px solid rgba(255,255,255,.12)}
+.footer .bottom .container{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;padding-top:20px;padding-bottom:20px;font-size:14px}
+
+@media (max-width:1100px){.nav{gap:22px}.head-cta .btn{display:none}}
+@media (max-width:960px){
+  .burger{display:grid}
+  .nav{display:none;position:absolute;top:100%;left:var(--gutter);right:var(--gutter);flex-direction:column;gap:0;background:#fff;border-radius:var(--radius-img);padding:8px 20px 14px;box-shadow:0 20px 40px rgba(0,0,0,.25)}
+  .nav.open{display:flex}
+  .nav a{color:var(--ink);min-height:44px;border-bottom:1px solid var(--line)}
+  .about .container,.plans .container,.faq-grid,.banner-box,.sos-box{grid-template-columns:minmax(0,1fr)}
+  .about .container,.plans .container{gap:44px}
+  .svc-grid,.why-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .steps{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .step::after{display:none}
+  .hero-feats .container{grid-template-columns:minmax(0,1fr)}
+  .footer .grid{grid-template-columns:1fr 1fr}
+  .strip .container{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:768px){
+  :root{--section-y:64px;--gutter:20px}
+  h1,.display{font-size:40px;letter-spacing:-1.5px}h2{font-size:32px;letter-spacing:-.8px}
+  .topbar .tb-right{display:none}
+  .topbar .tb-left{gap:14px;font-size:13px}
+  .brand img{width:48px;height:48px}
+  .brand span{font-size:16px}
+  .hero{min-height:0}
+  .hero-main{padding:130px 0 30px}
+  .hero-sub{font-size:20px}
+  .hf .circle{width:60px;height:60px}
+  .hf .circle svg{width:26px;height:26px}
+  .about{padding:64px 0}
+  .services{padding-bottom:64px}
+  .svc-grid,.why-grid,.steps,.tiles{grid-template-columns:minmax(0,1fr)}
+  .svc .card-body{padding:56px 24px 30px}
+  .why-item{padding:24px}
+  .banner{padding-top:64px}
+  .banner-box{padding:36px 22px;gap:30px}
+  .banner-box .quote{font-size:24px}
+  .compare{padding:22px}
+  .tiles .t2,.tiles .t4{transform:none}
+  .plan{min-height:0}
+  .plan .price{font-size:44px}
+  .testi .card{padding:40px 22px 34px}
+  .testi .qmark{left:18px;top:16px;width:34px;height:34px}
+  .acc{padding:4px 18px}
+  .help-card{padding:30px 22px}
+  .sos-band{padding:64px 0}
+  .sos-left,.sos-right{padding:30px 22px}
+  .sos-right .num{font-size:28px}
+  .sos-right .num svg{width:28px;height:28px}
+  .strip .stmt{font-size:21px}
+  .footer .grid{grid-template-columns:minmax(0,1fr);gap:30px}
+  .footer .big{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){.btn,.acc summary::after{transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="topbar">
+  <div class="container">
+    <div class="tb-left">
+      <a href="tel:+442036422190"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>SOS Centre: +44 (0) 203 642 2190</a>
+      <a href="mailto:help@medassist247.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>help@medassist247.com</a>
+    </div>
+    <div class="tb-right">Available 24 hours a day, 7 days a week, 365 days a year.</div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="#" aria-label="Med Assist 24/7, home">
+      <img src="../assets/10fa85750a.png" width="616" height="609" alt="Med Assist logo">
+      <span>MedAssist247<small>Global Medical &amp; General Assistance</small></span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#how">How It Works</a>
+      <a href="#memberships">Memberships</a>
+      <a href="#about">About</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="head-cta">
+      <a class="btn btn-accent" href="#memberships">Join MedAssist247</a>
+      <button class="burger" id="burger" aria-controls="nav" aria-expanded="false" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero on-dark" aria-label="Introduction">
+    <img class="hero-img" src="../assets/1945590bfa.png" alt="A MedAssist247 coordinator tracking live cases, with an air ambulance jet outside" fetchpriority="high">
+    <div class="hero-main">
+      <div class="container">
+        <span class="eyebrow">Membership Programme — Not Insurance</span>
+        <h1>Medical emergencies don't wait. Neither do we.</h1>
+        <p class="hero-sub">One call. One team. One mission.</p>
+        <p class="hero-offer">If illness or injury strikes more than 50 miles from home, we coordinate your safe return, bedside to bedside. <b>Individual membership £398/year.</b></p>
+        <div class="hero-actions">
+          <a class="btn btn-lg" href="#memberships">View Membership Plans</a>
+          <a class="sos" href="tel:+442036422190"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>Need help now? Call 24/7</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-feats">
+      <div class="container">
+        <div class="hf"><span class="circle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3zM3 19a2 2 0 0 0 2 2h1v-6H3z"/></svg></span><div><h4>24/7 SOS Response</h4><p>Trained Assistance Co-ordinators, around the clock, with specialist doctor back-up.</p></div></div>
+        <div class="hf"><span class="circle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg></span><div><h4>Air Ambulance Support</h4><p>Dedicated air ambulance services for critical or long-distance evacuations.</p></div></div>
+        <div class="hf"><span class="circle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span><div><h4>Global Medical Assistance</h4><p>Coordinated clinical support to get you home safely, worldwide.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about" aria-labelledby="about-title">
+    <div class="container">
+      <img src="../assets/stock-2xb1csEK8As.jpg" alt="A family together at home on the sofa" loading="lazy">
+      <div>
+        <span class="eyebrow">About Med Assist</span>
+        <h2 id="about-title">Why getting home matters</h2>
+        <p>Healing involves more than clinical treatment alone. Being close to family, familiar surroundings and trusted medical professionals often supports both physical recovery and emotional wellbeing.</p>
+        <p>At Med Assist, we recognise the value of bringing people home: restoring connection, dignity and peace of mind is an essential part of care.</p>
+        <p class="values">Guided by compassion | Grounded in clinical care | Open to all</p>
+        <a class="btn" href="#how">How It Works</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" aria-labelledby="svc-title">
+    <div class="container">
+      <div class="head-c">
+        <span class="eyebrow">What We Provide</span>
+        <h2 id="svc-title">Comprehensive Medical Assistance</h2>
+        <p class="lead">When illness or injury strikes far from home, our coordinated services work together to get you back safely, guided by clinical expertise and human compassion.</p>
+      </div>
+      <div class="svc-grid">
+        <article class="svc svc-pale">
+          <div class="svc-media"><img src="../assets/d6d8cb91bd.jpg" alt="A patient on a stretcher being transferred to an air ambulance" loading="lazy"><span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg></span></div>
+          <div class="card-body"><h4>Private Air Ambulance</h4><p>Dedicated air ambulance services for critical or long-distance medical evacuations.</p><a class="btn" href="#memberships">Read more<span class="sr-only"> about Private Air Ambulance</span></a></div>
+        </article>
+        <article class="svc svc-accent">
+          <div class="svc-media"><img src="../assets/a527cf8084.jpg" alt="Medical team loading a patient into a road ambulance" loading="lazy"><span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="7" width="14" height="10" rx="1"/><path d="M15 10h4l3 3v4h-7M8 9v6M5 12h6"/><circle cx="5.5" cy="18" r="1.5"/><circle cx="18.5" cy="18" r="1.5"/></svg></span></div>
+          <div class="card-body"><h4>Private Road Ambulance</h4><p>Coordinated private road ambulance services for safe and timely ground transportation.</p><a class="btn" href="#memberships">Read more<span class="sr-only"> about Private Road Ambulance</span></a></div>
+        </article>
+        <article class="svc svc-primary">
+          <div class="svc-media"><img src="../assets/a8b3db4a48.jpg" alt="Emergency responders at the scene of a road accident" loading="lazy"><span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l9 4v6c0 5-3.8 9-9 10-5.2-1-9-5-9-10V6z"/><path d="M12 8v8M8 12h8"/></svg></span></div>
+          <div class="card-body"><h4>Disaster Response</h4><p>Private disaster response experts and coordinated services when the unexpected happens.</p><a class="btn" href="#memberships">Read more<span class="sr-only"> about Disaster Response</span></a></div>
+        </article>
+      </div>
+      <ul class="svc-more" aria-label="Also included">
+        <li>24/7 SOS Centre</li><li>Medical Escorts</li><li>Worldwide Stretcher Flights</li><li>Patient Management</li><li>Repatriation Services</li><li>Trauma Counselling</li><li>Medical Legal Experts</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="why alt" aria-labelledby="why-title">
+    <div class="container">
+      <div class="head-c">
+        <span class="eyebrow">Why Trust MedAssist247</span>
+        <h2 id="why-title">Help without hesitation</h2>
+        <p class="lead">Our guiding principle is simple: no one should be left without help when they are far from home.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-item"><span class="sq" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3zM3 19a2 2 0 0 0 2 2h1v-6H3z"/></svg></span><div><h4>Trained co-ordinators</h4><p>Fully trained Assistance Co-ordinators available around the clock, 365 days a year.</p></div></div>
+        <div class="why-item"><span class="sq" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3v6a6 6 0 0 0 12 0V3M12 15v3a3 3 0 0 0 6 0v-1"/><circle cx="18" cy="15" r="2"/></svg></span><div><h4>Specialist doctor back-up</h4><p>Specialist doctor back-up on every call, with clinical oversight worldwide.</p></div></div>
+        <div class="why-item"><span class="sq" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></span><div><h4>Bedside to bedside</h4><p>Doctors, specialist nurses and flight paramedics providing bedside-to-bedside care worldwide.</p></div></div>
+        <div class="why-item"><span class="sq" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/></svg></span><div><h4>Compassion without conditions</h4><p>Care guided by conscience as well as competence.</p></div></div>
+        <div class="why-item"><span class="sq" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><div><h4>Clear, honest communication</h4><p>No fine print, no jargon: just straightforward guidance when it matters.</p></div></div>
+        <div class="why-item"><span class="sq" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8z"/></svg></span><div><h4>In-house medical legal experts</h4><p>Advice to guide members through complex situations.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="banner" aria-labelledby="diff-title">
+    <div class="container">
+      <div class="banner-box on-dark">
+        <img class="bg" src="../assets/stock-SwaEMQAzP_8.jpg" alt="" loading="lazy">
+        <div>
+          <span class="eyebrow">A Clear Difference</span>
+          <h2 id="diff-title">Membership Programme — Not Insurance</h2>
+          <p class="quote">"When others say 'that's not covered', MedAssist247 starts finding a way to help."</p>
+          <p class="copy">Traditional travel insurance is designed around policies, exclusions and claims processes. MedAssist247 is designed around people.</p>
+          <a class="btn btn-white" href="#memberships">View Membership Plans</a>
+        </div>
+        <div class="compare">
+          <h4>Traditional Travel Insurance</h4>
+          <ul class="no">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Complex exclusions and fine print</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Claims declined at your most vulnerable</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Decisions based on policy wording</li>
+          </ul>
+          <div class="yes">
+            <h4>MedAssist247 Membership</h4>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>No exclusions, no fine print</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Faster, more decisive assistance</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Decisions guided by clinical appropriateness</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" aria-labelledby="how-title">
+    <div class="container">
+      <div class="head-c">
+        <span class="eyebrow">How It Works</span>
+        <h2 id="how-title">When the unexpected happens</h2>
+        <p class="lead">Throughout every step, our focus remains on dignity, clarity and compassionate support.</p>
+      </div>
+      <ol class="steps">
+        <li class="step"><span class="chip">Step 1</span><h4>Become a Member</h4><p>Choose individual, family or senior cover through one of our simple membership plans.</p></li>
+        <li class="step"><span class="chip">Step 2</span><h4>Contact us when you need help</h4><p>If illness or injury occurs more than 50 miles from home, contact our 24/7 SOS Centre.</p></li>
+        <li class="step"><span class="chip">Step 3</span><h4>Clinical assessment &amp; coordination</h4><p>Our specialist team reviews your situation and coordinates medical and practical support.</p></li>
+        <li class="step"><span class="chip">Step 4</span><h4>Supported return home</h4><p>When clinically appropriate, we arrange your safe return home, with dignity and care.</p></li>
+      </ol>
+      <p class="how-cta"><a class="btn" href="#memberships">Start Your Membership</a></p>
+    </div>
+  </section>
+
+  <section class="plans" id="memberships" aria-labelledby="plans-title">
+    <div class="container">
+      <div>
+        <span class="eyebrow">Membership Plans</span>
+        <h2 id="plans-title">Choose your protection</h2>
+        <p>Simple, transparent membership. No hidden exclusions. No claims process. Just coordinated medical assistance when you need it most.</p>
+        <div class="more">
+          <span><b>VIP / Executive</b> · £2,985/year</span>
+          <span><b>Global Traveller VIP Family</b> · £5,328.00/year</span>
+          <span><b>Corporate</b> · POA</span>
+          <span><b>UK Private Ambulance</b> · Add-On</span>
+        </div>
+        <p class="note">MedAssist247 is a medical assistance membership programme, not insurance. Membership provides access to assistance services and coordination.</p>
+        <div class="actions">
+          <a class="btn btn-lg" href="#contact">Join MedAssist247</a>
+          <a class="btn btn-lg btn-accent" href="#contact">Compare all plans</a>
+        </div>
+      </div>
+      <div class="tiles">
+        <div class="plan plan-pale"><span class="tag">Individual</span><p class="name">Peace of mind away from home</p><p class="who">For regular travellers who value preparedness.</p><p class="price">£398<small>/year</small></p></div>
+        <div class="plan plan-deep t2"><span class="tag">Most Popular</span><p class="name">Family</p><p class="who">Covers 2 adults + up to 2 children.</p><p class="price">£995<small>/year</small></p></div>
+        <div class="plan plan-deep"><span class="tag">Ages 18-30</span><p class="name">Gap Year</p><p class="who">Designed for extended international travel.</p><p class="price">£498<small>/year</small></p></div>
+        <div class="plan plan-pale t4"><span class="tag">Ages 60+</span><p class="name">Golden Years</p><p class="who">Enhanced support for mature travellers.</p><p class="price">£529<small>/year</small></p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testi" aria-labelledby="testi-title">
+    <div class="container">
+      <div class="head-c">
+        <span class="eyebrow">From Our Members</span>
+        <h2 id="testi-title">Everything was already arranged</h2>
+      </div>
+      <figure class="card" style="margin:0 auto">
+        <svg class="qmark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 17h3l2-4V7H6v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg>
+        <span class="avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+        <blockquote>“When we arrived at the hospital back home, everything was already arranged. The surgeon was waiting. A nurse asked how we managed it all so quickly — I simply told her we had Med Assist.”</blockquote>
+        <figcaption class="who">MedAssist247 Member<span>Medical repatriation from Southern Europe</span></figcaption>
+      </figure>
+      <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
+    </div>
+  </section>
+
+  <section class="faq" id="faq" aria-labelledby="faq-title">
+    <div class="container">
+      <div class="head-c">
+        <span class="eyebrow">Frequently Asked Questions</span>
+        <h2 id="faq-title">Got questions?</h2>
+        <p class="lead">Clear, honest answers about how Med Assist works.</p>
+      </div>
+      <div class="faq-grid">
+        <aside class="help-card">
+          <span class="sq" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3zM3 19a2 2 0 0 0 2 2h1v-6H3z"/></svg></span>
+          <h3>Still have questions? We are here to help.</h3>
+          <p>For non-urgent questions about membership, service scope or onboarding.</p>
+          <div class="links">
+            <a href="mailto:help@medassist247.com">help@medassist247.com</a>
+            <a href="https://wa.me/447947455118">WhatsApp: +44 7947 455 118</a>
+          </div>
+        </aside>
+        <div class="acc">
+          <details open><summary>Are you an insurance company?</summary><p>No. MedAssist247 is a medical assistance membership programme, not insurance. Membership provides access to assistance services and coordination rather than reimbursement of medical expenses.</p></details>
+          <details><summary>What does membership provide?</summary><p>Access to the Global SOS Centre and our worldwide coordination network: liaison with hospitals and healthcare providers, assessment of medical transport needs, coordination of a medically necessary return home, and support and communication with family members.</p></details>
+          <details><summary>Do I still need travel insurance?</summary><p>We do not replace insurance; we provide something different: help without hesitation. Some members choose to hold insurance separately, but Med Assist operates independently of insurance products.</p></details>
+          <details><summary>What does 50 miles from home mean?</summary><p>Assistance applies when the member is located more than 50 miles (80 kilometres) from their registered residence at the time of the incident.</p></details>
+          <details><summary>Can a person join mid-trip, or is it only pre-booking?</summary><p>Membership cannot be purchased or activated for an incident that has already occurred or is already in progress. Unless otherwise specified, membership becomes active 48 hours after purchase.</p></details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sos-band" id="contact" aria-labelledby="sos-title">
+    <div class="container">
+      <div class="sos-box">
+        <div class="sos-left">
+          <span class="sq" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l9 4v6c0 5-3.8 9-9 10-5.2-1-9-5-9-10V6z"/><path d="M12 8v8M8 12h8"/></svg></span>
+          <h3 id="sos-title">Need help now?</h3>
+          <p>If you or someone with you has become ill or injured while away from home, contact us.</p>
+        </div>
+        <div class="sos-right">
+          <span class="eyebrow">Emergency SOS Helpline</span>
+          <a class="num" href="tel:+442036422190"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>+44 (0) 203 642 2190</a>
+          <p>Available 24 hours a day, 7 days a week, 365 days a year.</p>
+          <a class="wa" href="https://wa.me/447947455118">WhatsApp: +44 7947 455 118</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="strip">
+  <div class="container">
+    <p class="stmt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7 12l3.5 3.5L17 9"/></svg>Accidents, illness and injury can happen anywhere. MedAssist247 can get you home.</p>
+    <a class="btn btn-white btn-lg" href="#memberships">View Membership Plans</a>
+  </div>
+</div>
+<footer class="footer">
+  <div class="container grid">
+    <div class="fbrand">
+      <img src="../assets/10fa85750a.png" width="616" height="609" alt="Med Assist" loading="lazy">
+      <p>A membership-based medical assistance programme providing coordinated clinical support to help you return home safely.</p>
+    </div>
+    <div>
+      <h4>Navigation</h4>
+      <ul><li><a href="#how">How It Works</a></li><li><a href="#memberships">Memberships</a></li><li><a href="#about">About</a></li><li><a href="#">Blogs</a></li><li><a href="#contact">Contact</a></li></ul>
+    </div>
+    <div>
+      <h4>Legal &amp; Policy</h4>
+      <ul><li><a href="#">Terms of Service</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Medical Disclaimer</a></li><li><a href="#">Website Disclaimer</a></li><li><a href="#">Code of Conduct</a></li></ul>
+    </div>
+    <div>
+      <h4>SOS Centre</h4>
+      <a class="big" href="tel:+442036422190">+44 (0) 203 642 2190</a>
+      <p class="small">Worldwide coverage for members travelling 50+ miles from home</p>
+      <ul><li><a href="mailto:help@medassist247.com">help@medassist247.com</a></li></ul>
+    </div>
+  </div>
+  <div class="bottom">
+    <div class="container">
+      <span>© 2026 Med Assist 24/7. All rights reserved.</span>
+      <span>Membership programme, not insurance.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){var b=document.getElementById('burger'),n=document.getElementById('nav');b.addEventListener('click',function(){var o=n.classList.toggle('open');b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Close menu':'Open menu');});n.addEventListener('click',function(e){if(e.target.tagName==='A'){n.classList.remove('open');b.setAttribute('aria-expanded','false');}});})();
+</script>
+</body>
+</html>
+
+```

@@ -1,0 +1,11 @@
+```json
+{"strongestAsset": {"path": "assets/1945590bfa.png", "reason": "The full-width hero image (a coordinator at a live case-tracking screen with an air ambulance jet behind) is visibly rendered in the screenshot and tells the whole 24/7 coordination story at a glance; it just needs a lighter overlay so the jet and screens show."},
+ "issues": [
+  {"severity": "high", "category": "content", "title": "Membership offer and price never shown up front", "detail": "The hero sells a feeling ('Neither do we.') but never says what a membership covers, who it is for or what it costs, so 'Become A Member' asks for commitment without an offer."},
+  {"severity": "medium", "category": "structure", "title": "Logo is an unreadable badge", "detail": "The circular logo crams a plane, star of life, phone number and small print into a 110px disc on a blue bar; none of the text is legible and it looks dated next to the modern hero."},
+  {"severity": "medium", "category": "structure", "title": "Heavy dark overlay hides the hero photo", "detail": "The coordination room and air ambulance are darkened to near-black, and a faded 'MED ASSIST 247' watermark and wide italic display type add noise instead of clarity."},
+  {"severity": "medium", "category": "mobile", "title": "Long mobile page of near-identical icon rows", "detail": "On phones the 'What we provide' list becomes about a dozen stacked icon + title + text blocks with no images or grouping, making the page very long and hard to scan."},
+  {"severity": "low", "category": "content", "title": "Emergency number and SOS action compete with sign-up", "detail": "The phone number, a floating red SOS button and two hero buttons all ask for different actions, so the path for a prospective member versus someone in an emergency is unclear."}
+ ],
+ "vertical": {"key": "travel-medical-assistance", "label": "Medical Assistance", "register": "The buyer is a traveller or family deciding whether this membership looks credible and capable enough to trust with getting them home safely after illness or injury abroad, judged against travel medical assistance and air ambulance membership providers rather than ordinary travel insurance comparison sites."}}
+```

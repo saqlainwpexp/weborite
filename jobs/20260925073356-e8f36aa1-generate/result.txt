@@ -1,0 +1,478 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GenXe (SMC-Pvt) Ltd | Website Development Company in Lahore</title>
+<meta name="description" content="GenXe (SMC-Pvt) Ltd is a creative digital agency in Lahore for website development, ecommerce development, digital marketing, graphic design and web hosting. 2,005 projects done.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="../assets/b6a18ebbd4.webp">
+<style>
+:root{--primary:#8b0903;--accent:#ca2a23;--ink:#1d1b1b;--body:#5f6770;--surface:#ffffff;--surface-alt:#f8f4f4;--footer:#3a0402;--radius-btn:8px;--radius-card:20px;--radius-img:10px;--container:1280px;--gutter:32px;--section-y:100px;
+  --tint:#fbeeee;--deep:#5c0602;--line:#ecdede}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Manrope',sans-serif;font-size:16px;line-height:1.81;color:var(--body);background:var(--surface);overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+p{margin:0}
+.container{max-width:var(--container);padding:0 var(--gutter);margin:0 auto}
+.container>*{min-width:0}
+section{padding:var(--section-y) 0}
+.eyebrow{display:inline-block;font-size:14px;font-weight:700;line-height:2.07;padding:2px 15px;border-radius:30px;background:var(--tint);color:var(--primary);margin-bottom:16px}
+.on-dark .eyebrow{background:rgba(255,255,255,.12);color:#fff}
+h1,h2,h3,h4{font-family:'Manrope',sans-serif;margin:0;overflow-wrap:break-word}
+h1,.display{font-size:64px;font-weight:600;line-height:1.1;letter-spacing:-3px;color:#fff}
+h2{font-size:42px;font-weight:600;line-height:1.1;letter-spacing:-1.25px;color:var(--ink);margin:0 0 20px}
+h2 em{font-style:normal;color:var(--primary)}
+.on-dark h2{color:#fff}
+.on-dark h2 em{color:#ffb3ae}
+h3{font-size:24px;font-weight:600;line-height:1.4;color:var(--ink)}
+h4{font-size:20px;font-weight:700;line-height:1.3;color:var(--ink);margin:0 0 10px}
+.lead{font-size:18px;line-height:1.78;letter-spacing:-.2px;color:var(--body);max-width:600px;margin:0 auto}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:5px 25px;border-radius:var(--radius-btn);font-size:15px;font-weight:700;background:var(--primary);color:#fff;text-decoration:none;border:0;cursor:pointer;font-family:inherit;transition:background .2s}
+.btn:hover{background:var(--deep)}
+.btn-accent{background:var(--accent)}
+.btn-accent:hover{background:var(--primary)}
+.btn-ghost{background:rgba(255,255,255,.1);color:#fff}
+.btn-light{background:#fff;color:var(--primary)}
+.btn-light:hover{background:var(--tint)}
+.btn-lg{min-height:54px;padding:10px 30px;font-size:16px}
+.card{border-radius:var(--radius-card);overflow:hidden;background:var(--surface-alt)}
+.card-body{padding:40px}
+.skip{position:absolute;left:-999px;top:0;background:#fff;color:var(--primary);padding:10px 16px;z-index:100}
+.skip:focus{left:12px;top:12px}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* header over hero */
+.topbar{position:absolute;top:0;left:0;right:0;z-index:20;font-size:14px;color:#f3d6d4;border-bottom:1px solid rgba(255,255,255,.12)}
+.topbar .container{display:flex;justify-content:space-between;align-items:center;min-height:40px;gap:16px}
+.topbar a{color:#fff;text-decoration:none}
+.topbar .tb-left{display:flex;gap:26px}
+.site-header{position:absolute;top:41px;left:0;right:0;z-index:20}
+.site-header .container{display:flex;align-items:center;justify-content:space-between;min-height:96px;gap:24px}
+.logo img{width:96px;height:auto}
+.nav{display:flex;align-items:center;gap:34px}
+.nav a{color:#fff;text-decoration:none;font-size:15px;font-weight:600;padding:10px 0;position:relative}
+.nav a:hover::after,.nav a[aria-current]::after{content:'';position:absolute;left:0;right:0;bottom:4px;height:2px;background:#fff;opacity:.8}
+.head-cta{display:flex;align-items:center;gap:14px}
+.burger{display:none;width:48px;height:48px;border-radius:var(--radius-btn);border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);color:#fff;cursor:pointer;place-items:center}
+.burger svg{width:24px;height:24px}
+
+/* hero */
+.hero{position:relative;min-height:900px;display:flex;flex-direction:column;justify-content:flex-end;padding:0;color:#fff;background:#1b0605 url('../assets/b6a18ebbd4.webp') center/cover no-repeat;isolation:isolate}
+.hero::before{content:'';position:absolute;inset:0;background:url('../assets/a61dfbe748.webp') center/cover no-repeat;opacity:.82;mix-blend-mode:multiply;z-index:-1}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(27,6,5,.55) 0%,rgba(27,6,5,.35) 45%,rgba(27,6,5,.85) 100%);z-index:-1}
+.hero-main{flex:1;display:flex;align-items:center;padding:190px 0 60px}
+.hero-main .container{text-align:center;width:100%}
+.hero .eyebrow{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25)}
+.hero h1{max-width:900px;margin:0 auto}
+.hero-sub{font-size:24px;font-weight:600;line-height:1.4;color:#fff;max-width:720px;margin:24px auto 36px;letter-spacing:-.3px}
+.hero-sub span{display:block;font-size:17px;font-weight:400;line-height:1.7;color:#f3d6d4;margin-top:12px;letter-spacing:0}
+.hero-stats{display:flex;justify-content:center;gap:40px;margin-top:40px;flex-wrap:wrap}
+.hero-stats div{text-align:center}
+.hero-stats b{display:block;font-size:34px;font-weight:600;letter-spacing:-1px;line-height:1}
+.hero-stats span{font-size:14px;color:#f3d6d4}
+.hero-features{border-top:1px solid rgba(255,255,255,.15)}
+.hero-features .container{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;padding-top:40px;padding-bottom:50px}
+.hf{display:flex;gap:20px;align-items:flex-start}
+.hf .circle{width:80px;height:80px;border-radius:50%;background:var(--accent);display:grid;place-items:center;flex:none;color:#fff}
+.hf .circle svg{width:34px;height:34px}
+.hf h3{color:#fff;font-size:20px;font-weight:700;line-height:1.3;margin:6px 0 6px}
+.hf p{font-size:15px;line-height:1.6;color:#f3d6d4}
+
+/* about */
+.about .container{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:80px;align-items:center}
+.about-media{position:relative}
+.about-media img{width:100%;aspect-ratio:607/576;object-fit:cover;border-radius:var(--radius-card)}
+.about-stat{position:absolute;left:28px;bottom:28px;background:#fff;border-radius:var(--radius-img);box-shadow:0 20px 50px rgba(58,4,2,.18);padding:22px 26px}
+.about-stat b{display:block;font-size:56px;font-weight:600;letter-spacing:-2px;line-height:1;color:var(--primary)}
+.about-stat span{font-size:16px;color:var(--ink);font-weight:600}
+.about p.body{margin-bottom:28px}
+.feature{display:flex;gap:20px;align-items:flex-start;padding:24px;border-radius:var(--radius-img);background:var(--surface-alt);margin-bottom:28px}
+.feature .tile{width:80px;height:80px;border-radius:var(--radius-img);background:var(--tint);color:var(--primary);display:grid;place-items:center;flex:none}
+.feature .tile svg{width:34px;height:34px}
+.feature p{font-size:15px;line-height:1.7}
+.checks{list-style:none;padding:0;margin:0 0 34px;display:grid;grid-template-columns:1fr 1fr;gap:14px 24px}
+.checks li{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:1.6;color:var(--ink);font-weight:600}
+.checks li::before{content:'';flex:none;width:22px;height:22px;border-radius:50%;margin-top:1px;background:var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/12px no-repeat}
+.about-actions{display:flex;flex-wrap:wrap;align-items:center;gap:24px}
+.about-actions .mini{display:flex;gap:28px}
+.about-actions .mini b{display:block;font-size:24px;font-weight:700;color:var(--ink);line-height:1.1}
+.about-actions .mini span{font-size:13px}
+
+/* services */
+.services{padding-top:0;background:var(--surface-alt)}
+.svc-band{background:#1b0605;background-image:linear-gradient(rgba(58,4,2,.86),rgba(58,4,2,.86)),url('../assets/624d891d37.webp');background-size:cover;background-position:center;padding:100px 0 190px}
+.svc-band .container{display:flex;justify-content:space-between;align-items:flex-end;gap:40px}
+.svc-band p{color:#f3d6d4;max-width:560px}
+.round-arrows{display:flex;gap:12px}
+.round-arrows span{width:54px;height:54px;border-radius:50%;border:1px solid rgba(255,255,255,.4);display:grid;place-items:center;color:#fff}
+.round-arrows span:last-child{background:#fff;color:var(--primary);border-color:#fff}
+.round-arrows svg{width:20px;height:20px}
+.svc-cards{margin-top:-130px}
+.svc-cards .container{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.svc{background:#fff;border-radius:var(--radius-card);overflow:hidden;box-shadow:0 20px 50px rgba(58,4,2,.08);position:relative;display:flex;flex-direction:column}
+.svc::after{content:'';position:absolute;top:40px;bottom:40px;right:0;width:5px;background:var(--accent);border-radius:3px 0 0 3px}
+.svc img{width:100%;aspect-ratio:3/2;object-fit:cover}
+.svc .badge{width:64px;height:72px;background:var(--accent);clip-path:polygon(50% 0,100% 38%,100% 100%,0 100%,0 38%);display:grid;place-items:end center;padding-bottom:12px;color:#fff;margin:-40px 0 0 40px;position:relative;z-index:1}
+.svc .badge svg{width:26px;height:26px}
+.svc .card-body{padding:22px 40px 40px;display:flex;flex-direction:column;flex:1}
+.svc h3{font-size:22px;margin-bottom:10px}
+.svc p{margin-bottom:26px}
+.svc .btn{margin-top:auto;align-self:flex-start;background:var(--tint);color:var(--primary)}
+.svc .btn:hover{background:var(--primary);color:#fff}
+.svc-more{text-align:center;margin-top:44px}
+
+/* process */
+.process-head .container{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:60px;align-items:end}
+.process-head{padding-bottom:50px}
+.process-band{position:relative;background:#1b0605;background-image:linear-gradient(rgba(27,6,5,.78),rgba(27,6,5,.9)),url('../assets/9e9648ee70.webp');background-size:cover;background-position:center;color:#fff;padding:0}
+.process-band ol{list-style:none;margin:0 auto;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.process-band li{border-left:1px solid rgba(255,255,255,.2);padding:220px 28px 56px;display:flex;flex-direction:column;justify-content:flex-end}
+.process-band li:last-child{border-right:1px solid rgba(255,255,255,.2)}
+.process-band .num{font-size:100px;font-weight:700;line-height:1;letter-spacing:-4px;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.75);margin-bottom:18px}
+.process-band h3{color:#fff;font-size:20px;font-weight:700;line-height:1.35}
+
+/* cta tiles */
+.cta .container{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0}
+.cta-tile{display:flex;gap:22px;align-items:flex-start;padding:48px;text-decoration:none;min-height:230px;transition:transform .2s}
+.cta-tile:hover{transform:translateY(-4px)}
+.cta-a{background:var(--accent);color:#fff;border-radius:var(--radius-card) 0 0 var(--radius-card)}
+.cta-b{background:var(--footer);color:#fff;border-radius:0 var(--radius-card) var(--radius-card) 0}
+.cta-tile .ico{width:56px;height:56px;flex:none}
+.cta-tile h3{color:#fff;font-size:36px;letter-spacing:-1px;line-height:1.1;margin-bottom:10px}
+.cta-tile p{color:#fff;opacity:.92}
+.cta-tile .go{margin-left:auto;align-self:flex-end;width:52px;height:52px;border-radius:50%;border:2px solid #fff;display:grid;place-items:center;flex:none}
+.cta-tile .go svg{width:20px;height:20px}
+
+/* service word strip */
+.strip{background:#1b0605;padding:26px 0;overflow:hidden}
+.strip-track{display:flex;gap:34px;width:max-content;animation:scroll 32s linear infinite}
+.strip:hover .strip-track{animation-play-state:paused}
+.word{display:flex;align-items:center;gap:34px;white-space:nowrap;font-size:28px;font-weight:700;letter-spacing:-.5px;text-transform:uppercase;color:#fff}
+.word::before{content:attr(data-name)}
+.word::after{content:'✦';color:var(--accent);font-size:22px}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.strip-track{animation:none}.cta-tile,.btn{transition:none}}
+
+/* footer */
+.footer{background:var(--footer);color:#e8b4b0;padding:80px 0 0}
+.footer-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:40px;padding-bottom:60px;border-bottom:1px solid rgba(255,255,255,.12)}
+.f-call{display:flex;align-items:center;gap:18px;color:#fff;text-decoration:none}
+.f-call .ring{width:64px;height:64px;border-radius:50%;background:var(--accent);display:grid;place-items:center;flex:none}
+.f-call .ring svg{width:26px;height:26px}
+.f-call small{display:block;color:#e8b4b0;font-size:15px}
+.f-call b{font-size:28px;font-weight:700;letter-spacing:-.5px}
+.f-quote{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius-card);padding:28px 30px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.f-quote h3{color:#fff;font-size:22px}
+.f-quote p{font-size:15px}
+.footer .grid{display:grid;grid-template-columns:1.3fr 1fr 1fr 1.4fr;gap:44px;padding:60px 0}
+.footer h4{color:#fff;font-size:17px;margin-bottom:16px}
+.footer ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.footer a{color:#e8b4b0;text-decoration:none;display:inline-flex;align-items:center;min-height:36px}
+.footer a:hover{color:#fff}
+.footer .flogo img{width:88px;height:auto;margin-bottom:18px}
+.footer .office{margin-bottom:14px;font-size:15px;line-height:1.6}
+.footer .office b{color:#fff;display:block}
+.socials{display:flex;gap:10px;margin-top:18px}
+.socials a{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.25);justify-content:center}
+.socials svg{width:18px;height:18px}
+.footer .bottom{border-top:1px solid rgba(255,255,255,.12)}
+.footer .bottom .container{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;padding-top:20px;padding-bottom:20px;font-size:14px}
+
+@media (max-width:1100px){
+  .nav{gap:22px}
+  .head-cta .btn{display:none}
+}
+@media (max-width:960px){
+  .burger{display:grid}
+  .nav{display:none;position:absolute;top:100%;left:var(--gutter);right:var(--gutter);flex-direction:column;align-items:stretch;gap:0;background:#fff;border-radius:var(--radius-img);padding:8px 20px 14px;box-shadow:0 20px 40px rgba(0,0,0,.25)}
+  .nav.open{display:flex}
+  .nav a{color:var(--ink);min-height:44px;border-bottom:1px solid var(--line)}
+  .nav a:hover::after,.nav a[aria-current]::after{display:none}
+  .about .container,.process-head .container,.footer-top{grid-template-columns:minmax(0,1fr);gap:44px}
+  .svc-cards .container{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .hero-features .container{grid-template-columns:minmax(0,1fr)}
+  .process-band ol{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .process-band li{padding-top:120px;border-bottom:1px solid rgba(255,255,255,.2)}
+  .footer .grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  :root{--section-y:64px;--gutter:20px}
+  h1,.display{font-size:40px;letter-spacing:-1.5px}h2{font-size:32px;letter-spacing:-.8px}
+  .topbar .tb-right{display:none}
+  .topbar .tb-left{gap:16px;font-size:13px}
+  .site-header .container{min-height:84px}
+  .logo img{width:76px}
+  .hero{min-height:0}
+  .hero-main{padding:150px 0 40px}
+  .hero-sub{font-size:19px}
+  .hero-stats{gap:24px}
+  .hero-stats b{font-size:28px}
+  .hf .circle{width:60px;height:60px}
+  .hf .circle svg{width:26px;height:26px}
+  .about-stat{left:14px;bottom:14px;padding:14px 18px}
+  .about-stat b{font-size:40px}
+  .checks{grid-template-columns:1fr}
+  .svc-band{padding:64px 0 150px}
+  .svc-band .container{flex-direction:column;align-items:flex-start}
+  .svc-cards .container{grid-template-columns:minmax(0,1fr)}
+  .svc .card-body{padding:20px 24px 30px}
+  .svc .badge{margin-left:24px}
+  .process-band ol{grid-template-columns:minmax(0,1fr)}
+  .process-band li{padding:40px 20px;border-right:1px solid rgba(255,255,255,.2)}
+  .process-band .num{font-size:64px}
+  .cta .container{grid-template-columns:minmax(0,1fr)}
+  .cta-tile{padding:30px 24px;min-height:0}
+  .cta-a{border-radius:var(--radius-card) var(--radius-card) 0 0}
+  .cta-b{border-radius:0 0 var(--radius-card) var(--radius-card)}
+  .cta-tile h3{font-size:28px}
+  .word{font-size:20px}
+  .f-quote{flex-direction:column;align-items:flex-start}
+  .f-call b{font-size:24px}
+  .footer .grid{grid-template-columns:minmax(0,1fr);gap:32px}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="topbar">
+  <div class="container">
+    <div class="tb-left">
+      <a href="mailto:info@genxe.com.pk">info@genxe.com.pk</a>
+      <a href="tel:+923005624325">0300-5624325</a>
+    </div>
+    <div class="tb-right">Monday - Saturday 10:00 AM - 07:00 PM</div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container">
+    <a class="logo" href="#" aria-label="GenXe (SMC-Pvt) Ltd, home"><img src="../assets/cf2e4eaf90.png" width="368" height="330" alt="GenXe (SMC-Pvt) Ltd"></a>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#" aria-current="page">Home</a>
+      <a href="#services">What We Offer</a>
+      <a href="#about">About Us</a>
+      <a href="#process">How We Work</a>
+      <a href="#contact">Contact Us</a>
+    </nav>
+    <div class="head-cta">
+      <a class="btn btn-light" href="#contact">Get A Free Quote</a>
+      <button class="burger" id="burger" aria-controls="nav" aria-expanded="false" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero on-dark" aria-label="Introduction">
+    <div class="hero-main">
+      <div class="container">
+        <span class="eyebrow">Creative Digital Agency · Lahore</span>
+        <h1>Your dream website, built to grow your business</h1>
+        <p class="hero-sub">Website development, ecommerce and digital marketing from one team.<span>Results-driven strategies, pixel perfect design on every device, and long-term free support even after the project is completed.</span></p>
+        <a class="btn btn-accent btn-lg" href="#contact">Get A Free Quote Now</a>
+        <div class="hero-stats">
+          <div><b>2,005</b><span>Projects Done</span></div>
+          <div><b>7+</b><span>Years Experience</span></div>
+          <div><b>12</b><span>Best Team</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-features">
+      <div class="container">
+        <div class="hf">
+          <span class="circle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3M9 9l-2 2 2 2M15 9l2 2-2 2"/></svg></span>
+          <div><h3>Website Development</h3><p>Built on the latest technologies, for all kinds of business industries.</p></div>
+        </div>
+        <div class="hf">
+          <span class="circle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4h2l2.4 11h11L21 7H6.2"/><circle cx="9" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></svg></span>
+          <div><h3>Ecommerce Development</h3><p>Online stores for small &amp; big businesses.</p></div>
+        </div>
+        <div class="hf">
+          <span class="circle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1zM15 9a3 3 0 0 1 0 6M18 6a7 7 0 0 1 0 12"/></svg></span>
+          <div><h3>Digital Marketing</h3><p>Social media marketing &amp; optimization that expands your reach.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about" aria-labelledby="about-title">
+    <div class="container">
+      <div class="about-media">
+        <img src="../assets/297c3bb987.webp" alt="A GenXe developer writing code across multiple screens" loading="lazy">
+        <div class="about-stat"><b>2,005</b><span>Projects Done</span></div>
+      </div>
+      <div>
+        <span class="eyebrow">About GenXe</span>
+        <h2 id="about-title">Professional Website Development Company in <em>Lahore</em></h2>
+        <p class="body">GenXe (SMC-Pvt) Ltd provides web-based online solutions shaped around each customer's demands and the nature of their business. With our experience in marketing strategies and our work with hosting partners, we offer multiple plans for your products and services.</p>
+        <div class="feature">
+          <span class="tile" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+          <div><h4>Long-term free support</h4><p>Support continues even after the project is completed, because we build long-term relationships.</p></div>
+        </div>
+        <ul class="checks">
+          <li>Pixel perfect all devices responsiveness design</li>
+          <li>In-depth security evaluations &amp; vulnerability assessments</li>
+          <li>Persistent performance enhancement and monitoring</li>
+          <li>Daily, weekly, and monthly progress reporting</li>
+        </ul>
+        <div class="about-actions">
+          <a class="btn btn-lg" href="#contact">Talk To An Expert</a>
+          <div class="mini"><div><b>7+</b><span>Years Experience</span></div><div><b>12</b><span>Best Team</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" id="services" aria-labelledby="services-title">
+    <div class="svc-band on-dark">
+      <div class="container">
+        <div>
+          <span class="eyebrow">What We Do</span>
+          <h2 id="services-title">Our <em>services</em></h2>
+          <p>Website development, ecommerce, digital marketing and graphic designing, plus SSL, RDP, domain registration and web hosting.</p>
+        </div>
+        <div class="round-arrows" aria-hidden="true">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </div>
+      </div>
+    </div>
+    <div class="svc-cards">
+      <div class="container">
+        <article class="svc">
+          <img src="../assets/1ee0282e4a.jpg" alt="Web development concept with code and interface icons" loading="lazy">
+          <span class="badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4"/></svg></span>
+          <div class="card-body">
+            <h3>Website Development</h3>
+            <p>A leading website development company in Lahore, working on various latest technologies.</p>
+            <a class="btn" href="#contact">Learn More<span class="sr-only"> about Website Development</span></a>
+          </div>
+        </article>
+        <article class="svc">
+          <img src="../assets/1c1c59405e.jpg" alt="Shopping cart beside a tablet showing an ecommerce website" loading="lazy">
+          <span class="badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h2l2.4 11h11L21 7H6.2"/><circle cx="9" cy="19" r="1.3"/><circle cx="17" cy="19" r="1.3"/></svg></span>
+          <div class="card-body">
+            <h3>Ecommerce Development</h3>
+            <p>Our ecommerce developers have been serving small &amp; big businesses.</p>
+            <a class="btn" href="#contact">Learn More<span class="sr-only"> about Ecommerce Development</span></a>
+          </div>
+        </article>
+        <article class="svc">
+          <img src="../assets/43ef9f87c9.jpg" alt="Laptop showing a digital marketing dashboard" loading="lazy">
+          <span class="badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg></span>
+          <div class="card-body">
+            <h3>Digital Marketing</h3>
+            <p>The ultimate solution to all of your digital problems.</p>
+            <a class="btn" href="#contact">Learn More<span class="sr-only"> about Digital Marketing</span></a>
+          </div>
+        </article>
+      </div>
+      <p class="svc-more"><a class="btn btn-accent" href="#contact">See All Services</a></p>
+    </div>
+  </section>
+
+  <section class="process-head" id="process" aria-labelledby="process-title">
+    <div class="container">
+      <div>
+        <span class="eyebrow">How We Work</span>
+        <h2 id="process-title">Built right, then <em>looked after</em></h2>
+      </div>
+      <p class="lead" style="margin:0">Every project comes with the same standards: a responsive design, security checks, ongoing performance work and regular progress reports, backed by a long-term relationship.</p>
+    </div>
+  </section>
+  <div class="process-band">
+    <div class="container">
+      <ol>
+        <li><span class="num" aria-hidden="true">01</span><h3>Pixel perfect design on all devices</h3></li>
+        <li><span class="num" aria-hidden="true">02</span><h3>In-depth security evaluations</h3></li>
+        <li><span class="num" aria-hidden="true">03</span><h3>Performance enhancement &amp; monitoring</h3></li>
+        <li><span class="num" aria-hidden="true">04</span><h3>Daily, weekly, and monthly reporting</h3></li>
+      </ol>
+    </div>
+  </div>
+
+  <section class="cta" id="contact" aria-label="Get in touch">
+    <div class="container">
+      <a class="cta-tile cta-a" href="tel:+923005624325">
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M42 33.8v6a4 4 0 0 1-4.4 4A39.6 39.6 0 0 1 4.2 10.4 4 4 0 0 1 8.2 6h6a4 4 0 0 1 4 3.4c.3 2 .8 3.8 1.5 5.6a4 4 0 0 1-.9 4.2L16 21.8a32 32 0 0 0 12 12l2.6-2.6a4 4 0 0 1 4.2-.9c1.8.7 3.6 1.2 5.6 1.5a4 4 0 0 1 3.6 4z"/></svg>
+        <div><h3>Talk To An Expert</h3><p>Call +92 300-5624325</p></div>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="cta-tile cta-b" href="mailto:info@genxe.com.pk?subject=Proposal%20request">
+        <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M28 6H12a4 4 0 0 0-4 4v28a4 4 0 0 0 4 4h24a4 4 0 0 0 4-4V18z"/><path d="M28 6v12h12M16 26h16M16 33h10"/></svg>
+        <div><h3>Send Me A Proposal</h3><p>Share your project details and get a free quote.</p></div>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </section>
+
+  <div class="strip" role="img" aria-label="Services: Website Development, Ecommerce Development, Digital Marketing, Social Media Marketing, Graphic Designing, Domain Registration, Web Hosting">
+    <div class="strip-track" aria-hidden="true">
+      <span class="word" data-name="Website Development"></span><span class="word" data-name="Ecommerce Development"></span><span class="word" data-name="Digital Marketing"></span><span class="word" data-name="Social Media Marketing"></span><span class="word" data-name="Graphic Designing"></span><span class="word" data-name="Domain Registration"></span><span class="word" data-name="Web Hosting"></span>
+      <span class="word" data-name="Website Development"></span><span class="word" data-name="Ecommerce Development"></span><span class="word" data-name="Digital Marketing"></span><span class="word" data-name="Social Media Marketing"></span><span class="word" data-name="Graphic Designing"></span><span class="word" data-name="Domain Registration"></span><span class="word" data-name="Web Hosting"></span>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <a class="f-call" href="tel:+923005624325">
+        <span class="ring" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></span>
+        <span><small>Phone Number</small><b>+92 300-5624325</b></span>
+      </a>
+      <div class="f-quote">
+        <div><h3>Get A Free Quote Now</h3><p>Let the experts build your project.</p></div>
+        <a class="btn btn-light" href="mailto:info@genxe.com.pk">Request a quote</a>
+      </div>
+    </div>
+    <div class="grid">
+      <div>
+        <span class="flogo"><img src="../assets/cf2e4eaf90.png" width="368" height="330" alt="GenXe" loading="lazy"></span>
+        <p>An initiative for excellence in web designing and development services for all kinds of business industries.</p>
+        <div class="socials">
+          <a href="#" aria-label="GenXe on Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H8v4h2v8h4v-8h3l1-4h-4V8z"/></svg></a>
+          <a href="#" aria-label="GenXe on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg></a>
+          <a href="#" aria-label="GenXe on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 9h4v11H4zM6 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM10 9h4v1.6c.6-1 1.9-1.9 3.6-1.9 3.2 0 4.4 2 4.4 5.2V20h-4v-5.4c0-1.5-.3-2.8-1.9-2.8s-2.1 1.2-2.1 2.8V20h-4z"/></svg></a>
+          <a href="#" aria-label="GenXe on YouTube"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 8.2a3 3 0 0 0-2.1-2.1C18 5.6 12 5.6 12 5.6s-6 0-7.9.5A3 3 0 0 0 2 8.2 31 31 0 0 0 1.6 12 31 31 0 0 0 2 15.8a3 3 0 0 0 2.1 2.1c1.9.5 7.9.5 7.9.5s6 0 7.9-.5a3 3 0 0 0 2.1-2.1c.4-1.2.4-3.8.4-3.8s0-2.6-.4-3.8zM10 15V9l5 3z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul><li><a href="#about">About Us</a></li><li><a href="#">Blogs</a></li><li><a href="#">Business Portfolio</a></li><li><a href="#">Ecommerce Portfolio</a></li><li><a href="#">Careers</a></li><li><a href="#">Client Login</a></li></ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul><li><a href="#services">Website Development</a></li><li><a href="#services">E-Commerce Development</a></li><li><a href="#services">Digital Marketing</a></li><li><a href="#services">Business Web Hosting</a></li><li><a href="#">Submit Ticket</a></li></ul>
+      </div>
+      <div>
+        <h4>We Are Located At</h4>
+        <p class="office"><b>Pakistan · Head Office</b>Office # 36-37F, First Floor, Gulberg Center, 84-D1, Main Boulevard, Gulberg 3, Lahore.</p>
+        <p class="office"><b>United Kingdom</b>46 Sidcup High Street, London, United kingdom, DA14 6EH.</p>
+        <p class="office"><b>UAE</b>Ontario Tower, Business Bay, Dubai, UAE</p>
+      </div>
+    </div>
+  </div>
+  <div class="bottom">
+    <div class="container">
+      <span>Copyright © 2025 GenXe (SMC-Pvt) Ltd. All Rights Reserved.</span>
+      <span>Office Hours: Monday - Saturday 10:00 AM - 07:00 PM</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){var b=document.getElementById('burger'),n=document.getElementById('nav');b.addEventListener('click',function(){var o=n.classList.toggle('open');b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Close menu':'Open menu');});n.addEventListener('click',function(e){if(e.target.tagName==='A'){n.classList.remove('open');b.setAttribute('aria-expanded','false');}});})();
+</script>
+</body>
+</html>
+
+```

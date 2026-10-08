@@ -1,0 +1,11 @@
+```json
+{"strongestAsset": {"path": "assets/c337c8b971.jpg", "reason": "Full-width above-the-fold hero photo: the whole team standing in front of their branded service vans is real, authentic proof of a sizeable local installer, currently wasted under a heavy blue overlay and text."},
+ "issues": [
+  {"severity": "high", "category": "structure", "title": "Hero is a wall of centred text", "detail": "The first screen is a long company-name headline plus a four-line paragraph, with no clear value proposition or single primary action, and the text hides the team photo behind it."},
+  {"severity": "high", "category": "content", "title": "Red 'hard to reach' notice dominates the hero", "detail": "The most prominent element above the fold is a red box saying the company is hard to reach by phone, which undermines trust and competes with the call-to-action buttons."},
+  {"severity": "medium", "category": "structure", "title": "Three equal CTAs, dated button style", "detail": "Phone, quote and contact buttons have equal weight and clip-art-style icons in orange pills, so the quote request doesn't stand out as the main action."},
+  {"severity": "medium", "category": "content", "title": "Strong proof buried below the fold", "detail": "The 4.9-star Google rating (264 reviews) and '5,000+ installations' are the best trust signals but only appear after the hero, as a plain Google logo and body copy."},
+  {"severity": "low", "category": "structure", "title": "Cluttered navigation and long text-heavy mobile page", "detail": "Nine top-level menu items (incl. Downloads, Vacatures) crowd the header, and the mobile page is a long run of text blocks with few images breaking it up."}
+ ],
+ "vertical": {"key": "hvac-installer", "label": "Airco Installer", "register": "The buyer needs an air conditioning unit installed or repaired and is judging whether this local firm looks certified, professional and quick to respond, next to other local HVAC and climate-control installers and service companies rather than large manufacturers."}}
+```
