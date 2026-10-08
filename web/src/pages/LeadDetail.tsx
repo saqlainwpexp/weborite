@@ -2,22 +2,23 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import {
   AlertTriangle, ArrowRight, ArrowUpRight, Blocks, Check, CheckCircle2, ChevronDown, Clock, Copy, Download, ExternalLink,
-  FileOutput, Globe, Image as ImageIcon, Info, Layers, Loader2, Mail, MessageCircle, Monitor, PanelsTopLeft, RefreshCw, Rocket, Smartphone, Sparkles, Star, StickyNote,
+  FileOutput, Globe, Image as ImageIcon, Info, Layers, Loader2, Mail, MessageCircle, Monitor, PanelsTopLeft, RefreshCw, Rocket, Send, Smartphone, Sparkles, Star, StickyNote,
   Target, Trash2, Users, Wand2, Wrench, X, XCircle,
 } from "lucide-react";
-import { STEPS, type LeadDetail as Detail, type StepKey } from "../../../shared/types";
+import { LEAD_TEMP, STEPS, type LeadDetail as Detail, type StepKey } from "../../../shared/types";
 import { workspaceEnabled } from "../../../shared/features";
 import type { LayoutCtx } from "../layout/Layout";
 import { api, duration, fileUrl, host, shortDate, timeAgo, usePoll } from "../lib/api";
-import { EventIcon, StatusPill, StepIcon } from "../components/ui";
+import { StatusPill, StepIcon } from "../components/ui";
 import { DEFAULT_PAGES } from "../components/builds";
 
 type View = "desktop" | "mobile";
-type Tab = "overview" | "redesign" | "seo" | "competitors" | "close";
+type Tab = "overview" | "redesign" | "outreach" | "seo" | "competitors" | "close";
 
 const TABS: { key: Tab; label: string; icon: React.ReactNode }[] = [
   { key: "overview", label: "Overview", icon: <Layers /> },
   { key: "redesign", label: "Redesign", icon: <Wand2 /> },
+  { key: "outreach", label: "Outreach", icon: <Send /> },
   { key: "seo", label: "SEO audit", icon: <Globe /> },
   { key: "competitors", label: "Competitors", icon: <Users /> },
   { key: "close", label: "How to close", icon: <Target /> },
@@ -35,10 +36,10 @@ function useWidth<T extends HTMLElement>() {
   return [ref, w] as const;
 }
 
-function Viewport({ view, children }: { view: View; children: (scale: number) => React.ReactNode }) {
+function Viewport({ view, height, children }: { view: View; height?: number; children: (scale: number) => React.ReactNode }) {
   const [ref, w] = useWidth<HTMLDivElement>();
   return (
-    <div className={`viewport ${view}`}>
+    <div className={`viewport ${view}`} style={height ? { height } : undefined}>
       <div className="scroller" ref={ref}>{w > 0 && children(w / 1440)}</div>
     </div>
   );
@@ -51,7 +52,7 @@ function Empty({ icon, text }: { icon: React.ReactNode; text: string }) {
 export default function LeadDetail() {
   const { id = "" } = useParams();
   const nav = useNavigate();
-  const { events, reloadAll } = useOutletContext<LayoutCtx>();
+  const { reloadAll } = useOutletContext<LayoutCtx>();
   const { data: lead, error, reload } = usePoll<Detail>(`/api/leads/${id}`, 3000);
   const [view, setView] = useState<View>("desktop");
   const [tab, setTab] = useState<Tab>("overview");
@@ -72,12 +73,22 @@ export default function LeadDetail() {
   const [reviseBusy, setReviseBusy] = useState(false);
   const [reviseErr, setReviseErr] = useState<string | null>(null);
 
-  // Outreach email — drafted after the gate, regenerated on demand.
-  const [pitchOpen, setPitchOpen] = useState(false);
+  // Outreach email — drafted after the gate, regenerated on demand, shown in the Outreach tab.
   const [pitch, setPitch] = useState<{ subject: string; body: string } | null>(null);
   const [pitchBusy, setPitchBusy] = useState(false);
   const [pitchErr, setPitchErr] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const pitchInit = useRef(false);
+  // Sending the email over SMTP (the configured outreach mailbox).
+  const [attachMockup, setAttachMockup] = useState(true);
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [sendErr, setSendErr] = useState<string | null>(null);
+  const [testing, setTesting] = useState(false);
+  const [testSent, setTestSent] = useState(false);
+  // WhatsApp message (opens wa.me with the text prefilled).
+  const [waText, setWaText] = useState("");
+  const waInit = useRef(false);
 
   // "How to close this lead" — the strategy playbook (shown in its own tab, separate from the email).
   const [play, setPlay] = useState<Detail["playbook"]>(null);
@@ -106,6 +117,15 @@ export default function LeadDetail() {
     setFeedback(lead.feedback ?? "");
     setNotes(lead.notes ?? "");
     setSavedNotes(lead.notes ?? "");
+  }, [lead]);
+
+  // Seed the WhatsApp message once, using the live mockup link when it's published.
+  useEffect(() => {
+    if (waInit.current || !lead) return;
+    waInit.current = true;
+    const who = lead.business || host(lead.url);
+    const link = lead.publish?.url ? ` You can see it here: ${/^https?:\/\//i.test(lead.publish.url) ? lead.publish.url : `https://${lead.publish.url}`}` : "";
+    setWaText(`Hi, I put together a new homepage design for ${who} — I think it'll help you win more customers.${link} Can I send it over?`);
   }, [lead]);
 
   async function saveNotes() {
@@ -166,13 +186,18 @@ export default function LeadDetail() {
   const name = lead.business || host(lead.url);
   const stepMeta = (k: StepKey) => STEPS.find((s) => s.key === k)!;
   const doneSteps = lead.steps.filter((s) => s.status === "done");
-  const lastDone = [...doneSteps].sort((a, b) => (b.finishedAt ?? "").localeCompare(a.finishedAt ?? ""))[0];
   const next = lead.steps.find((s) => s.status !== "done");
   const captured = lead.steps[0].status === "done";
   const brand = lead.diagnosis?.brand;
   const swatches = brand ? [brand.primary, brand.secondary, brand.accent, brand.text].filter(Boolean) as string[] : [];
-  const leadEvents = (events ?? []).filter((e) => e.leadId === lead.id || e.kind === "lead").slice(0, 3);
   const busy = lead.status === "running" || lead.status === "queued";
+
+  // Overview widgets.
+  const gatePass = lead.gate ? lead.gate.checks.filter((c) => c.pass).length : 0;
+  const gateTotal = lead.gate?.checks.length ?? 0;
+  const gateCls = !lead.gate ? "" : gatePass === gateTotal ? "good" : gatePass * 2 >= gateTotal ? "warn" : "bad";
+  const scoreCls = lead.score === undefined ? "" : lead.score >= 70 ? "good" : lead.score >= 45 ? "warn" : "bad";
+  const sourceLabel = lead.source === "meta" ? "Meta Lead Ads" : lead.source === "elementor" ? "Elementor" : lead.source === "maps" ? "Lead Finder (Google Maps)" : "Manual entry";
 
   // Delivery pipeline (Mockup → Build → WordPress → Launch → Maintenance) for the one-click advance card.
   const pipe = lead.pipeline ?? { build: null, conversion: null };
@@ -207,7 +232,7 @@ export default function LeadDetail() {
   }
 
   async function winLead(regenerate = false) {
-    setPitchOpen(true);
+    pitchInit.current = true;
     setPitchErr(null);
     setCopied(false);
     // Show the draft cached after the gate straight away; only call the AI on first draft or regenerate.
@@ -266,11 +291,49 @@ export default function LeadDetail() {
     ? `mailto:${lead.email || ""}?subject=${encodeURIComponent(pitch.subject)}&body=${encodeURIComponent(pitch.body)}`
     : "";
 
-  // One-click WhatsApp: wa.me needs digits only (best effort — strips spaces, dashes and a leading +).
+  // The published live link, and whether it's already in the email body (so we can warn before sending).
+  const liveUrl = lead.publish?.url ? (/^https?:\/\//i.test(lead.publish.url) ? lead.publish.url : `https://${lead.publish.url}`) : "";
+  const linkMissing = Boolean(liveUrl && pitch && !pitch.body.includes(lead.publish!.url) && !pitch.body.includes(liveUrl));
+
+  function insertLiveLink() {
+    if (!pitch || !liveUrl) return;
+    setPitch({ ...pitch, body: `${pitch.body.trimEnd()}\n\nYou can see the new homepage here: ${liveUrl}` });
+  }
+
+  // Keep the Notes card in sync after a contact is logged, but never clobber unsaved edits.
+  function syncNotes(next?: string) {
+    if (next !== undefined && notes === savedNotes) { setNotes(next); setSavedNotes(next); }
+    void reload();
+  }
+
+  async function sendEmail(test = false) {
+    if (!pitch || (!test && !lead!.email)) return;
+    if (!test && linkMissing && !confirm("The live mockup link isn't in the email. Send without it?")) return;
+    const busy = test ? setTesting : setSending;
+    busy(true);
+    setSendErr(null);
+    if (test) setTestSent(false); else setSent(false);
+    try {
+      const r = await api<{ notes?: string }>(`/api/leads/${lead!.id}/send-email`, { method: "POST", json: { subject: pitch.subject, body: pitch.body, attachMockup, test } });
+      if (test) { setTestSent(true); setTimeout(() => setTestSent(false), 4000); }
+      else { setSent(true); setTimeout(() => setSent(false), 4000); syncNotes(r.notes); }
+    } catch (e) {
+      setSendErr((e as Error).message);
+    } finally {
+      busy(false);
+    }
+  }
+
+  async function recordContact(channel: "whatsapp" | "call") {
+    try {
+      const r = await api<{ notes?: string }>(`/api/leads/${lead!.id}/contacted`, { method: "POST", json: { channel } });
+      syncNotes(r.notes);
+    } catch { /* logging contact is best-effort; opening WhatsApp/the dialer still happens */ }
+  }
+
+  // WhatsApp deep link: wa.me needs digits only (strips spaces, dashes and a leading +).
   const waDigits = (lead.phone || "").replace(/[^\d]/g, "");
-  const waHref = waDigits
-    ? `https://wa.me/${waDigits}?text=${encodeURIComponent(`Hi, I put together a new homepage mockup for ${name} — can I send it over?`)}`
-    : "";
+  const waHref = waDigits ? `https://wa.me/${waDigits}?text=${encodeURIComponent(waText)}` : "";
 
   async function remove() {
     if (!confirm(`Delete ${name} and all its files?`)) return;
@@ -329,80 +392,147 @@ export default function LeadDetail() {
             role="tab"
             aria-selected={tab === t.key}
             className={`tab tab-btn${tab === t.key ? " on" : ""}`}
-            onClick={() => { setTab(t.key); if (t.key === "close") void openPlaybook(); }}
+            onClick={() => { setTab(t.key); if (t.key === "close") void openPlaybook(); if (t.key === "outreach" && !pitchInit.current) void winLead(); }}
           >{t.icon}{t.label}</button>
         ))}
       </nav>
 
       <div className="grid-main">
         <div className="stack">
-          {tab === "overview" && (
-          <div className="two">
-            {/* Recent task */}
-            <div className="card task-card">
-              <div className="chips">
-                <span className="chip">{shortDate(lead.createdAt)}{lastDone?.finishedAt ? ` – ${shortDate(lastDone.finishedAt)}` : ""}</span>
-                <span className="chip"><Layers />{doneSteps.length} of {STEPS.length} steps</span>
-                <span className="chip"><span className="dot" />{lastDone ? "Completed" : "Not started"}</span>
-              </div>
-              <div>
-                <h4>{lastDone ? stepMeta(lastDone.key).label : "Recent task"}</h4>
-                <p className="sub">{lastDone ? lastDone.note || stepMeta(lastDone.key).hint : "Nothing has finished yet"}</p>
-              </div>
-              <div className="task-foot">
-                <div className="stack-dots" aria-label="Brand colours">
-                  {swatches.slice(0, 3).map((c) => <span key={c} style={{ background: c }} title={c} />)}
-                  {swatches.length > 3 && <span className="more">+{swatches.length - 3}</span>}
-                  {!swatches.length && <span style={{ background: "var(--chip)" }} />}
+          {tab === "overview" && (<>
+            {/* Key numbers at a glance */}
+            <div className="scores">
+              <div className="score"><b>{doneSteps.length}/{STEPS.length}</b><span>Steps completed</span></div>
+              <div className="score"><b className={gateCls}>{lead.gate ? `${gatePass}/${gateTotal}` : "—"}</b><span>Quality checks passed</span></div>
+              <div className="score"><b className={scoreCls}>{lead.score ?? "—"}</b><span>Lead score{lead.temp ? ` · ${LEAD_TEMP[lead.temp].label}` : ""}</span></div>
+              <div className="score"><b>{lead.rating ? `${lead.rating}/10` : "—"}</b><span>Your rating</span></div>
+            </div>
+
+            <div className="two">
+              {/* Live mockup preview */}
+              <div className="card">
+                <div className="card-head">
+                  <h3 className="card-title" style={{ fontSize: 18 }}><PanelsTopLeft size={18} /> Mockup preview</h3>
+                  <div style={{ display: "flex", gap: 8 }}>
+                    <button className="icon-btn" aria-label="Open the redesign review" title="Open in Redesign" onClick={() => setTab("redesign")}><Monitor /></button>
+                    <a className="icon-btn" aria-label="Open mockup full screen" title="Open full screen" href={fileUrl(lead.id, "mockup/index.html")} target="_blank" rel="noreferrer" style={!lead.hasMockup ? { pointerEvents: "none", opacity: .4 } : undefined}><ArrowUpRight /></a>
+                  </div>
                 </div>
-                {lead.hasSideBySide ? (
-                  <a className="btn btn-ink btn-sm" href={fileUrl(lead.id, "side-by-side.png")} target="_blank" rel="noreferrer">View side-by-side <ArrowRight /></a>
-                ) : (
-                  <button className="btn btn-ink btn-sm" disabled>View side-by-side <ArrowRight /></button>
+                <div style={{ marginTop: 14 }}>
+                  <Viewport view="desktop" height={360}>
+                    {(s) =>
+                      lead.hasMockup ? (
+                        <div className="scale-wrap" style={{ ["--s" as string]: s }}><iframe title="Mockup preview" src={mockupSrc} sandbox="allow-scripts" /></div>
+                      ) : (
+                        <Empty icon={<Clock />} text={busy ? "Claude is building the mockup…" : "The mockup appears here once it's generated."} />
+                      )
+                    }
+                  </Viewport>
+                </div>
+              </div>
+
+              {/* Lead summary */}
+              <div className="card">
+                <div className="card-head">
+                  <h3 className="card-title" style={{ fontSize: 18 }}><Info size={18} /> At a glance</h3>
+                  <div style={{ display: "flex", gap: 8 }}>
+                    {busy && <button className="btn btn-white btn-sm danger" onClick={() => void stop()} title="Stop this run"><X />Stop</button>}
+                    <button className="btn btn-ink btn-sm" onClick={() => run()} disabled={busy || !next}>{busy ? "Running" : next ? "Run now" : "Done"} <ArrowRight /></button>
+                  </div>
+                </div>
+                <dl className="fields">
+                  <div className="field"><dt>Status</dt><dd><StatusPill status={lead.status} /></dd></div>
+                  <div className="field"><dt>Current step</dt><dd>{next ? stepMeta(next.key).label : lead.gate?.pass ? "Done — passed every check" : "All steps complete"}</dd></div>
+                  <div className="field"><dt>Vertical</dt><dd>{lead.benchmarks?.label ?? "Unclassified"}{lead.benchmarks ? ` · ${lead.benchmarks.sites.length} benchmarks` : ""}</dd></div>
+                  <div className="field"><dt>Source</dt><dd>{sourceLabel}</dd></div>
+                  <div className="field"><dt>Email</dt><dd>{lead.email ? <a href={`mailto:${lead.email}`}>{lead.email}</a> : "—"}</dd></div>
+                  <div className="field"><dt>Phone</dt><dd>{lead.phone || "—"}</dd></div>
+                  <div className="field"><dt>Website</dt><dd>{scratch ? "No website · Google listing" : <a href={lead.url} target="_blank" rel="noreferrer">{host(lead.url)}</a>}</dd></div>
+                  <div className="field"><dt>Added</dt><dd>{shortDate(lead.createdAt)} · {timeAgo(lead.createdAt)}</dd></div>
+                  {lead.lastContactedAt && <div className="field"><dt>Last contacted</dt><dd>{timeAgo(lead.lastContactedAt)}</dd></div>}
+                </dl>
+                {swatches.length > 0 && (
+                  <div className="brand-row" style={{ marginTop: 16 }}>
+                    <span className="label-sm" style={{ margin: "0 2px 0 0" }}>Brand</span>
+                    {swatches.map((c) => <span key={c} className="swatch"><i style={{ background: c }} />{c}</span>)}
+                  </div>
                 )}
               </div>
             </div>
 
-            {/* Upcoming task */}
-            <div className="card task-card">
-              <div className="chips">
-                <span className="chip">{timeAgo(lead.createdAt)}</span>
-                <span className="chip"><Users />{lead.benchmarks ? `${lead.benchmarks.sites.length} benchmarks` : "No benchmarks yet"}</span>
-                <span className="chip"><span className="dot" />{next ? (next.status === "running" ? "In progress" : lead.status === "paused" ? "Paused" : next.status === "failed" ? "Failed" : "Up next") : "Done"}</span>
-              </div>
-              <div>
-                <h4>{next ? stepMeta(next.key).label : "All steps complete"}</h4>
-                <p className="sub">{next ? next.note || stepMeta(next.key).hint : lead.gate?.pass ? "Passed every quality check" : "Review the failing checks below"}</p>
-              </div>
-              <div className="task-foot">
-                <div className="stack-dots" aria-label="Benchmark sites">
-                  {(lead.benchmarks?.sites ?? []).slice(0, 3).map((s, i) => (
-                    <span key={s.url} title={s.name} style={{ background: ["#3d3b3c", "#8a6d4f", "#5a8f93"][i] }}>{s.name[0]}</span>
-                  ))}
-                  {(lead.benchmarks?.sites.length ?? 0) > 3 && <span className="more">+{lead.benchmarks!.sites.length - 3}</span>}
-                  {!lead.benchmarks && <span style={{ background: "var(--chip)" }} />}
-                </div>
-                <div style={{ display: "flex", gap: 8 }}>
-                  {busy && (
-                    <button className="btn btn-white btn-sm danger" onClick={() => void stop()} title="Stop this run">
-                      <X /> Stop
-                    </button>
+            <div className={workspaceEnabled("builds") ? "two" : ""}>
+              {workspaceEnabled("builds") && (
+                <div className="card">
+                  <h3 className="card-title" style={{ fontSize: 18 }}><Rocket size={18} /> Delivery pipeline</h3>
+                  <p className="card-sub" style={{ margin: "2px 0 12px" }}>Move this lead to the next stage with one click.</p>
+                  <div className="steps">
+                    {stageList.map((s, i) => {
+                      const prevDone = i === 0 || stageList[i - 1].done;
+                      const state = s.done ? "done" : s.started ? "running" : prevDone ? "next" : "pending";
+                      return (
+                        <div key={s.key} className={`step${state === "running" ? " running" : ""}`}>
+                          <div><b>{s.label}</b><span>{state === "done" ? "Done" : state === "running" ? "In progress" : state === "next" ? "Up next" : "Not started"}</span></div>
+                          <span className="ico">
+                            {s.done ? <CheckCircle2 className="ok" /> : s.started ? <Loader2 className="spin" /> : <span className="dot" style={{ opacity: state === "next" ? 1 : .3 }} />}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div style={{ marginTop: 14 }}>
+                    {nextStep.to ? (
+                      <Link className="btn btn-ink btn-sm" style={{ width: "100%", justifyContent: "center" }} to={nextStep.to}>{nextStep.icon}{nextStep.label}<ArrowRight /></Link>
+                    ) : (
+                      <button className="btn btn-ink btn-sm" style={{ width: "100%", justifyContent: "center" }} onClick={nextStep.onClick} disabled={nextStep.disabled || advBusy}>
+                        {advBusy ? <Loader2 className="spin" /> : nextStep.icon}{nextStep.label}{!nextStep.disabled && <ArrowRight />}
+                      </button>
+                    )}
+                  </div>
+                  {(pipe.build || pipe.conversion) && (
+                    <div className="notif-foot" style={{ marginTop: 10 }}>
+                      <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+                        {pipe.build && <Link className="link-btn" to={`/builds/${pipe.build.id}`}><Blocks size={14} />Open build</Link>}
+                        {pipe.conversion && <Link className="link-btn" to={`/wp/${pipe.conversion.id}`}><PanelsTopLeft size={14} />Open WordPress</Link>}
+                        {buildReady && <Link className="link-btn" to="/care"><Wrench size={14} />Maintenance</Link>}
+                      </div>
+                    </div>
                   )}
-                  <button className="btn btn-ink btn-sm" onClick={() => run()} disabled={busy || !next}>
-                    {busy ? "Running" : next ? "Run now" : "Done"} <ArrowRight />
-                  </button>
                 </div>
+              )}
+
+              <div className="card">
+                <h3 className="card-title" style={{ fontSize: 18 }}>Form entries <ArrowUpRight size={20} strokeWidth={1.6} /></h3>
+                <p className="card-sub">Submitted via {sourceLabel} · {timeAgo(lead.createdAt)}</p>
+                <dl className="fields">
+                  {Object.entries(lead.fields).map(([k, v]) => (
+                    <div key={k} className="field"><dt>{k}</dt><dd>{v || "—"}</dd></div>
+                  ))}
+                </dl>
+                <div style={{ marginTop: 14 }}><StatusPill status={lead.status} /></div>
               </div>
             </div>
-          </div>
-          )}
 
-          {tab === "overview" && (
+            {(lead.diagnosis?.issues?.length || next) && (
+              <div className="card card-lg">
+                <div className="guide">
+                  <h5>{lead.diagnosis?.issues?.length ? `Top issues on ${scratch ? "their listing" : host(lead.url)}` : "What's next"}</h5>
+                  <ul>
+                    {(lead.diagnosis?.issues ?? []).slice(0, 4).map((i, n) => (
+                      <li key={n}><span className={`sev ${i.severity}`} /><div>{i.title}<small>{i.detail}</small></div></li>
+                    ))}
+                    {!lead.diagnosis?.issues?.length && next && (
+                      <li><ArrowRight className="muted" /><div>{stepMeta(next.key).label}<small>{next.note || stepMeta(next.key).hint}</small></div></li>
+                    )}
+                  </ul>
+                </div>
+              </div>
+            )}
+
             <div className="bottom-actions">
               <a className="btn btn-outline" href={lead.url} target="_blank" rel="noreferrer">{scratch ? "Open Google listing" : "Open current site"}</a>
               <a className="btn btn-accent" href={fileUrl(lead.id, "mockup/index.html")} target="_blank" rel="noreferrer" style={!lead.hasMockup ? { pointerEvents: "none", opacity: .5 } : undefined}>Open mockup full screen</a>
             </div>
-          )}
+          </>)}
 
           {tab === "redesign" && (<>
           <div className="review-head">
@@ -506,6 +636,84 @@ export default function LeadDetail() {
           </div>
           </>)}
 
+          {tab === "outreach" && (<>
+            {/* Email */}
+            <div className="card card-lg stack" style={{ gap: 18 }}>
+              <div className="card-head">
+                <div>
+                  <h2 className="section-title">Email {name}</h2>
+                  <p className="card-sub" style={{ margin: "4px 0 0" }}>
+                    {lead.email ? <>Sending to <b>{lead.email}</b>. </> : "No email address on this lead — use WhatsApp below, or add one via the form. "}
+                    A closing email built from this lead's answers, the issues found and the new mockup. Edit anything before you send.
+                  </p>
+                </div>
+                <button type="button" className="btn btn-white btn-sm" onClick={() => winLead(true)} disabled={pitchBusy}>
+                  {pitchBusy ? <Loader2 className="spin" /> : <RefreshCw />}Regenerate
+                </button>
+              </div>
+
+              {pitchBusy && !pitch && <div className="pitch-loading"><Loader2 className="spin" /><span>Writing the email…</span></div>}
+              {pitchErr && !pitchBusy && <div className="banner err" style={{ margin: 0 }}><XCircle /><div>{pitchErr}</div></div>}
+
+              {pitch && (<>
+                <label className="pitch-field">
+                  <span>Subject</span>
+                  <input className="input" value={pitch.subject} onChange={(e) => setPitch({ ...pitch, subject: e.target.value })} />
+                </label>
+                <label className="pitch-field">
+                  <span>Email</span>
+                  <textarea className="input pitch-body" rows={14} value={pitch.body} onChange={(e) => setPitch({ ...pitch, body: e.target.value })} />
+                </label>
+                <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14, color: "var(--text-2)" }}>
+                  <input type="checkbox" checked={attachMockup} onChange={(e) => setAttachMockup(e.target.checked)} disabled={!lead.hasMockup} />
+                  Attach a preview image of the mockup{!lead.hasMockup && " (available once the mockup is ready)"}
+                </label>
+
+                {linkMissing && (
+                  <div className="banner">
+                    <Info />
+                    <div>The live mockup link isn't in this email. <button type="button" className="link-btn" style={{ display: "inline" }} onClick={insertLiveLink}>Add it</button></div>
+                  </div>
+                )}
+                {sendErr && <div className="banner err" style={{ margin: 0 }}><XCircle /><div>{sendErr}</div></div>}
+                {sent && <div className="banner"><CheckCircle2 className="ok" /><div>Email sent to {lead.email}.</div></div>}
+                {testSent && <div className="banner"><CheckCircle2 className="ok" /><div>Test sent to your own address.</div></div>}
+                {!lead.emailReady && (
+                  <p className="card-sub" style={{ margin: 0 }}>
+                    To send directly from the app, set up your outreach mailbox in <Link to="/settings/integrations">Settings → Integrations</Link>. You can still copy the text or open it in your own email app.
+                  </p>
+                )}
+
+                <div className="bottom-actions" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
+                  <button type="button" className="btn btn-white" onClick={() => void copyPitch()}>{copied ? <Check /> : <Copy />}{copied ? "Copied" : "Copy"}</button>
+                  <a className="btn btn-white" href={mailtoHref} style={!lead.email ? { pointerEvents: "none", opacity: .5 } : undefined}><Mail />Open in email app</a>
+                  <button type="button" className="btn btn-white" onClick={() => void sendEmail(true)} disabled={testing || !lead.emailReady} title={!lead.emailReady ? "Set up your outreach mailbox first" : "Send a copy to your own address"}>
+                    {testing ? <Loader2 className="spin" /> : <Send />}{testing ? "Sending…" : "Send test to me"}
+                  </button>
+                  <button type="button" className="btn btn-accent" onClick={() => void sendEmail()} disabled={sending || !lead.email || !lead.emailReady} title={!lead.emailReady ? "Set up your outreach mailbox in Settings → Integrations" : undefined}>
+                    {sending ? <Loader2 className="spin" /> : <Send />}{sending ? "Sending…" : "Send email"}
+                  </button>
+                </div>
+              </>)}
+            </div>
+
+            {/* WhatsApp */}
+            <div className="card card-lg stack" style={{ gap: 14 }}>
+              <div>
+                <h2 className="section-title">WhatsApp</h2>
+                <p className="card-sub" style={{ margin: "4px 0 0" }}>
+                  {lead.phone ? <>Message <b>{lead.phone}</b> on WhatsApp. </> : "No phone number on this lead. "}
+                  Edit the text, then open WhatsApp with it prefilled to send.
+                </p>
+              </div>
+              <textarea className="input" rows={4} value={waText} onChange={(e) => setWaText(e.target.value)} placeholder="Your WhatsApp message…" />
+              <div className="bottom-actions">
+                <a className="btn btn-outline" href={`tel:${(lead.phone || "").replace(/[^\d+]/g, "")}`} onClick={() => void recordContact("call")} style={!lead.phone ? { pointerEvents: "none", opacity: .5 } : undefined}>Call {lead.phone || ""}</a>
+                <a className="btn btn-accent" href={waHref || undefined} target="_blank" rel="noreferrer" onClick={() => void recordContact("whatsapp")} style={!waHref ? { pointerEvents: "none", opacity: .5 } : undefined}><MessageCircle />Open in WhatsApp</a>
+              </div>
+            </div>
+          </>)}
+
           {tab === "seo" && (
             <div className="card card-lg stack" style={{ gap: 24 }}>
               <div>
@@ -575,7 +783,7 @@ export default function LeadDetail() {
               {playErr && !playBusy && <div className="banner err" style={{ margin: 0 }}><XCircle /><div>{playErr}</div></div>}
               {play && <div className="playbook"><p className="playbook-text">{play.text.replace(/\*\*/g, "").replace(/^#+\s*/gm, "")}</p></div>}
               <div className="bottom-actions">
-                <button className="btn btn-outline" onClick={() => winLead()}><Mail />Outreach email</button>
+                <button className="btn btn-outline" onClick={() => { setTab("outreach"); if (!pitchInit.current) void winLead(); }}><Mail />Outreach email</button>
                 <a className="btn btn-accent" href={fileUrl(lead.id, "mockup/index.html")} target="_blank" rel="noreferrer" style={!lead.hasMockup ? { pointerEvents: "none", opacity: .5 } : undefined}>Open mockup full screen</a>
               </div>
             </div>
@@ -584,86 +792,6 @@ export default function LeadDetail() {
 
         {/* Right column */}
         <div className="stack side-col">
-          <div className="card">
-            <div className="notif-list">
-              {leadEvents.map((e, i) => (
-                <button key={e.id} className={`notif${i === 1 ? " hl" : ""}`} style={{ border: 0, textAlign: "left", background: undefined }} onClick={() => e.leadId && nav(`/leads/${e.leadId}`)}>
-                  <span className="tile"><EventIcon kind={e.kind} /></span>
-                  <div><b>{e.title}</b><span>{e.detail}</span></div>
-                  <ArrowUpRight />
-                </button>
-              ))}
-              {!leadEvents.length && <p className="side-empty" style={{ padding: 10 }}>No activity yet</p>}
-            </div>
-            <div className="notif-foot">
-              <button className="btn btn-ink btn-sm" onClick={() => nav("/leads")}>See all leads <ArrowRight /></button>
-              <div style={{ display: "flex", gap: 14 }}>
-                <a className="link-btn" href={waHref || undefined} target="_blank" rel="noreferrer" style={!waHref ? { pointerEvents: "none", opacity: .5 } : undefined} title={waHref ? "Open WhatsApp" : "No phone number on this lead"}><MessageCircle />WhatsApp</a>
-                <a className="link-btn" href={`mailto:${lead.email}`} style={!lead.email ? { pointerEvents: "none", opacity: .5 } : undefined}><StickyNote />Email lead</a>
-              </div>
-            </div>
-          </div>
-
-          <div className="win-actions">
-            <button className="btn btn-accent" onClick={() => { setTab("close"); void openPlaybook(); }}><Target />How to close this lead</button>
-            <button className="btn btn-white" onClick={() => winLead()}><Mail />Outreach email</button>
-          </div>
-
-          {workspaceEnabled("builds") && (
-            <div className="card">
-              <h3 className="card-title"><Rocket size={18} /> Delivery pipeline</h3>
-              <p className="card-sub" style={{ margin: "2px 0 12px" }}>Move this lead to the next stage with one click.</p>
-              <div className="steps">
-                {stageList.map((s, i) => {
-                  const prevDone = i === 0 || stageList[i - 1].done;
-                  const state = s.done ? "done" : s.started ? "running" : prevDone ? "next" : "pending";
-                  return (
-                    <div key={s.key} className={`step${state === "running" ? " running" : ""}`}>
-                      <div><b>{s.label}</b><span>{state === "done" ? "Done" : state === "running" ? "In progress" : state === "next" ? "Up next" : "Not started"}</span></div>
-                      <span className="ico">
-                        {s.done ? <CheckCircle2 className="ok" /> : s.started ? <Loader2 className="spin" /> : <span className="dot" style={{ opacity: state === "next" ? 1 : .3 }} />}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-              <div style={{ marginTop: 14 }}>
-                {nextStep.to ? (
-                  <Link className="btn btn-ink btn-sm" style={{ width: "100%", justifyContent: "center" }} to={nextStep.to}>{nextStep.icon}{nextStep.label}<ArrowRight /></Link>
-                ) : (
-                  <button className="btn btn-ink btn-sm" style={{ width: "100%", justifyContent: "center" }} onClick={nextStep.onClick} disabled={nextStep.disabled || advBusy}>
-                    {advBusy ? <Loader2 className="spin" /> : nextStep.icon}{nextStep.label}{!nextStep.disabled && <ArrowRight />}
-                  </button>
-                )}
-              </div>
-              {(pipe.build || pipe.conversion) && (
-                <div className="notif-foot" style={{ marginTop: 10 }}>
-                  <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-                    {pipe.build && <Link className="link-btn" to={`/builds/${pipe.build.id}`}><Blocks size={14} />Open build</Link>}
-                    {pipe.conversion && <Link className="link-btn" to={`/wp/${pipe.conversion.id}`}><PanelsTopLeft size={14} />Open WordPress</Link>}
-                    {buildReady && <Link className="link-btn" to="/care"><Wrench size={14} />Maintenance</Link>}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-
-          <div className="card">
-            <div className="card-head">
-              <h3 className="card-title"><StickyNote size={18} /> Notes</h3>
-              {notesSaved && <span className="muted" style={{ fontSize: 12 }}><Check size={13} /> Saved</span>}
-            </div>
-            <p className="card-sub" style={{ margin: "2px 0 8px" }}>Track where this lead stands — contacted, follow-ups, what you've sent.</p>
-            <textarea
-              className="input"
-              rows={4}
-              placeholder="e.g. Called 7 Oct, sent the mockup link, follow up Friday…"
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-            />
-            <button className="btn btn-ink btn-sm" style={{ width: "100%", justifyContent: "center", marginTop: 10 }} disabled={notes === savedNotes} onClick={() => void saveNotes()}>Save notes</button>
-          </div>
-
           {lead.hasMockup && (
             <div className="card publish-card">
               <div className="card-head">
@@ -725,14 +853,19 @@ export default function LeadDetail() {
           )}
 
           <div className="card">
-            <h3 className="card-title">Form entries <ArrowUpRight size={22} strokeWidth={1.6} /></h3>
-            <p className="card-sub">Submitted via {lead.source === "meta" ? "Meta Lead Ads" : lead.source === "elementor" ? "Elementor" : lead.source === "maps" ? "Lead Finder (Google Maps)" : "manual entry"} · {timeAgo(lead.createdAt)}</p>
-            <dl className="fields">
-              {Object.entries(lead.fields).map(([k, v]) => (
-                <div key={k} className="field"><dt>{k}</dt><dd>{v || "—"}</dd></div>
-              ))}
-            </dl>
-            <div style={{ marginTop: 14 }}><StatusPill status={lead.status} /></div>
+            <div className="card-head">
+              <h3 className="card-title"><StickyNote size={18} /> Notes</h3>
+              {notesSaved && <span className="muted" style={{ fontSize: 12 }}><Check size={13} /> Saved</span>}
+            </div>
+            <p className="card-sub" style={{ margin: "2px 0 8px" }}>Track where this lead stands — contacted, follow-ups, what you've sent.</p>
+            <textarea
+              className="input"
+              rows={4}
+              placeholder="e.g. Called 7 Oct, sent the mockup link, follow up Friday…"
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+            />
+            <button className="btn btn-ink btn-sm" style={{ width: "100%", justifyContent: "center", marginTop: 10 }} disabled={notes === savedNotes} onClick={() => void saveNotes()}>Save notes</button>
           </div>
 
           <div className="card">
@@ -758,53 +891,6 @@ export default function LeadDetail() {
           </div>
         </div>
       </div>
-
-      {pitchOpen && (
-        <div className="backdrop" onClick={() => setPitchOpen(false)}>
-          <div className="modal pitch-modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-label="Closing email">
-            <div className="card-head">
-              <div>
-                <h3 className="card-title" style={{ fontSize: 24 }}>Outreach email for {name}</h3>
-                <p className="card-sub" style={{ margin: "2px 0 0" }}>A closing email built from this lead's form answers, the issues found, and the new mockup. Edit anything before you send.</p>
-              </div>
-              <button type="button" className="icon-btn" aria-label="Close" onClick={() => setPitchOpen(false)}><X /></button>
-            </div>
-
-            {pitchBusy && !pitch && (
-              <div className="pitch-loading"><Loader2 className="spin" /><span>Writing the email…</span></div>
-            )}
-            {pitchErr && !pitchBusy && (
-              <div className="banner err" style={{ margin: 0 }}><XCircle /><div>{pitchErr}</div></div>
-            )}
-
-            {pitch && (
-              <>
-                <label className="pitch-field">
-                  <span>Subject</span>
-                  <input className="input" value={pitch.subject} onChange={(e) => setPitch({ ...pitch, subject: e.target.value })} />
-                </label>
-                <label className="pitch-field">
-                  <span>Email</span>
-                  <textarea className="input pitch-body" rows={16} value={pitch.body} onChange={(e) => setPitch({ ...pitch, body: e.target.value })} />
-                </label>
-                <p className="card-sub" style={{ margin: 0 }}>Fill in anything in [brackets] — the price, the mockup link, and any figures the AI couldn't know.</p>
-              </>
-            )}
-
-            <div className="foot" style={{ justifyContent: "space-between" }}>
-              <button type="button" className="btn btn-white" onClick={() => winLead(true)} disabled={pitchBusy}>
-                {pitchBusy ? <Loader2 className="spin" /> : <RefreshCw />}Regenerate
-              </button>
-              <div style={{ display: "flex", gap: 12 }}>
-                <button type="button" className="btn btn-white" onClick={() => void copyPitch()} disabled={!pitch}>
-                  {copied ? <Check /> : <Copy />}{copied ? "Copied" : "Copy"}
-                </button>
-                <a className="btn btn-ink" href={mailtoHref} style={!pitch ? { pointerEvents: "none", opacity: .5 } : undefined}><Mail />Open in email</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {reviseOpen && (
         <div className="backdrop" onClick={() => !reviseBusy && setReviseOpen(false)}>

@@ -198,6 +198,61 @@ function findNavToggle() {
   return { visibleLinks, hasToggle: !!cands[0] };
 }
 
+/**
+ * Mobile header hygiene (runs in the page at 375px): the top bar must hold ONLY the logo and the menu
+ * button. Call-to-action buttons belong in a sticky bottom action bar, not crammed into the header.
+ * Run AFTER navToggleCheck so the hamburger is tagged with data-studio-toggle and can be excluded.
+ */
+export function mobileHeaderCheck() {
+  const vw = window.innerWidth;
+  const header =
+    document.querySelector<HTMLElement>("header, [role=banner], [class*='header' i], [class*='navbar' i], [class*='topbar' i]") ||
+    Array.from(document.querySelectorAll<HTMLElement>("nav")).find((n) => n.getBoundingClientRect().top < 120) ||
+    null;
+  if (!header) return { id: "mobile-header", pass: true, detail: "No header bar to check" };
+
+  const CTA = /\b(call|book|quote|contact|get|start|buy|order|schedule|appointment|enquire|inquire|shop|reserve|request|free|today|now|sign ?up|join|subscribe|hire|consult|estimate|demo)\b/i;
+  const isToggle = (el: HTMLElement) =>
+    el.hasAttribute("data-studio-toggle") || !!el.closest("[data-studio-toggle]") ||
+    /hamburger|menu-toggle|nav-toggle|burger|navbar-toggler/i.test(el.className) ||
+    el.hasAttribute("aria-controls") || el.hasAttribute("aria-expanded") ||
+    /menu|nav/i.test(el.getAttribute("aria-label") || "");
+  const isLogo = (el: HTMLElement) =>
+    /logo|brand/i.test(el.className) || !!el.querySelector("img, svg") ||
+    !!el.closest("[class*='logo' i], [class*='brand' i]");
+
+  const ctas = Array.from(header.querySelectorAll<HTMLElement>("a, button")).filter((el) => {
+    const r = el.getBoundingClientRect();
+    const s = getComputedStyle(el);
+    if (r.width < 1 || r.height < 1 || s.display === "none" || s.visibility === "hidden" || parseFloat(s.opacity) < 0.1) return false;
+    if (r.top > 160) return false; // the top bar only, not an opened drawer below it
+    if (isToggle(el) || isLogo(el)) return false;
+    const txt = (el.textContent || "").trim();
+    const isTel = (el.getAttribute("href") || "").startsWith("tel:");
+    const bg = s.backgroundColor;
+    const looksButton = bg !== "rgba(0, 0, 0, 0)" && bg !== "transparent" && parseFloat(s.paddingLeft) > 6;
+    return (CTA.test(txt) || isTel || (looksButton && txt.length >= 3));
+  }).map((el) => (el.textContent || "").trim().replace(/\s+/g, " ").slice(0, 30) || (el.getAttribute("href") || "button"));
+
+  // Does a sticky/fixed bottom bar with an action exist (the place CTAs should move to)?
+  const hasBottomBar = Array.from(document.querySelectorAll<HTMLElement>("body *")).some((el) => {
+    const s = getComputedStyle(el);
+    if (s.position !== "fixed" && s.position !== "sticky") return false;
+    if (s.display === "none" || s.visibility === "hidden") return false;
+    const r = el.getBoundingClientRect();
+    return r.bottom >= window.innerHeight - 6 && r.top > window.innerHeight * 0.5 && r.width >= vw * 0.8 && !!el.querySelector("a, button");
+  });
+
+  const pass = ctas.length === 0;
+  return {
+    id: "mobile-header",
+    pass,
+    detail: pass
+      ? (hasBottomBar ? "Mobile header is just the logo and menu; a sticky bottom action bar is present" : "Mobile header is just the logo and menu button")
+      : `These must move out of the mobile header into a sticky bottom action bar: ${ctas.slice(0, 5).join(", ")}`,
+  };
+}
+
 export async function navToggleCheck(page: Page) {
   const before = await page.evaluate(findNavToggle);
   if (!before.hasToggle) {

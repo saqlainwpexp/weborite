@@ -28,10 +28,11 @@ import { admin } from "./admin.ts";
 import { agent } from "./agent/routes.ts";
 import { campaigns, startCampaignTimers } from "./campaigns/index.ts";
 import { automations } from "./automations/routes.ts";
-import { startWorkflowTimers } from "./automations/engine.ts";
+import { mockupPreview, outreach, outreachReady, startWorkflowTimers } from "./automations/engine.ts";
+import { sendMail } from "./golive/smtp.ts";
 import { license, requireFullLicense, requireLicense, startLicenseTimers } from "./license/index.ts";
 import { assertPublicUrl, localOnly, sandboxFiles } from "./security.ts";
-import { STEPS, type BenchmarkSet, type Capture, type Diagnosis, type GateResult, type LeadDetail, type LeadPlaybook, type OutreachEmail, type StepKey, type Usage } from "../shared/types.ts";
+import { STEPS, type BenchmarkSet, type Capture, type Diagnosis, type GateResult, type Lead, type LeadDetail, type LeadPlaybook, type OutreachEmail, type StepKey, type Usage } from "../shared/types.ts";
 import { ai } from "./claude/aiRoutes.ts";
 import { pitch } from "./pitch.ts";
 import { playbook } from "./playbook.ts";
@@ -77,6 +78,7 @@ app.get("/api/leads/:id", (req, res) => {
     outreach: readJson<OutreachEmail>(lead.id, "outreach.json"),
     playbook: readJson<LeadPlaybook>(lead.id, "playbook.json"),
     publishReady: hostingReady(),
+    emailReady: outreachReady(),
     pipeline: {
       build: build ? { id: build.id, status: build.status } : null,
       conversion: conversion ? { id: conversion.id, status: conversion.status } : null,
@@ -92,6 +94,55 @@ app.post("/api/leads/:id/notes", (req, res) => {
   lead.notes = String((req.body ?? {}).notes ?? "").slice(0, 8000);
   saveLead(lead);
   res.json({ ok: true, notes: lead.notes });
+});
+
+/** Stamp the lead as contacted and prepend a dated line to its CRM notes (recent-first). */
+function logContact(lead: Lead, line: string) {
+  lead.lastContactedAt = new Date().toISOString();
+  const entry = `• ${lead.lastContactedAt.slice(0, 10)}: ${line}`;
+  lead.notes = (entry + (lead.notes ? `\n${lead.notes}` : "")).slice(0, 8000);
+}
+
+/** Send an outreach email to this lead from the configured outreach mailbox (Settings → Integrations). */
+app.post("/api/leads/:id/send-email", async (req, res) => {
+  const lead = getLead(req.params.id);
+  if (!lead) return res.sendStatus(404);
+  const b = req.body ?? {};
+  const subject = String(b.subject ?? "").trim();
+  const body = String(b.body ?? "").trim();
+  if (!subject || !body) return res.status(400).json({ error: "Add a subject and a message before sending." });
+  const o = outreach();
+  if (!outreachReady(o)) return res.status(400).json({ error: "Set up your outreach mailbox in Settings → Integrations first." });
+  // A test goes to your own outreach address and is NOT logged against the lead.
+  const test = Boolean(b.test);
+  const to = (test ? o.fromEmail : String(b.to || lead.email || "")).trim();
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(to)) return res.status(400).json({ error: test ? "Your outreach address isn't set." : "This lead has no valid email address." });
+  let attachment: { name: string; type: string; data: Buffer } | undefined;
+  if (b.attachMockup) {
+    const img = await mockupPreview(lead.id).catch(() => null);
+    if (img) attachment = { name: `${(lead.business || "mockup").replace(/[^\w-]+/g, "-").slice(0, 40)}-new-website.jpg`, type: "image/jpeg", data: img };
+  }
+  try {
+    await sendMail(
+      { host: o.host, port: o.port, security: o.security, user: o.user, password: o.password },
+      { fromName: o.fromName, fromEmail: o.fromEmail, to, subject: test ? `[TEST] ${subject}` : subject, text: body + (o.footer ? `\n\n${o.footer}` : ""), attachment },
+    );
+    if (!test) { logContact(lead, `Emailed — ${subject.slice(0, 120)}`); saveLead(lead); }
+    res.json({ ok: true, lastContactedAt: lead.lastContactedAt, notes: lead.notes });
+  } catch (e) {
+    res.status(502).json({ error: (e as Error).message });
+  }
+});
+
+/** Record a non-email contact (WhatsApp opened, call placed) so the CRM tracks outreach history. */
+app.post("/api/leads/:id/contacted", (req, res) => {
+  const lead = getLead(req.params.id);
+  if (!lead) return res.sendStatus(404);
+  const channel = String((req.body ?? {}).channel ?? "");
+  const line = channel === "whatsapp" ? "Messaged on WhatsApp" : channel === "call" ? "Called" : channel === "email" ? "Emailed" : "Contacted";
+  logContact(lead, line);
+  saveLead(lead);
+  res.json({ ok: true, lastContactedAt: lead.lastContactedAt, notes: lead.notes });
 });
 
 app.post("/api/leads", async (req, res) => {

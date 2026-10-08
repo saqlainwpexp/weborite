@@ -4,7 +4,7 @@ import { leadDir, listLeads, readJson, writeJson } from "../db.ts";
 import type { Capture, Diagnosis, Fact, GateCheck, GateResult, Lead } from "../../shared/types.ts";
 import { DESKTOP, MOBILE, newContext } from "./browser.ts";
 import { dhash, similarity } from "./signature.ts";
-import { mobileChecks, navToggleCheck, runAxeContrast } from "./capture.ts";
+import { mobileChecks, mobileHeaderCheck, navToggleCheck, runAxeContrast } from "./capture.ts";
 import { googleFonts, isGoogleFamily, primaryFamily } from "../fonts.ts";
 import { layoutChecks, type LayoutFinding } from "./layout.ts";
 
@@ -55,6 +55,8 @@ export interface InspectOptions {
   strongestAsset: Diagnosis["strongestAsset"] | null;
   logo: Capture["logo"];
   brand: Diagnosis["brand"];
+  /** Where to save the rendered mobile (375px) screenshot of the page, for review. */
+  mobileShot?: string;
 }
 
 /** Deterministic quality checks on one rendered page (file:// or http:// URL). */
@@ -167,7 +169,15 @@ export async function inspectPage(url: string, input: InspectOptions): Promise<{
   await mpage.goto(url, { waitUntil: "load", timeout: 30000 });
   await mpage.waitForTimeout(800);
   const contrastMobile = await runAxeContrast(mpage);
+  // navToggleCheck runs first so the hamburger is tagged, then the header-hygiene check can exclude it.
   const mobile = [...(await mpage.evaluate(mobileChecks)), await navToggleCheck(mpage)];
+  const mobileHeader = await mpage.evaluate(mobileHeaderCheck);
+  if (input.mobileShot) {
+    try {
+      const mh = await mpage.evaluate(() => document.documentElement.scrollHeight);
+      await mpage.screenshot({ path: input.mobileShot, type: "jpeg", quality: 78, clip: { x: 0, y: 0, width: MOBILE.width, height: Math.min(mh, 20000) } });
+    } catch { /* a failed screenshot never blocks the gate */ }
+  }
   await mctx.close();
 
   // 1. Contrast
@@ -269,6 +279,13 @@ export async function inspectPage(url: string, input: InspectOptions): Promise<{
     detail: [...mobileFails.map((m) => m.detail), ...structure].join("; ") || "No sideways scroll, nav opens, semantic landmarks present",
   });
 
+  // 8b. Mobile header: only the logo + hamburger belong in the bar; CTAs go to a sticky bottom action bar.
+  checks.push({
+    name: "Mobile header (logo + menu only)",
+    pass: mobileHeader.pass,
+    detail: mobileHeader.detail,
+  });
+
   // 9. Desktop layout: nothing overlaps, nothing is cut off, one content column, no sideways scroll.
   checks.push({
     name: "Desktop layout (1440 & 1280)",
@@ -305,6 +322,7 @@ export async function runGate(leadId: string, input: { capture: Capture; diagnos
     strongestAsset: input.diagnosis.strongestAsset,
     logo: input.capture.logo,
     brand: input.diagnosis.brand,
+    mobileShot: join(leadDir(leadId), "mockup-mobile.jpg"),
   });
 
   // Sameness: don't ship a near-clone of another lead's mockup.

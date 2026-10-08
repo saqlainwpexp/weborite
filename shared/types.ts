@@ -49,6 +49,8 @@ export interface Lead {
   publish?: { url: string; path: string; at: string };
   /** Free-text CRM notes (who's been contacted, follow-ups, what was sent…). */
   notes?: string;
+  /** When this lead was last contacted (email sent, WhatsApp/call opened), ISO timestamp. */
+  lastContactedAt?: string;
 }
 
 /** How promising a lead is to win: hot = chase today, cold = low priority. */
@@ -270,6 +272,8 @@ export interface LeadDetail extends Lead {
   playbook: LeadPlaybook | null;
   /** Whether Hostinger SFTP is configured, so the UI can enable "Publish live". */
   publishReady: boolean;
+  /** Whether the outreach mailbox (SMTP) is configured, so the UI can enable "Send email". */
+  emailReady: boolean;
   /** Downstream delivery pipeline: the build and WordPress conversion made from this lead, if any. */
   pipeline: {
     build: { id: string; status: BuildStatus } | null;
