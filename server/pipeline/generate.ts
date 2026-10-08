@@ -9,7 +9,7 @@ import { nextMocFor, pickMocNiche, resolveMoc } from "./mocs.ts";
 import { fetchDribbbleMoc } from "./dribbble.ts";
 import type { BenchmarkSet, Capture, Diagnosis, Fact, GateCheck } from "../../shared/types.ts";
 
-export const SYSTEM = `You are a senior web designer and front-end engineer. You rebuild small-business homepages so they compete visually with the best sites in their category, and you write clean, semantic, responsive HTML and CSS by hand.
+const SYSTEM_RULES = `You are a senior web designer and front-end engineer. You rebuild small-business homepages so they compete visually with the best sites in their category, and you write clean, semantic, responsive HTML and CSS by hand.
 
 Non-negotiable rules:
 1. The brand colours and the logo are fixed inputs. Use them exactly as given. Don't recolour, restyle or redraw the logo, and don't add new brand hues. You may use neutrals (white, off-whites, greys, near-black) and tints or shades of the brand colours for surfaces.
@@ -17,9 +17,18 @@ Non-negotiable rules:
 3. No invented facts. Every number, rating, review count, year, award, client name, testimonial, address and phone number must be copied verbatim from the FACTS list. If a fact you'd like to use isn't there, leave the element out. Never derive new figures, for example by counting listed locations or computing years in business. A number must appear verbatim in FACTS. Don't use placeholder text, lorem ipsum, "Your Company", example.com, or stock image URLs.
 4. Use only the local asset paths provided. Google Fonts is the only permitted external resource. Every font family must be a Google Fonts family loaded with a <link> from fonts.googleapis.com (for example Inter, Source Serif 4, Libre Caslon Text, DM Sans). Never make a system font (Helvetica Neue, Iowan Old Style, Georgia, Arial, -apple-system, Segoe UI…) the primary family; generic fallbacks after the Google family are fine. The site will later be rebuilt in WordPress/Elementor, which can only load Google Fonts.
 5. Every class used in the HTML must be defined in your CSS. Text must reach WCAG AA contrast (4.5:1 for body text, 3:1 for text 24px and larger).
-6. Mobile first. It must work at 375px with no sideways scroll. The mobile nav must open and close (a small inline script or a checkbox/details pattern). Tap targets must be at least 44px. No element may scroll sideways, including the nav row. Use one primary call-to-action style and don't repeat the same button twice in the header.
+6. Mobile first. It must work at 375px with no sideways scroll. The mobile nav must open and close (a small inline script or a checkbox/details pattern). Tap targets must be at least 44px. No element may scroll sideways, including the nav row. Use one primary call-to-action style and don't repeat the same button twice in the header.`;
+
+export const SYSTEM = `${SYSTEM_RULES}
 
 Design standard: distinctive, confident and specific to this business. Use generous whitespace, a clear typographic hierarchy, one primary call to action, and trust signals near the top (only real ones from the FACTS list). Avoid generic AI-template patterns such as purple gradients, emoji icons, three identical feature cards with icons, or glassmorphism.`;
+
+// Clone mode: a specific reference design is attached and must be reproduced, so the "be distinctive /
+// avoid generic patterns" guidance above is REPLACED by a replication mandate — otherwise the model
+// imposes its own taste and the result looks like a generic AI page instead of the chosen design.
+const SYSTEM_CLONE = `${SYSTEM_RULES}
+
+YOUR JOB IS REPLICATION, NOT INVENTION. A specific, finished reference design is attached. Rebuild it as faithfully as a front-end developer recreating a site pixel-by-pixel from a screenshot: the same layout, the same sections in the same order, the same header/nav, the same hero composition, the same card/button/badge shapes, the same proportions, spacing rhythm and type hierarchy. Reproduce EVERY section the reference has — do not drop, merge, reorder or add sections. Keep the reference's structure even where it uses patterns you would normally avoid (full-bleed hero photo, rows of feature cards with icons, etc.); here those are the target, not a mistake. Do NOT substitute your own design taste, simplify it, or "improve" it. The ONLY things you change are: the brand colours (swap the reference's accent for this lead's locked brand colour, keep its neutrals), the real content and FACTS, the lead's own logo and photos, and Google-Fonts families that match the reference's typographic character. A page that looks like a generic AI template instead of this specific reference is a FAILURE, no matter how clean it is.`;
 
 function contrast(a: string, b: string) {
   const lum = (h: string) => {
@@ -170,6 +179,12 @@ The brand colours below were chosen for this business (it has no existing brand)
 Include the ways people actually act: call (tel: link), get directions (link to the Google Maps listing above), and opening hours if they are in FACTS. Google reviews in FACTS may be used as testimonials, quoted verbatim.`
     : `Rebuild the homepage for "${input.business || capture.title}" (${capture.finalUrl}).`) + `
 The file will be saved as mockup/index.html inside the lead folder, so asset paths start with ../assets/.`;
+  if (moc) {
+    prompt += `
+
+▲ MOST IMPORTANT INSTRUCTION — read before anything else:
+A finished reference design is attached (the LAST image). Your job is to REBUILD THAT EXACT DESIGN for this business — clone its layout, its sections, its structure and its styling as closely as a developer recreating it from a screenshot. Study the reference image first and list its sections top to bottom in your head; your page must have the SAME sections in the SAME order with the SAME look. Change only the brand colours, the real content/facts, the logo and photos, and the fonts. Everything else below serves this one goal. A generic, "clean AI" page that doesn't look like the reference is a failure.`;
+  }
   prompt += `
 
 LOCKED INPUTS (use exactly):
@@ -309,7 +324,7 @@ ${prev}
 Return the full corrected document.`;
   }
 
-  const res = await runClaude({ leadId, task: "generate", cwd: dir, images, heavy: true, system: SYSTEM, prompt });
+  const res = await runClaude({ leadId, task: "generate", cwd: dir, images, heavy: true, system: moc ? SYSTEM_CLONE : SYSTEM, prompt });
   const html = extractHtml(res.text);
   writeFileSync(join(outDir, "index.html"), html);
   return html;
