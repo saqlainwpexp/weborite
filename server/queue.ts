@@ -13,6 +13,7 @@ import { generateMockup } from "./pipeline/generate.ts";
 import { scoreLead } from "./pipeline/score.ts";
 import { runGate } from "./pipeline/gate.ts";
 import { renderSideBySide } from "./pipeline/render.ts";
+import { humanError } from "./pipeline/errors.ts";
 import type { Capture, Diagnosis, Fact, GateResult, Lead, StepKey } from "../shared/types.ts";
 
 const RESUME_AFTER_MS = 20 * 60 * 1000;
@@ -51,7 +52,7 @@ async function doStep(lead: Lead, key: StepKey, fn: () => Promise<string | void>
     s.note = note || undefined;
   } catch (e) {
     s.status = e instanceof ClaudeUnavailableError ? "pending" : "failed";
-    s.note = (e as Error).message.slice(0, 300);
+    s.note = e instanceof ClaudeUnavailableError ? (e as Error).message.slice(0, 300) : humanError(e);
     throw e;
   } finally {
     s.finishedAt = new Date().toISOString();
@@ -155,9 +156,9 @@ async function runLead(id: string) {
       scheduleResume(id);
     } else {
       lead.status = "failed";
-      lead.error = (e as Error).message.slice(0, 400);
+      lead.error = humanError(e); // plain, user-readable — never the raw Playwright/AI log
       addEvent({ leadId: id, kind: "failed", title: "Job failed", detail: `${label}: ${lead.error.slice(0, 120)}` });
-      console.error(`[lead ${id}]`, e);
+      console.error(`[lead ${id}]`, e); // raw error kept in the console for debugging
     }
   }
   saveLead(lead);

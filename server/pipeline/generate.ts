@@ -5,7 +5,8 @@ import { extractHtml, runClaude } from "../claude/runner.ts";
 import { pickDesignSystem } from "./designLibrary.ts";
 import { assetSheet, stockPhotos, trimPadding } from "./assets.ts";
 import { currentRecipe, newRecipe, pickNiche } from "./recipe.ts";
-import { nextMocFor, resolveMoc } from "./mocs.ts";
+import { nextMocFor, pickMocNiche, resolveMoc } from "./mocs.ts";
+import { fetchDribbbleMoc } from "./dribbble.ts";
 import type { BenchmarkSet, Capture, Diagnosis, Fact, GateCheck } from "../../shared/types.ts";
 
 export const SYSTEM = `You are a senior web designer and front-end engineer. You rebuild small-business homepages so they compete visually with the best sites in their category, and you write clean, semantic, responsive HTML and CSS by hand.
@@ -68,7 +69,7 @@ export async function generateMockup(
   // requests edit the EXISTING mockup (same recipe) instead of starting over.
   const sameness = Boolean(opts?.failures?.some((f) => /^Distinct from other mockups/.test(f.name)));
   const amend = Boolean((opts?.failures?.length && !sameness) || opts?.changes);
-  const prevPick = readJson<{ niche?: string; style?: string; system?: string; mocNiche?: string; moc?: string }>(leadId, "design.json") ?? null;
+  const prevPick = readJson<{ niche?: string; style?: string; system?: string; mocNiche?: string; moc?: string; dribbble?: string }>(leadId, "design.json") ?? null;
   const dir = leadDir(leadId);
   const outDir = join(dir, "mockup");
   mkdirSync(outDir, { recursive: true });
@@ -98,9 +99,21 @@ export async function generateMockup(
   // MOC QUEUE (preferred): show the model ONE finished reference design and have it clone that exact
   // layout, re-skinned for this lead — the fix for "every niche gets the same template". On an amend
   // or a (non-sameness) gate retry we keep the same moc so edits refine that design; a fresh run or a
-  // sameness re-pick advances to the next moc in the niche's pool (recycling once all are used). When
-  // a niche has no mocs uploaded yet, moc is null and we fall back to the recipe / design-system path.
-  const moc = amend ? resolveMoc(prevPick?.mocNiche ?? "", prevPick?.moc ?? "") : nextMocFor(verticalText);
+  // sameness re-pick advances to the next moc in the niche's pool (recycling once all are used).
+  let moc: { niche: string; file: string; path: string } | null =
+    amend ? resolveMoc(prevPick?.mocNiche ?? "", prevPick?.moc ?? "") : nextMocFor(verticalText);
+  // An amend that originally cloned a Dribbble shot reuses that cached image so edits refine it.
+  if (!moc && amend && prevPick?.dribbble && existsSync(prevPick.dribbble)) {
+    moc = { niche: prevPick.mocNiche ?? "dribbble", file: basename(prevPick.dribbble), path: prevPick.dribbble };
+  }
+  // DRIBBBLE FALLBACK: no uploaded moc for this niche (or an unlisted niche) — rather than drop back to
+  // the one generic layout, fetch a fresh, niche-appropriate design from Dribbble and clone that. Each
+  // fresh run pulls a different shot. Best-effort: null (offline/blocked) falls through to recipe/ds.
+  let dribbble = false;
+  if (!moc && !amend) {
+    const d = await fetchDribbbleMoc(verticalText, pickMocNiche(verticalText).slug);
+    if (d) { moc = { niche: d.niche, file: basename(d.path), path: d.path }; dribbble = true; }
+  }
 
   // Niches with a section library get a unique RECIPE (base style + sections mixed from different
   // designs), so no two leads — and no two regenerations of one lead — share a layout. A gate retry
@@ -118,7 +131,10 @@ export async function generateMockup(
     sameness && prevPick?.system ? [prevPick.system] : [],
   );
   // Remember what was chosen so a later amend can reuse it / a sameness retry can avoid it.
-  writeJson(leadId, "design.json", moc ? { mocNiche: moc.niche, moc: moc.file } : recipe ? { niche: recipe.niche, style: recipe.style.id } : { system: ds?.slug });
+  writeJson(leadId, "design.json",
+    moc ? (dribbble ? { mocNiche: moc.niche, dribbble: moc.path } : { mocNiche: moc.niche, moc: moc.file })
+    : recipe ? { niche: recipe.niche, style: recipe.style.id }
+    : { system: ds?.slug });
 
   // Learned preferences: corrections the owner gave on earlier mockups, so they don't have to be
   // repeated. Favour notes from the same vertical, then fill with recent ones from any vertical.
