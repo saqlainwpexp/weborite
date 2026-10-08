@@ -1,5 +1,6 @@
 import { spawn } from "node:child_process";
-import { relative } from "node:path";
+import { copyFileSync, mkdirSync } from "node:fs";
+import { basename, join, relative } from "node:path";
 import { ClaudeUnavailableError, type RunRequest, type RunResult } from "./runner.ts";
 
 /**
@@ -7,8 +8,23 @@ import { ClaudeUnavailableError, type RunRequest, type RunResult } from "./runne
  * so a Pro/Max subscription covers the usage instead of per-token API billing.
  */
 export function runSession(req: RunRequest, opts: { claudePath: string; model: string }): Promise<RunResult> {
-  const imageNote = req.images?.length
-    ? `\n\nBefore answering, open and look at these image files with the Read tool:\n${req.images
+  // Session mode can't attach images as vision input — it tells Claude to open them with the Read tool,
+  // which is sandboxed to the working folder. Reference designs (the moc / Dribbble shot, recipe crops,
+  // design-system slices) live OUTSIDE the lead folder, so Claude could never read them and the page
+  // came out generic. Copy any out-of-folder image into <cwd>/_refs/ so the Read tool can open it.
+  const localImages = (req.images ?? []).map((p, i) => {
+    if (!relative(req.cwd, p).startsWith("..")) return p; // already inside the working folder
+    try {
+      const dest = join(req.cwd, "_refs", `${i}-${basename(p)}`);
+      mkdirSync(join(req.cwd, "_refs"), { recursive: true });
+      copyFileSync(p, dest);
+      return dest;
+    } catch {
+      return p; // copy failed: fall back to the original path
+    }
+  });
+  const imageNote = localImages.length
+    ? `\n\nBefore answering, open and look at these image files with the Read tool:\n${localImages
         .map((p) => "- " + relative(req.cwd, p).replace(/\\/g, "/"))
         .join("\n")}`
     : "";
@@ -29,9 +45,14 @@ export function runSession(req: RunRequest, opts: { claudePath: string; model: s
   ];
 
   return new Promise((resolve, reject) => {
+    if (req.signal?.aborted) return reject(new Error("Stopped by you."));
     const win = process.platform === "win32";
     const cmd = win && opts.claudePath.includes(" ") ? `"${opts.claudePath}"` : opts.claudePath;
     const child = spawn(cmd, args, { cwd: req.cwd, shell: win, windowsHide: true });
+    // Stop pressed: kill the Claude Code process so generation really ends.
+    const onAbort = () => { try { child.kill(); } catch { /* already gone */ } };
+    req.signal?.addEventListener("abort", onAbort, { once: true });
+    child.on("close", () => req.signal?.removeEventListener("abort", onAbort));
     let out = "";
     let err = "";
     child.stdout.on("data", (d) => (out += d));

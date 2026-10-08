@@ -3,6 +3,7 @@ import { makePitch } from "./pitch.ts";
 import { makePlaybook } from "./playbook.ts";
 import { hostingReady, publishMockup } from "./publish/hostinger.ts";
 import { ClaudeUnavailableError } from "./claude/runner.ts";
+import { startAbort, clearAbort, abortLead } from "./claude/abort.ts";
 import { Pool, parallel } from "./pool.ts";
 import { captureSite, type CaptureOutput } from "./pipeline/capture.ts";
 import { diagnose, diagnoseScratch } from "./pipeline/diagnose.ts";
@@ -64,9 +65,11 @@ async function runLead(id: string) {
   const lead = getLead(id);
   if (!lead) return;
   lead.status = "running";
+  lead.error = undefined;
   saveLead(lead);
   const label = lead.business || new URL(lead.url).hostname;
   const scratch = lead.mode === "scratch";
+  const abort = startAbort(id); // the Stop button cancels this run
 
   try {
     let cap: CaptureOutput | null = null;
@@ -114,7 +117,8 @@ async function runLead(id: string) {
       const changes = lead.reviseRequest;
       await generateMockup(id, input, changes ? { changes } : undefined);
       if (changes) { lead.reviseRequest = undefined; saveLead(lead); }
-      return changes ? "Applied your change request" : undefined;
+      if (changes) return "Applied your change request";
+      return designSourceLabel(id); // show exactly which design was used (moc / Dribbble / recipe / system)
     });
 
     let gate: GateResult | null = null;
@@ -149,7 +153,14 @@ async function runLead(id: string) {
     // the mockup live if auto-publish is on. All best-effort — a failure here never fails the lead.
     await afterGate(id, label);
   } catch (e) {
-    if (e instanceof ClaudeUnavailableError) {
+    if (abort.signal.aborted) {
+      // Stop was pressed — a clean cancel, not a failure.
+      lead.status = "stopped";
+      lead.error = "Stopped by you.";
+      const running = lead.steps.find((s) => s.status === "running");
+      if (running) { running.status = "pending"; running.note = undefined; }
+      addEvent({ leadId: id, kind: "info", title: "Job stopped", detail: `${label}: stopped by you` });
+    } else if (e instanceof ClaudeUnavailableError) {
       lead.status = "paused";
       lead.error = e.message;
       addEvent({ leadId: id, kind: "info", title: "Job paused", detail: e.message.slice(0, 140) });
@@ -160,8 +171,37 @@ async function runLead(id: string) {
       addEvent({ leadId: id, kind: "failed", title: "Job failed", detail: `${label}: ${lead.error.slice(0, 120)}` });
       console.error(`[lead ${id}]`, e); // raw error kept in the console for debugging
     }
+  } finally {
+    clearAbort(id);
   }
   saveLead(lead);
+}
+
+/** Stop a mockup that's queued or running. Kills the in-flight AI call if it's active. */
+export function stopLead(id: string) {
+  pool.remove((j) => j === id); // drop it if it's still only queued
+  const wasRunning = abortLead(id); // kill the in-flight AI process if a run is active
+  const lead = getLead(id);
+  if (!lead) return;
+  // Queued-only (no active run): finalize here. If it was running, runLead's catch finalizes it.
+  if (!wasRunning && (lead.status === "queued" || lead.status === "running")) {
+    lead.status = "stopped";
+    lead.error = "Stopped by you.";
+    const running = lead.steps.find((s) => s.status === "running");
+    if (running) { running.status = "pending"; running.note = undefined; }
+    saveLead(lead);
+  }
+}
+
+/** A short label of which design the generator used, read back from design.json for the UI. */
+function designSourceLabel(id: string): string | undefined {
+  const d = readJson<{ mocNiche?: string; moc?: string; dribbble?: string; niche?: string; style?: string; system?: string }>(id, "design.json");
+  if (!d) return undefined;
+  if (d.moc) return `Cloned moc: ${d.mocNiche}/${d.moc}`;
+  if (d.dribbble) return `Cloned a Dribbble design (${d.mocNiche ?? "web"})`;
+  if (d.niche) return `Recipe mix: ${d.niche}${d.style ? " / " + d.style : ""}`;
+  if (d.system) return `Design system: ${d.system}`;
+  return undefined;
 }
 
 /**

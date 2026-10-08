@@ -41,7 +41,7 @@ export async function runApi(req: RunRequest, opts: { apiKey: string; model: str
         system: req.system,
         messages,
         ...(tools.length ? { tools } : {}),
-      });
+      }, { signal: req.signal }); // Stop button aborts the request
       const msg = await stream.finalMessage();
       const u = msg.usage;
       cost += ((u.input_tokens + (u.cache_creation_input_tokens ?? 0) * 1.25 + (u.cache_read_input_tokens ?? 0) * 0.1) * pin + u.output_tokens * pout) / 1e6;

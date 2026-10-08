@@ -25,6 +25,7 @@ const STATUS_LABEL: Record<LeadStatus, string> = {
   needs_review: "Needs review",
   failed: "Failed",
   paused: "Paused",
+  stopped: "Stopped",
 };
 
 export function StatusPill({ status }: { status: LeadStatus }) {

@@ -1,4 +1,5 @@
 import { getSettings, recordRun } from "../db.ts";
+import { abortSignal } from "./abort.ts";
 import { runSession } from "./sessionRunner.ts";
 import { runApi } from "./apiRunner.ts";
 import { runCloud } from "./cloudRunner.ts";
@@ -18,6 +19,8 @@ export interface RunRequest {
   cwd: string;
   /** Use the heavier generation model (otherwise the fast model). */
   heavy?: boolean;
+  /** Set by runClaude from the abort registry; lets the provider kill the call when Stop is pressed. */
+  signal?: AbortSignal;
 }
 
 export interface RunResult {
@@ -30,6 +33,8 @@ export class ClaudeUnavailableError extends Error {}
 /** Runs a request on whichever AI is chosen in Settings → AI (the name stays: it began as Claude-only). */
 export async function runClaude(req: RunRequest): Promise<RunResult> {
   const s = getSettings();
+  req.signal ??= abortSignal(req.leadId); // let the Stop button kill this call
+
   if (s.aiProvider && s.aiProvider !== "claude") {
     const key: AiModelKey = s.aiProvider === "openai" ? `openai-${s.openaiAccess}` : s.aiProvider === "gemini" ? `gemini-${s.geminiAccess}` : s.aiProvider;
     const m = s.aiModels[key] ?? { heavy: "", fast: "" };

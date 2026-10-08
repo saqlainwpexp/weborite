@@ -200,6 +200,12 @@ export default function LeadDetail() {
     reloadAll();
   }
 
+  async function stop() {
+    await api(`/api/leads/${lead!.id}/stop`, { method: "POST" });
+    void reload();
+    reloadAll();
+  }
+
   async function winLead(regenerate = false) {
     setPitchOpen(true);
     setPitchErr(null);
@@ -376,9 +382,16 @@ export default function LeadDetail() {
                   {(lead.benchmarks?.sites.length ?? 0) > 3 && <span className="more">+{lead.benchmarks!.sites.length - 3}</span>}
                   {!lead.benchmarks && <span style={{ background: "var(--chip)" }} />}
                 </div>
-                <button className="btn btn-ink btn-sm" onClick={() => run()} disabled={busy || !next}>
-                  {busy ? "Running" : next ? "Run now" : "Done"} <ArrowRight />
-                </button>
+                <div style={{ display: "flex", gap: 8 }}>
+                  {busy && (
+                    <button className="btn btn-white btn-sm danger" onClick={() => void stop()} title="Stop this run">
+                      <X /> Stop
+                    </button>
+                  )}
+                  <button className="btn btn-ink btn-sm" onClick={() => run()} disabled={busy || !next}>
+                    {busy ? "Running" : next ? "Run now" : "Done"} <ArrowRight />
+                  </button>
+                </div>
               </div>
             </div>
           </div>

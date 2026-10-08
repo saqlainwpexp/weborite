@@ -1,5 +1,5 @@
 export type LeadSource = "elementor" | "meta" | "manual" | "maps";
-export type LeadStatus = "queued" | "running" | "ready" | "needs_review" | "failed" | "paused";
+export type LeadStatus = "queued" | "running" | "ready" | "needs_review" | "failed" | "paused" | "stopped";
 export type StepKey = "capture" | "diagnose" | "vertical" | "generate" | "gate" | "render";
 export type StepStatus = "pending" | "running" | "done" | "failed" | "skipped";
 

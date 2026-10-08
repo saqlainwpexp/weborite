@@ -8,7 +8,7 @@ import {
   API_PORT, BRAND_DIR, BUILDS_DIR, LEADS_DIR, ROOT, addFeedbackNote, deleteLeadRow, encryptStoredSecrets, getLead, getSettings, leadDir, listEvents, listLeads,
   normalizeUrl, publicSettings, readJson, saveLead, setSettings, usageToday,
 } from "./db.ts";
-import { enqueue, queueState, resumeInterrupted } from "./queue.ts";
+import { enqueue, queueState, resumeInterrupted, stopLead } from "./queue.ts";
 import { hooks, intakeLead } from "./intake.ts";
 import { getBenchmarkSet, listBenchmarkSets, saveBenchmarkSet } from "./pipeline/benchmarks.ts";
 import { finder } from "./finder/routes.ts";
@@ -123,6 +123,13 @@ app.post("/api/leads/:id/run", (req, res) => {
     saveLead(lead);
   }
   enqueue(lead.id);
+  res.json({ ok: true });
+});
+
+app.post("/api/leads/:id/stop", (req, res) => {
+  const lead = getLead(req.params.id);
+  if (!lead) return res.sendStatus(404);
+  stopLead(lead.id);
   res.json({ ok: true });
 });
 
